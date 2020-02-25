@@ -1,0 +1,1160 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.What Is Ownership?Some languages have garbage collection that constantly looks for no longer used memory as the program runs;in other languages, the programmer must explicitly allocate and free the memory. Rust uses a third approach:  memory is managed through a system of ownership with a set of rules that the compiler checks at compile time.Ownership Rules  Each value in Rust has a variable that’s called its owner.  There can only be one owner at a time.  When the owner goes out of scope, the value will be dropped.Variable ScopeThe variable s refers to a string literal, where the value of the string is hardcoded into the text of our program. The variable is valid from the point at which it’s declared until the end of the current scope.let s = &quot;hello&quot;;scope is the range within a program for which an item is valid.{                    // s is not valid here, it’s not yet declared  let s = &quot;hello&quot;;   // s is valid from this point forward  // do stuff with s}                    // this scope is now over, and s is no longer validListing 4-1: A variable and the scope in which it is validThere are two important points in time here:  When s comes into scope, it is valid.  It remains valid until it goes out of scope.The String Typewe need a data type that is more complex than the ones we covered in the “Data Types” section of Chapter 3. The types covered previously are all stored on the stack and popped off the stack when their scope is over, but we want to look at data that is stored on the heap and explore how Rust knows when to clean up that data. For example, what if we want to take user input and store it? For these situations, Rust has a second string type, String. This type is allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a String from a string literal using the from function, like so:let s = String::from(&quot;hello&quot;);The double colon (::) is an operator that allows us to namespace this particular from function under the String type rather than using some sort of name like string_from. Why can String be mutated but literals cannot? The difference is how these two types deal with memory.Memory and AllocationWith the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:  The memory must be requested from the operating system at runtime.  We need a way of returning this memory to the operating system when we’re done with our String.That first part is done by us: when we call String::from, its implementation requests the memory it needs. However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one allocate with exactly one free.{    let s = String::from(&quot;hello&quot;); // s is valid from this point forward    // do stuff with s}                                  // this scope is now over, and s is no                                   // longer validThere is a natural point at which we can return the memory our String needs to the operating system: when s goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called drop, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket.Note: In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called Resource Acquisition Is Initialization (RAII). The drop function in Rust will be familiar to you if you’ve used RAII patterns.Ways Variables and Data Interact: Movelet s1 = String::from(&quot;hello&quot;);let s2 = s1;A String is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents. Figure 4-1: Representation in memory of a String holding the value “hello” bound to s1When we assign s1 to s2, the String data is copied, meaning we copy the pointer, the length, and the capacity that are on the stack. We do not copy the data on the heap that the pointer refers to. Figure 4-2: Representation in memory of the variable s2 that has a copy of the pointer, length, and capacity of s1The representation does not look like Figure 4-3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation s2 = s1 could be very expensive in terms of runtime performance if the data on the heap were large. Figure 4-3: Another possibility for what s2 = s1 might do if Rust copied the heap data as wellEarlier, we said that when a variable goes out of scope, Rust automatically calls the drop function and cleans up the heap memory for that variable. But Figure 4-2 shows both data pointers pointing to the same location. This is a problem: when s2 and s1 go out of scope, they will both try to free the same memory. This is known as a double free error and is one of the memory safety bugs we mentioned previously. To ensure memory safety, there’s one more detail to what happens in this situation in Rust.let s1 = String::from(&quot;hello&quot;);let s2 = s1;println!(&quot;{}, world!&quot;, s1);You’ll get an error like this because Rust prevents you from using the invalidated reference:error[E0382]: use of moved value: `s1` --&gt; src/main.rs:5:28  |3 |     let s2 = s1;  |         -- value moved here4 |5 |     println!(&quot;{}, world!&quot;, s1);  |                            ^^ value used here after move  |  = note: move occurs because `s1` has type `std::string::String`,  which does not implement the `Copy` traitwith other languages, the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy. But because Rust also invalidates the first variable, instead of being called a shallow copy, it’s known as a move. That solves our problem! With only s2 valid, when it goes out of scope, it alone will free the memory, and we’re done. Rust will never automatically create “deep” copies of your data. Figure 4-4: Representation in memory after s1 has been invalidatedWays Variables and Data Interact: CloneIf we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone. This methods are a common feature in many programming languages, you’ve probably seen them before. This works just fine and explicitly produces the behavior shown in Figure 4-3, where the heap data does get copied.let s1 = String::from(&quot;hello&quot;);let s2 = s1.clone();println!(&quot;s1 = {}, s2 = {}&quot;, s1, s2);Stack-Only Data: CopyThis code seems to contradict what we just learned: we don’t have a call to clone, but x is still valid and wasn’t moved into y. The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.let x = 5;let y = x;println!(&quot;x = {}, y = {}&quot;, x, y);Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).So what types are Copy?  All the integer types, such as u32.  The Boolean type, bool, with values true and false.  All the floating point types, such as f64.  The character type, char.  Tuples, if they only contain types that are also Copy. For example, (i32, i32) is Copy, but (i32, String) is not.Ownership and FunctionsThe semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does. If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. These static checks protect us from mistakes.fn main() {    let s = String::from(&quot;hello&quot;);  // s comes into scope    takes_ownership(s);             // s&#39;s value moves into the function...                                    // ... and so is no longer valid here    let x = 5;                      // x comes into scope    makes_copy(x);                  // x would move into the function,                                    // but i32 is Copy, so it’s okay to still                                    // use x afterward} // Here, x goes out of scope, then s. But because s&#39;s value was moved, nothing  // special happens.fn takes_ownership(some_string: String) { // some_string comes into scope    println!(&quot;{}&quot;, some_string);} // Here, some_string goes out of scope and `drop` is called. The backing  // memory is freed.fn makes_copy(some_integer: i32) { // some_integer comes into scope    println!(&quot;{}&quot;, some_integer);} // Here, some_integer goes out of scope. Nothing special happens.Listing 4-3: Functions with ownership and scope annotatedReturn Values and ScopeReturning values can also transfer ownership. Listing 4-4 is an example with similar annotations to those in Listing 4-3.fn main() {    let s1 = gives_ownership();         // gives_ownership moves its return                                        // value into s1    let s2 = String::from(&quot;hello&quot;);     // s2 comes into scope    let s3 = takes_and_gives_back(s2);  // s2 is moved into                                        // takes_and_gives_back, which also                                        // moves its return value into s3} // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was  // moved, so nothing happens. s1 goes out of scope and is dropped.fn gives_ownership() -&gt; String {             // gives_ownership will move its                                             // return value into the function                                             // that calls it    let some_string = String::from(&quot;hello&quot;); // some_string comes into scope    some_string                              // some_string is returned and                                             // moves out to the calling                                             // function}// takes_and_gives_back will take a String and return onefn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into                                                      // scope    a_string  // a_string is returned and moves out to the calling function}Listing 4-4: Transferring ownership of return valuesThe ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless the data has been moved to be owned by another variable.Taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.It’s possible to return multiple values using a tuple, as shown in Listing 4-5.fn main() {    let s1 = String::from(&quot;hello&quot;);    let (s2, len) = calculate_length(s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s2, len);}fn calculate_length(s: String) -&gt; (String, usize) {    let length = s.len(); // len() returns the length of a String.    (s, length)}Listing 4-5: Returning ownership of parametersBut this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called references.References and BorrowingHere is how you would define and use a calculate_length function that has a reference to an object as a parameter instead of taking ownership of the value:fn main() {    let s1 = String::from(&quot;hello&quot;);    let len = calculate_length(&amp;s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s1, len);}fn calculate_length(s: &amp;String) -&gt; usize {    s.len()}First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass &amp;s1 into calculate_length and, in its definition, we take &amp;String rather than String. These ampersands are references, and they allow you to refer to some value without taking ownership of it Figure 4-5: A diagram of &amp;String s pointing at String s1Note: The opposite of referencing by using &amp; is dereferencing, which is accomplished with the dereference operator, *. We’ll see some uses of the dereference operator in Chapter 8 and discuss details of dereferencing in Chapter 15.let s1 = String::from(&quot;hello&quot;);let len = calculate_length(&amp;s1);The &amp;s1 syntax lets us create a reference that refers to the value of s1 but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.Likewise, the signature of the function uses &amp; to indicate that the type of the parameter s is a reference. Let’s add some explanatory annotations:fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a String    s.len()} // Here, s goes out of scope. But because it does not have ownership of what  // it refers to, nothing happens.```The scope in which the variable s is valid is the same as any function parameter’s scope, but we don’t drop what the reference points to when it goes out of scope because we don’t have ownership. When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership. We call having references as function parameters borrowing. As in real life, if a person owns something, you can borrow it from them. When you’re done, you have to give it back.So what happens if we try to modify something we’re borrowing? Try the code. Spoiler alert: it doesn’t work!fn main() {    let s = String::from(&quot;hello&quot;);    change(&amp;s);}fn change(some_string: &amp;String) {    some_string.push_str(&quot;, world&quot;);}error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable --&gt; error.rs:8:5  |7 | fn change(some_string: &amp;String) {  |                        ------- use `&amp;mut String` here to make mutable8 |     some_string.push_str(&quot;, world&quot;);  |     ^^^^^^^^^^^ cannot borrow as mutableListing 4-6: Attempting to modify a borrowed valueJust as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.Mutable ReferencesWe can fix the error in the code from Listing 4-6 with just a small tweakfn main() {    let mut s = String::from(&quot;hello&quot;);    change(&amp;mut s);}fn change(some_string: &amp;mut String) {    some_string.push_str(&quot;, world&quot;);}First, we had to change s to be mut. Then we had to create a mutable reference with &amp;mut s and accept a mutable reference with some_string: &amp;mut String.But mutable references have one big restriction: you can have only one mutable reference to a particular piece of data in a particular scope. This code will fail:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;mut s;let r2 = &amp;mut s;println!(&quot;{}, {}&quot;, r1, r2);error[E0499]: cannot borrow `s` as mutable more than once at a time --&gt; src/main.rs:5:14  |4 |     let r1 = &amp;mut s;  |              ------ first mutable borrow occurs here5 |     let r2 = &amp;mut s;  |              ^^^^^^ second mutable borrow occurs here6 |7 |     println!(&quot;{}, {}&quot;, r1, r2);  |                        -- first borrow later used hereThis restriction allows for mutation but in a very controlled fashion. It’s something that new Rustaceans struggle with, because most languages let you mutate whenever you’d like. The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:  Two or more pointers access the same data at the same time.  At least one of the pointers is being used to write to the data.  There’s no mechanism being used to synchronize access to the data.Data races cause undefined behavior and can be difficult to diagnose and fix when you’re trying to track them down at runtime; Rust prevents this problem from happening because it won’t even compile code with data races! As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:let mut s = String::from(&quot;hello&quot;);{    let r1 = &amp;mut s;} // r1 goes out of scope here, so we can make a new reference with no problems.let r2 = &amp;mut s;A similar rule exists for combining mutable and immutable references. This code results in an error:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemlet r3 = &amp;mut s; // BIG PROBLEMprintln!(&quot;{}, {}, and {}&quot;, r1, r2, r3);error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable --&gt; src/main.rs:6:14  |4 |     let r1 = &amp;s; // no problem  |              -- immutable borrow occurs here5 |     let r2 = &amp;s; // no problem6 |     let r3 = &amp;mut s; // BIG PROBLEM  |              ^^^^^^ mutable borrow occurs here7 |8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);  |                                -- immutable borrow later used hereWhew! We also cannot have a mutable reference while we have an immutable one. Users of an immutable reference don’t expect the values to suddenly change out from under them! However, multiple immutable references are okay because no one who is just reading the data has the ability to affect anyone else’s reading of the data.Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references occurs before the mutable reference is introduced:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemprintln!(&quot;{} and {}&quot;, r1, r2);// r1 and r2 are no longer used after this pointlet r3 = &amp;mut s; // no problemprintln!(&quot;{}&quot;, r3);The scopes of the immutable references r1 and r2 end after the println! where they are last used, which is before the mutable reference r3 is created. These scopes don’t overlap, so this code is allowed.Even though borrowing errors may be frustrating at times, remember that it’s the Rust compiler pointing out a potential bug early (at compile time rather than at runtime) and showing you exactly where the problem is. Then you don’t have to track down why your data isn’t what you thought it was.Dangling ReferencesIn languages with pointers, it’s easy to erroneously create a dangling pointer, a pointer that references a location in memory that may have been given to someone else, by freeing some memory while preserving a pointer to that memory. In Rust, by contrast, the compiler guarantees that references will never be dangling references: if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.fn main() {    let reference_to_nothing = dangle();}fn dangle() -&gt; &amp;String {    let s = String::from(&quot;hello&quot;);    &amp;s}error[E0106]: missing lifetime specifier --&gt; dangle.rs:5:16  |5 | fn dangle() -&gt; &amp;String {  |                ^^^^^^^  |  = help: this function&#39;s return type contains a borrowed value, but there is no    value for it to be borrowed from  = help: consider giving it a &#39;static lifetimeerror: aborting due to previous errorThis error message refers to a feature we haven’t covered yet: lifetimes. We’ll discuss lifetimes in detail in Chapter 10. But, if you disregard the parts about lifetimes, the message does contain the key to why this code is a problem:  this function’s return type contains a borrowed value, but there is no value for it to be borrowed from.Let’s take a closer look at exactly what’s happening at each stage of our dangle code:fn dangle() -&gt; &amp;String { // dangle returns a reference to a String    let s = String::from(&quot;hello&quot;); // s is a new String    &amp;s // we return a reference to the String, s} // Here, s goes out of scope, and is dropped. Its memory goes away.  // Danger!Because s is created inside dangle, when the code of dangle is finished, s will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid String. That’s no good! Rust won’t let us do this.The solution here is to return the String directly:fn no_dangle() -&gt; String {    let s = String::from(&quot;hello&quot;);    s}This works without any problems. Ownership is moved out, and nothing is deallocated.The Rules of ReferencesLet’s recap what we’ve discussed about references:  At any given time, you can have either one mutable reference or any number of immutable references.  References must always be valid.The Slice TypeAnother data type that does not have ownership is the slice. Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.Here’s a small programming problem: write a function that takes a string and returns the first word it finds in that string. If the function doesn’t find a space in the string, the whole string must be one word, so the entire string should be returned.Let’s think about the signature of this function:fn first_word(s: &amp;String) -&gt; ?This function, first_word, has a &amp;String as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.fn main() {    fn first_word(s: &amp;String) -&gt; usize {        let bytes = s.as_bytes();        for (i, &amp;item) in bytes.iter().enumerate() {            if item == b&#39; &#39; {                return i;            }        }        s.len()    }}Listing 4-7: The first_word function that returns a byte index value into the String parameterBecause we need to go through the String element by element and check whether a value is a space, we’ll convert our String to an array of bytes using the as_bytes method:let bytes = s.as_bytes();Next, we create an iterator over the array of bytes using the iter method:for (i, &amp;item) in bytes.iter().enumerate() {We’ll discuss iterators in more detail in Chapter 13. For now, know that iter is a method that returns each element in a collection and that enumerate wraps the result of iter and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.Because the enumerate method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the for loop, we specify a pattern that has i for the index in the tuple and &amp;item for the single byte in the tuple. Because we get a reference to the element from .iter().enumerate(), we use &amp; in the pattern.Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using s.len():    if item == b&#39; &#39; {        return i;    }}s.len()We now have a way to find out the index of the end of the first word in the string, but there’s a problem. We’re returning a usize on its own, but it’s only a meaningful number in the context of the &amp;String. In other words, because it’s a separate value from the String, there’s no guarantee that it will still be valid in the future. Consider the program in Listing 4-8 that uses the first_word function from Listing 4-7.fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s); // word will get the value 5    s.clear(); // this empties the String, making it equal to &quot;&quot;    // word still has the value 5 here, but there&#39;s no more string that    // we could meaningfully use the value 5 with. word is now totally invalid!}Listing 4-8: Storing the result from calling the first_word function and then changing the String contentsThis program compiles without any errors and would also do so if we used word after calling s.clear(). Because word isn’t connected to the state of s at all, word still contains the value 5. We could use that value 5 with the variable s to try to extract the first word out, but this would be a bug because the contents of s have changed since we saved 5 in word.Having to worry about the index in word getting out of sync with the data in s is tedious and error prone! Managing these indices is even more brittle if we write a second_word function. Its signature would have to look like this:fn second_word(s: &amp;String) -&gt; (usize, usize) {Now we’re tracking a starting and an ending index, and we have even more values that were calculated from data in a particular state but aren’t tied to that state at all. We now have three unrelated variables floating around that need to be kept in sync.Luckily, Rust has a solution to this problem: string slices.String SlicesA string slice is a reference to part of a String, and it looks like this:fn main() {    let s = String::from(&quot;hello world&quot;);    let hello = &amp;s[0..5];    let world = &amp;s[6..11];}This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.We can create slices using a range within brackets by specifying [starting_index..ending_index], where starting_index is the first position in the slice and ending_index is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to ending_index minus starting_index. So in the case of let world = &amp;s[6..11];, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.Figure 4-6: String slice referring to part of a StringWith Rust’s .. range syntax, if you want to start at the first index (zero), you can drop the value before the two periods. In other words, these are equal:let s = String::from(&quot;hello&quot;);let slice = &amp;s[0..2];let slice = &amp;s[..2];You can also drop both values to take a slice of the entire string. So these are equal:let s = String::from(&quot;hello&quot;);let len = s.len();let slice = &amp;s[0..len];let slice = &amp;s[..];Note: String slice range indices must occur at valid UTF-8 character boundaries. If you attempt to create a string slice in the middle of a multibyte character, your program will exit with an error. For the purposes of introducing string slices, we are assuming ASCII only in this section; a more thorough discussion of UTF-8 handling is in the “Storing UTF-8 Encoded Text with Strings” section of Chapter 8.With all this information in mind, let’s rewrite first_word to return a slice. The type that signifies “string slice” is written as &amp;str:fn first_word(s: &amp;String) -&gt; &amp;str {    let bytes = s.as_bytes();    for (i, &amp;item) in bytes.iter().enumerate() {        if item == b&#39; &#39; {            return &amp;s[0..i];        }    }    &amp;s[..]}We get the index for the end of the word in the same way as we did in Listing 4-7, by looking for the first occurrence of a space. When we find a space, we return a string slice using the start of the string and the index of the space as the starting and ending indices.Now when we call first_word, we get back a single value that is tied to the underlying data. The value is made up of a reference to the starting point of the slice and the number of elements in the slice.Returning a slice would also work for a second_word function:fn second_word(s: &amp;String) -&gt; &amp;str {We now have a straightforward API that’s much harder to mess up, because the compiler will ensure the references into the String remain valid. Remember the bug in the program in Listing 4-8, when we got the index to the end of the first word but then cleared the string so our index was invalid? That code was logically incorrect but didn’t show any immediate errors. The problems would show up later if we kept trying to use the first word index with an emptied string. Slices make this bug impossible and let us know we have a problem with our code much sooner. Using the slice version of first_word will throw a compile-time error:fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s);    s.clear(); // Error!    println!(&quot;the first word is: {}&quot;, word);}error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable  --&gt; src/main.rs:18:5   |16 |     let word = first_word(&amp;s);   |                           -- immutable borrow occurs here17 |18 |     s.clear(); // error!   |     ^^^^^^^^^ mutable borrow occurs here19 |20 |     println!(&quot;the first word is: {}&quot;, word);   |                                       ---- immutable borrow later used hereRecall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference. Because clear needs to truncate the String, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!String Literals Are SlicesThe type of s here is &amp;str: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; &amp;str is an immutable reference.let s = &quot;Hello, world!&quot;;String Slices as ParametersKnowing that you can take slices of literals and String values leads us to one more improvement on first_word, and that’s its signature:fn first_word(s: &amp;String) -&gt; &amp;str {A more experienced Rustacean would write the signature shown in Listing 4-9 instead because it allows us to use the same function on both &amp;String values and &amp;str values.fn first_word(s: &amp;str) -&gt; &amp;str {Listing 4-9: Improving the first_word function by using a string slice for the type of the s parameterIf we have a string slice, we can pass that directly. If we have a String, we can pass a slice of the entire String. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:fn main() {    let my_string = String::from(&quot;hello world&quot;);    // first_word works on slices of `String`s    let word = first_word(&amp;my_string[..]);    let my_string_literal = &quot;hello world&quot;;    // first_word works on slices of string literals    let word = first_word(&amp;my_string_literal[..]);    // Because string literals *are* string slices already,    // this works too, without the slice syntax!    let word = first_word(my_string_literal);}Other SlicesString slices, as you might imagine, are specific to strings. But there’s a more general slice type, too. Consider this array:let a = [1, 2, 3, 4, 5];Just as we might want to refer to a part of a string, we might want to refer to part of an array. We’d do so like this:let a = [1, 2, 3, 4, 5];let slice = &amp;a[1..3];This slice has the type &amp;[i32]. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.SummaryThe concepts of ownership, borrowing, and slices ensure memory safety in Rust programs at compile time. The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a struct.">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : 4.Understanding Ownership">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/4.Understanding-Ownership/">
+
+
+  <meta property="og:description" content="Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.What Is Ownership?Some languages have garbage collection that constantly looks for no longer used memory as the program runs;in other languages, the programmer must explicitly allocate and free the memory. Rust uses a third approach:  memory is managed through a system of ownership with a set of rules that the compiler checks at compile time.Ownership Rules  Each value in Rust has a variable that’s called its owner.  There can only be one owner at a time.  When the owner goes out of scope, the value will be dropped.Variable ScopeThe variable s refers to a string literal, where the value of the string is hardcoded into the text of our program. The variable is valid from the point at which it’s declared until the end of the current scope.let s = &quot;hello&quot;;scope is the range within a program for which an item is valid.{                    // s is not valid here, it’s not yet declared  let s = &quot;hello&quot;;   // s is valid from this point forward  // do stuff with s}                    // this scope is now over, and s is no longer validListing 4-1: A variable and the scope in which it is validThere are two important points in time here:  When s comes into scope, it is valid.  It remains valid until it goes out of scope.The String Typewe need a data type that is more complex than the ones we covered in the “Data Types” section of Chapter 3. The types covered previously are all stored on the stack and popped off the stack when their scope is over, but we want to look at data that is stored on the heap and explore how Rust knows when to clean up that data. For example, what if we want to take user input and store it? For these situations, Rust has a second string type, String. This type is allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a String from a string literal using the from function, like so:let s = String::from(&quot;hello&quot;);The double colon (::) is an operator that allows us to namespace this particular from function under the String type rather than using some sort of name like string_from. Why can String be mutated but literals cannot? The difference is how these two types deal with memory.Memory and AllocationWith the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:  The memory must be requested from the operating system at runtime.  We need a way of returning this memory to the operating system when we’re done with our String.That first part is done by us: when we call String::from, its implementation requests the memory it needs. However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one allocate with exactly one free.{    let s = String::from(&quot;hello&quot;); // s is valid from this point forward    // do stuff with s}                                  // this scope is now over, and s is no                                   // longer validThere is a natural point at which we can return the memory our String needs to the operating system: when s goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called drop, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket.Note: In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called Resource Acquisition Is Initialization (RAII). The drop function in Rust will be familiar to you if you’ve used RAII patterns.Ways Variables and Data Interact: Movelet s1 = String::from(&quot;hello&quot;);let s2 = s1;A String is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents. Figure 4-1: Representation in memory of a String holding the value “hello” bound to s1When we assign s1 to s2, the String data is copied, meaning we copy the pointer, the length, and the capacity that are on the stack. We do not copy the data on the heap that the pointer refers to. Figure 4-2: Representation in memory of the variable s2 that has a copy of the pointer, length, and capacity of s1The representation does not look like Figure 4-3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation s2 = s1 could be very expensive in terms of runtime performance if the data on the heap were large. Figure 4-3: Another possibility for what s2 = s1 might do if Rust copied the heap data as wellEarlier, we said that when a variable goes out of scope, Rust automatically calls the drop function and cleans up the heap memory for that variable. But Figure 4-2 shows both data pointers pointing to the same location. This is a problem: when s2 and s1 go out of scope, they will both try to free the same memory. This is known as a double free error and is one of the memory safety bugs we mentioned previously. To ensure memory safety, there’s one more detail to what happens in this situation in Rust.let s1 = String::from(&quot;hello&quot;);let s2 = s1;println!(&quot;{}, world!&quot;, s1);You’ll get an error like this because Rust prevents you from using the invalidated reference:error[E0382]: use of moved value: `s1` --&gt; src/main.rs:5:28  |3 |     let s2 = s1;  |         -- value moved here4 |5 |     println!(&quot;{}, world!&quot;, s1);  |                            ^^ value used here after move  |  = note: move occurs because `s1` has type `std::string::String`,  which does not implement the `Copy` traitwith other languages, the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy. But because Rust also invalidates the first variable, instead of being called a shallow copy, it’s known as a move. That solves our problem! With only s2 valid, when it goes out of scope, it alone will free the memory, and we’re done. Rust will never automatically create “deep” copies of your data. Figure 4-4: Representation in memory after s1 has been invalidatedWays Variables and Data Interact: CloneIf we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone. This methods are a common feature in many programming languages, you’ve probably seen them before. This works just fine and explicitly produces the behavior shown in Figure 4-3, where the heap data does get copied.let s1 = String::from(&quot;hello&quot;);let s2 = s1.clone();println!(&quot;s1 = {}, s2 = {}&quot;, s1, s2);Stack-Only Data: CopyThis code seems to contradict what we just learned: we don’t have a call to clone, but x is still valid and wasn’t moved into y. The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.let x = 5;let y = x;println!(&quot;x = {}, y = {}&quot;, x, y);Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).So what types are Copy?  All the integer types, such as u32.  The Boolean type, bool, with values true and false.  All the floating point types, such as f64.  The character type, char.  Tuples, if they only contain types that are also Copy. For example, (i32, i32) is Copy, but (i32, String) is not.Ownership and FunctionsThe semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does. If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. These static checks protect us from mistakes.fn main() {    let s = String::from(&quot;hello&quot;);  // s comes into scope    takes_ownership(s);             // s&#39;s value moves into the function...                                    // ... and so is no longer valid here    let x = 5;                      // x comes into scope    makes_copy(x);                  // x would move into the function,                                    // but i32 is Copy, so it’s okay to still                                    // use x afterward} // Here, x goes out of scope, then s. But because s&#39;s value was moved, nothing  // special happens.fn takes_ownership(some_string: String) { // some_string comes into scope    println!(&quot;{}&quot;, some_string);} // Here, some_string goes out of scope and `drop` is called. The backing  // memory is freed.fn makes_copy(some_integer: i32) { // some_integer comes into scope    println!(&quot;{}&quot;, some_integer);} // Here, some_integer goes out of scope. Nothing special happens.Listing 4-3: Functions with ownership and scope annotatedReturn Values and ScopeReturning values can also transfer ownership. Listing 4-4 is an example with similar annotations to those in Listing 4-3.fn main() {    let s1 = gives_ownership();         // gives_ownership moves its return                                        // value into s1    let s2 = String::from(&quot;hello&quot;);     // s2 comes into scope    let s3 = takes_and_gives_back(s2);  // s2 is moved into                                        // takes_and_gives_back, which also                                        // moves its return value into s3} // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was  // moved, so nothing happens. s1 goes out of scope and is dropped.fn gives_ownership() -&gt; String {             // gives_ownership will move its                                             // return value into the function                                             // that calls it    let some_string = String::from(&quot;hello&quot;); // some_string comes into scope    some_string                              // some_string is returned and                                             // moves out to the calling                                             // function}// takes_and_gives_back will take a String and return onefn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into                                                      // scope    a_string  // a_string is returned and moves out to the calling function}Listing 4-4: Transferring ownership of return valuesThe ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless the data has been moved to be owned by another variable.Taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.It’s possible to return multiple values using a tuple, as shown in Listing 4-5.fn main() {    let s1 = String::from(&quot;hello&quot;);    let (s2, len) = calculate_length(s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s2, len);}fn calculate_length(s: String) -&gt; (String, usize) {    let length = s.len(); // len() returns the length of a String.    (s, length)}Listing 4-5: Returning ownership of parametersBut this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called references.References and BorrowingHere is how you would define and use a calculate_length function that has a reference to an object as a parameter instead of taking ownership of the value:fn main() {    let s1 = String::from(&quot;hello&quot;);    let len = calculate_length(&amp;s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s1, len);}fn calculate_length(s: &amp;String) -&gt; usize {    s.len()}First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass &amp;s1 into calculate_length and, in its definition, we take &amp;String rather than String. These ampersands are references, and they allow you to refer to some value without taking ownership of it Figure 4-5: A diagram of &amp;String s pointing at String s1Note: The opposite of referencing by using &amp; is dereferencing, which is accomplished with the dereference operator, *. We’ll see some uses of the dereference operator in Chapter 8 and discuss details of dereferencing in Chapter 15.let s1 = String::from(&quot;hello&quot;);let len = calculate_length(&amp;s1);The &amp;s1 syntax lets us create a reference that refers to the value of s1 but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.Likewise, the signature of the function uses &amp; to indicate that the type of the parameter s is a reference. Let’s add some explanatory annotations:fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a String    s.len()} // Here, s goes out of scope. But because it does not have ownership of what  // it refers to, nothing happens.```The scope in which the variable s is valid is the same as any function parameter’s scope, but we don’t drop what the reference points to when it goes out of scope because we don’t have ownership. When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership. We call having references as function parameters borrowing. As in real life, if a person owns something, you can borrow it from them. When you’re done, you have to give it back.So what happens if we try to modify something we’re borrowing? Try the code. Spoiler alert: it doesn’t work!fn main() {    let s = String::from(&quot;hello&quot;);    change(&amp;s);}fn change(some_string: &amp;String) {    some_string.push_str(&quot;, world&quot;);}error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable --&gt; error.rs:8:5  |7 | fn change(some_string: &amp;String) {  |                        ------- use `&amp;mut String` here to make mutable8 |     some_string.push_str(&quot;, world&quot;);  |     ^^^^^^^^^^^ cannot borrow as mutableListing 4-6: Attempting to modify a borrowed valueJust as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.Mutable ReferencesWe can fix the error in the code from Listing 4-6 with just a small tweakfn main() {    let mut s = String::from(&quot;hello&quot;);    change(&amp;mut s);}fn change(some_string: &amp;mut String) {    some_string.push_str(&quot;, world&quot;);}First, we had to change s to be mut. Then we had to create a mutable reference with &amp;mut s and accept a mutable reference with some_string: &amp;mut String.But mutable references have one big restriction: you can have only one mutable reference to a particular piece of data in a particular scope. This code will fail:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;mut s;let r2 = &amp;mut s;println!(&quot;{}, {}&quot;, r1, r2);error[E0499]: cannot borrow `s` as mutable more than once at a time --&gt; src/main.rs:5:14  |4 |     let r1 = &amp;mut s;  |              ------ first mutable borrow occurs here5 |     let r2 = &amp;mut s;  |              ^^^^^^ second mutable borrow occurs here6 |7 |     println!(&quot;{}, {}&quot;, r1, r2);  |                        -- first borrow later used hereThis restriction allows for mutation but in a very controlled fashion. It’s something that new Rustaceans struggle with, because most languages let you mutate whenever you’d like. The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:  Two or more pointers access the same data at the same time.  At least one of the pointers is being used to write to the data.  There’s no mechanism being used to synchronize access to the data.Data races cause undefined behavior and can be difficult to diagnose and fix when you’re trying to track them down at runtime; Rust prevents this problem from happening because it won’t even compile code with data races! As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:let mut s = String::from(&quot;hello&quot;);{    let r1 = &amp;mut s;} // r1 goes out of scope here, so we can make a new reference with no problems.let r2 = &amp;mut s;A similar rule exists for combining mutable and immutable references. This code results in an error:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemlet r3 = &amp;mut s; // BIG PROBLEMprintln!(&quot;{}, {}, and {}&quot;, r1, r2, r3);error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable --&gt; src/main.rs:6:14  |4 |     let r1 = &amp;s; // no problem  |              -- immutable borrow occurs here5 |     let r2 = &amp;s; // no problem6 |     let r3 = &amp;mut s; // BIG PROBLEM  |              ^^^^^^ mutable borrow occurs here7 |8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);  |                                -- immutable borrow later used hereWhew! We also cannot have a mutable reference while we have an immutable one. Users of an immutable reference don’t expect the values to suddenly change out from under them! However, multiple immutable references are okay because no one who is just reading the data has the ability to affect anyone else’s reading of the data.Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references occurs before the mutable reference is introduced:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemprintln!(&quot;{} and {}&quot;, r1, r2);// r1 and r2 are no longer used after this pointlet r3 = &amp;mut s; // no problemprintln!(&quot;{}&quot;, r3);The scopes of the immutable references r1 and r2 end after the println! where they are last used, which is before the mutable reference r3 is created. These scopes don’t overlap, so this code is allowed.Even though borrowing errors may be frustrating at times, remember that it’s the Rust compiler pointing out a potential bug early (at compile time rather than at runtime) and showing you exactly where the problem is. Then you don’t have to track down why your data isn’t what you thought it was.Dangling ReferencesIn languages with pointers, it’s easy to erroneously create a dangling pointer, a pointer that references a location in memory that may have been given to someone else, by freeing some memory while preserving a pointer to that memory. In Rust, by contrast, the compiler guarantees that references will never be dangling references: if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.fn main() {    let reference_to_nothing = dangle();}fn dangle() -&gt; &amp;String {    let s = String::from(&quot;hello&quot;);    &amp;s}error[E0106]: missing lifetime specifier --&gt; dangle.rs:5:16  |5 | fn dangle() -&gt; &amp;String {  |                ^^^^^^^  |  = help: this function&#39;s return type contains a borrowed value, but there is no    value for it to be borrowed from  = help: consider giving it a &#39;static lifetimeerror: aborting due to previous errorThis error message refers to a feature we haven’t covered yet: lifetimes. We’ll discuss lifetimes in detail in Chapter 10. But, if you disregard the parts about lifetimes, the message does contain the key to why this code is a problem:  this function’s return type contains a borrowed value, but there is no value for it to be borrowed from.Let’s take a closer look at exactly what’s happening at each stage of our dangle code:fn dangle() -&gt; &amp;String { // dangle returns a reference to a String    let s = String::from(&quot;hello&quot;); // s is a new String    &amp;s // we return a reference to the String, s} // Here, s goes out of scope, and is dropped. Its memory goes away.  // Danger!Because s is created inside dangle, when the code of dangle is finished, s will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid String. That’s no good! Rust won’t let us do this.The solution here is to return the String directly:fn no_dangle() -&gt; String {    let s = String::from(&quot;hello&quot;);    s}This works without any problems. Ownership is moved out, and nothing is deallocated.The Rules of ReferencesLet’s recap what we’ve discussed about references:  At any given time, you can have either one mutable reference or any number of immutable references.  References must always be valid.The Slice TypeAnother data type that does not have ownership is the slice. Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.Here’s a small programming problem: write a function that takes a string and returns the first word it finds in that string. If the function doesn’t find a space in the string, the whole string must be one word, so the entire string should be returned.Let’s think about the signature of this function:fn first_word(s: &amp;String) -&gt; ?This function, first_word, has a &amp;String as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.fn main() {    fn first_word(s: &amp;String) -&gt; usize {        let bytes = s.as_bytes();        for (i, &amp;item) in bytes.iter().enumerate() {            if item == b&#39; &#39; {                return i;            }        }        s.len()    }}Listing 4-7: The first_word function that returns a byte index value into the String parameterBecause we need to go through the String element by element and check whether a value is a space, we’ll convert our String to an array of bytes using the as_bytes method:let bytes = s.as_bytes();Next, we create an iterator over the array of bytes using the iter method:for (i, &amp;item) in bytes.iter().enumerate() {We’ll discuss iterators in more detail in Chapter 13. For now, know that iter is a method that returns each element in a collection and that enumerate wraps the result of iter and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.Because the enumerate method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the for loop, we specify a pattern that has i for the index in the tuple and &amp;item for the single byte in the tuple. Because we get a reference to the element from .iter().enumerate(), we use &amp; in the pattern.Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using s.len():    if item == b&#39; &#39; {        return i;    }}s.len()We now have a way to find out the index of the end of the first word in the string, but there’s a problem. We’re returning a usize on its own, but it’s only a meaningful number in the context of the &amp;String. In other words, because it’s a separate value from the String, there’s no guarantee that it will still be valid in the future. Consider the program in Listing 4-8 that uses the first_word function from Listing 4-7.fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s); // word will get the value 5    s.clear(); // this empties the String, making it equal to &quot;&quot;    // word still has the value 5 here, but there&#39;s no more string that    // we could meaningfully use the value 5 with. word is now totally invalid!}Listing 4-8: Storing the result from calling the first_word function and then changing the String contentsThis program compiles without any errors and would also do so if we used word after calling s.clear(). Because word isn’t connected to the state of s at all, word still contains the value 5. We could use that value 5 with the variable s to try to extract the first word out, but this would be a bug because the contents of s have changed since we saved 5 in word.Having to worry about the index in word getting out of sync with the data in s is tedious and error prone! Managing these indices is even more brittle if we write a second_word function. Its signature would have to look like this:fn second_word(s: &amp;String) -&gt; (usize, usize) {Now we’re tracking a starting and an ending index, and we have even more values that were calculated from data in a particular state but aren’t tied to that state at all. We now have three unrelated variables floating around that need to be kept in sync.Luckily, Rust has a solution to this problem: string slices.String SlicesA string slice is a reference to part of a String, and it looks like this:fn main() {    let s = String::from(&quot;hello world&quot;);    let hello = &amp;s[0..5];    let world = &amp;s[6..11];}This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.We can create slices using a range within brackets by specifying [starting_index..ending_index], where starting_index is the first position in the slice and ending_index is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to ending_index minus starting_index. So in the case of let world = &amp;s[6..11];, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.Figure 4-6: String slice referring to part of a StringWith Rust’s .. range syntax, if you want to start at the first index (zero), you can drop the value before the two periods. In other words, these are equal:let s = String::from(&quot;hello&quot;);let slice = &amp;s[0..2];let slice = &amp;s[..2];You can also drop both values to take a slice of the entire string. So these are equal:let s = String::from(&quot;hello&quot;);let len = s.len();let slice = &amp;s[0..len];let slice = &amp;s[..];Note: String slice range indices must occur at valid UTF-8 character boundaries. If you attempt to create a string slice in the middle of a multibyte character, your program will exit with an error. For the purposes of introducing string slices, we are assuming ASCII only in this section; a more thorough discussion of UTF-8 handling is in the “Storing UTF-8 Encoded Text with Strings” section of Chapter 8.With all this information in mind, let’s rewrite first_word to return a slice. The type that signifies “string slice” is written as &amp;str:fn first_word(s: &amp;String) -&gt; &amp;str {    let bytes = s.as_bytes();    for (i, &amp;item) in bytes.iter().enumerate() {        if item == b&#39; &#39; {            return &amp;s[0..i];        }    }    &amp;s[..]}We get the index for the end of the word in the same way as we did in Listing 4-7, by looking for the first occurrence of a space. When we find a space, we return a string slice using the start of the string and the index of the space as the starting and ending indices.Now when we call first_word, we get back a single value that is tied to the underlying data. The value is made up of a reference to the starting point of the slice and the number of elements in the slice.Returning a slice would also work for a second_word function:fn second_word(s: &amp;String) -&gt; &amp;str {We now have a straightforward API that’s much harder to mess up, because the compiler will ensure the references into the String remain valid. Remember the bug in the program in Listing 4-8, when we got the index to the end of the first word but then cleared the string so our index was invalid? That code was logically incorrect but didn’t show any immediate errors. The problems would show up later if we kept trying to use the first word index with an emptied string. Slices make this bug impossible and let us know we have a problem with our code much sooner. Using the slice version of first_word will throw a compile-time error:fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s);    s.clear(); // Error!    println!(&quot;the first word is: {}&quot;, word);}error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable  --&gt; src/main.rs:18:5   |16 |     let word = first_word(&amp;s);   |                           -- immutable borrow occurs here17 |18 |     s.clear(); // error!   |     ^^^^^^^^^ mutable borrow occurs here19 |20 |     println!(&quot;the first word is: {}&quot;, word);   |                                       ---- immutable borrow later used hereRecall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference. Because clear needs to truncate the String, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!String Literals Are SlicesThe type of s here is &amp;str: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; &amp;str is an immutable reference.let s = &quot;Hello, world!&quot;;String Slices as ParametersKnowing that you can take slices of literals and String values leads us to one more improvement on first_word, and that’s its signature:fn first_word(s: &amp;String) -&gt; &amp;str {A more experienced Rustacean would write the signature shown in Listing 4-9 instead because it allows us to use the same function on both &amp;String values and &amp;str values.fn first_word(s: &amp;str) -&gt; &amp;str {Listing 4-9: Improving the first_word function by using a string slice for the type of the s parameterIf we have a string slice, we can pass that directly. If we have a String, we can pass a slice of the entire String. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:fn main() {    let my_string = String::from(&quot;hello world&quot;);    // first_word works on slices of `String`s    let word = first_word(&amp;my_string[..]);    let my_string_literal = &quot;hello world&quot;;    // first_word works on slices of string literals    let word = first_word(&amp;my_string_literal[..]);    // Because string literals *are* string slices already,    // this works too, without the slice syntax!    let word = first_word(my_string_literal);}Other SlicesString slices, as you might imagine, are specific to strings. But there’s a more general slice type, too. Consider this array:let a = [1, 2, 3, 4, 5];Just as we might want to refer to a part of a string, we might want to refer to part of an array. We’d do so like this:let a = [1, 2, 3, 4, 5];let slice = &amp;a[1..3];This slice has the type &amp;[i32]. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.SummaryThe concepts of ownership, borrowing, and slices ensure memory safety in Rust programs at compile time. The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a struct.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-25T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/4.Understanding-Ownership/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : 4.Understanding Ownership">
+    <meta itemprop="description" content="Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.What Is Ownership?Some languages have garbage collection that constantly looks for no longer used memory as the program runs;in other languages, the programmer must explicitly allocate and free the memory. Rust uses a third approach:  memory is managed through a system of ownership with a set of rules that the compiler checks at compile time.Ownership Rules  Each value in Rust has a variable that’s called its owner.  There can only be one owner at a time.  When the owner goes out of scope, the value will be dropped.Variable ScopeThe variable s refers to a string literal, where the value of the string is hardcoded into the text of our program. The variable is valid from the point at which it’s declared until the end of the current scope.let s = &quot;hello&quot;;scope is the range within a program for which an item is valid.{                    // s is not valid here, it’s not yet declared  let s = &quot;hello&quot;;   // s is valid from this point forward  // do stuff with s}                    // this scope is now over, and s is no longer validListing 4-1: A variable and the scope in which it is validThere are two important points in time here:  When s comes into scope, it is valid.  It remains valid until it goes out of scope.The String Typewe need a data type that is more complex than the ones we covered in the “Data Types” section of Chapter 3. The types covered previously are all stored on the stack and popped off the stack when their scope is over, but we want to look at data that is stored on the heap and explore how Rust knows when to clean up that data. For example, what if we want to take user input and store it? For these situations, Rust has a second string type, String. This type is allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a String from a string literal using the from function, like so:let s = String::from(&quot;hello&quot;);The double colon (::) is an operator that allows us to namespace this particular from function under the String type rather than using some sort of name like string_from. Why can String be mutated but literals cannot? The difference is how these two types deal with memory.Memory and AllocationWith the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:  The memory must be requested from the operating system at runtime.  We need a way of returning this memory to the operating system when we’re done with our String.That first part is done by us: when we call String::from, its implementation requests the memory it needs. However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one allocate with exactly one free.{    let s = String::from(&quot;hello&quot;); // s is valid from this point forward    // do stuff with s}                                  // this scope is now over, and s is no                                   // longer validThere is a natural point at which we can return the memory our String needs to the operating system: when s goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called drop, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket.Note: In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called Resource Acquisition Is Initialization (RAII). The drop function in Rust will be familiar to you if you’ve used RAII patterns.Ways Variables and Data Interact: Movelet s1 = String::from(&quot;hello&quot;);let s2 = s1;A String is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents. Figure 4-1: Representation in memory of a String holding the value “hello” bound to s1When we assign s1 to s2, the String data is copied, meaning we copy the pointer, the length, and the capacity that are on the stack. We do not copy the data on the heap that the pointer refers to. Figure 4-2: Representation in memory of the variable s2 that has a copy of the pointer, length, and capacity of s1The representation does not look like Figure 4-3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation s2 = s1 could be very expensive in terms of runtime performance if the data on the heap were large. Figure 4-3: Another possibility for what s2 = s1 might do if Rust copied the heap data as wellEarlier, we said that when a variable goes out of scope, Rust automatically calls the drop function and cleans up the heap memory for that variable. But Figure 4-2 shows both data pointers pointing to the same location. This is a problem: when s2 and s1 go out of scope, they will both try to free the same memory. This is known as a double free error and is one of the memory safety bugs we mentioned previously. To ensure memory safety, there’s one more detail to what happens in this situation in Rust.let s1 = String::from(&quot;hello&quot;);let s2 = s1;println!(&quot;{}, world!&quot;, s1);You’ll get an error like this because Rust prevents you from using the invalidated reference:error[E0382]: use of moved value: `s1` --&gt; src/main.rs:5:28  |3 |     let s2 = s1;  |         -- value moved here4 |5 |     println!(&quot;{}, world!&quot;, s1);  |                            ^^ value used here after move  |  = note: move occurs because `s1` has type `std::string::String`,  which does not implement the `Copy` traitwith other languages, the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy. But because Rust also invalidates the first variable, instead of being called a shallow copy, it’s known as a move. That solves our problem! With only s2 valid, when it goes out of scope, it alone will free the memory, and we’re done. Rust will never automatically create “deep” copies of your data. Figure 4-4: Representation in memory after s1 has been invalidatedWays Variables and Data Interact: CloneIf we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone. This methods are a common feature in many programming languages, you’ve probably seen them before. This works just fine and explicitly produces the behavior shown in Figure 4-3, where the heap data does get copied.let s1 = String::from(&quot;hello&quot;);let s2 = s1.clone();println!(&quot;s1 = {}, s2 = {}&quot;, s1, s2);Stack-Only Data: CopyThis code seems to contradict what we just learned: we don’t have a call to clone, but x is still valid and wasn’t moved into y. The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.let x = 5;let y = x;println!(&quot;x = {}, y = {}&quot;, x, y);Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).So what types are Copy?  All the integer types, such as u32.  The Boolean type, bool, with values true and false.  All the floating point types, such as f64.  The character type, char.  Tuples, if they only contain types that are also Copy. For example, (i32, i32) is Copy, but (i32, String) is not.Ownership and FunctionsThe semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does. If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. These static checks protect us from mistakes.fn main() {    let s = String::from(&quot;hello&quot;);  // s comes into scope    takes_ownership(s);             // s&#39;s value moves into the function...                                    // ... and so is no longer valid here    let x = 5;                      // x comes into scope    makes_copy(x);                  // x would move into the function,                                    // but i32 is Copy, so it’s okay to still                                    // use x afterward} // Here, x goes out of scope, then s. But because s&#39;s value was moved, nothing  // special happens.fn takes_ownership(some_string: String) { // some_string comes into scope    println!(&quot;{}&quot;, some_string);} // Here, some_string goes out of scope and `drop` is called. The backing  // memory is freed.fn makes_copy(some_integer: i32) { // some_integer comes into scope    println!(&quot;{}&quot;, some_integer);} // Here, some_integer goes out of scope. Nothing special happens.Listing 4-3: Functions with ownership and scope annotatedReturn Values and ScopeReturning values can also transfer ownership. Listing 4-4 is an example with similar annotations to those in Listing 4-3.fn main() {    let s1 = gives_ownership();         // gives_ownership moves its return                                        // value into s1    let s2 = String::from(&quot;hello&quot;);     // s2 comes into scope    let s3 = takes_and_gives_back(s2);  // s2 is moved into                                        // takes_and_gives_back, which also                                        // moves its return value into s3} // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was  // moved, so nothing happens. s1 goes out of scope and is dropped.fn gives_ownership() -&gt; String {             // gives_ownership will move its                                             // return value into the function                                             // that calls it    let some_string = String::from(&quot;hello&quot;); // some_string comes into scope    some_string                              // some_string is returned and                                             // moves out to the calling                                             // function}// takes_and_gives_back will take a String and return onefn takes_and_gives_back(a_string: String) -&gt; String { // a_string comes into                                                      // scope    a_string  // a_string is returned and moves out to the calling function}Listing 4-4: Transferring ownership of return valuesThe ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless the data has been moved to be owned by another variable.Taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.It’s possible to return multiple values using a tuple, as shown in Listing 4-5.fn main() {    let s1 = String::from(&quot;hello&quot;);    let (s2, len) = calculate_length(s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s2, len);}fn calculate_length(s: String) -&gt; (String, usize) {    let length = s.len(); // len() returns the length of a String.    (s, length)}Listing 4-5: Returning ownership of parametersBut this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called references.References and BorrowingHere is how you would define and use a calculate_length function that has a reference to an object as a parameter instead of taking ownership of the value:fn main() {    let s1 = String::from(&quot;hello&quot;);    let len = calculate_length(&amp;s1);    println!(&quot;The length of &#39;{}&#39; is {}.&quot;, s1, len);}fn calculate_length(s: &amp;String) -&gt; usize {    s.len()}First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass &amp;s1 into calculate_length and, in its definition, we take &amp;String rather than String. These ampersands are references, and they allow you to refer to some value without taking ownership of it Figure 4-5: A diagram of &amp;String s pointing at String s1Note: The opposite of referencing by using &amp; is dereferencing, which is accomplished with the dereference operator, *. We’ll see some uses of the dereference operator in Chapter 8 and discuss details of dereferencing in Chapter 15.let s1 = String::from(&quot;hello&quot;);let len = calculate_length(&amp;s1);The &amp;s1 syntax lets us create a reference that refers to the value of s1 but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.Likewise, the signature of the function uses &amp; to indicate that the type of the parameter s is a reference. Let’s add some explanatory annotations:fn calculate_length(s: &amp;String) -&gt; usize { // s is a reference to a String    s.len()} // Here, s goes out of scope. But because it does not have ownership of what  // it refers to, nothing happens.```The scope in which the variable s is valid is the same as any function parameter’s scope, but we don’t drop what the reference points to when it goes out of scope because we don’t have ownership. When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership. We call having references as function parameters borrowing. As in real life, if a person owns something, you can borrow it from them. When you’re done, you have to give it back.So what happens if we try to modify something we’re borrowing? Try the code. Spoiler alert: it doesn’t work!fn main() {    let s = String::from(&quot;hello&quot;);    change(&amp;s);}fn change(some_string: &amp;String) {    some_string.push_str(&quot;, world&quot;);}error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable --&gt; error.rs:8:5  |7 | fn change(some_string: &amp;String) {  |                        ------- use `&amp;mut String` here to make mutable8 |     some_string.push_str(&quot;, world&quot;);  |     ^^^^^^^^^^^ cannot borrow as mutableListing 4-6: Attempting to modify a borrowed valueJust as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.Mutable ReferencesWe can fix the error in the code from Listing 4-6 with just a small tweakfn main() {    let mut s = String::from(&quot;hello&quot;);    change(&amp;mut s);}fn change(some_string: &amp;mut String) {    some_string.push_str(&quot;, world&quot;);}First, we had to change s to be mut. Then we had to create a mutable reference with &amp;mut s and accept a mutable reference with some_string: &amp;mut String.But mutable references have one big restriction: you can have only one mutable reference to a particular piece of data in a particular scope. This code will fail:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;mut s;let r2 = &amp;mut s;println!(&quot;{}, {}&quot;, r1, r2);error[E0499]: cannot borrow `s` as mutable more than once at a time --&gt; src/main.rs:5:14  |4 |     let r1 = &amp;mut s;  |              ------ first mutable borrow occurs here5 |     let r2 = &amp;mut s;  |              ^^^^^^ second mutable borrow occurs here6 |7 |     println!(&quot;{}, {}&quot;, r1, r2);  |                        -- first borrow later used hereThis restriction allows for mutation but in a very controlled fashion. It’s something that new Rustaceans struggle with, because most languages let you mutate whenever you’d like. The benefit of having this restriction is that Rust can prevent data races at compile time. A data race is similar to a race condition and happens when these three behaviors occur:  Two or more pointers access the same data at the same time.  At least one of the pointers is being used to write to the data.  There’s no mechanism being used to synchronize access to the data.Data races cause undefined behavior and can be difficult to diagnose and fix when you’re trying to track them down at runtime; Rust prevents this problem from happening because it won’t even compile code with data races! As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not simultaneous ones:let mut s = String::from(&quot;hello&quot;);{    let r1 = &amp;mut s;} // r1 goes out of scope here, so we can make a new reference with no problems.let r2 = &amp;mut s;A similar rule exists for combining mutable and immutable references. This code results in an error:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemlet r3 = &amp;mut s; // BIG PROBLEMprintln!(&quot;{}, {}, and {}&quot;, r1, r2, r3);error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable --&gt; src/main.rs:6:14  |4 |     let r1 = &amp;s; // no problem  |              -- immutable borrow occurs here5 |     let r2 = &amp;s; // no problem6 |     let r3 = &amp;mut s; // BIG PROBLEM  |              ^^^^^^ mutable borrow occurs here7 |8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);  |                                -- immutable borrow later used hereWhew! We also cannot have a mutable reference while we have an immutable one. Users of an immutable reference don’t expect the values to suddenly change out from under them! However, multiple immutable references are okay because no one who is just reading the data has the ability to affect anyone else’s reading of the data.Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references occurs before the mutable reference is introduced:let mut s = String::from(&quot;hello&quot;);let r1 = &amp;s; // no problemlet r2 = &amp;s; // no problemprintln!(&quot;{} and {}&quot;, r1, r2);// r1 and r2 are no longer used after this pointlet r3 = &amp;mut s; // no problemprintln!(&quot;{}&quot;, r3);The scopes of the immutable references r1 and r2 end after the println! where they are last used, which is before the mutable reference r3 is created. These scopes don’t overlap, so this code is allowed.Even though borrowing errors may be frustrating at times, remember that it’s the Rust compiler pointing out a potential bug early (at compile time rather than at runtime) and showing you exactly where the problem is. Then you don’t have to track down why your data isn’t what you thought it was.Dangling ReferencesIn languages with pointers, it’s easy to erroneously create a dangling pointer, a pointer that references a location in memory that may have been given to someone else, by freeing some memory while preserving a pointer to that memory. In Rust, by contrast, the compiler guarantees that references will never be dangling references: if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.fn main() {    let reference_to_nothing = dangle();}fn dangle() -&gt; &amp;String {    let s = String::from(&quot;hello&quot;);    &amp;s}error[E0106]: missing lifetime specifier --&gt; dangle.rs:5:16  |5 | fn dangle() -&gt; &amp;String {  |                ^^^^^^^  |  = help: this function&#39;s return type contains a borrowed value, but there is no    value for it to be borrowed from  = help: consider giving it a &#39;static lifetimeerror: aborting due to previous errorThis error message refers to a feature we haven’t covered yet: lifetimes. We’ll discuss lifetimes in detail in Chapter 10. But, if you disregard the parts about lifetimes, the message does contain the key to why this code is a problem:  this function’s return type contains a borrowed value, but there is no value for it to be borrowed from.Let’s take a closer look at exactly what’s happening at each stage of our dangle code:fn dangle() -&gt; &amp;String { // dangle returns a reference to a String    let s = String::from(&quot;hello&quot;); // s is a new String    &amp;s // we return a reference to the String, s} // Here, s goes out of scope, and is dropped. Its memory goes away.  // Danger!Because s is created inside dangle, when the code of dangle is finished, s will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid String. That’s no good! Rust won’t let us do this.The solution here is to return the String directly:fn no_dangle() -&gt; String {    let s = String::from(&quot;hello&quot;);    s}This works without any problems. Ownership is moved out, and nothing is deallocated.The Rules of ReferencesLet’s recap what we’ve discussed about references:  At any given time, you can have either one mutable reference or any number of immutable references.  References must always be valid.The Slice TypeAnother data type that does not have ownership is the slice. Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.Here’s a small programming problem: write a function that takes a string and returns the first word it finds in that string. If the function doesn’t find a space in the string, the whole string must be one word, so the entire string should be returned.Let’s think about the signature of this function:fn first_word(s: &amp;String) -&gt; ?This function, first_word, has a &amp;String as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.fn main() {    fn first_word(s: &amp;String) -&gt; usize {        let bytes = s.as_bytes();        for (i, &amp;item) in bytes.iter().enumerate() {            if item == b&#39; &#39; {                return i;            }        }        s.len()    }}Listing 4-7: The first_word function that returns a byte index value into the String parameterBecause we need to go through the String element by element and check whether a value is a space, we’ll convert our String to an array of bytes using the as_bytes method:let bytes = s.as_bytes();Next, we create an iterator over the array of bytes using the iter method:for (i, &amp;item) in bytes.iter().enumerate() {We’ll discuss iterators in more detail in Chapter 13. For now, know that iter is a method that returns each element in a collection and that enumerate wraps the result of iter and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.Because the enumerate method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the for loop, we specify a pattern that has i for the index in the tuple and &amp;item for the single byte in the tuple. Because we get a reference to the element from .iter().enumerate(), we use &amp; in the pattern.Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using s.len():    if item == b&#39; &#39; {        return i;    }}s.len()We now have a way to find out the index of the end of the first word in the string, but there’s a problem. We’re returning a usize on its own, but it’s only a meaningful number in the context of the &amp;String. In other words, because it’s a separate value from the String, there’s no guarantee that it will still be valid in the future. Consider the program in Listing 4-8 that uses the first_word function from Listing 4-7.fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s); // word will get the value 5    s.clear(); // this empties the String, making it equal to &quot;&quot;    // word still has the value 5 here, but there&#39;s no more string that    // we could meaningfully use the value 5 with. word is now totally invalid!}Listing 4-8: Storing the result from calling the first_word function and then changing the String contentsThis program compiles without any errors and would also do so if we used word after calling s.clear(). Because word isn’t connected to the state of s at all, word still contains the value 5. We could use that value 5 with the variable s to try to extract the first word out, but this would be a bug because the contents of s have changed since we saved 5 in word.Having to worry about the index in word getting out of sync with the data in s is tedious and error prone! Managing these indices is even more brittle if we write a second_word function. Its signature would have to look like this:fn second_word(s: &amp;String) -&gt; (usize, usize) {Now we’re tracking a starting and an ending index, and we have even more values that were calculated from data in a particular state but aren’t tied to that state at all. We now have three unrelated variables floating around that need to be kept in sync.Luckily, Rust has a solution to this problem: string slices.String SlicesA string slice is a reference to part of a String, and it looks like this:fn main() {    let s = String::from(&quot;hello world&quot;);    let hello = &amp;s[0..5];    let world = &amp;s[6..11];}This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.We can create slices using a range within brackets by specifying [starting_index..ending_index], where starting_index is the first position in the slice and ending_index is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to ending_index minus starting_index. So in the case of let world = &amp;s[6..11];, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.Figure 4-6: String slice referring to part of a StringWith Rust’s .. range syntax, if you want to start at the first index (zero), you can drop the value before the two periods. In other words, these are equal:let s = String::from(&quot;hello&quot;);let slice = &amp;s[0..2];let slice = &amp;s[..2];You can also drop both values to take a slice of the entire string. So these are equal:let s = String::from(&quot;hello&quot;);let len = s.len();let slice = &amp;s[0..len];let slice = &amp;s[..];Note: String slice range indices must occur at valid UTF-8 character boundaries. If you attempt to create a string slice in the middle of a multibyte character, your program will exit with an error. For the purposes of introducing string slices, we are assuming ASCII only in this section; a more thorough discussion of UTF-8 handling is in the “Storing UTF-8 Encoded Text with Strings” section of Chapter 8.With all this information in mind, let’s rewrite first_word to return a slice. The type that signifies “string slice” is written as &amp;str:fn first_word(s: &amp;String) -&gt; &amp;str {    let bytes = s.as_bytes();    for (i, &amp;item) in bytes.iter().enumerate() {        if item == b&#39; &#39; {            return &amp;s[0..i];        }    }    &amp;s[..]}We get the index for the end of the word in the same way as we did in Listing 4-7, by looking for the first occurrence of a space. When we find a space, we return a string slice using the start of the string and the index of the space as the starting and ending indices.Now when we call first_word, we get back a single value that is tied to the underlying data. The value is made up of a reference to the starting point of the slice and the number of elements in the slice.Returning a slice would also work for a second_word function:fn second_word(s: &amp;String) -&gt; &amp;str {We now have a straightforward API that’s much harder to mess up, because the compiler will ensure the references into the String remain valid. Remember the bug in the program in Listing 4-8, when we got the index to the end of the first word but then cleared the string so our index was invalid? That code was logically incorrect but didn’t show any immediate errors. The problems would show up later if we kept trying to use the first word index with an emptied string. Slices make this bug impossible and let us know we have a problem with our code much sooner. Using the slice version of first_word will throw a compile-time error:fn main() {    let mut s = String::from(&quot;hello world&quot;);    let word = first_word(&amp;s);    s.clear(); // Error!    println!(&quot;the first word is: {}&quot;, word);}error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable  --&gt; src/main.rs:18:5   |16 |     let word = first_word(&amp;s);   |                           -- immutable borrow occurs here17 |18 |     s.clear(); // error!   |     ^^^^^^^^^ mutable borrow occurs here19 |20 |     println!(&quot;the first word is: {}&quot;, word);   |                                       ---- immutable borrow later used hereRecall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference. Because clear needs to truncate the String, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!String Literals Are SlicesThe type of s here is &amp;str: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; &amp;str is an immutable reference.let s = &quot;Hello, world!&quot;;String Slices as ParametersKnowing that you can take slices of literals and String values leads us to one more improvement on first_word, and that’s its signature:fn first_word(s: &amp;String) -&gt; &amp;str {A more experienced Rustacean would write the signature shown in Listing 4-9 instead because it allows us to use the same function on both &amp;String values and &amp;str values.fn first_word(s: &amp;str) -&gt; &amp;str {Listing 4-9: Improving the first_word function by using a string slice for the type of the s parameterIf we have a string slice, we can pass that directly. If we have a String, we can pass a slice of the entire String. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:fn main() {    let my_string = String::from(&quot;hello world&quot;);    // first_word works on slices of `String`s    let word = first_word(&amp;my_string[..]);    let my_string_literal = &quot;hello world&quot;;    // first_word works on slices of string literals    let word = first_word(&amp;my_string_literal[..]);    // Because string literals *are* string slices already,    // this works too, without the slice syntax!    let word = first_word(my_string_literal);}Other SlicesString slices, as you might imagine, are specific to strings. But there’s a more general slice type, too. Consider this array:let a = [1, 2, 3, 4, 5];Just as we might want to refer to a part of a string, we might want to refer to part of an array. We’d do so like this:let a = [1, 2, 3, 4, 5];let slice = &amp;a[1..3];This slice has the type &amp;[i32]. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.SummaryThe concepts of ownership, borrowing, and slices ensure memory safety in Rust programs at compile time. The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a struct.">
+    <meta itemprop="datePublished" content="2020-02-25T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : 4.Understanding Ownership
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  28 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.</p>
+
+<h2 id="what-is-ownership">What Is Ownership?</h2>
+<p>Some languages have garbage collection that constantly looks for no longer used memory as the program runs;in other languages, the programmer must explicitly allocate and free the memory. Rust uses a third approach:</p>
+<blockquote>
+  <p>memory is managed through a system of ownership with a set of rules that the compiler checks at compile time.</p>
+</blockquote>
+
+<h3 id="ownership-rules">Ownership Rules</h3>
+<ol>
+  <li>Each value in Rust has a variable that’s called its owner.</li>
+  <li>There can only be one owner at a time.</li>
+  <li>When the owner goes out of scope, the value will be dropped.</li>
+</ol>
+
+<h3 id="variable-scope">Variable Scope</h3>
+<p>The variable s refers to a <strong>string literal</strong>, where the value of the string is hardcoded into the text of our program. The variable is valid from the point at which it’s declared until the end of the current scope.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>
+</code></pre></div></div>
+<p>scope is the range within a program for which an item is valid.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>                    <span class="c">// s is not valid here, it’s not yet declared</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>   <span class="c">// s is valid from this point forward</span>
+  <span class="c">// do stuff with s</span>
+<span class="p">}</span>                    <span class="c">// this scope is now over, and s is no longer valid</span>
+</code></pre></div></div>
+<h4 id="listing-4-1-a-variable-and-the-scope-in-which-it-is-valid">Listing 4-1: A variable and the scope in which it is valid</h4>
+<p>There are two important points in time here:</p>
+<ol>
+  <li>When s comes into scope, it is valid.</li>
+  <li>It remains valid until it goes out of scope.</li>
+</ol>
+
+<h3 id="the-string-type">The String Type</h3>
+<p>we need a data type that is more complex than the ones we covered in the “Data Types” section of Chapter 3. The types covered previously are all stored on the stack and popped off the stack when their scope is over, but we want to <strong>look at data that is stored on the heap and explore how Rust knows when to clean up that data.</strong> <br />
+For example, what if we want to take user input and store it? For these situations, Rust has a second string type, String. This type is <strong>allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time.</strong> You can create a String from a string literal using the from function, like so:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The double colon (<code class="highlighter-rouge">::</code>) is an operator that allows us to namespace this particular <code class="highlighter-rouge">from</code> function under the String type rather than using some sort of name like <code class="highlighter-rouge">string_from</code>. <br />
+Why can String be mutated but literals cannot? <code class="highlighter-rouge">The difference is how these two types deal with memory.</code></p>
+
+<h3 id="memory-and-allocation">Memory and Allocation</h3>
+<p>With the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:</p>
+<ol>
+  <li>The memory must be requested from the operating system at runtime.</li>
+  <li>We need a way of returning this memory to the operating system when we’re done with our String.</li>
+</ol>
+
+<p>That first part is done by us: when we call String::from, its implementation requests the memory it needs. <br />
+However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. <strong>We need to pair exactly one allocate with exactly one free.</strong></p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// s is valid from this point forward</span>
+    <span class="c">// do stuff with s</span>
+<span class="p">}</span>                                  <span class="c">// this scope is now over, and s is no</span>
+                                   <span class="c">// longer valid</span>
+</code></pre></div></div>
+<p>There is a natural point at which we can return the memory our String needs to the operating system: when <code class="highlighter-rouge">s</code> goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called <code class="highlighter-rouge">drop</code>, and it’s where the author of String can put the code to return the memory. Rust calls <code class="highlighter-rouge">drop</code> automatically at the closing curly bracket.</p>
+
+<p class="notice--info"><strong>Note:</strong> In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called Resource Acquisition Is Initialization (RAII). The drop function in Rust will be familiar to you if you’ve used RAII patterns.</p>
+
+<h3 id="ways-variables-and-data-interact-move">Ways Variables and Data Interact: Move</h3>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">;</span>
+</code></pre></div></div>
+<p>A String is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length, and a capacity. This group of data is stored on the stack. On the right is the memory on the heap that holds the contents. <br />
+<img src="/assets/images/rust/trpl04-01.svg" alt="Figure 4-1" width="50%" height="40%" /></p>
+<h4 id="figure-4-1-representation-in-memory-of-a-string-holding-the-value-hello-bound-to-s1">Figure 4-1: Representation in memory of a String holding the value “hello” bound to s1</h4>
+
+<p>When we assign s1 to s2, the String data is copied, meaning we copy the pointer, the length, and the capacity that are on the stack. We do not copy the data on the heap that the pointer refers to. <br />
+<img src="/assets/images/rust/trpl04-02.svg" alt="Figure 4-2" width="50%" height="40%" /></p>
+<h4 id="figure-4-2-representation-in-memory-of-the-variable-s2-that-has-a-copy-of-the-pointer-length-and-capacity-of-s1">Figure 4-2: Representation in memory of the variable s2 that has a copy of the pointer, length, and capacity of s1</h4>
+
+<p>The representation does not look like Figure 4-3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation s2 = s1 could be very expensive in terms of runtime performance if the data on the heap were large. <br />
+<img src="/assets/images/rust/trpl04-03.svg" alt="Figure 4-3" width="50%" height="40%" /></p>
+<h4 id="figure-4-3-another-possibility-for-what-s2--s1-might-do-if-rust-copied-the-heap-data-as-well">Figure 4-3: Another possibility for what s2 = s1 might do if Rust copied the heap data as well</h4>
+
+<p>Earlier, we said that when a variable goes out of scope, Rust <strong>automatically calls the drop function and cleans up the heap memory for that variable</strong>. But Figure 4-2 shows both data pointers pointing to the same location. This is a problem: when s2 and s1 go out of scope, they will both try to free the same memory. This is known as a <strong>double free error</strong> and is one of the memory safety bugs we mentioned previously. To ensure memory safety, there’s one more detail to what happens in this situation in Rust.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">;</span>
+
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}, world!"</span><span class="p">,</span> <span class="n">s1</span><span class="p">);</span>
+</code></pre></div></div>
+<p>You’ll get an error like this because Rust prevents you from using the invalidated reference:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">s1</span><span class="err">`</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">28</span>
+  <span class="p">|</span>
+<span class="mi">3</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">;</span>
+  <span class="p">|</span>         <span class="o">--</span> <span class="n">value</span> <span class="n">moved</span> <span class="n">here</span>
+<span class="mi">4</span> <span class="p">|</span>
+<span class="mi">5</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}, world!"</span><span class="p">,</span> <span class="n">s1</span><span class="p">);</span>
+  <span class="p">|</span>                            <span class="o">^^</span> <span class="n">value</span> <span class="n">used</span> <span class="n">here</span> <span class="n">after</span> <span class="k">move</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">move</span> <span class="n">occurs</span> <span class="n">because</span> <span class="err">`</span><span class="n">s1</span><span class="err">`</span> <span class="n">has</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">string</span><span class="p">::</span><span class="nb">String</span><span class="err">`</span><span class="p">,</span>
+  <span class="n">which</span> <span class="n">does</span> <span class="n">not</span> <span class="n">implement</span> <span class="n">the</span> <span class="err">`</span><span class="nb">Copy</span><span class="err">`</span> <span class="k">trait</span>
+</code></pre></div></div>
+<p>with other languages, <strong>the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy.</strong> But because Rust also invalidates the first variable, instead of being called a shallow copy, it’s known as a <strong>move</strong>. That solves our problem! With only s2 valid, when it goes out of scope, it alone will free the memory, and we’re done. Rust will never automatically create “deep” copies of your data. <br />
+<img src="/assets/images/rust/trpl04-04.svg" alt="Figure 4-4" width="50%" height="40%" /></p>
+<h4 id="figure-4-4-representation-in-memory-after-s1-has-been-invalidated">Figure 4-4: Representation in memory after s1 has been invalidated</h4>
+
+<h3 id="ways-variables-and-data-interact-clone">Ways Variables and Data Interact: Clone</h3>
+<p>If we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone. This methods are a common feature in many programming languages, you’ve probably seen them before. This works just fine and explicitly produces the behavior shown in Figure 4-3, where the heap data does get copied.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="nf">.clone</span><span class="p">();</span>
+
+<span class="nd">println!</span><span class="p">(</span><span class="s">"s1 = {}, s2 = {}"</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="stack-only-data-copy">Stack-Only Data: Copy</h3>
+<p>This code seems to contradict what we just learned: we don’t have a call to <code class="highlighter-rouge">clone</code>, but <code class="highlighter-rouge">x</code> is still valid and wasn’t moved into <code class="highlighter-rouge">y</code>. <br />
+The reason is that types such as integers that have a known size at compile time are <code class="highlighter-rouge">stored entirely on the stack</code>, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+
+<span class="nd">println!</span><span class="p">(</span><span class="s">"x = {}, y = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Rust has a special annotation called the <code class="highlighter-rouge">Copy</code> trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).
+So what types are Copy?</p>
+<ul>
+  <li>All the integer types, such as u32.</li>
+  <li>The Boolean type, bool, with values true and false.</li>
+  <li>All the floating point types, such as f64.</li>
+  <li>The character type, char.</li>
+  <li>Tuples, if they only contain types that are also Copy. For example, (i32, i32) is Copy, but (i32, String) is not.</li>
+</ul>
+
+<h3 id="ownership-and-functions">Ownership and Functions</h3>
+<p>The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will <strong>move</strong> or <strong>copy</strong>, just as assignment does. If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. These static checks protect us from mistakes.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>  <span class="c">// s comes into scope</span>
+
+    <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>             <span class="c">// s's value moves into the function...</span>
+                                    <span class="c">// ... and so is no longer valid here</span>
+
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                      <span class="c">// x comes into scope</span>
+
+    <span class="nf">makes_copy</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>                  <span class="c">// x would move into the function,</span>
+                                    <span class="c">// but i32 is Copy, so it’s okay to still</span>
+                                    <span class="c">// use x afterward</span>
+
+<span class="p">}</span> <span class="c">// Here, x goes out of scope, then s. But because s's value was moved, nothing</span>
+  <span class="c">// special happens.</span>
+
+<span class="k">fn</span> <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span> <span class="c">// some_string comes into scope</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">some_string</span><span class="p">);</span>
+<span class="p">}</span> <span class="c">// Here, some_string goes out of scope and `drop` is called. The backing</span>
+  <span class="c">// memory is freed.</span>
+
+<span class="k">fn</span> <span class="nf">makes_copy</span><span class="p">(</span><span class="n">some_integer</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span> <span class="c">// some_integer comes into scope</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">some_integer</span><span class="p">);</span>
+<span class="p">}</span> <span class="c">// Here, some_integer goes out of scope. Nothing special happens.</span>
+</code></pre></div></div>
+<h4 id="listing-4-3-functions-with-ownership-and-scope-annotated">Listing 4-3: Functions with ownership and scope annotated</h4>
+
+<h3 id="return-values-and-scope">Return Values and Scope</h3>
+<p>Returning values can also transfer ownership. Listing 4-4 is an example with similar annotations to those in Listing 4-3.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nf">gives_ownership</span><span class="p">();</span>         <span class="c">// gives_ownership moves its return</span>
+                                        <span class="c">// value into s1</span>
+
+    <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>     <span class="c">// s2 comes into scope</span>
+
+    <span class="k">let</span> <span class="n">s3</span> <span class="o">=</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>  <span class="c">// s2 is moved into</span>
+                                        <span class="c">// takes_and_gives_back, which also</span>
+                                        <span class="c">// moves its return value into s3</span>
+<span class="p">}</span> <span class="c">// Here, s3 goes out of scope and is dropped. s2 goes out of scope but was</span>
+  <span class="c">// moved, so nothing happens. s1 goes out of scope and is dropped.</span>
+
+<span class="k">fn</span> <span class="nf">gives_ownership</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>             <span class="c">// gives_ownership will move its</span>
+                                             <span class="c">// return value into the function</span>
+                                             <span class="c">// that calls it</span>
+
+    <span class="k">let</span> <span class="n">some_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// some_string comes into scope</span>
+
+    <span class="n">some_string</span>                              <span class="c">// some_string is returned and</span>
+                                             <span class="c">// moves out to the calling</span>
+                                             <span class="c">// function</span>
+<span class="p">}</span>
+
+<span class="c">// takes_and_gives_back will take a String and return one</span>
+<span class="k">fn</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">a_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span> <span class="c">// a_string comes into</span>
+                                                      <span class="c">// scope</span>
+
+    <span class="n">a_string</span>  <span class="c">// a_string is returned and moves out to the calling function</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-4-4-transferring-ownership-of-return-values">Listing 4-4: Transferring ownership of return values</h4>
+
+<p>The ownership of a variable follows the same pattern every time: assigning a value to another variable <strong>move</strong>s it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by <strong>drop</strong> unless the data has been moved to be owned by another variable.</p>
+
+<p>Taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It’s quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.</p>
+
+<p>It’s possible to return multiple values using a tuple, as shown in Listing 4-5.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">len</span><span class="p">)</span> <span class="o">=</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The length of '{}' is {}."</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="nb">String</span><span class="p">,</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.len</span><span class="p">();</span> <span class="c">// len() returns the length of a String.</span>
+
+    <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-4-5-returning-ownership-of-parameters">Listing 4-5: Returning ownership of parameters</h4>
+<p>But this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called <code class="highlighter-rouge">references</code>.</p>
+
+<h2 id="references-and-borrowing">References and Borrowing</h2>
+<p>Here is how you would define and use a calculate_length function that has a reference to an object as a parameter instead of taking ownership of the value:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">);</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The length of '{}' is {}."</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass <code class="highlighter-rouge">&amp;s1</code> into calculate_length and, in its definition, we take <code class="highlighter-rouge">&amp;String</code> rather than String. <br />
+These ampersands are references, and they allow you to refer to some value without taking ownership of it <br />
+<img src="/assets/images/rust/trpl04-05.svg" alt="Figure 4-1" width="50%" height="40%" /></p>
+<h4 id="figure-4-5-a-diagram-of-string-s-pointing-at-string-s1">Figure 4-5: A diagram of &amp;String s pointing at String s1</h4>
+<p class="notice--info"><strong>Note:</strong> The opposite of referencing by using &amp; is dereferencing, which is accomplished with the dereference operator, *. We’ll see some uses of the dereference operator in Chapter 8 and discuss details of dereferencing in Chapter 15.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">&amp;s1</code> syntax lets us create a reference that refers to the value of <code class="highlighter-rouge">s1</code> but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.</p>
+
+<p>Likewise, the signature of the function uses <code class="highlighter-rouge">&amp;</code> to indicate that the type of the parameter <code class="highlighter-rouge">s</code> is a reference. Let’s add some explanatory annotations:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span> <span class="c">// s is a reference to a String</span>
+    <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
+<span class="p">}</span> <span class="c">// Here, s goes out of scope. But because it does not have ownership of what</span>
+  <span class="c">// it refers to, nothing happens.```</span>
+</code></pre></div></div>
+<p>The scope in which the variable s is valid is the same as any function parameter’s scope, but we don’t drop what the reference points to when it goes out of scope because we don’t have ownership. When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership. <br />
+We call having <strong>references as function parameters <em>borrowing</em></strong>. As in real life, if a person owns something, you can borrow it from them. When you’re done, you have to give it back.</p>
+
+<p>So what happens if we try to modify something we’re borrowing? Try the code. <del>Spoiler alert: it doesn’t work!</del></p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="nf">change</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">change</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">some_string</span><span class="nf">.push_str</span><span class="p">(</span><span class="s">", world"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0596</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="n">immutable</span> <span class="n">borrowed</span> <span class="n">content</span> <span class="err">`</span><span class="o">*</span><span class="n">some_string</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">error</span><span class="py">.rs</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">5</span>
+  <span class="p">|</span>
+<span class="mi">7</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">change</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">|</span>                        <span class="o">-------</span> <span class="k">use</span> <span class="err">`</span><span class="o">&amp;</span><span class="k">mut</span> <span class="nb">String</span><span class="err">`</span> <span class="n">here</span> <span class="n">to</span> <span class="n">make</span> <span class="n">mutable</span>
+<span class="mi">8</span> <span class="p">|</span>     <span class="n">some_string</span><span class="nf">.push_str</span><span class="p">(</span><span class="s">", world"</span><span class="p">);</span>
+  <span class="p">|</span>     <span class="o">^^^^^^^^^^^</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="k">as</span> <span class="n">mutable</span>
+</code></pre></div></div>
+<h4 id="listing-4-6-attempting-to-modify-a-borrowed-value">Listing 4-6: Attempting to modify a borrowed value</h4>
+<p>Just as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.</p>
+
+<h3 id="mutable-references">Mutable References</h3>
+<p>We can fix the error in the code from Listing 4-6 with just a small tweak</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="nf">change</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">change</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">some_string</span><span class="nf">.push_str</span><span class="p">(</span><span class="s">", world"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>First, we had to change <code class="highlighter-rouge">s</code> to be <code class="highlighter-rouge">mut</code>. Then we had to create a mutable reference with <code class="highlighter-rouge">&amp;mut s</code> and accept a mutable reference with <code class="highlighter-rouge">some_string: &amp;mut String</code>.</p>
+
+<p>But mutable references have one big restriction: <strong>you can have only one mutable reference to a particular piece of data in a particular scope.</strong> This code will fail:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">);</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0499</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">s</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span> <span class="n">more</span> <span class="n">than</span> <span class="n">once</span> <span class="n">at</span> <span class="n">a</span> <span class="n">time</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">14</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+  <span class="p">|</span>              <span class="o">------</span> <span class="n">first</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">5</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+  <span class="p">|</span>              <span class="o">^^^^^^</span> <span class="n">second</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">6</span> <span class="p">|</span>
+<span class="mi">7</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">);</span>
+  <span class="p">|</span>                        <span class="o">--</span> <span class="n">first</span> <span class="n">borrow</span> <span class="n">later</span> <span class="n">used</span> <span class="n">here</span>
+</code></pre></div></div>
+<p>This restriction allows for mutation but in a very controlled fashion. It’s something that new Rustaceans struggle with, because most languages let you mutate whenever you’d like. <br />
+The benefit of having this restriction is that Rust can prevent <code class="highlighter-rouge">data races</code> at compile time. A data race is similar to a race condition and happens when these three behaviors occur:</p>
+<ul>
+  <li>Two or more pointers access the same data at the same time.</li>
+  <li>At least one of the pointers is being used to write to the data.</li>
+  <li>There’s no mechanism being used to synchronize access to the data.</li>
+</ul>
+
+<p>Data races cause undefined behavior and can be difficult to diagnose and fix when you’re trying to track them down at runtime; Rust prevents this problem from happening because it won’t even compile code with data races! <br />
+As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not <code class="highlighter-rouge">simultaneous</code> ones:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="p">{</span>
+    <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+<span class="p">}</span> <span class="c">// r1 goes out of scope here, so we can make a new reference with no problems.</span>
+
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>A similar rule exists for combining mutable and immutable references. This code results in an error:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// BIG PROBLEM</span>
+
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}, and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0502</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">s</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span> <span class="n">because</span> <span class="n">it</span> <span class="n">is</span> <span class="n">also</span> <span class="n">borrowed</span> <span class="k">as</span> <span class="n">immutable</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">14</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+  <span class="p">|</span>              <span class="o">--</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">5</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="mi">6</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// BIG PROBLEM</span>
+  <span class="p">|</span>              <span class="o">^^^^^^</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">7</span> <span class="p">|</span>
+<span class="mi">8</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}, and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
+  <span class="p">|</span>                                <span class="o">--</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">later</span> <span class="n">used</span> <span class="n">here</span>
+</code></pre></div></div>
+<p>Whew! We also <strong>cannot have a mutable reference while we have an immutable one</strong>. Users of an immutable reference don’t expect the values to suddenly change out from under them! However, multiple immutable references are okay because no one who is just reading the data has the ability to affect anyone else’s reading of the data.</p>
+
+<p>Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references occurs before the mutable reference is introduced:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{} and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">);</span>
+<span class="c">// r1 and r2 are no longer used after this point</span>
+
+<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The scopes of the immutable references r1 and r2 end after the println! where they are last used, which is before the mutable reference r3 is created. These scopes don’t overlap, so this code is allowed.</p>
+
+<p>Even though borrowing errors may be frustrating at times, remember that it’s the Rust compiler pointing out a potential bug early (at compile time rather than at runtime) and showing you exactly where the problem is. Then you don’t have to track down why your data isn’t what you thought it was.</p>
+
+<h3 id="dangling-references">Dangling References</h3>
+<p>In languages with pointers, it’s easy to erroneously create a <em>dangling pointer</em>, a pointer that references a location in memory that may have been given to someone else, by freeing some memory while preserving a pointer to that memory. In Rust, by contrast, <strong>the compiler guarantees that references will never be dangling references</strong>: if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">reference_to_nothing</span> <span class="o">=</span> <span class="nf">dangle</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">String</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="o">&amp;</span><span class="n">s</span>
+<span class="p">}</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0106</span><span class="p">]:</span> <span class="n">missing</span> <span class="n">lifetime</span> <span class="n">specifier</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">dangle</span><span class="py">.rs</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">16</span>
+  <span class="p">|</span>
+<span class="mi">5</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">String</span> <span class="p">{</span>
+  <span class="p">|</span>                <span class="o">^^^^^^^</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">this</span> <span class="n">function</span><span class="nv">'s</span> <span class="k">return</span> <span class="k">type</span> <span class="n">contains</span> <span class="n">a</span> <span class="n">borrowed</span> <span class="n">value</span><span class="p">,</span> <span class="n">but</span> <span class="n">there</span> <span class="n">is</span> <span class="n">no</span>
+    <span class="n">value</span> <span class="k">for</span> <span class="n">it</span> <span class="n">to</span> <span class="n">be</span> <span class="n">borrowed</span> <span class="n">from</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">consider</span> <span class="n">giving</span> <span class="n">it</span> <span class="n">a</span> <span class="nv">'static</span> <span class="n">lifetime</span>
+
+<span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
+</code></pre></div></div>
+<p>This error message refers to a feature we haven’t covered yet: lifetimes. We’ll discuss lifetimes in detail in Chapter 10. But, if you disregard the parts about lifetimes, the message does contain the key to why this code is a problem:</p>
+<blockquote>
+  <p>this function’s return type contains a borrowed value, but there is no value for it to be borrowed from.</p>
+</blockquote>
+
+<p>Let’s take a closer look at exactly what’s happening at each stage of our dangle code:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">String</span> <span class="p">{</span> <span class="c">// dangle returns a reference to a String</span>
+
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// s is a new String</span>
+
+    <span class="o">&amp;</span><span class="n">s</span> <span class="c">// we return a reference to the String, s</span>
+<span class="p">}</span> <span class="c">// Here, s goes out of scope, and is dropped. Its memory goes away.</span>
+  <span class="c">// Danger!</span>
+</code></pre></div></div>
+<p>Because s is created inside dangle, when the code of dangle is finished, s will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid String. That’s no good! Rust won’t let us do this.</p>
+
+<p>The solution here is to return the String directly:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">no_dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+    <span class="n">s</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>This works without any problems. Ownership is moved out, and nothing is deallocated.</p>
+
+<h2 id="the-rules-of-references">The Rules of References</h2>
+<p>Let’s recap what we’ve discussed about references:</p>
+<ul>
+  <li>At any given time, you can have either one mutable reference or any number of immutable references.</li>
+  <li>References must always be valid.</li>
+</ul>
+
+<h2 id="the-slice-type">The Slice Type</h2>
+<p>Another data type that does not have ownership is the <strong>slice</strong>. Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.</p>
+
+<p>Here’s a small programming problem: write a function that takes a string and returns the first word it finds in that string. If the function doesn’t find a space in the string, the whole string must be one word, so the entire string should be returned.</p>
+
+<p>Let’s think about the signature of this function:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">?</span>
+</code></pre></div></div>
+
+<p>This function, <code class="highlighter-rouge">first_word</code>, has a <code class="highlighter-rouge">&amp;String</code> as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-4-7-the-first_word-function-that-returns-a-byte-index-value-into-the-string-parameter">Listing 4-7: The first_word function that returns a byte index value into the String parameter</h4>
+
+<p>Because we need to go through the String element by element and check whether a value is a space, we’ll convert our String to an array of bytes using the as_bytes method:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
+</code></pre></div></div>
+<p>Next, we create an iterator over the array of bytes using the iter method:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>We’ll discuss iterators in more detail in Chapter 13. For now, know that <code class="highlighter-rouge">iter</code> is a method that returns each element in a collection and that <code class="highlighter-rouge">enumerate</code> wraps the result of <code class="highlighter-rouge">iter</code> and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.</p>
+
+<p>Because the <code class="highlighter-rouge">enumerate</code> method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the <code class="highlighter-rouge">for</code> loop, we specify a pattern that has <code class="highlighter-rouge">i</code> for the index in the tuple and <code class="highlighter-rouge">&amp;item</code> for the single byte in the tuple. Because we get a reference to the element from <code class="highlighter-rouge">.iter().enumerate()</code>, we use <code class="highlighter-rouge">&amp;</code> in the pattern.</p>
+
+<p>Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using <code class="highlighter-rouge">s.len()</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
+</code></pre></div></div>
+<p>We now have a way to find out the index of the end of the first word in the string, but there’s a problem. We’re returning a usize on its own, but it’s only a meaningful number in the context of the &amp;String. In other words, because it’s a separate value from the String, there’s no guarantee that it will still be valid in the future. Consider the program in Listing 4-8 that uses the first_word function from Listing 4-7.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span> <span class="c">// word will get the value 5</span>
+
+    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// this empties the String, making it equal to ""</span>
+
+    <span class="c">// word still has the value 5 here, but there's no more string that</span>
+    <span class="c">// we could meaningfully use the value 5 with. word is now totally invalid!</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-4-8-storing-the-result-from-calling-the-first_word-function-and-then-changing-the-string-contents">Listing 4-8: Storing the result from calling the first_word function and then changing the String contents</h4>
+
+<p>This program compiles without any errors and would also do so if we used <code class="highlighter-rouge">word</code> after calling <code class="highlighter-rouge">s.clear()</code>. Because <code class="highlighter-rouge">word</code> isn’t connected to the state of <code class="highlighter-rouge">s</code> at all, <code class="highlighter-rouge">word</code> still contains the value <code class="highlighter-rouge">5</code>. We could use that value <code class="highlighter-rouge">5</code> with the variable <code class="highlighter-rouge">s</code> to try to extract the first word out, but this would be a <strong>bug</strong> because the contents of <code class="highlighter-rouge">s</code> have changed since we saved <code class="highlighter-rouge">5</code> in <code class="highlighter-rouge">word</code>.</p>
+
+<p>Having to worry about the index in <code class="highlighter-rouge">word</code> getting out of sync with the data in <code class="highlighter-rouge">s</code> is tedious and error prone! Managing these indices is even more brittle if we write a <code class="highlighter-rouge">second_word</code> function. Its signature would have to look like this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">second_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="nb">usize</span><span class="p">,</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>Now we’re tracking a starting and an ending index, and we have even more values that were calculated from data in a particular state but aren’t tied to that state at all. We now have three unrelated variables floating around that need to be kept in sync.</p>
+
+<p>Luckily, Rust has a solution to this problem: <strong>string slices</strong>.</p>
+
+<h3 id="string-slices">String Slices</h3>
+<p>A string slice is a reference to part of a String, and it looks like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">hello</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="mi">5</span><span class="p">];</span>
+    <span class="k">let</span> <span class="n">world</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">6</span><span class="o">..</span><span class="mi">11</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.</p>
+
+<p>We can create slices using a range within brackets by specifying <code class="highlighter-rouge">[starting_index..ending_index]</code>, where <code class="highlighter-rouge">starting_index</code> is the first position in the slice and <code class="highlighter-rouge">ending_index</code> is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to <code class="highlighter-rouge">ending_index</code> minus <code class="highlighter-rouge">starting_index</code>. So in the case of <code class="highlighter-rouge">let world = &amp;s[6..11];</code>, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.
+<img src="/assets/images/rust/trpl04-06.svg" alt="Figure 4-6" width="50%" height="40%" /></p>
+<h4 id="figure-4-6-string-slice-referring-to-part-of-a-string">Figure 4-6: String slice referring to part of a String</h4>
+
+<p>With Rust’s .. range syntax, if you want to start at the first index (zero), you can drop the value before the two periods. In other words, these are equal:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="mi">2</span><span class="p">];</span>
+<span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="o">..</span><span class="mi">2</span><span class="p">];</span>
+</code></pre></div></div>
+<p>You can also drop both values to take a slice of the entire string. So these are equal:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.len</span><span class="p">();</span>
+
+<span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">len</span><span class="p">];</span>
+<span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="o">..</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Note:</strong> String slice range indices must occur at valid UTF-8 character boundaries. If you attempt to create a string slice in the middle of a multibyte character, your program will exit with an error. For the purposes of introducing string slices, we are assuming ASCII only in this section; a more thorough discussion of UTF-8 handling is in the “Storing UTF-8 Encoded Text with Strings” section of Chapter 8.</p>
+
+<p>With all this information in mind, let’s rewrite <code class="highlighter-rouge">first_word</code> to return a slice. The type that signifies “string slice” is written as <code class="highlighter-rouge">&amp;str</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="o">..</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We get the index for the end of the word in the same way as we did in Listing 4-7, by looking for the first occurrence of a space. When we find a space, we return a string slice using the start of the string and the index of the space as the starting and ending indices.</p>
+
+<p>Now when we call first_word, we get back a single value that is tied to the underlying data. The value is made up of a reference to the starting point of the slice and the number of elements in the slice.</p>
+
+<p>Returning a slice would also work for a second_word function:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">second_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>We now have a straightforward API that’s much harder to mess up, because the compiler will ensure the references into the String remain valid. <strong>Remember the bug in the program in Listing 4-8, when we got the index to the end of the first word but then cleared the string so our index was invalid?</strong> That code was logically incorrect but didn’t show any immediate errors. The problems would show up later if we kept trying to use the first word index with an emptied string. <strong>Slices make this bug impossible and let us know we have a problem with our code much sooner.</strong> Using the slice version of first_word will throw a compile-time error:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+
+    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// Error!</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"the first word is: {}"</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0502</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">s</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span> <span class="n">because</span> <span class="n">it</span> <span class="n">is</span> <span class="n">also</span> <span class="n">borrowed</span> <span class="k">as</span> <span class="n">immutable</span>
+  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">5</span>
+   <span class="p">|</span>
+<span class="mi">16</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+   <span class="p">|</span>                           <span class="o">--</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">17</span> <span class="p">|</span>
+<span class="mi">18</span> <span class="p">|</span>     <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// error!</span>
+   <span class="p">|</span>     <span class="o">^^^^^^^^^</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
+<span class="mi">19</span> <span class="p">|</span>
+<span class="mi">20</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"the first word is: {}"</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+   <span class="p">|</span>                                       <span class="o">----</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">later</span> <span class="n">used</span> <span class="n">here</span>
+</code></pre></div></div>
+<p><strong>Recall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference.</strong> Because <code class="highlighter-rouge">clear</code> needs to truncate the <code class="highlighter-rouge">String</code>, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!</p>
+
+<h3 id="string-literals-are-slices">String Literals Are Slices</h3>
+<p>The type of <code class="highlighter-rouge">s</code> here is <code class="highlighter-rouge">&amp;str</code>: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; <code class="highlighter-rouge">&amp;str</code> is an immutable reference.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"Hello, world!"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="string-slices-as-parameters">String Slices as Parameters</h3>
+<p>Knowing that you can take slices of literals and String values leads us to one more improvement on first_word, and that’s its signature:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>A more experienced Rustacean would write the signature shown in Listing 4-9 instead because it allows us to use the same function on both &amp;String values and &amp;str values.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
+</code></pre></div></div>
+<h4 id="listing-4-9-improving-the-first_word-function-by-using-a-string-slice-for-the-type-of-the-s-parameter">Listing 4-9: Improving the first_word function by using a string slice for the type of the s parameter</h4>
+
+<p>If we have a string slice, we can pass that directly. If we have a <code class="highlighter-rouge">String</code>, we can pass a slice of the entire <code class="highlighter-rouge">String</code>. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">my_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
+
+    <span class="c">// first_word works on slices of `String`s</span>
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_string</span><span class="p">[</span><span class="o">..</span><span class="p">]);</span>
+
+    <span class="k">let</span> <span class="n">my_string_literal</span> <span class="o">=</span> <span class="s">"hello world"</span><span class="p">;</span>
+
+    <span class="c">// first_word works on slices of string literals</span>
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_string_literal</span><span class="p">[</span><span class="o">..</span><span class="p">]);</span>
+
+    <span class="c">// Because string literals *are* string slices already,</span>
+    <span class="c">// this works too, without the slice syntax!</span>
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">my_string_literal</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="other-slices">Other Slices</h3>
+<p>String slices, as you might imagine, are specific to strings. But there’s a more general slice type, too. Consider this array:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+</code></pre></div></div>
+<p>Just as we might want to refer to a part of a string, we might want to refer to part of an array. We’d do so like this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+
+<span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">3</span><span class="p">];</span>
+</code></pre></div></div>
+<p>This slice has the type <code class="highlighter-rouge">&amp;[i32]</code>. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.</p>
+
+<h2 id="summary">Summary</h2>
+<p>The concepts of ownership, borrowing, and slices ensure memory safety in Rust programs at compile time. The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.</p>
+
+<p>Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a <code class="highlighter-rouge">struct</code>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#memory-safety" class="page__taxonomy-item" rel="tag">Memory safety</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ownership" class="page__taxonomy-item" rel="tag">Ownership</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#unique-feature" class="page__taxonomy-item" rel="tag">Unique feature</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-02-25T00:00:00+00:00">February 25, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+4.Understanding+Ownership%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F4.Understanding-Ownership%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F4.Understanding-Ownership%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F4.Understanding-Ownership%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/3.Common-Programming-Concepts/" class="pagination--pager" title="RUST : 3.Common Programming Concepts
+">Previous</a>
+    
+    
+      <a href="/rust/rust_overview/" class="pagination--pager" title="RUST : Overview
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/rust_overview/" rel="permalink">RUST : Overview
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I will post a summary of RUST 
+Plz follow the below link. Thx :D
+nil
+
+link
+
+  Getting Started
+  Programming a Guessing Game
+  3. Common Programming Concepts
+...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/3.Common-Programming-Concepts/" rel="permalink">RUST : 3.Common Programming Concepts
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Variables and Mutability
+Default variables are immutable.
+If you want mutable variable, can make them mutable by adding mut in front of the variable name.
+fn...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="Variables and Mutability  Default variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.    fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}        First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.    const MAX_POINTS: u32 = 100_000;        Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readability  Data Types      Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.    Table 3-1: Integer Types in Rust                            Length          Signed          Unsigned                                      8-bit          i8          u8                          16-bit          i16          u16                          32-bit          i32          u32                          64-bit          i64          u64                          arch          isize          usize                      Table 3-2:Integer Literals in Rust                            Number literals          Example                                      Decimal          98_222                          Hex          0xff                          Octal          0o77                          Binary          0b1111_0000                          Byte (u8 only)          b’A’                      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];      Functions  fn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.    fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}        Parameters    fn main() {  another_function(5, 6);}fn another_function(x: i32, y: i32) {  println!(&quot;The value of x is: {}&quot;, x);  println!(&quot;The value of y is: {}&quot;, y);}        Function Bodies Contain Statements and Expressions    Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.    fn main() {  let y = 6;  // This is Statemnets  // Error - (let y = 6) statement does not return a value  let x = (let y = 6); }        Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.    Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:    fn main() {  let x = 5;  let y = { //like this      let x = 3;      x + 1  };  println!(&quot;The value of y is: {}&quot;, y);}        This expression:    {  let x = 3;  x + 1}        Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.    Functions with Return Values    We don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.    // perfectly valid function in Rustfn five() -&gt; i32 {  5  }fn main() {  let x = five();  println!(&quot;The value of x is: {}&quot;, x);}        fn main() {  let x = plus_one(5);  println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {  x + 1  // If place a semicolon at the end of the line x + 1,  // changing it from an expression to a statement,   // we’ll get an error.  // like this -&gt; error[E0308]: mismatched types}      Comments  A simple comment:    // So we’re doing something complicated here, // long enough that we need// multiple lines of comments to do it!// Whew! Hopefully, this comment will// explain what’s going on.let lucky_number = 7; // I’m feeling lucky today.        Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.  ">
+<meta name="description" content="Variables and MutabilityDefault variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.const MAX_POINTS: u32 = 100_000;Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readabilityData TypesKeep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.Table 3-1: Integer Types in Rust            Length      Signed      Unsigned                  8-bit      i8      u8              16-bit      i16      u16              32-bit      i32      u32              64-bit      i64      u64              arch      isize      usize      Table 3-2:Integer Literals in Rust            Number literals      Example                  Decimal      98_222              Hex      0xff              Octal      0o77              Binary      0b1111_0000              Byte (u8 only)      b’A’      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];Functionsfn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}Parametersfn main() {    another_function(5, 6);}fn another_function(x: i32, y: i32) {    println!(&quot;The value of x is: {}&quot;, x);    println!(&quot;The value of y is: {}&quot;, y);}Function Bodies Contain Statements and ExpressionsStatements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.fn main() {    let y = 6;  // This is Statemnets    // Error - (let y = 6) statement does not return a value    let x = (let y = 6); }Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:fn main() {    let x = 5;    let y = { //like this        let x = 3;        x + 1    };    println!(&quot;The value of y is: {}&quot;, y);}This expression:{    let x = 3;    x + 1}Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.Functions with Return ValuesWe don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.// perfectly valid function in Rustfn five() -&gt; i32 {    5 }fn main() {    let x = five();    println!(&quot;The value of x is: {}&quot;, x);}fn main() {    let x = plus_one(5);    println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {    x + 1    // If place a semicolon at the end of the line x + 1,    // changing it from an expression to a statement,     // we’ll get an error.    // like this -&gt; error[E0308]: mismatched types}CommentsA simple comment:    // So we’re doing something complicated here,     // long enough that we need    // multiple lines of comments to do it!    // Whew! Hopefully, this comment will    // explain what’s going on.    let lucky_number = 7; // I’m feeling lucky today.Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.Control FlowThe most common constructs that let you control the flow of execution of Rust code are if expressions and loops.if Expressionsfn main() {    let number = 3;    if number &lt; 5 {        rintln!(&quot;condition was true&quot;);    } else {        println!(&quot;condition was false&quot;);    }}It’s also worth noting that the condition in this code must be a bool. Rust will not automatically try to convert non-Boolean types to a Boolean.fn main() {    let number = 3;    if number {   //Change to &quot;if number != 0 {&quot;        println!(&quot;number was three&quot;);    }}You can have multiple conditions by combining if and else in an else if expression.fn main() {    let number = 6;    if number % 4 == 0 {        println!(&quot;number is divisible by 4&quot;);    } else if number % 3 == 0 {        println!(&quot;number is divisible by 3&quot;);    } else if number % 2 == 0 {        println!(&quot;number is divisible by 2&quot;);    } else {        println!(&quot;number is not divisible by 4, 3, or 2&quot;);    }}Because if is an expression, we can use it on the right side of a let statement, as in below.fn main() {    let condition = true;    let number = if condition {        5    } else {        6    };    println!(&quot;The value of number is: {}&quot;, number);}loop ExpressionsThe loop keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. Most terminals support a keyboard shortcut, ctrl-c, to interrupt a program that is stuck in a continual loop. The symbol ^C represents where you pressed ctrl-c. You may or may not see the word again! printed after the ^C, depending on where the code was in the loop when it received the interrupt signal.fn main() {    loop {        println!(&quot;again!&quot;);    }}// Returning Values from Loopsfn main() {    let mut counter = 0;    let result = loop {        counter += 1;        if counter == 10 {          break counter * 2;        }      };    println!(&quot;The result is {}&quot;, result);}while ExpressionsWhile the condition is true, the loop runs. When the condition ceases to be true, the program calls break, stopping the loop. This loop type could be implemented using a combination of loop, if, else, and break; you could try that now in a program, if you’d like.fn main() {    let mut number = 3;    while number != 0 {        println!(&quot;{}!&quot;, number);        number -= 1;    }    println!(&quot;LIFTOFF!!!&quot;);}for ExpressionsYou could use the while construct to loop over the elements of a collection, such as an array.fn main() {    let a = [10, 20, 30, 40, 50];    let mut index = 0;    while index &lt; 5 {        println!(&quot;the value is: {}&quot;, a[index]);        index = index + 1;    }}But this approach is error prone; we could cause the program to panic if the index length is incorrect. It’s also slow, because the compiler adds runtime code to perform the conditional check on every element on every iteration through the loop. As a more concise alternative, you can use a for loop and execute some code for each item in a collection.fn main() {    let a = [10, 20, 30, 40, 50];    for element in a.iter() {        println!(&quot;the value is: {}&quot;, element);    }}Here’s what the countdown would look like using a for loop and another method we’ve not yet talked about, rev, to reverse the range:fn main() {    for number in (1..4).rev() {        println!(&quot;{}!&quot;, number);    }      println!(&quot;LIFTOFF!!!&quot;);}">
 
 
   <meta name="author" content="JJungs-lee">
@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://jjungs-lee.github.io//rust/3.Common-Programming-Concepts/">
 
 
-  <meta property="og:description" content="Variables and Mutability  Default variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.    fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}        First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.    const MAX_POINTS: u32 = 100_000;        Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readability  Data Types      Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.    Table 3-1: Integer Types in Rust                            Length          Signed          Unsigned                                      8-bit          i8          u8                          16-bit          i16          u16                          32-bit          i32          u32                          64-bit          i64          u64                          arch          isize          usize                      Table 3-2:Integer Literals in Rust                            Number literals          Example                                      Decimal          98_222                          Hex          0xff                          Octal          0o77                          Binary          0b1111_0000                          Byte (u8 only)          b’A’                      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];      Functions  fn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.    fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}        Parameters    fn main() {  another_function(5, 6);}fn another_function(x: i32, y: i32) {  println!(&quot;The value of x is: {}&quot;, x);  println!(&quot;The value of y is: {}&quot;, y);}        Function Bodies Contain Statements and Expressions    Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.    fn main() {  let y = 6;  // This is Statemnets  // Error - (let y = 6) statement does not return a value  let x = (let y = 6); }        Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.    Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:    fn main() {  let x = 5;  let y = { //like this      let x = 3;      x + 1  };  println!(&quot;The value of y is: {}&quot;, y);}        This expression:    {  let x = 3;  x + 1}        Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.    Functions with Return Values    We don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.    // perfectly valid function in Rustfn five() -&gt; i32 {  5  }fn main() {  let x = five();  println!(&quot;The value of x is: {}&quot;, x);}        fn main() {  let x = plus_one(5);  println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {  x + 1  // If place a semicolon at the end of the line x + 1,  // changing it from an expression to a statement,   // we’ll get an error.  // like this -&gt; error[E0308]: mismatched types}      Comments  A simple comment:    // So we’re doing something complicated here, // long enough that we need// multiple lines of comments to do it!// Whew! Hopefully, this comment will// explain what’s going on.let lucky_number = 7; // I’m feeling lucky today.        Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.  ">
+  <meta property="og:description" content="Variables and MutabilityDefault variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.const MAX_POINTS: u32 = 100_000;Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readabilityData TypesKeep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.Table 3-1: Integer Types in Rust            Length      Signed      Unsigned                  8-bit      i8      u8              16-bit      i16      u16              32-bit      i32      u32              64-bit      i64      u64              arch      isize      usize      Table 3-2:Integer Literals in Rust            Number literals      Example                  Decimal      98_222              Hex      0xff              Octal      0o77              Binary      0b1111_0000              Byte (u8 only)      b’A’      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];Functionsfn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}Parametersfn main() {    another_function(5, 6);}fn another_function(x: i32, y: i32) {    println!(&quot;The value of x is: {}&quot;, x);    println!(&quot;The value of y is: {}&quot;, y);}Function Bodies Contain Statements and ExpressionsStatements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.fn main() {    let y = 6;  // This is Statemnets    // Error - (let y = 6) statement does not return a value    let x = (let y = 6); }Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:fn main() {    let x = 5;    let y = { //like this        let x = 3;        x + 1    };    println!(&quot;The value of y is: {}&quot;, y);}This expression:{    let x = 3;    x + 1}Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.Functions with Return ValuesWe don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.// perfectly valid function in Rustfn five() -&gt; i32 {    5 }fn main() {    let x = five();    println!(&quot;The value of x is: {}&quot;, x);}fn main() {    let x = plus_one(5);    println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {    x + 1    // If place a semicolon at the end of the line x + 1,    // changing it from an expression to a statement,     // we’ll get an error.    // like this -&gt; error[E0308]: mismatched types}CommentsA simple comment:    // So we’re doing something complicated here,     // long enough that we need    // multiple lines of comments to do it!    // Whew! Hopefully, this comment will    // explain what’s going on.    let lucky_number = 7; // I’m feeling lucky today.Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.Control FlowThe most common constructs that let you control the flow of execution of Rust code are if expressions and loops.if Expressionsfn main() {    let number = 3;    if number &lt; 5 {        rintln!(&quot;condition was true&quot;);    } else {        println!(&quot;condition was false&quot;);    }}It’s also worth noting that the condition in this code must be a bool. Rust will not automatically try to convert non-Boolean types to a Boolean.fn main() {    let number = 3;    if number {   //Change to &quot;if number != 0 {&quot;        println!(&quot;number was three&quot;);    }}You can have multiple conditions by combining if and else in an else if expression.fn main() {    let number = 6;    if number % 4 == 0 {        println!(&quot;number is divisible by 4&quot;);    } else if number % 3 == 0 {        println!(&quot;number is divisible by 3&quot;);    } else if number % 2 == 0 {        println!(&quot;number is divisible by 2&quot;);    } else {        println!(&quot;number is not divisible by 4, 3, or 2&quot;);    }}Because if is an expression, we can use it on the right side of a let statement, as in below.fn main() {    let condition = true;    let number = if condition {        5    } else {        6    };    println!(&quot;The value of number is: {}&quot;, number);}loop ExpressionsThe loop keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. Most terminals support a keyboard shortcut, ctrl-c, to interrupt a program that is stuck in a continual loop. The symbol ^C represents where you pressed ctrl-c. You may or may not see the word again! printed after the ^C, depending on where the code was in the loop when it received the interrupt signal.fn main() {    loop {        println!(&quot;again!&quot;);    }}// Returning Values from Loopsfn main() {    let mut counter = 0;    let result = loop {        counter += 1;        if counter == 10 {          break counter * 2;        }      };    println!(&quot;The result is {}&quot;, result);}while ExpressionsWhile the condition is true, the loop runs. When the condition ceases to be true, the program calls break, stopping the loop. This loop type could be implemented using a combination of loop, if, else, and break; you could try that now in a program, if you’d like.fn main() {    let mut number = 3;    while number != 0 {        println!(&quot;{}!&quot;, number);        number -= 1;    }    println!(&quot;LIFTOFF!!!&quot;);}for ExpressionsYou could use the while construct to loop over the elements of a collection, such as an array.fn main() {    let a = [10, 20, 30, 40, 50];    let mut index = 0;    while index &lt; 5 {        println!(&quot;the value is: {}&quot;, a[index]);        index = index + 1;    }}But this approach is error prone; we could cause the program to panic if the index length is incorrect. It’s also slow, because the compiler adds runtime code to perform the conditional check on every element on every iteration through the loop. As a more concise alternative, you can use a for loop and execute some code for each item in a collection.fn main() {    let a = [10, 20, 30, 40, 50];    for element in a.iter() {        println!(&quot;the value is: {}&quot;, element);    }}Here’s what the countdown would look like using a for loop and another method we’ve not yet talked about, rev, to reverse the range:fn main() {    for number in (1..4).rev() {        println!(&quot;{}!&quot;, number);    }      println!(&quot;LIFTOFF!!!&quot;);}">
 
 
 
@@ -283,7 +283,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="RUST : 3.Common Programming Concepts">
-    <meta itemprop="description" content="Variables and Mutability  Default variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.    fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}        First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.    const MAX_POINTS: u32 = 100_000;        Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readability  Data Types      Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.    Table 3-1: Integer Types in Rust                            Length          Signed          Unsigned                                      8-bit          i8          u8                          16-bit          i16          u16                          32-bit          i32          u32                          64-bit          i64          u64                          arch          isize          usize                      Table 3-2:Integer Literals in Rust                            Number literals          Example                                      Decimal          98_222                          Hex          0xff                          Octal          0o77                          Binary          0b1111_0000                          Byte (u8 only)          b’A’                      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];      Functions  fn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.    fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}        Parameters    fn main() {  another_function(5, 6);}fn another_function(x: i32, y: i32) {  println!(&quot;The value of x is: {}&quot;, x);  println!(&quot;The value of y is: {}&quot;, y);}        Function Bodies Contain Statements and Expressions    Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.    fn main() {  let y = 6;  // This is Statemnets  // Error - (let y = 6) statement does not return a value  let x = (let y = 6); }        Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.    Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:    fn main() {  let x = 5;  let y = { //like this      let x = 3;      x + 1  };  println!(&quot;The value of y is: {}&quot;, y);}        This expression:    {  let x = 3;  x + 1}        Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.    Functions with Return Values    We don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.    // perfectly valid function in Rustfn five() -&gt; i32 {  5  }fn main() {  let x = five();  println!(&quot;The value of x is: {}&quot;, x);}        fn main() {  let x = plus_one(5);  println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {  x + 1  // If place a semicolon at the end of the line x + 1,  // changing it from an expression to a statement,   // we’ll get an error.  // like this -&gt; error[E0308]: mismatched types}      Comments  A simple comment:    // So we’re doing something complicated here, // long enough that we need// multiple lines of comments to do it!// Whew! Hopefully, this comment will// explain what’s going on.let lucky_number = 7; // I’m feeling lucky today.        Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.  ">
+    <meta itemprop="description" content="Variables and MutabilityDefault variables are immutable.If you want mutable variable, can make them mutable by adding mut in front of the variable name.fn main() {    let mut x = 5;    println!(&quot;The value of x is: {}&quot;, x);    x = 6;    println!(&quot;The value of x is: {}&quot;, x);}First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re always immutable.You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.const MAX_POINTS: u32 = 100_000;Note: Rust’s naming convention for constants is to use all uppercase with underscores between words, and underscores can be inserted in numeric literals to improve readabilityData TypesKeep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.Table 3-1: Integer Types in Rust            Length      Signed      Unsigned                  8-bit      i8      u8              16-bit      i16      u16              32-bit      i32      u32              64-bit      i64      u64              arch      isize      usize      Table 3-2:Integer Literals in Rust            Number literals      Example                  Decimal      98_222              Hex      0xff              Octal      0o77              Binary      0b1111_0000              Byte (u8 only)      b’A’      // Floating-Point(default type is f64)let x = 2.0; // f64let y: f32 = 3.0; // f32// Numeric Operationslet sum = 5 + 10;let difference = 95.5 - 4.3;let product = 4 * 30;let quotient = 56.7 / 32.2;let remainder = 43 % 5;// Booleanlet t = true;let f: bool = false; // with explicit type annotation// Characterlet c = &#39;z&#39;;let z = &#39;ℤ&#39;;let heart_eyed_cat = &#39;😻&#39;;// Tuplelet tup = (500, 6.4, 1);let (x, y, z) = tup;println!(&quot;The value of y is: {}&quot;, y);// Access a tuple element directly by using a period(.)// followed by the index of the value we want to accesslet x: (i32, f64, u8) = (500, 6.4, 1);let five_hundred = x.0;let six_point_four = x.1;let one = x.2;// arraylet a = [1, 2, 3, 4, 5];let first = a[0];let second = a[1];Functionsfn keyword, which allows you to declare new functions.Rust doesn’t care where you define your functions, only that they’re defined somewhere.fn main() {    println!(&quot;Hello, world!&quot;);    another_function();}fn another_function() {    println!(&quot;Another function.&quot;);}Parametersfn main() {    another_function(5, 6);}fn another_function(x: i32, y: i32) {    println!(&quot;The value of x is: {}&quot;, x);    println!(&quot;The value of y is: {}&quot;, y);}Function Bodies Contain Statements and ExpressionsStatements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value.fn main() {    let y = 6;  // This is Statemnets    // Error - (let y = 6) statement does not return a value    let x = (let y = 6); }Note: This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.Expressions can be part of statements: the 6 in the statement let y = 6; is an expression that evaluates to the value 6. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, {}, is an expression, for example:fn main() {    let x = 5;    let y = { //like this        let x = 3;        x + 1    };    println!(&quot;The value of y is: {}&quot;, y);}This expression:{    let x = 3;    x + 1}Note: the x + 1 line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.Functions with Return ValuesWe don’t name return values, but we do declare their type after an arrow (-&gt;)In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.// perfectly valid function in Rustfn five() -&gt; i32 {    5 }fn main() {    let x = five();    println!(&quot;The value of x is: {}&quot;, x);}fn main() {    let x = plus_one(5);    println!(&quot;The value of x is: {}&quot;, x);}fn plus_one(x: i32) -&gt; i32 {    x + 1    // If place a semicolon at the end of the line x + 1,    // changing it from an expression to a statement,     // we’ll get an error.    // like this -&gt; error[E0308]: mismatched types}CommentsA simple comment:    // So we’re doing something complicated here,     // long enough that we need    // multiple lines of comments to do it!    // Whew! Hopefully, this comment will    // explain what’s going on.    let lucky_number = 7; // I’m feeling lucky today.Rust also has another kind of comment, documentation comments, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.Control FlowThe most common constructs that let you control the flow of execution of Rust code are if expressions and loops.if Expressionsfn main() {    let number = 3;    if number &lt; 5 {        rintln!(&quot;condition was true&quot;);    } else {        println!(&quot;condition was false&quot;);    }}It’s also worth noting that the condition in this code must be a bool. Rust will not automatically try to convert non-Boolean types to a Boolean.fn main() {    let number = 3;    if number {   //Change to &quot;if number != 0 {&quot;        println!(&quot;number was three&quot;);    }}You can have multiple conditions by combining if and else in an else if expression.fn main() {    let number = 6;    if number % 4 == 0 {        println!(&quot;number is divisible by 4&quot;);    } else if number % 3 == 0 {        println!(&quot;number is divisible by 3&quot;);    } else if number % 2 == 0 {        println!(&quot;number is divisible by 2&quot;);    } else {        println!(&quot;number is not divisible by 4, 3, or 2&quot;);    }}Because if is an expression, we can use it on the right side of a let statement, as in below.fn main() {    let condition = true;    let number = if condition {        5    } else {        6    };    println!(&quot;The value of number is: {}&quot;, number);}loop ExpressionsThe loop keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. Most terminals support a keyboard shortcut, ctrl-c, to interrupt a program that is stuck in a continual loop. The symbol ^C represents where you pressed ctrl-c. You may or may not see the word again! printed after the ^C, depending on where the code was in the loop when it received the interrupt signal.fn main() {    loop {        println!(&quot;again!&quot;);    }}// Returning Values from Loopsfn main() {    let mut counter = 0;    let result = loop {        counter += 1;        if counter == 10 {          break counter * 2;        }      };    println!(&quot;The result is {}&quot;, result);}while ExpressionsWhile the condition is true, the loop runs. When the condition ceases to be true, the program calls break, stopping the loop. This loop type could be implemented using a combination of loop, if, else, and break; you could try that now in a program, if you’d like.fn main() {    let mut number = 3;    while number != 0 {        println!(&quot;{}!&quot;, number);        number -= 1;    }    println!(&quot;LIFTOFF!!!&quot;);}for ExpressionsYou could use the while construct to loop over the elements of a collection, such as an array.fn main() {    let a = [10, 20, 30, 40, 50];    let mut index = 0;    while index &lt; 5 {        println!(&quot;the value is: {}&quot;, a[index]);        index = index + 1;    }}But this approach is error prone; we could cause the program to panic if the index length is incorrect. It’s also slow, because the compiler adds runtime code to perform the conditional check on every element on every iteration through the loop. As a more concise alternative, you can use a for loop and execute some code for each item in a collection.fn main() {    let a = [10, 20, 30, 40, 50];    for element in a.iter() {        println!(&quot;the value is: {}&quot;, element);    }}Here’s what the countdown would look like using a for loop and another method we’ve not yet talked about, rev, to reverse the range:fn main() {    for number in (1..4).rev() {        println!(&quot;{}!&quot;, number);    }      println!(&quot;LIFTOFF!!!&quot;);}">
     <meta itemprop="datePublished" content="2020-02-25T00:00:00+00:00">
     
 
@@ -298,7 +298,7 @@
 
 
 
-  4 minute read
+  7 minute read
 
 </p>
           
@@ -308,102 +308,97 @@
       <section class="page__content" itemprop="text">
         
         <h2 id="variables-and-mutability">Variables and Mutability</h2>
-<ul>
-  <li>Default variables are immutable.<br />
-If you want mutable variable, can make them mutable by adding <code class="highlighter-rouge">mut</code> in front of the variable name.
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<p>Default variables are immutable.<br />
+If you want mutable variable, can make them mutable by adding <code class="highlighter-rouge">mut</code> in front of the variable name.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
     <span class="n">x</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <p>First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re <code class="highlighter-rouge">always</code> immutable.<br />
+</code></pre></div></div>
+<p>First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re <code class="highlighter-rouge">always</code> immutable.<br />
 You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.</p>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">MAX_POINTS</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">100_000</span><span class="p">;</span>
-</code></pre></div>    </div>
-    <p class="notice--warning"><strong>Note:</strong> Rust’s naming convention for constants is to <code class="highlighter-rouge">use all uppercase with underscores between words</code>, and <code class="highlighter-rouge">underscores can be inserted in numeric literals to improve readability</code></p>
-  </li>
-</ul>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">MAX_POINTS</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">100_000</span><span class="p">;</span>
+</code></pre></div></div>
+<p class="notice--warning"><strong>Note:</strong> Rust’s naming convention for constants is to <code class="highlighter-rouge">use all uppercase with underscores between words</code>, and <code class="highlighter-rouge">underscores can be inserted in numeric literals to improve readability</code></p>
 
 <h2 id="data-types">Data Types</h2>
-<ul>
-  <li>
-    <p>Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.</p>
+<p>Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.</p>
 
-    <h4 id="table-3-1-integer-types-in-rust">Table 3-1: Integer Types in Rust</h4>
+<h4 id="table-3-1-integer-types-in-rust">Table 3-1: Integer Types in Rust</h4>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Length</th>
-          <th style="text-align: center">Signed</th>
-          <th style="text-align: center">Unsigned</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>8-bit</td>
-          <td style="text-align: center">i8</td>
-          <td style="text-align: center">u8</td>
-        </tr>
-        <tr>
-          <td>16-bit</td>
-          <td style="text-align: center">i16</td>
-          <td style="text-align: center">u16</td>
-        </tr>
-        <tr>
-          <td>32-bit</td>
-          <td style="text-align: center">i32</td>
-          <td style="text-align: center">u32</td>
-        </tr>
-        <tr>
-          <td>64-bit</td>
-          <td style="text-align: center">i64</td>
-          <td style="text-align: center">u64</td>
-        </tr>
-        <tr>
-          <td>arch</td>
-          <td style="text-align: center">isize</td>
-          <td style="text-align: center">usize</td>
-        </tr>
-      </tbody>
-    </table>
+<table>
+  <thead>
+    <tr>
+      <th>Length</th>
+      <th style="text-align: center">Signed</th>
+      <th style="text-align: center">Unsigned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8-bit</td>
+      <td style="text-align: center">i8</td>
+      <td style="text-align: center">u8</td>
+    </tr>
+    <tr>
+      <td>16-bit</td>
+      <td style="text-align: center">i16</td>
+      <td style="text-align: center">u16</td>
+    </tr>
+    <tr>
+      <td>32-bit</td>
+      <td style="text-align: center">i32</td>
+      <td style="text-align: center">u32</td>
+    </tr>
+    <tr>
+      <td>64-bit</td>
+      <td style="text-align: center">i64</td>
+      <td style="text-align: center">u64</td>
+    </tr>
+    <tr>
+      <td>arch</td>
+      <td style="text-align: center">isize</td>
+      <td style="text-align: center">usize</td>
+    </tr>
+  </tbody>
+</table>
 
-    <h4 id="table-3-2integer-literals-in-rust">Table 3-2:Integer Literals in Rust</h4>
+<h4 id="table-3-2integer-literals-in-rust">Table 3-2:Integer Literals in Rust</h4>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Number literals</th>
-          <th style="text-align: center">Example</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Decimal</td>
-          <td style="text-align: center">98_222</td>
-        </tr>
-        <tr>
-          <td>Hex</td>
-          <td style="text-align: center">0xff</td>
-        </tr>
-        <tr>
-          <td>Octal</td>
-          <td style="text-align: center">0o77</td>
-        </tr>
-        <tr>
-          <td>Binary</td>
-          <td style="text-align: center">0b1111_0000</td>
-        </tr>
-        <tr>
-          <td>Byte (u8 only)</td>
-          <td style="text-align: center">b’A’</td>
-        </tr>
-      </tbody>
-    </table>
+<table>
+  <thead>
+    <tr>
+      <th>Number literals</th>
+      <th style="text-align: center">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Decimal</td>
+      <td style="text-align: center">98_222</td>
+    </tr>
+    <tr>
+      <td>Hex</td>
+      <td style="text-align: center">0xff</td>
+    </tr>
+    <tr>
+      <td>Octal</td>
+      <td style="text-align: center">0o77</td>
+    </tr>
+    <tr>
+      <td>Binary</td>
+      <td style="text-align: center">0b1111_0000</td>
+    </tr>
+    <tr>
+      <td>Byte (u8 only)</td>
+      <td style="text-align: center">b’A’</td>
+    </tr>
+  </tbody>
+</table>
 
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Floating-Point(default type is f64)</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Floating-Point(default type is f64)</span>
 <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c">// f64</span>
 <span class="k">let</span> <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">;</span> <span class="c">// f32</span>
 
@@ -439,15 +434,12 @@ You declare constants using the const keyword instead of the let keyword, and th
 <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
 <span class="k">let</span> <span class="n">first</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 <span class="k">let</span> <span class="n">second</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
+</code></pre></div></div>
 
 <h2 id="functions">Functions</h2>
-<ul>
-  <li>fn keyword, which allows you to declare new functions.<br />
-Rust doesn’t care where you define your functions, <code class="highlighter-rouge">only that they’re defined somewhere.</code>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<p><code class="highlighter-rouge">fn</code> keyword, which allows you to declare new functions.<br />
+Rust doesn’t care where you define your functions, <code class="highlighter-rouge">only that they’re defined somewhere.</code></p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
 
     <span class="nf">another_function</span><span class="p">();</span>
@@ -456,99 +448,219 @@ Rust doesn’t care where you define your functions, <code class="highlighter-ro
 <span class="k">fn</span> <span class="nf">another_function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Another function."</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <h3 id="parameters">Parameters</h3>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nf">another_function</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</code></pre></div></div>
+<h3 id="parameters">Parameters</h3>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">another_function</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">another_function</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-  <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of y is: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of y is: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre></div></div>
 
-    <h3 id="function-bodies-contain-statements-and-expressions">Function Bodies Contain Statements and Expressions</h3>
-    <p><code class="highlighter-rouge">Statements</code> are instructions that perform some action and do not return a value. <br />
+<h3 id="function-bodies-contain-statements-and-expressions">Function Bodies Contain Statements and Expressions</h3>
+<p><code class="highlighter-rouge">Statements</code> are instructions that perform some action and do not return a value. <br />
 <code class="highlighter-rouge">Expressions</code> evaluate to a resulting value.</p>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c">// This is Statemnets</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c">// This is Statemnets</span>
 
-  <span class="c">// Error - (let y = 6) statement does not return a value</span>
-  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">);</span> 
+    <span class="c">// Error - (let y = 6) statement does not return a value</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">);</span> 
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <p class="notice--warning"><strong>Note:</strong> This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. 
+</code></pre></div></div>
+<p class="notice--warning"><strong>Note:</strong> This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. 
 In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.</p>
 
-    <p>Expressions can be part of statements: the <code class="highlighter-rouge">6</code> in the statement <code class="highlighter-rouge">let y = 6;</code> is an expression that evaluates to the value <code class="highlighter-rouge">6</code>. 
+<p>Expressions can be part of statements: the <code class="highlighter-rouge">6</code> in the statement <code class="highlighter-rouge">let y = 6;</code> is an expression that evaluates to the value <code class="highlighter-rouge">6</code>. 
 Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, <code class="highlighter-rouge">{}</code>, is an expression, for example:</p>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 
-  <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="p">{</span> <span class="c">//like this</span>
-      <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-      <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-  <span class="p">};</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="p">{</span> <span class="c">//like this</span>
+        <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">};</span>
 
-  <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of y is: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of y is: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <p>This expression:</p>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+<p>This expression:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-    <p class="notice--warning"><strong>Note:</strong> the <code class="highlighter-rouge">x + 1</code> line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. 
+</code></pre></div></div>
+<p class="notice--warning"><strong>Note:</strong> the <code class="highlighter-rouge">x + 1</code> line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. 
 <code class="highlighter-rouge">Expressions do not include ending semicolons.</code> If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.</p>
 
-    <h3 id="functions-with-return-values">Functions with Return Values</h3>
-    <p>We don’t name return values, but we do declare their type after an arrow (-&gt;)
+<h3 id="functions-with-return-values">Functions with Return Values</h3>
+<p>We don’t name return values, but we do declare their type after an arrow (-&gt;)
 In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. 
 You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.</p>
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// perfectly valid function in Rust</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// perfectly valid function in Rust</span>
 <span class="k">fn</span> <span class="nf">five</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
-  <span class="mi">5</span>  
+    <span class="mi">5</span> 
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">five</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">five</span><span class="p">();</span>
 
-  <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
+</code></pre></div></div>
 
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 
-  <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
-  <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-  <span class="c">// If place a semicolon at the end of the line x + 1,</span>
-  <span class="c">// changing it from an expression to a statement, </span>
-  <span class="c">// we’ll get an error.</span>
-  <span class="c">// like this -&gt; error[E0308]: mismatched types</span>
+    <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c">// If place a semicolon at the end of the line x + 1,</span>
+    <span class="c">// changing it from an expression to a statement, </span>
+    <span class="c">// we’ll get an error.</span>
+    <span class="c">// like this -&gt; error[E0308]: mismatched types</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
+</code></pre></div></div>
 
 <h2 id="comments">Comments</h2>
-<ul>
-  <li>A simple comment:
-    <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// So we’re doing something complicated here, </span>
-<span class="c">// long enough that we need</span>
-<span class="c">// multiple lines of comments to do it!</span>
-<span class="c">// Whew! Hopefully, this comment will</span>
-<span class="c">// explain what’s going on.</span>
-<span class="k">let</span> <span class="n">lucky_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c">// I’m feeling lucky today.</span>
-</code></pre></div>    </div>
-    <p>Rust also has another kind of comment, <code class="highlighter-rouge">documentation comments</code>, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.</p>
-  </li>
-</ul>
+<p>A simple comment:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// So we’re doing something complicated here, </span>
+    <span class="c">// long enough that we need</span>
+    <span class="c">// multiple lines of comments to do it!</span>
+    <span class="c">// Whew! Hopefully, this comment will</span>
+    <span class="c">// explain what’s going on.</span>
+    <span class="k">let</span> <span class="n">lucky_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c">// I’m feeling lucky today.</span>
+</code></pre></div></div>
+<p>Rust also has another kind of comment, <code class="highlighter-rouge">documentation comments</code>, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.</p>
+
+<h2 id="control-flow">Control Flow</h2>
+<p>The most common constructs that let you control the flow of execution of Rust code are if expressions and loops.</p>
+<h3 id="if-expressions"><code class="highlighter-rouge">if</code> Expressions</h3>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="p">{</span>
+        <span class="nd">rintln!</span><span class="p">(</span><span class="s">"condition was true"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"condition was false"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It’s also worth noting that the condition in this code must be a bool. Rust will not automatically try to convert non-Boolean types to a Boolean.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="n">number</span> <span class="p">{</span>   <span class="c">//Change to "if number != 0 {"</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"number was three"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You can have multiple conditions by combining if and else in an else if expression.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"number is divisible by 4"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"number is divisible by 3"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"number is divisible by 2"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"number is not divisible by 4, 3, or 2"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Because if is an expression, we can use it on the right side of a let statement, as in below.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">condition</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="k">if</span> <span class="n">condition</span> <span class="p">{</span>
+        <span class="mi">5</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="mi">6</span>
+    <span class="p">};</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of number is: {}"</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="loop-expressions"><code class="highlighter-rouge">loop</code> Expressions</h3>
+<p>The loop keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. <br />
+Most terminals support a keyboard shortcut, <code class="highlighter-rouge">ctrl-c</code>, to interrupt a program that is stuck in a continual loop. The symbol <code class="highlighter-rouge">^C</code> represents where you pressed <code class="highlighter-rouge">ctrl-c</code>. You may or may not see the word again! printed after the <code class="highlighter-rouge">^C</code>, depending on where the code was in the loop when it received the interrupt signal.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">loop</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"again!"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Returning Values from Loops</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="k">loop</span> <span class="p">{</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">==</span> <span class="mi">10</span> <span class="p">{</span>
+          <span class="k">break</span> <span class="n">counter</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">};</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"The result is {}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="while-expressions"><code class="highlighter-rouge">while</code> Expressions</h3>
+<p>While the condition is true, the loop runs. When the condition ceases to be true, the program calls break, stopping the loop. This loop type could be implemented using a combination of loop, if, else, and break; you could try that now in a program, if you’d like.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="n">number</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{}!"</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+
+        <span class="n">number</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"LIFTOFF!!!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="for-expressions"><code class="highlighter-rouge">for</code> Expressions</h3>
+<p>You could use the while construct to loop over the elements of a collection, such as an array.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">];</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"the value is: {}"</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]);</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>But this approach is error prone; we could cause the program to panic if the index length is incorrect. It’s also slow, because the compiler adds runtime code to perform the conditional check on every element on every iteration through the loop. As a more concise alternative, you can use a for loop and execute some code for each item in a collection.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="n">element</span> <span class="n">in</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"the value is: {}"</span><span class="p">,</span> <span class="n">element</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here’s what the countdown would look like using a for loop and another method we’ve not yet talked about, rev, to reverse the range:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="nf">in</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">)</span><span class="nf">.rev</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{}!"</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+    <span class="p">}</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"LIFTOFF!!!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
         
       </section>
@@ -624,7 +736,7 @@ You can return early from a function by using the return keyword and specifying 
       <a href="#" class="pagination--pager disabled">Previous</a>
     
     
-      <a href="/rust/rust_overview/" class="pagination--pager" title="RUST : Overview
+      <a href="/rust/4.Understanding-Ownership/" class="pagination--pager" title="RUST : 4.Understanding Ownership
 ">Next</a>
     
   </nav>
@@ -673,6 +785,37 @@ link
   Programming a Guessing Game
   3. Common Programming Concepts
 ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/4.Understanding-Ownership/" rel="permalink">RUST : 4.Understanding Ownership
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  29 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.
+
+What Is Ownership?
+Some l...</p>
   </article>
 </div>
 
