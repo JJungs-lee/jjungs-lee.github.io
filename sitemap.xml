@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://jjungs-lee.github.io//rust/3.Common-Programming-Concepts/</loc>
+<loc>https://jjungs-lee.github.io//rust/rust-0.Overview/</loc>
 <lastmod>2020-02-25T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://jjungs-lee.github.io//rust/4.Understanding-Ownership/</loc>
+<loc>https://jjungs-lee.github.io//rust/rust-3.Common-Programming-Concepts/</loc>
 <lastmod>2020-02-25T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://jjungs-lee.github.io//rust/rust_overview/</loc>
+<loc>https://jjungs-lee.github.io//rust/rust-4.Understanding-Ownership/</loc>
 <lastmod>2020-02-25T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://jjungs-lee.github.io//rust/5.Using-Structs-to-Structure-Related-Data/</loc>
+<loc>https://jjungs-lee.github.io//rust/rust-5.Using-Structs-to-Structure-Related-Data/</loc>
 <lastmod>2020-02-26T00:00:00+00:00</lastmod>
 </url>
 <url>
