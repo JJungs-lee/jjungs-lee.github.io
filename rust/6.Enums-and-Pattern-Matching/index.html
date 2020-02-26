@@ -1,0 +1,991 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Enums allow you to define a type by enumerating its possible variants. Next, we’ll explore a particularly useful enum, called Option, which expresses that a value can be either something or nothing. Then we’ll look at how pattern matching in the match expression makes it easy to run different code for different values of an enum. Finally, we’ll cover how the if let construct is another convenient and concise idiom available to you to handle enums in your code.">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : 6. Enums and Pattern Matching">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/6.Enums-and-Pattern-Matching/">
+
+
+  <meta property="og:description" content="Enums allow you to define a type by enumerating its possible variants. Next, we’ll explore a particularly useful enum, called Option, which expresses that a value can be either something or nothing. Then we’ll look at how pattern matching in the match expression makes it easy to run different code for different values of an enum. Finally, we’ll cover how the if let construct is another convenient and concise idiom available to you to handle enums in your code.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-26T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/6.Enums-and-Pattern-Matching/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : 6. Enums and Pattern Matching">
+    <meta itemprop="description" content="Enums allow you to define a type by enumerating its possible variants. Next, we’ll explore a particularly useful enum, called Option, which expresses that a value can be either something or nothing. Then we’ll look at how pattern matching in the match expression makes it easy to run different code for different values of an enum. Finally, we’ll cover how the if let construct is another convenient and concise idiom available to you to handle enums in your code.">
+    <meta itemprop="datePublished" content="2020-02-26T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : 6. Enums and Pattern Matching
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  22 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Enums allow you to define a type by enumerating its possible variants. 
+Next, we’ll explore a particularly useful enum, called <code class="highlighter-rouge">Option</code>, which expresses that a value can be either something or nothing. 
+Then we’ll look at how pattern matching in the <code class="highlighter-rouge">match</code> expression makes it easy to run different code for different values of an enum. 
+Finally, we’ll cover how the <code class="highlighter-rouge">if let</code> construct is another convenient and concise idiom available to you to handle enums in your code.</p>
+
+<p>Rust’s enums are most similar to algebraic data types in functional languages, such as F#, OCaml, and Haskell.</p>
+
+<h2 id="defining-an-enum">Defining an Enum</h2>
+<p>Let’s look at a situation we might want to express in code and see why enums are useful and more appropriate than structs in this case. 
+Say we need to work with IP addresses. Currently, two major standards are used for IP addresses: version four and version six. we can <code class="highlighter-rouge">enumerate</code> all possible variants, which is where enumeration gets its name.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">IpAddrKind</span> <span class="p">{</span>
+    <span class="n">V4</span><span class="p">,</span>
+    <span class="n">V6</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="enum-values">Enum Values</h3>
+<p>We can create instances of each of the two variants of IpAddrKind like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">four</span> <span class="o">=</span> <span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V4</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">six</span> <span class="o">=</span> <span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V6</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Note that the variants of the enum are namespaced under its identifier, and we use a double colon to separate the two. 
+The reason this is useful is that now both values <code class="highlighter-rouge">IpAddrKind::V4</code> and <code class="highlighter-rouge">IpAddrKind::V6</code> are of the same type: <code class="highlighter-rouge">IpAddrKind</code>. We can then, for instance, define a function that takes any <code class="highlighter-rouge">IpAddrKind</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">route</span><span class="p">(</span><span class="n">ip_kind</span><span class="p">:</span> <span class="n">IpAddrKind</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+</code></pre></div></div>
+<p>And we can call this function with either variant:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">route</span><span class="p">(</span><span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V4</span><span class="p">);</span>
+<span class="nf">route</span><span class="p">(</span><span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V6</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Using enums has even more advantages. Thinking more about our IP address type, at the moment we don’t have a way to store the actual IP address data; we only know what <em>kind</em> it is. Given that you just learned about structs in Chapter 5, you might tackle this problem as shown in Listing 6-1.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">IpAddrKind</span> <span class="p">{</span>
+    <span class="n">V4</span><span class="p">,</span>
+    <span class="n">V6</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">IpAddrKind</span><span class="p">,</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="n">home</span> <span class="o">=</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V4</span><span class="p">,</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">),</span>
+<span class="p">};</span>
+
+<span class="k">let</span> <span class="n">loopback</span> <span class="o">=</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nn">IpAddrKind</span><span class="p">::</span><span class="n">V6</span><span class="p">,</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"::1"</span><span class="p">),</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<h4 id="listing-6-1-storing-the-data-and-ipaddrkind-variant-of-an-ip-address-using-a-struct">Listing 6-1: Storing the data and IpAddrKind variant of an IP address using a struct</h4>
+<p>Here, we’ve defined a struct <code class="highlighter-rouge">IpAddr</code> that has two fields: a kind field that is of type IpAddrKind (the enum we defined previously) and an address field of type String. We have two instances of this struct. The first, <code class="highlighter-rouge">home</code>, has the value IpAddrKind::V4 as its kind with associated address data of 127.0.0.1. The second instance, <code class="highlighter-rouge">loopback</code>, has the other variant of IpAddrKind as its kind value, V6, and has address ::1 associated with it. We’ve used a struct to bundle the kind and address values together, so now the variant is associated with the value.</p>
+
+<p>We can represent the same concept in a more concise way using just an enum, rather than an enum inside a struct, <strong>by putting data directly into each enum variant</strong>. This new definition of the IpAddr enum says that both V4 and V6 variants will have associated String values:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="nf">V4</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+    <span class="nf">V6</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="n">home</span> <span class="o">=</span> <span class="nn">IpAddr</span><span class="p">::</span><span class="nf">V4</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">));</span>
+
+<span class="k">let</span> <span class="n">loopback</span> <span class="o">=</span> <span class="nn">IpAddr</span><span class="p">::</span><span class="nf">V6</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"::1"</span><span class="p">));</span>
+</code></pre></div></div>
+<p>We attach data to each variant of the enum directly, so there is no need for an extra struct.</p>
+
+<p>There’s another advantage to using an enum rather than a struct: each variant can have different types and amounts of associated data. Version four type IP addresses will always have four numeric components that will have values between 0 and 255. If we wanted to store V4 addresses as four u8 values but still express V6 addresses as one String value, <strong>we wouldn’t be able to with a struct. Enums handle this case with ease</strong>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="nf">V4</span><span class="p">(</span><span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">,</span> <span class="nb">u8</span><span class="p">),</span>
+    <span class="nf">V6</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="n">home</span> <span class="o">=</span> <span class="nn">IpAddr</span><span class="p">::</span><span class="nf">V4</span><span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">loopback</span> <span class="o">=</span> <span class="nn">IpAddr</span><span class="p">::</span><span class="nf">V6</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"::1"</span><span class="p">));</span>
+</code></pre></div></div>
+<p>We’ve shown several different ways to define data structures to store version four and version six IP addresses. However, as it turns out, wanting to store IP addresses and encode which kind they are is so common that <a href="https://doc.rust-lang.org/std/net/enum.IpAddr.html">the standard library has a definition we can use!</a> It has the exact enum and variants that we’ve defined and used, but it embeds the address data inside the variants in the form of two different structs, which are defined differently for each variant:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Ipv4Addr</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">Ipv6Addr</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+
+<span class="k">enum</span> <span class="n">IpAddr</span> <span class="p">{</span>
+    <span class="nf">V4</span><span class="p">(</span><span class="n">Ipv4Addr</span><span class="p">),</span>
+    <span class="nf">V6</span><span class="p">(</span><span class="n">Ipv6Addr</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>This code illustrates that you can put any kind of data inside an enum variant: strings, numeric types, or structs, for example.You can even include another enum!</p>
+
+<p>Note that even though the standard library contains a definition for <code class="highlighter-rouge">IpAddr</code>, we can still create and use our own definition without conflict because we haven’t brought the standard library’s definition into our scope. We’ll talk more about bringing types into scope in Chapter 7.</p>
+
+<p>Let’s look at another example of an enum in Listing 6-2: this one has a wide variety of types embedded in its variants.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Message</span> <span class="p">{</span>
+    <span class="n">Quit</span><span class="p">,</span>
+    <span class="n">Move</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span> <span class="p">},</span>
+    <span class="nf">Write</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+    <span class="nf">ChangeColor</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">i32</span><span class="p">,</span> <span class="nb">i32</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-6-2-a-message-enum-whose-variants-each-store-different-amounts-and-types-of-values">Listing 6-2: A Message enum whose variants each store different amounts and types of values</h4>
+<p>This enum has four variants with different types:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Quit</code> has no data associated with it at all.</li>
+  <li><code class="highlighter-rouge">Move</code> includes an anonymous struct inside it.</li>
+  <li><code class="highlighter-rouge">Write</code> includes a single String.</li>
+  <li><code class="highlighter-rouge">ChangeColor</code> includes three i32 values.</li>
+</ul>
+
+<p>Defining an enum with variants such as the ones in Listing 6-2 is <em>similar to defining different kinds of struct definitions</em>, <strong>except the enum doesn’t use the struct keyword and all the variants are grouped together under the Message type</strong>. The following structs could hold the same data that the preceding enum variants hold:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">QuitMessage</span><span class="p">;</span> <span class="c">// unit struct</span>
+<span class="k">struct</span> <span class="n">MoveMessage</span> <span class="p">{</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">struct</span> <span class="nf">WriteMessage</span><span class="p">(</span><span class="nb">String</span><span class="p">);</span> <span class="c">// tuple struct</span>
+<span class="k">struct</span> <span class="nf">ChangeColorMessage</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">i32</span><span class="p">,</span> <span class="nb">i32</span><span class="p">);</span> <span class="c">// tuple struct</span>
+</code></pre></div></div>
+<p>But if we used the different structs, which each have their own type, we <strong>couldn’t as easily</strong> define a function to take any of these kinds of messages as we could with the Message enum defined in Listing 6-2, which is a single type.</p>
+
+<p>There is one more similarity between enums and structs: just as we’re able to define methods on structs using <code class="highlighter-rouge">impl</code>, we’re also able to define methods on enums. 
+Here’s a method named <code class="highlighter-rouge">call</code> that we could define on our <code class="highlighter-rouge">Message</code> enum:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">Message</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">call</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c">// method body would be defined here</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Message</span><span class="p">::</span><span class="nf">Write</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">));</span>
+<span class="n">m</span><span class="nf">.call</span><span class="p">();</span>
+</code></pre></div></div>
+<p>The body of the method would use <code class="highlighter-rouge">self</code> to get the value that we called the method on. In this example, we’ve created a variable <code class="highlighter-rouge">m</code> that has the value <code class="highlighter-rouge">Message::Write(String::from("hello"))</code>, and that is what self will be in the body of the <code class="highlighter-rouge">call</code> method when <code class="highlighter-rouge">m.call()</code> runs.</p>
+
+<h3 id="the-option-enum-and-its-advantages-over-null-values">The <code class="highlighter-rouge">Option</code> Enum and Its Advantages Over Null Values</h3>
+<p>This section explores a case study of <code class="highlighter-rouge">Option</code>, which is another enum defined by the standard library. 
+The <code class="highlighter-rouge">Option</code> type is used in many places because it encodes the very common scenario in which a value could be something or it could be nothing. 
+Expressing this concept in terms of the type system means the compiler can check whether you’ve handled all the cases you should be handling; 
+this functionality can <strong>prevent bugs</strong> that are extremely common in other programming languages.</p>
+
+<p>Programming language design is often thought of in terms of which features you include, but the features you exclude are important too. 
+Rust doesn’t have the <code class="highlighter-rouge">null</code> feature that many other languages have. 
+Null is a value that means there is no value there. In languages with null, variables can always be in one of two states: null or not-null.</p>
+
+<p>In his 2009 presentation “Null References: The Billion Dollar Mistake,” Tony Hoare, the inventor of null, has this to say:</p>
+
+<p class="notice--info">I call it my billion-dollar mistake. At that time, I was designing the first comprehensive type system for references in an object-oriented language. My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.</p>
+
+<p>The problem with null values is that if you try to use a null value as a not-null value, you’ll get an error of some kind. Because this null or not-null property is pervasive, it’s extremely easy to make this kind of error.</p>
+
+<p>However, the concept that null is trying to express is still a useful one: a null is a value that is currently invalid or absent for some reason.</p>
+
+<p>The problem isn’t really with the concept but with the particular implementation. As such, <strong>Rust does not have nulls, but it does have an enum that can encode the concept of a value being present or absent</strong>. This enum is <code class="highlighter-rouge">Option&lt;T&gt;</code>, and it is <a href="https://doc.rust-lang.org/std/option/enum.Option.html">defined by the standard library</a> as follows:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nf">Some</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
+    <span class="nb">None</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The Option<T> enum is so useful that it’s even included in the prelude; you don’t need to bring it into scope explicitly. 
+In addition, so are its variants: you can use `Some` and `None` directly without the `Option::` prefix. The `Option<T>` enum is still just a regular enum, and `Some(T)` and `None` are still variants of type `Option<T>`.</T></T></T></p>
+
+<p>The <code class="highlighter-rouge">&lt;T&gt;</code> syntax is a feature of Rust we haven’t talked about yet. It’s a generic type parameter, and we’ll cover generics in more detail in Chapter 10. 
+For now, all you need to know is that <code class="highlighter-rouge">&lt;T&gt;</code> means the <code class="highlighter-rouge">Some</code> variant of the <code class="highlighter-rouge">Option</code> enum can hold one piece of data of any type. 
+Here are some examples of using Option values to hold number types and string types:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">some_number</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">some_string</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="s">"a string"</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">absent_number</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">None</span><span class="p">;</span>
+</code></pre></div></div>
+<p>If we use <code class="highlighter-rouge">None</code> rather than <code class="highlighter-rouge">Some</code>, we need to tell Rust what type of <code class="highlighter-rouge">Option&lt;T&gt;</code> we have, because the compiler can’t infer the type that the <code class="highlighter-rouge">Some</code> variant will hold by looking only at a <code class="highlighter-rouge">None</code> value.</p>
+
+<p>When we have a <code class="highlighter-rouge">Some</code> value, we know that a value is present and the value is held within the <code class="highlighter-rouge">Some</code>. When we have a <code class="highlighter-rouge">None</code> value, in some sense, it means the same thing as null: we don’t have a valid value. So why is having <code class="highlighter-rouge">Option&lt;T&gt;</code> any better than having null?</p>
+
+<p>In short, because <code class="highlighter-rouge">Option&lt;T&gt;</code> and <code class="highlighter-rouge">T</code> (where T can be any type) are different types, the compiler won’t let us use an <code class="highlighter-rouge">Option&lt;T&gt;</code> value as if it were definitely a valid value. For example, this code won’t compile because it’s trying to add an <code class="highlighter-rouge">i8</code> to an <code class="highlighter-rouge">Option&lt;i8&gt;</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i8</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">y</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i8</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</code></pre></div></div>
+<p>If we run this code, we get an error message like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="k">trait</span> <span class="n">bound</span> <span class="err">`</span><span class="nb">i8</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nb">Add</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">option</span><span class="p">::</span><span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i8</span><span class="o">&gt;&gt;</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">satisfied</span>
+ <span class="o">-</span><span class="k">-&gt;</span>
+  <span class="p">|</span>
+<span class="mi">5</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+  <span class="p">|</span>                 <span class="o">^</span> <span class="n">no</span> <span class="n">implementation</span> <span class="k">for</span> <span class="err">`</span><span class="nb">i8</span> <span class="o">+</span> <span class="nn">std</span><span class="p">::</span><span class="nn">option</span><span class="p">::</span><span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i8</span><span class="o">&gt;</span><span class="err">`</span>
+  <span class="p">|</span>
+</code></pre></div></div>
+<p>Intense! In effect, this error message means that Rust doesn’t understand how to add an <code class="highlighter-rouge">i8</code> and an <code class="highlighter-rouge">Option&lt;i8&gt;</code>, because <strong>they’re different types</strong>. When we have a value of a type like i8 in Rust, the compiler will ensure that we always have a valid value. We can proceed confidently without having to check for null before using that value. Only when we have an <code class="highlighter-rouge">Option&lt;i8&gt;</code> (or whatever type of value we’re working with) do we have to worry about possibly not having a value, and the compiler will make sure we handle that case before using the value.</p>
+
+<p>In other words, you have to convert an <code class="highlighter-rouge">Option&lt;T&gt;</code> to a <code class="highlighter-rouge">T</code> before you can perform <code class="highlighter-rouge">T</code> operations with it. Generally, <strong>this helps catch one of the most common issues with null</strong>: assuming that something isn’t null when it actually is.</p>
+
+<p>Not having to worry about incorrectly assuming a not-null value helps you to be more confident in your code. In order to have a value that can possibly be null, you <strong>must explicitly opt in by making the type of that value <code class="highlighter-rouge">Option&lt;T&gt;</code></strong>. Then, when you use that value, you are required to explicitly handle the case when the value is null. Everywhere that a value has a type that isn’t an <code class="highlighter-rouge">Option&lt;T&gt;</code>, you can safely assume that the value isn’t null. This was a deliberate design decision for Rust to limit null’s pervasiveness and increase the safety of Rust code.</p>
+
+<p>So, how do you get the <code class="highlighter-rouge">T</code> value out of a <code class="highlighter-rouge">Some</code> variant when you have a value of type <code class="highlighter-rouge">Option&lt;T&gt;</code> so you can use that value? The <code class="highlighter-rouge">Option&lt;T&gt;</code> enum has a large number of methods that are useful in a variety of situations; you can check them out in <a href="https://doc.rust-lang.org/std/option/enum.Option.html">its documentation</a>. Becoming familiar with the methods on Option<T> will be extremely useful in your journey with Rust.</T></p>
+
+<p>In general, in order to use an <code class="highlighter-rouge">Option&lt;T&gt;</code> value, you want to have code that will handle each variant. You want some code that will run only when you have a <code class="highlighter-rouge">Some(T)</code> value, and this code is allowed to use the inner <code class="highlighter-rouge">T</code>. You want some other code to run if you have a <code class="highlighter-rouge">None</code> value, and that code doesn’t have a T value available. The <code class="highlighter-rouge">match expression</code> is a control flow construct that does just this when used with enums: it will run different code depending on which variant of the enum it has, and that code can use the data inside the matching value.</p>
+
+<h2 id="the-match-control-flow-operator">The match Control Flow Operator</h2>
+<p>Rust has an <em>extremely powerful control flow operator</em> called <strong>match</strong> that allows you to compare a value against a series of patterns and then execute code based on which pattern matches. Patterns can be made up of literal values, variable names, wildcards, and many other things; Chapter 18 covers all the different kinds of patterns and what they do. The power of match comes from the expressiveness of the patterns and the fact that the compiler confirms that all possible cases are handled.</p>
+
+<p>Think of a <code class="highlighter-rouge">match expression</code> as being like a <em>coin-sorting machine</em>: coins slide down a track with variously sized holes along it, and each coin falls through the first hole it encounters that it fits into. In the same way, values go through each pattern in a <code class="highlighter-rouge">match</code>, and at the first pattern the value “fits,” the value falls into the associated code block to be used during execution.</p>
+
+<p>Because we just mentioned coins, let’s use them as an example using <code class="highlighter-rouge">match</code>! We can write a function that can take an unknown United States coin and, in a similar way as the counting machine, determine which coin it is and return its value in cents, as shown here in Listing 6-3.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Coin</span> <span class="p">{</span>
+    <span class="n">Penny</span><span class="p">,</span>
+    <span class="n">Nickel</span><span class="p">,</span>
+    <span class="n">Dime</span><span class="p">,</span>
+    <span class="n">Quarter</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">value_in_cents</span><span class="p">(</span><span class="n">coin</span><span class="p">:</span> <span class="n">Coin</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u8</span> <span class="p">{</span>
+    <span class="c">// JHS) similar to 'case' in C/C++</span>
+    <span class="k">match</span> <span class="n">coin</span> <span class="p">{</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Penny</span> <span class="k">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Nickel</span> <span class="k">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Dime</span> <span class="k">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Quarter</span> <span class="k">=&gt;</span> <span class="mi">25</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-6-3-an-enum-and-a-match-expression-that-has-the-variants-of-the-enum-as-its-patterns">Listing 6-3: An enum and a match expression that has the variants of the enum as its patterns</h4>
+
+<p>Let’s break down the <code class="highlighter-rouge">match</code> in the <code class="highlighter-rouge">value_in_cents</code> function. First, we list the <code class="highlighter-rouge">match </code>keyword followed by an expression, which in this case is the value <code class="highlighter-rouge">coin</code>. This seems very <strong>similar</strong> to an expression used with <code class="highlighter-rouge">if</code>, but there’s a big difference: with if, the expression needs to return a Boolean value, but here, <strong>it can be any type</strong>. The type of coin in this example is the Coin enum that we defined on line 1.</p>
+
+<p>Next are the match arms. An arm has two parts: a pattern and some code. The first arm here has a pattern that is the value <code class="highlighter-rouge">Coin::Penny</code> and then the <code class="highlighter-rouge">=&gt;</code> operator that separates the pattern and the code to run. The code in this case is just the value <code class="highlighter-rouge">1</code>. Each arm is separated from the next with a <code class="highlighter-rouge">comma(,)</code>.</p>
+
+<p>When the match expression executes, it compares the resulting value against the pattern of each arm, in order. If a pattern matches the value, the code associated with that pattern is executed. If that pattern doesn’t match the value, execution continues to the next arm, much as in a coin-sorting machine. We can have as many arms as we need: in Listing 6-3, our match has four arms.</p>
+
+<p>The code associated with each arm is an expression, and the resulting value of the expression in the matching arm is the value that gets returned for the entire match expression.</p>
+
+<p><strong>Curly brackets typically aren’t used if the match arm code is short, as it is in Listing 6-3 where each arm just returns a value</strong>. If you want to run multiple lines of code in a match arm, you can use curly brackets. For example, the following code would print “Lucky penny!” every time the method was called with a <code class="highlighter-rouge">Coin::Penny</code> but would still return the last value of the block, <code class="highlighter-rouge">1</code>:</p>
+
+<h3 id="patterns-that-bind-to-values">Patterns that Bind to Values</h3>
+<p>Another useful feature of match arms is that they can <strong>bind to the parts of the values that match the pattern</strong>. This is how we can extract values out of enum variants.</p>
+
+<p>As an example, let’s change one of our enum variants to hold data inside it. From 1999 through 2008, the United States minted quarters with different designs for each of the 50 states on one side. No other coins got state designs, so only quarters have this extra value. We can add this information to our <code class="highlighter-rouge">enum</code> by changing the <code class="highlighter-rouge">Quarter</code> variant to include a <code class="highlighter-rouge">UsState</code> value stored inside it, which we’ve done here in Listing 6-4.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span> <span class="c">// so we can inspect the state in a minute</span>
+<span class="k">enum</span> <span class="n">UsState</span> <span class="p">{</span>
+    <span class="n">Alabama</span><span class="p">,</span>
+    <span class="n">Alaska</span><span class="p">,</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+
+<span class="k">enum</span> <span class="n">Coin</span> <span class="p">{</span>
+    <span class="n">Penny</span><span class="p">,</span>
+    <span class="n">Nickel</span><span class="p">,</span>
+    <span class="n">Dime</span><span class="p">,</span>
+    <span class="nf">Quarter</span><span class="p">(</span><span class="n">UsState</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-6-4-a-coin-enum-in-which-the-quarter-variant-also-holds-a-usstate-value">Listing 6-4: A Coin enum in which the Quarter variant also holds a UsState value</h4>
+<p>Let’s imagine that a friend of ours is trying to collect all 50 state quarters. While we sort our loose change by coin type, we’ll also call out the name of the state associated with each quarter so if it’s one our friend doesn’t have, they can add it to their collection.</p>
+
+<p>In the match expression for this code, we add a variable called <code class="highlighter-rouge">state</code> to the pattern that matches values of the variant <code class="highlighter-rouge">Coin::Quarter</code>. When a <code class="highlighter-rouge">Coin::Quarter</code> matches, the <code class="highlighter-rouge">state</code> variable will bind to the value of that quarter’s state. Then we can use <code class="highlighter-rouge">state</code> in the code for that arm, like so:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">value_in_cents</span><span class="p">(</span><span class="n">coin</span><span class="p">:</span> <span class="n">Coin</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u8</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="n">coin</span> <span class="p">{</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Penny</span> <span class="k">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Nickel</span> <span class="k">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="n">Dime</span> <span class="k">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="nn">Coin</span><span class="p">::</span><span class="nf">Quarter</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"State quarter from {:?}!"</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
+            <span class="mi">25</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>If we were to call <code class="highlighter-rouge">value_in_cents(Coin::Quarter(UsState::Alaska))</code>, coin would be <code class="highlighter-rouge">Coin::Quarter(UsState::Alaska)</code>. When we compare that value with each of the match arms, none of them match until we reach <code class="highlighter-rouge">Coin::Quarter(state)</code>. At that point, the binding for <code class="highlighter-rouge">state</code> will be the value <code class="highlighter-rouge">UsState::Alaska</code>. We can then use that binding in the println! expression, thus getting the inner state value out of the <code class="highlighter-rouge">Coin</code> enum variant for <code class="highlighter-rouge">Quarter</code>.</p>
+
+<h3 id="matching-with-option">Matching with Option<T></T></h3>
+<p>In the previous section, we wanted to get the inner <code class="highlighter-rouge">T</code> value out of the <code class="highlighter-rouge">Some</code> case when using <code class="highlighter-rouge">Option&lt;T&gt;</code>; we can also handle <code class="highlighter-rouge">Option&lt;T&gt;</code> using <code class="highlighter-rouge">match</code> as we did with the <code class="highlighter-rouge">Coin</code> enum! Instead of comparing coins, we’ll compare the variants of <code class="highlighter-rouge">Option&lt;T&gt;</code>, but the way that the match expression works remains the same.</p>
+
+<p>Let’s say we want to write a function that takes an <code class="highlighter-rouge">Option&lt;i32&gt;</code> and, if there’s a value inside, adds 1 to that value. If there isn’t a value inside, the function should return the None value and not attempt to perform any operations.</p>
+
+<p>This function is <strong>very easy</strong> to write, thanks to <code class="highlighter-rouge">match</code>, and will look like Listing 6-5.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
+        <span class="nb">None</span> <span class="k">=&gt;</span> <span class="nb">None</span><span class="p">,</span>
+        <span class="nf">Some</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="n">five</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">six</span> <span class="o">=</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">five</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">none</span> <span class="o">=</span> <span class="nf">plus_one</span><span class="p">(</span><span class="nb">None</span><span class="p">);</span>
+</code></pre></div></div>
+<h4 id="listing-6-5-a-function-that-uses-a-match-expression-on-an-option">Listing 6-5: A function that uses a match expression on an Option<i32></i32></h4>
+
+<p>Let’s examine the first execution of <code class="highlighter-rouge">plus_one</code> in more detail. When we call <code class="highlighter-rouge">plus_one(five)</code>, the variable <code class="highlighter-rouge">x</code> in the body of <code class="highlighter-rouge">plus_one</code> will have the value <code class="highlighter-rouge">Some(5)</code>. We then compare that against each match arm.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">None</span> <span class="k">=&gt;</span> <span class="nb">None</span><span class="p">,</span>
+</code></pre></div></div>
+<p>The Some(5) value doesn’t match the pattern None, so we continue to the next arm.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Some</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+</code></pre></div></div>
+<p>Does <code class="highlighter-rouge">Some(5)</code> match <code class="highlighter-rouge">Some(i)</code>? Why yes it does! We have the same variant. The <code class="highlighter-rouge">i</code> binds to the value contained in <code class="highlighter-rouge">Some</code>, so <code class="highlighter-rouge">i</code> takes the value <code class="highlighter-rouge">5</code>. The code in the match arm is then executed, so we add 1 to the value of i and create a <strong>new Some</strong> value with our total <code class="highlighter-rouge">6</code> inside.</p>
+
+<p>Now let’s consider the second call of <code class="highlighter-rouge">plus_one</code> in Listing 6-5, where <code class="highlighter-rouge">x</code> is <code class="highlighter-rouge">None</code>. We enter the match and compare to the first arm.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">None</span> <span class="k">=&gt;</span> <span class="nb">None</span><span class="p">,</span>
+</code></pre></div></div>
+<p>It matches! There’s no value to add to, so the program stops and returns the <code class="highlighter-rouge">None</code> value on the right side of <code class="highlighter-rouge">=&gt;</code>. Because the first arm matched, no other arms are compared.</p>
+
+<p>Combining <code class="highlighter-rouge">match</code> and enums is useful in many situations. You’ll see this pattern a lot in Rust code: match against an enum, bind a variable to the data inside, and then execute code based on it. It’s a bit tricky at first, but once you get used to it, you’ll wish you had it in all languages. It’s consistently a user favorite.</p>
+
+<h3 id="matches-are-exhaustive">Matches Are Exhaustive</h3>
+<p>There’s one other aspect of match we need to discuss. Consider this version of our plus_one function that has a bug and won’t compile:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
+        <span class="nf">Some</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We didn’t handle the <code class="highlighter-rouge">None</code> case, so this code will cause a <strong>bug</strong>. Luckily, it’s a bug Rust knows how to catch. If we try to compile this code, we’ll get this error:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0004</span><span class="p">]:</span> <span class="n">non</span><span class="o">-</span><span class="n">exhaustive</span> <span class="n">patterns</span><span class="p">:</span> <span class="err">`</span><span class="nb">None</span><span class="err">`</span> <span class="n">not</span> <span class="n">covered</span>
+ <span class="o">-</span><span class="k">-&gt;</span>
+  <span class="p">|</span>
+<span class="mi">6</span> <span class="p">|</span>         <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
+  <span class="p">|</span>               <span class="o">^</span> <span class="n">pattern</span> <span class="err">`</span><span class="nb">None</span><span class="err">`</span> <span class="n">not</span> <span class="n">covered</span>
+</code></pre></div></div>
+<p>Rust knows that we didn’t cover every possible case and even knows which pattern we forgot! Matches in Rust are <em>exhaustive</em>: we must exhaust every last possibility in order for the code to be valid. Especially in the case of <code class="highlighter-rouge">Option&lt;T&gt;</code>, when Rust prevents us from forgetting to explicitly handle the None case, it protects us from assuming that we have a value when we might have null, thus making the billion-dollar mistake discussed earlier.</p>
+
+<h3 id="the-_-placeholder">The _ Placeholder</h3>
+<p>Rust also has a pattern we can use when we don’t want to list all possible values. 
+For example, a u8 can have valid values of 0 through 255. If we only care about the values 1, 3, 5, and 7, we don’t want to have to list out 0, 2, 4, 6, 8, 9 all the way up to 255. <strong>Fortunately, we don’t have to: we can use the special pattern <code class="highlighter-rouge">_</code> instead</strong>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">some_u8_value</span> <span class="o">=</span> <span class="mi">0u8</span><span class="p">;</span>
+<span class="k">match</span> <span class="n">some_u8_value</span> <span class="p">{</span>
+    <span class="mi">1</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"one"</span><span class="p">),</span>
+    <span class="mi">3</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"three"</span><span class="p">),</span>
+    <span class="mi">5</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"five"</span><span class="p">),</span>
+    <span class="mi">7</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"seven"</span><span class="p">),</span>
+    <span class="mi">_</span> <span class="k">=&gt;</span> <span class="p">(),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">_</code> pattern will match any value. By putting it after our other arms, the <code class="highlighter-rouge">_</code> will match all the possible cases that aren’t specified before it. The <code class="highlighter-rouge">()</code> is just the unit value, so <strong>nothing will happen</strong> in the <code class="highlighter-rouge">_</code> case. As a result, we can say that we want to do nothing for all the possible values that we don’t list before the <code class="highlighter-rouge">_</code> placeholder.</p>
+
+<p>However, the <code class="highlighter-rouge">match</code> expression can be a bit wordy in a situation in which we care about only <em>one</em> of the cases. For this situation, Rust provides <code class="highlighter-rouge">if let</code>.</p>
+
+<h2 id="concise-control-flow-with-if-let">Concise Control Flow with if let</h2>
+<p>The <code class="highlighter-rouge">if let</code> syntax lets you combine if and let into a less verbose way to handle values that match one pattern while ignoring the rest. 
+Consider the program in Listing 6-6 that matches on an <code class="highlighter-rouge">Option&lt;u8&gt;</code> value but only wants to execute code if the value is 3.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">some_u8_value</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">0u8</span><span class="p">);</span>
+<span class="k">match</span> <span class="n">some_u8_value</span> <span class="p">{</span>
+    <span class="nf">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"three"</span><span class="p">),</span>
+    <span class="mi">_</span> <span class="k">=&gt;</span> <span class="p">(),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-6-6-a-match-that-only-cares-about-executing-code-when-the-value-is-some3">Listing 6-6: A match that only cares about executing code when the value is Some(3)</h4>
+<p>We want to do something with the <code class="highlighter-rouge">Some(3)</code> match but do nothing with any other <code class="highlighter-rouge">Some&lt;u8&gt;</code> value or the <code class="highlighter-rouge">None</code> value. 
+To satisfy the <code class="highlighter-rouge">match</code> expression, we have to add <code class="highlighter-rouge">_ =&gt; ()</code> after processing just one variant, which is a lot of boilerplate code to add.</p>
+
+<p>Instead, we could write this in a <strong>shorter</strong> way using <code class="highlighter-rouge">if let</code>. The following code behaves the same as the <code class="highlighter-rouge">match</code> in Listing 6-6:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">some_u8_value</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"three"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The syntax <code class="highlighter-rouge">if let</code> takes a pattern and an expression separated by an <code class="highlighter-rouge">equal(=) sign</code>. It works the same way as a <code class="highlighter-rouge">match</code>, where the expression is given to the <code class="highlighter-rouge">match</code> and the pattern is its first arm.</p>
+
+<p>Using <code class="highlighter-rouge">if let</code> means <strong>less</strong> typing, <strong>less</strong> indentation, and <strong>less</strong> boilerplate code. However, you lose the exhaustive checking that <code class="highlighter-rouge">match</code> enforces. Choosing between <code class="highlighter-rouge">match</code> and <code class="highlighter-rouge">if let</code> depends on what you’re doing in your particular situation and whether gaining conciseness is an appropriate trade-off for losing exhaustive checking.</p>
+
+<p>In other words, you can think of <code class="highlighter-rouge">if let</code> as syntax sugar for a <code class="highlighter-rouge">match</code> that runs code when the value matches one pattern and then ignores all other values.</p>
+
+<p>We can include an <code class="highlighter-rouge">else</code> with an <code class="highlighter-rouge">if let</code>. The block of code that goes with the <code class="highlighter-rouge">else</code> is the <strong>same</strong> as the block of code that would go with the <code class="highlighter-rouge">_</code> case in the <code class="highlighter-rouge">match</code> expression that is equivalent to the <code class="highlighter-rouge">if let</code> and <code class="highlighter-rouge">else</code>. Recall the <code class="highlighter-rouge">Coin</code> enum definition in Listing 6-4, where the <code class="highlighter-rouge">Quarter</code> variant also held a <code class="highlighter-rouge">UsState</code> value. If we wanted to count all non-quarter coins we see while also announcing the state of the quarters, we could do that with a <code class="highlighter-rouge">match</code> expression like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">match</span> <span class="n">coin</span> <span class="p">{</span>
+    <span class="nn">Coin</span><span class="p">::</span><span class="nf">Quarter</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"State quarter from {:?}!"</span><span class="p">,</span> <span class="n">state</span><span class="p">),</span>
+    <span class="mi">_</span> <span class="k">=&gt;</span> <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Or we could use an if let and else expression like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nn">Coin</span><span class="p">::</span><span class="nf">Quarter</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">=</span> <span class="n">coin</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"State quarter from {:?}!"</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>If you have a situation in which your program has logic that is too verbose to express using a match, <strong>remember that <code class="highlighter-rouge">if let</code> is in your Rust toolbox as well</strong>.</p>
+
+<h2 id="summary">Summary</h2>
+<p>We’ve now covered how to use <strong>enums</strong> to create custom types that can be one of a set of enumerated values. We’ve shown how the standard library’s <code class="highlighter-rouge">Option&lt;T&gt;</code> type helps you use the type system to <strong>prevent errors</strong>. When enum values have data inside them, you can use <code class="highlighter-rouge">match</code> or <code class="highlighter-rouge">if let</code> to extract and use those values, depending on how many cases you need to handle.</p>
+
+<p>Your Rust programs can now express concepts in your domain using structs and enums. Creating custom types to use in your API ensures type safety: the compiler will make certain your functions get only values of the type each function expects.</p>
+
+<p>In order to provide a well-organized API to your users that is straightforward to use and only exposes exactly what your users will need, let’s now turn to Rust’s modules.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#enumerations" class="page__taxonomy-item" rel="tag">Enumerations</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#enum" class="page__taxonomy-item" rel="tag">Enum</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#matching" class="page__taxonomy-item" rel="tag">Matching</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pattern-matching" class="page__taxonomy-item" rel="tag">Pattern Matching</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pattern" class="page__taxonomy-item" rel="tag">Pattern</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-02-26T00:00:00+00:00">February 26, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+6.+Enums+and+Pattern+Matching%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F6.Enums-and-Pattern-Matching%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F6.Enums-and-Pattern-Matching%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F6.Enums-and-Pattern-Matching%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/5.Using-Structs-to-Structure-Related-Data/" class="pagination--pager" title="RUST : 5. Using structs to structure related data
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/5.Using-Structs-to-Structure-Related-Data/" rel="permalink">RUST : 5. Using structs to structure related data
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A struct, or structure, is a custom data type that lets you name and package together multiple related values that make up a meaningful group.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/4.Understanding-Ownership/" rel="permalink">RUST : 4. Understanding Ownership
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  28 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/3.Common-Programming-Concepts/" rel="permalink">RUST : 3. Common Programming Concepts
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Variables and Mutability
+Default variables are immutable.
+If you want mutable variable, can make them mutable by adding mut in front of the variable name.
+fn...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Overview/" rel="permalink">RUST : 0. Overview
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I will post a summary of RUST 
+Plz follow the below link. Thx :D
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
