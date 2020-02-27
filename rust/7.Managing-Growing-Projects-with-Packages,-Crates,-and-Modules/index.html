@@ -1,0 +1,1116 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="As you write large programs, organizing your code will be important because keeping track of your entire program in your head will become impossible. By grouping related functionality and separating code with distinct features, you’ll clarify where to find code that implements a particular feature and where to go to change how a feature works.">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : 7. Managing Growing Projects with Packages, Crates, and Modules">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules/">
+
+
+  <meta property="og:description" content="As you write large programs, organizing your code will be important because keeping track of your entire program in your head will become impossible. By grouping related functionality and separating code with distinct features, you’ll clarify where to find code that implements a particular feature and where to go to change how a feature works.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-27T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : 7. Managing Growing Projects with Packages, Crates, and Modules">
+    <meta itemprop="description" content="As you write large programs, organizing your code will be important because keeping track of your entire program in your head will become impossible. By grouping related functionality and separating code with distinct features, you’ll clarify where to find code that implements a particular feature and where to go to change how a feature works.">
+    <meta itemprop="datePublished" content="2020-02-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : 7. Managing Growing Projects with Packages, Crates, and Modules
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  26 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>As you write large programs, organizing your code will be important because keeping track of your entire program in your head will become impossible. By grouping related functionality and separating code with distinct features, you’ll clarify where to find code that implements a particular feature and where to go to change how a feature works.</p>
+
+<h2 id="packages-and-crates">Packages and Crates</h2>
+<p>The first parts of the module system we’ll cover are <strong>packages</strong> and <strong>crates</strong>. A crate is a binary or library. The crate root is a source file that the Rust compiler starts from and makes up the root module of your crate (we’ll explain modules in depth in the “Defining Modules to Control Scope and Privacy”) section. A package is one or more crates that provide a set of functionality. A package contains a Cargo.toml file that describes how to build those crates.</p>
+
+<p>Several rules determine what a package can contain. A package must contain zero or one library crates, and no more. It can contain as many binary crates as you’d like, but it must contain at least one crate (either library or binary).</p>
+
+<p>Let’s walk through what happens when we create a package. First, we enter the command cargo new:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">new</span> <span class="n">my</span><span class="o">-</span><span class="n">project</span>
+     <span class="n">Created</span> <span class="n">binary</span> <span class="p">(</span><span class="n">application</span><span class="p">)</span> <span class="err">`</span><span class="n">my</span><span class="o">-</span><span class="n">project</span><span class="err">`</span> <span class="n">package</span>
+<span class="err">$</span> <span class="n">ls</span> <span class="n">my</span><span class="o">-</span><span class="n">project</span>
+<span class="n">Cargo</span><span class="p">.</span><span class="n">toml</span>
+<span class="n">src</span>
+<span class="err">$</span> <span class="n">ls</span> <span class="n">my</span><span class="o">-</span><span class="n">project</span><span class="o">/</span><span class="n">src</span>
+<span class="n">main</span><span class="p">.</span><span class="n">rs</span>
+</code></pre></div></div>
+
+<p>When we entered the command, Cargo created a <em>Cargo.toml</em> file, giving us a package. Looking at the contents of <em>Cargo.toml</em>, there’s no mention of <em>src/main.rs</em> because Cargo follows a convention that <em>src/main.rs</em> is the crate root of a binary crate with the same name as the package. Likewise, Cargo knows that if the package directory contains <em>src/lib.rs</em>, the package contains a <code class="highlighter-rouge">library crate with the same name as the package</code>, and <em>src/lib.rs</em> is its crate root. Cargo passes the crate root files to rustc to build the library or binary.</p>
+
+<p>Here, we have a package that only contains <em>src/main.rs</em>, meaning it only contains a binary crate named <code class="highlighter-rouge">my-project</code>. If a package contains src/main.rs and src/lib.rs, it has two crates: a library and a binary, both with the same name as the package. A package can have multiple binary crates by placing files in the src/bin directory: each file will be a separate binary crate.</p>
+
+<p>A crate will group related <strong>functionality</strong> together in a scope so the functionality is easy to share between multiple projects. For example, the rand crate we used in Chapter 2 provides functionality that generates random numbers. We can use that functionality in our own projects by bringing the rand crate into our project’s scope. All the functionality provided by the rand crate is accessible through the crate’s name, rand.</p>
+
+<p>Keeping a crate’s functionality in its own scope clarifies whether particular functionality is defined in our crate or the <code class="highlighter-rouge">rand</code> crate and prevents potential conflicts. For example, the <code class="highlighter-rouge">rand</code> crate provides a trait named <code class="highlighter-rouge">Rng</code>. We can also define a struct named <code class="highlighter-rouge">Rng</code> in our own crate. Because a crate’s functionality is namespaced in its own scope, when we add <code class="highlighter-rouge">rand</code> as a dependency, the compiler isn’t confused about what the name <code class="highlighter-rouge">Rng</code> refers to. In our crate, it refers to the <code class="highlighter-rouge">struct Rng</code> that we defined. We would access the <code class="highlighter-rouge">Rng</code> trait from the <code class="highlighter-rouge">rand</code> crate as <code class="highlighter-rouge">rand::Rng</code>.</p>
+
+<h2 id="defining-modules-to-control-scope-and-privacy">Defining Modules to Control Scope and Privacy</h2>
+<p>In this section, we’ll talk about modules and other parts of the module system, namely <em>paths</em> that allow you to name items; the <code class="highlighter-rouge">use</code> keyword that brings a path into scope; and the <code class="highlighter-rouge">pub</code> keyword to make items public. We’ll also discuss the as keyword, external packages, and the glob operator. For now, let’s focus on modules!</p>
+
+<p><strong>Modules</strong> let us organize code within a crate into groups for readability and easy reuse. Modules also control the <code class="highlighter-rouge">privacy</code> of items, which is whether an item can be used by outside code (<code class="highlighter-rouge">public</code>) or is an internal implementation detail and not available for outside use (<code class="highlighter-rouge">private</code>).</p>
+
+<p>As an example, let’s write a library crate that provides the functionality of a restaurant. We’ll define the signatures of functions but leave their bodies empty to concentrate on the organization of the code, rather than actually implement a restaurant in code.</p>
+
+<p>In the restaurant industry, some parts of a restaurant are referred to as <code class="highlighter-rouge">front of house</code> and others as <code class="highlighter-rouge">back of house</code>. Front of house is where customers are; this is where hosts seat customers, servers take orders and payment, and bartenders make drinks. Back of house is where the chefs and cooks work in the kitchen, dishwashers clean up, and managers do administrative work.</p>
+
+<p>To structure our crate in the same way that a real restaurant works, we can organize the functions into nested modules. Create a new library named <code class="highlighter-rouge">restaurant</code> by running <code class="highlighter-rouge">cargo new --lib restaurant</code>; then put the code in Listing 7-1 into <em>src/lib.rs</em> to define some modules and function signatures.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="k">fn</span> <span class="nf">seat_at_table</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+
+    <span class="k">mod</span> <span class="n">serving</span> <span class="p">{</span>
+        <span class="k">fn</span> <span class="nf">take_order</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="k">fn</span> <span class="nf">serve_order</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="k">fn</span> <span class="nf">take_payment</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-1-a-front_of_house-module-containing-other-modules-that-then-contain-functions">Listing 7-1: A front_of_house module containing other modules that then contain functions</h4>
+
+<p>We define a <strong>module</strong> by starting with the <code class="highlighter-rouge">mod</code> keyword and then specify the name of the module (in this case, <code class="highlighter-rouge">front_of_house</code>) and place curly brackets around the body of the module. Inside modules, we can have other modules, as in this case with the modules <code class="highlighter-rouge">hosting</code> and <code class="highlighter-rouge">serving</code>. Modules can also hold definitions for other items, such as structs, enums, constants, traits, or—as in Listing 7-1—functions.</p>
+
+<p>By using modules, we can group related definitions together and name why they’re related. Programmers using this code would have an easier time finding the definitions they wanted to use because they could navigate the code based on the groups rather than having to read through all the definitions. Programmers adding new functionality to this code would know where to place the code to keep the program organized.</p>
+
+<p>Earlier, we mentioned that <em>src/main.rs</em> and <em>src/lib.rs</em> are called <strong>crate roots</strong>. The reason for their name is that the contents of either of these two files form a module named crate at the root of the crate’s module structure, known as the module tree.</p>
+
+<p>Listing 7-2 shows the module tree for the structure in Listing 7-1.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crate</span>
+ <span class="err">└──</span> <span class="n">front_of_house</span>
+     <span class="err">├──</span> <span class="n">hosting</span>
+     <span class="err">│</span>   <span class="err">├──</span> <span class="n">add_to_waitlist</span>
+     <span class="err">│</span>   <span class="err">└──</span> <span class="n">seat_at_table</span>
+     <span class="err">└──</span> <span class="n">serving</span>
+         <span class="err">├──</span> <span class="n">take_order</span>
+         <span class="err">├──</span> <span class="n">serve_order</span>
+         <span class="err">└──</span> <span class="n">take_payment</span>
+</code></pre></div></div>
+<h4 id="listing-7-2-the-module-tree-for-the-code-in-listing-7-1">Listing 7-2: The module tree for the code in Listing 7-1</h4>
+<p>This tree shows how some of the modules nest inside one another (for example, <code class="highlighter-rouge">hosting</code> nests inside <code class="highlighter-rouge">front_of_house</code>). The tree also shows that some modules are <em>siblings</em> to each other, meaning they’re defined in the same module (<code class="highlighter-rouge">hosting</code> and <code class="highlighter-rouge">serving</code> are defined within <code class="highlighter-rouge">front_of_house</code>). To continue the family metaphor, if module A is contained inside module B, we say that module A is the child of module B and that module B is the parent of module A. Notice that the entire module tree is rooted under the implicit module named <code class="highlighter-rouge">crate</code>.</p>
+
+<p>The module tree might remind you of the filesystem’s directory tree on your computer; this is a very apt comparison! Just like directories in a filesystem, you use modules to organize your code. And just like files in a directory, we need a way to find our modules.</p>
+
+<h2 id="paths-for-referring-to-an-item-in-the-module-tree">Paths for Referring to an Item in the Module Tree</h2>
+<p>To show Rust where to find an item in a module tree, we use a path in the same way we use a path when navigating a filesystem. If we want to call a function, we need to know its path.</p>
+
+<p>A path can take two forms:</p>
+<ul>
+  <li>An <em>absolute path</em> starts from a crate root by using a <strong>crate name</strong> or a <strong>literal crate</strong>.</li>
+  <li>A <em>relative path</em> starts from the current module and uses <code class="highlighter-rouge">self</code>, <code class="highlighter-rouge">super</code>, or an <code class="highlighter-rouge">identifier</code> in the current module.</li>
+</ul>
+
+<p>Both absolute and relative paths are followed by one or more identifiers separated by double colons (<code class="highlighter-rouge">::</code>).</p>
+
+<p>Let’s return to the example in Listing 7-1. How do we call the <code class="highlighter-rouge">add_to_waitlist</code> function? This is the same as asking, what’s the path of the <code class="highlighter-rouge">add_to_waitlist</code> function? In Listing 7-3, we simplified our code a bit by removing some of the modules and functions. We’ll <strong>show two ways to call the <code class="highlighter-rouge">add_to_waitlist</code> function from a new function <code class="highlighter-rouge">eat_at_restaurant</code> defined in the crate root</strong>. The <code class="highlighter-rouge">eat_at_restaurant</code> function is part of our library crate’s public API, so we mark it with the <code class="highlighter-rouge">pub</code> keyword. In the <strong>”Exposing Paths with the pub Keyword”</strong> section, we’ll go into more detail about <code class="highlighter-rouge">pub</code>. Note that this example won’t compile just yet; we’ll explain why in a bit.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Absolute path</span>
+    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+
+    <span class="c">// Relative path</span>
+    <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-3-calling-the-add_to_waitlist-function-using-absolute-and-relative-paths">Listing 7-3: Calling the add_to_waitlist function using absolute and relative paths</h4>
+
+<p>The first time we call the <code class="highlighter-rouge">add_to_waitlist</code> function in <code class="highlighter-rouge">eat_at_restaurant</code>, we use an <em>absolute path</em>. <strong>The <code class="highlighter-rouge">add_to_waitlist</code> function is defined in the same crate as <code class="highlighter-rouge">eat_at_restaurant</code>, which means we can use the <code class="highlighter-rouge">crate</code> keyword to start an absolute path</strong>.</p>
+
+<p>After <code class="highlighter-rouge">crate</code>, we include each of the successive modules until we make our way to <code class="highlighter-rouge">add_to_waitlist</code>. You can imagine a filesystem with the same structure, and we’d specify the path /front_of_house/hosting/add_to_waitlist to run the add_to_waitlist program; using the crate name to <strong>start from the crate root is like using / to start from the filesystem root in your shell</strong>.</p>
+
+<p>The second time we call <code class="highlighter-rouge">add_to_waitlist</code> in <code class="highlighter-rouge">eat_at_restaurant</code>, we use a <em>relative path</em>. The path starts with <code class="highlighter-rouge">front_of_house</code>, the name of the module defined at the <strong>same level of the module tree</strong> as e<code class="highlighter-rouge">at_at_restaurant</code>. Here the filesystem equivalent would be using the path front_of_house/hosting/add_to_waitlist. Starting with a name means that the path is relative.</p>
+
+<p>Choosing whether to use a relative or absolute path is a decision you’ll make based on your project. 
+The decision should depend on whether you’re more likely to move item definition code separately from or together with the code that uses the item. 
+For example, if we move the <code class="highlighter-rouge">front_of_house</code> module and the <code class="highlighter-rouge">eat_at_restaurant</code> function into a module named <code class="highlighter-rouge">customer_experience</code>, we’d need to update the absolute path to add_to_waitlist, but the relative path would still be valid. However, if we moved the <code class="highlighter-rouge">eat_at_restaurant</code> function separately into a module named <code class="highlighter-rouge">dining</code>, the absolute path to the add_to_waitlist call would stay the same, but the relative path would need to be updated. <strong>Our preference is to specify absolute paths</strong> because it’s more likely to move code definitions and item calls independently of each other.</p>
+
+<p>Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The error we get is shown in Listing 7-4.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
+   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/restaurant)</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">module</span> <span class="err">`</span><span class="n">hosting</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">28</span>
+  <span class="p">|</span>
+<span class="mi">9</span> <span class="p">|</span>     <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+  <span class="p">|</span>                            <span class="o">^^^^^^^</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">module</span> <span class="err">`</span><span class="n">hosting</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
+  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">21</span>
+   <span class="p">|</span>
+<span class="mi">12</span> <span class="p">|</span>     <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+   <span class="p">|</span>                     <span class="o">^^^^^^^</span>
+</code></pre></div></div>
+<h4 id="listing-7-4-compiler-errors-from-building-the-code-in-listing-7-3">Listing 7-4: Compiler errors from building the code in Listing 7-3</h4>
+
+<p>The error messages say that module hosting is private. In other words, we have the correct paths for the hosting module and the add_to_waitlist function, but Rust won’t let us use them because it <strong>doesn’t have access</strong> to the private sections.</p>
+
+<p>Modules aren’t useful only for organizing your code. They also define Rust’s privacy boundary: the line that encapsulates the implementation details external code isn’t allowed to know about, call, or rely on. So, if you want to make an item like a function or struct private, you put it in a module.</p>
+
+<p>The way privacy works in Rust is that <strong>all items (functions, methods, structs, enums, modules, and constants) are private by default</strong>. Items in a parent module <strong>can’t use</strong> the private items inside child modules, but items in child modules <strong>can use</strong> the items in their ancestor modules. The reason is that child modules wrap and hide their implementation details, but the child modules can see the context in which they’re defined. To continue with the restaurant metaphor, think of the privacy rules as being like the back office of a restaurant: what goes on in there is private to restaurant customers, but office managers can see and do everything in the restaurant in which they operate.</p>
+
+<p>Rust chose to have the module system function this way so that <strong>hiding inner implementation details is the default</strong>. That way, you know which parts of the inner code you can change without breaking outer code. But you can expose inner parts of child modules code to outer ancestor modules by using the <code class="highlighter-rouge">pub</code> keyword to make an item public.</p>
+
+<h3 id="exposing-paths-with-the-pub-keyword">Exposing Paths with the pub Keyword</h3>
+<p>Let’s return to the error in Listing 7-4 that told us the hosting module is private. 
+We want the <code class="highlighter-rouge">eat_at_restaurant</code> function in the parent module to have access to the <code class="highlighter-rouge">add_to_waitlist</code> function in the child module, so we mark the hosting module with the pub keyword, as shown in Listing 7-5.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Absolute path</span>
+    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+
+    <span class="c">// Relative path</span>
+    <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-5-declaring-the-hosting-module-as-pub-to-use-it-from-eat_at_restaurant">Listing 7-5: Declaring the hosting module as pub to use it from eat_at_restaurant</h4>
+<p>Unfortunately, the code in Listing 7-5 still results in an error, as shown in Listing 7-6.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
+   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/restaurant)</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">function</span> <span class="err">`</span><span class="n">add_to_waitlist</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">37</span>
+  <span class="p">|</span>
+<span class="mi">9</span> <span class="p">|</span>     <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+  <span class="p">|</span>                                     <span class="o">^^^^^^^^^^^^^^^</span>
+
+<span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">function</span> <span class="err">`</span><span class="n">add_to_waitlist</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
+  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">30</span>
+   <span class="p">|</span>
+<span class="mi">12</span> <span class="p">|</span>     <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+   <span class="p">|</span>                              <span class="o">^^^^^^^^^^^^^^^</span>
+</code></pre></div></div>
+<p>What happened? Adding the pub keyword in front of mod hosting makes the module public. 
+With this change, if we can access <code class="highlighter-rouge">front_of_house</code>, we can access <code class="highlighter-rouge">hosting</code>. But the contents of <code class="highlighter-rouge">hosting</code> are still private; 
+making the module public doesn’t make its contents public. The <code class="highlighter-rouge">pub</code> keyword on a module <strong>only lets code in its ancestor modules refer to it</strong>.</p>
+
+<p>The errors in Listing 7-6 say that the <code class="highlighter-rouge">add_to_waitlist</code> function is private. The privacy rules apply to structs, enums, functions, and methods as well as modules.</p>
+
+<p>Let’s also make the <code class="highlighter-rouge">add_to_waitlist</code> function public by adding the <code class="highlighter-rouge">pub</code> keyword before its definition, as in Listing 7-7.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Absolute path</span>
+    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+
+    <span class="c">// Relative path</span>
+    <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-7-adding-the-pub-keyword-to-mod-hosting-and-fn-add_to_waitlist-lets-us-call-the-function-from-eat_at_restaurant">Listing 7-7: Adding the pub keyword to mod hosting and fn add_to_waitlist lets us call the function from eat_at_restaurant</h4>
+<p>Now the code will compile! Let’s look at the absolute and the relative path and double-check why adding the pub keyword lets us use these paths in add_to_waitlist with respect to the privacy rules.</p>
+
+<p>In the absolute path, we start with <code class="highlighter-rouge">crate</code>, the root of our crate’s module tree. Then the front_of_house module is <strong>defined in the crate root</strong>. 
+The front_of_house module isn’t public, but because the eat_at_restaurant function is defined in the <strong>same module</strong> as front_of_house (that is, eat_at_restaurant and front_of_house are siblings –&gt; <span style="color:blue;">think about directory</span>), we can refer to front_of_house from eat_at_restaurant. Next is the hosting module marked with <code class="highlighter-rouge">pub</code>. We can access the parent module of hosting, so we can access hosting. Finally, the add_to_waitlist function is marked with pub and we can access its parent module, so this function call works!</p>
+
+<p>In the relative path, the logic is the same as the absolute path except for the first step: rather than starting from the crate root, the path starts from front_of_house. The front_of_house module is defined within the same module as eat_at_restaurant, so the relative path starting from the module in which eat_at_restaurant is defined works. Then, because hosting and add_to_waitlist are marked with pub, the rest of the path works, and this function call is valid!</p>
+
+<h3 id="starting-relative-paths-with-super">Starting Relative Paths with super</h3>
+<p>We can also construct relative paths that begin in the parent module by using super at the start of the path. 
+This is like starting a filesystem path with the <strong><code class="highlighter-rouge">..</code></strong> syntax. Why would we want to do this?</p>
+
+<p>Consider the code in Listing 7-8 that models the situation in which a chef fixes an incorrect order and personally brings it out to the customer. 
+The function fix_incorrect_order calls the function serve_order by specifying the path to serve_order starting with <code class="highlighter-rouge">super</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">serve_order</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="k">mod</span> <span class="n">back_of_house</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fix_incorrect_order</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">cook_order</span><span class="p">();</span>
+        <span class="nn">super</span><span class="p">::</span><span class="nf">serve_order</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">cook_order</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-8-calling-a-function-using-a-relative-path-starting-with-super">Listing 7-8: Calling a function using a relative path starting with super</h4>
+<p>The <code class="highlighter-rouge">fix_incorrect_order</code> function is in the <code class="highlighter-rouge">back_of_house</code> module, so we can use super to go to the parent module of <code class="highlighter-rouge">back_of_house</code>, which in this case is crate, the root. From there, we look for serve_order and find it. Success! 
+We think the <code class="highlighter-rouge">back_of_house</code> module and the <code class="highlighter-rouge">serve_order</code> function are likely to stay in the same relationship to each other and <strong>get moved together should we decide to reorganize the crate’s module tree</strong>. Therefore, we used super so we’ll have fewer places to update code in the future if this code gets moved to a different module.</p>
+
+<h3 id="making-structs-and-enums-public">Making Structs and Enums Public</h3>
+<p>We can also use <code class="highlighter-rouge">pub</code> to designate structs and enums as public, but there are a few extra details. 
+If we use <code class="highlighter-rouge">pub</code> before a struct definition, we <strong>make the struct public, but the struct’s fields will still be private</strong>. 
+We can make each field public or not on a case-by-case basis. 
+In Listing 7-9, we’ve defined a public <code class="highlighter-rouge">back_of_house::Breakfast</code> struct with a public <code class="highlighter-rouge">toast</code> field but a private <code class="highlighter-rouge">seasonal_fruit</code> field. 
+This models the case in a restaurant where the customer can pick the type of bread that comes with a meal, but the chef decides which fruit accompanies the meal based on what’s in season and in stock. The available fruit changes quickly, so customers can’t choose the fruit or even see which fruit they’ll get.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">back_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">struct</span> <span class="n">Breakfast</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="n">toast</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+        <span class="n">seasonal_fruit</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">impl</span> <span class="n">Breakfast</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">summer</span><span class="p">(</span><span class="n">toast</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Breakfast</span> <span class="p">{</span>
+            <span class="n">Breakfast</span> <span class="p">{</span>
+                <span class="n">toast</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="n">toast</span><span class="p">),</span>
+                <span class="n">seasonal_fruit</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"peaches"</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Order a breakfast in the summer with Rye toast</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">meal</span> <span class="o">=</span> <span class="nn">back_of_house</span><span class="p">::</span><span class="nn">Breakfast</span><span class="p">::</span><span class="nf">summer</span><span class="p">(</span><span class="s">"Rye"</span><span class="p">);</span>
+    <span class="c">// Change our mind about what bread we'd like</span>
+    <span class="n">meal</span><span class="py">.toast</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Wheat"</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"I'd like {} toast please"</span><span class="p">,</span> <span class="n">meal</span><span class="py">.toast</span><span class="p">);</span>
+
+    <span class="c">// The next line won't compile if we uncomment it; we're not allowed</span>
+    <span class="c">// to see or modify the seasonal fruit that comes with the meal</span>
+    <span class="c">// meal.seasonal_fruit = String::from("blueberries");</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-9-a-struct-with-some-public-fields-and-some-private-fields">Listing 7-9: A struct with some public fields and some private fields</h4>
+<p>Because the <code class="highlighter-rouge">toast</code> field in the <code class="highlighter-rouge">back_of_house::Breakfast</code> struct is public, in <code class="highlighter-rouge">eat_at_restaurant</code> we can write and read to the toast field using dot notation. 
+Notice that we can’t use the <code class="highlighter-rouge">seasonal_fruit</code> field in <code class="highlighter-rouge">eat_at_restaurant</code> because <code class="highlighter-rouge">seasonal_fruit</code> is private. 
+Try uncommenting the line modifying the seasonal_fruit field value to see what error you get!</p>
+
+<p>Also, note that because back_of_house::Breakfast has a private field, the struct needs to provide a public associated function that constructs an instance of Breakfast (we’ve named it <code class="highlighter-rouge">summer</code> here). If Breakfast didn’t have such a function, we couldn’t create an instance of Breakfast in eat_at_restaurant because we couldn’t set the value of the private seasonal_fruit field in eat_at_restaurant.</p>
+
+<p>In contrast, if we make an enum public, all of its variants are then public. We only need the pub before the enum keyword, as shown in Listing 7-10.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">back_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">enum</span> <span class="n">Appetizer</span> <span class="p">{</span>
+        <span class="n">Soup</span><span class="p">,</span>
+        <span class="n">Salad</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">order1</span> <span class="o">=</span> <span class="nn">back_of_house</span><span class="p">::</span><span class="nn">Appetizer</span><span class="p">::</span><span class="n">Soup</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">order2</span> <span class="o">=</span> <span class="nn">back_of_house</span><span class="p">::</span><span class="nn">Appetizer</span><span class="p">::</span><span class="n">Salad</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-10-designating-an-enum-as-public-makes-all-its-variants-public">Listing 7-10: Designating an enum as public makes all its variants public</h4>
+<p>Because we made the Appetizer enum public, we can use the Soup and Salad variants in <code class="highlighter-rouge">eat_at_restaurant</code>. 
+Enums aren’t very useful unless their variants are public; it would be annoying to have to annotate all enum variants with pub in every case, so <strong>the default for enum variants is to be public</strong>. 
+Structs are often useful without their fields being public, so <strong>struct fields follow the general rule of everything being private by default</strong> unless annotated with pub.</p>
+
+<p>There’s one more situation involving pub that we haven’t covered, and that is our last module system feature: the <code class="highlighter-rouge">use</code> keyword. 
+We’ll cover use by itself first, and then we’ll show how to combine <code class="highlighter-rouge">pub</code> and <code class="highlighter-rouge">use</code>.</p>
+
+<h2 id="bringing-paths-into-scope-with-the-use-keyword">Bringing Paths into Scope with the use Keyword</h2>
+<p>It might seem like the paths we’ve written to call functions so far are inconveniently long and repetitive. 
+For example, in Listing 7-7, whether we chose the absolute or relative path to the add_to_waitlist function, every time we wanted to call add_to_waitlist we had to specify front_of_house and hosting too. 
+Fortunately, <strong>there’s a way to simplify this process</strong>. We can bring a path into a scope once and then call the items in that path as if they’re local items with the <code class="highlighter-rouge">use</code> keyword.</p>
+
+<p>In Listing 7-11, we bring the <code class="highlighter-rouge">crate::front_of_house::hosting</code> module into the scope of the eat_at_restaurant function so we only have to specify hosting::add_to_waitlist to call the add_to_waitlist function in eat_at_restaurant.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-11-bringing-a-module-into-scope-with-use">Listing 7-11: Bringing a module into scope with use</h4>
+
+<p>Adding <code class="highlighter-rouge">use</code> and a path in a scope is similar to creating a symbolic link in the filesystem. By adding use crate::front_of_house::hosting in the crate root, hosting is now a valid name in that scope, just as though the hosting module had been defined in the crate root. Paths brought into scope with use also check privacy, like any other paths.</p>
+
+<p>You can also bring an item into scope with use and a relative path. Listing 7-12 shows how to specify a relative path to get the same behavior as in Listing 7-11.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">use</span> <span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-12-bringing-a-module-into-scope-with-use-and-a-relative-path">Listing 7-12: Bringing a module into scope with use and a relative path</h4>
+
+<h3 id="creating-idiomatic-use-paths">Creating Idiomatic use Paths</h3>
+<p>In Listing 7-11, you might have wondered why we specified <code class="highlighter-rouge">use crate::front_of_house::hosting</code> and then called <code class="highlighter-rouge">hosting::add_to_waitlist</code> in eat_at_restaurant rather than specifying the use path all the way out to the add_to_waitlist function to achieve the same result, as in Listing 7-13.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="n">add_to_waitlist</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-13-bringing-the-add_to_waitlist-function-into-scope-with-use-which-is-unidiomatic">Listing 7-13: Bringing the add_to_waitlist function into scope with use, which is unidiomatic</h4>
+<p>Although both Listing 7-11 and 7-13 accomplish the same task, Listing 7-11 is the idiomatic way to bring a function into scope with <code class="highlighter-rouge">use</code>. 
+Bringing the function’s parent module into scope with <code class="highlighter-rouge">use</code> so we have to specify the parent module when calling the function makes it clear that the function isn’t locally defined while still minimizing repetition of the full path. <strong>The code in Listing 7-13 is unclear as to where <code class="highlighter-rouge">add_to_waitlist</code> is defined</strong>.</p>
+
+<p>On the other hand, when bringing in structs, enums, and other items with use, it’s idiomatic to specify the full path. 
+Listing 7-14 shows the idiomatic way to bring the standard library’s HashMap struct into the scope of a binary crate.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">collections</span><span class="p">::</span><span class="n">HashMap</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">map</span> <span class="o">=</span> <span class="nn">HashMap</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">map</span><span class="nf">.insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-14-bringing-hashmap-into-scope-in-an-idiomatic-way">Listing 7-14: Bringing HashMap into scope in an idiomatic way</h4>
+
+<p>There’s no strong reason behind this idiom: it’s just the convention that has emerged, and folks have gotten used to reading and writing Rust code this way.</p>
+
+<p>The exception to this idiom is if we’re bringing two items with the same name into scope with use statements, because Rust doesn’t allow that. 
+Listing 7-15 shows how to bring two Result types into scope that have the same name but different parent modules and how to refer to them.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">function1</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Result</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">function2</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-15-bringing-two-types-with-the-same-name-into-the-same-scope-requires-using-their-parent-modules">Listing 7-15: Bringing two types with the same name into the same scope requires using their parent modules.</h4>
+<p>As you can see, using the parent modules <strong>distinguishes</strong> the two Result types. 
+If instead we specified use std::fmt::Result and use std::io::Result, we’d have two Result types in the same scope and Rust wouldn’t know which one we meant when we used Result.</p>
+
+<h3 id="providing-new-names-with-the-as-keyword">Providing New Names with the as Keyword</h3>
+<p>When we bring a name into scope with the <code class="highlighter-rouge">use</code> keyword, the name available in the new scope is private. 
+To enable the code that calls our code to refer to that name as if it had been defined in that code’s scope, we can combine <code class="highlighter-rouge">pub</code> and <code class="highlighter-rouge">use</code>. This technique is called <em>re-exporting</em> because we’re bringing an item into scope but also making that item available for others to bring into their scope.</p>
+
+<p>Listing 7-17 shows the code in Listing 7-11 with <code class="highlighter-rouge">use</code> in the root module changed to <code class="highlighter-rouge">pub use</code>.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+        <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">pub</span> <span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-17-making-a-name-available-for-any-code-to-use-from-a-new-scope-with-pub-use">Listing 7-17: Making a name available for any code to use from a new scope with pub use</h4>
+<p>By using pub use, external code can now call the add_to_waitlist function using hosting::add_to_waitlist. 
+If we hadn’t specified pub use, the eat_at_restaurant function could call hosting::add_to_waitlist in its scope, but external code couldn’t take advantage of this new path.</p>
+
+<p>Re-exporting is useful when the internal structure of your code is different from how programmers calling your code would think about the domain. For example, in this restaurant metaphor, the people running the restaurant think about “front of house” and “back of house.” 
+But customers visiting a restaurant probably won’t think about the parts of the restaurant in those terms. 
+With <code class="highlighter-rouge">pub use</code>, we can write our code with one structure but expose a different structure. Doing so makes our library well organized for programmers working on the library and programmers calling the library.</p>
+
+<h3 id="using-external-packages">Using External Packages</h3>
+<p>In Chapter 2, we programmed a guessing game project that used an external package called rand to get random numbers. To use rand in our project, we added this line to Cargo.toml:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: Cargo.toml</span>
+<span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
+<span class="n">rand</span> <span class="o">=</span> <span class="s">"0.5.5"</span>
+</code></pre></div></div>
+<p>Adding <code class="highlighter-rouge">rand</code> as a dependency in <em>Cargo.toml</em> tells Cargo to download the <code class="highlighter-rouge">rand</code> package and any dependencies from crates.io and make <code class="highlighter-rouge">rand</code> available to our project.</p>
+
+<p>Then, to bring <code class="highlighter-rouge">rand</code> definitions into the scope of our package, we added a <code class="highlighter-rouge">use</code> line starting with the name of the package, <code class="highlighter-rouge">rand</code>, and listed the items we wanted to bring into scope. Recall that in the “Generating a Random Number” section in Chapter 2, we brought the <code class="highlighter-rouge">Rng</code> trait into scope and called the <code class="highlighter-rouge">rand::thread_rng</code> function:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">secret_number</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">()</span><span class="nf">.gen_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Members of the Rust community have made many packages available at <a href="https://crates.io">crates.io</a>, and pulling any of them into your package involves these same steps: listing them in your package’s Cargo.toml file and using use to bring items into scope.</p>
+
+<p>Note that the standard library (<code class="highlighter-rouge">std</code>) is also a crate that’s external to our package. 
+Because the standard library is shipped with the Rust language, we don’t need to change <em>Cargo.toml</em> to include std. 
+But we do need to refer to it with use to bring items from there into our package’s scope. For example, with HashMap we would use this line:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">collections</span><span class="p">::</span><span class="n">HashMap</span><span class="p">;</span>
+</code></pre></div></div>
+<p>This is an absolute path starting with <code class="highlighter-rouge">std</code>, the name of the standard library crate.</p>
+
+<h3 id="using-nested-paths-to-clean-up-large-use-lists">Using Nested Paths to Clean Up Large use Lists</h3>
+<p>If we’re using multiple items defined in the same package or same module, listing each item on its own line can take up <strong>a lot of vertical space</strong> in our files. For example, these two use statements we had in the Guessing Game in Listing 2-4 bring items from std into scope:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">Ordering</span><span class="p">;</span>
+<span class="c">// ---snip---</span>
+</code></pre></div></div>
+<p>Instead, <strong>we can use nested paths to bring the same items into scope in one line</strong>. 
+We do this by specifying the common part of the path, followed by two colons, and then curly brackets around a list of the parts of the paths that differ, as shown in Listing 7-18.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::{</span><span class="nn">cmp</span><span class="p">::</span><span class="n">Ordering</span><span class="p">,</span> <span class="n">io</span><span class="p">};</span>
+<span class="c">// ---snip---</span>
+</code></pre></div></div>
+<h4 id="listing-7-18-specifying-a-nested-path-to-bring-multiple-items-with-the-same-prefix-into-scope">Listing 7-18: Specifying a nested path to bring multiple items with the same prefix into scope</h4>
+
+<p>In bigger programs, bringing many items into scope from the same package or module using nested paths can reduce the number of separate use statements needed by a lot!</p>
+
+<p>We can use a nested path at any level in a path, which is useful when combining two <code class="highlighter-rouge">use</code> statements that share a subpath. 
+For example, Listing 7-19 shows two use statements: one that brings <code class="highlighter-rouge">std::io</code> into scope and one that brings <code class="highlighter-rouge">std::io::Write</code> into scope.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Write</span><span class="p">;</span>
+</code></pre></div></div>
+<h4 id="listing-7-19-two-use-statements-where-one-is-a-subpath-of-the-other">Listing 7-19: Two use statements where one is a subpath of the other</h4>
+<p>The common part of these two paths is std::io, and that’s the complete first path. 
+To merge these two paths into one use statement, we can use self in the nested path, as shown in Listing 7-20.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="n">Write</span><span class="p">};</span>
+</code></pre></div></div>
+<h4 id="listing-7-20-combining-the-paths-in-listing-7-19-into-one-use-statement">Listing 7-20: Combining the paths in Listing 7-19 into one use statement</h4>
+<p>This line brings <code class="highlighter-rouge">std::io</code> and <code class="highlighter-rouge">std::io::Write</code> into scope.</p>
+
+<h3 id="the-glob-operator">The Glob Operator</h3>
+<p>If we want to bring <em>all</em> public items defined in a path into scope, we can specify that path followed by <code class="highlighter-rouge">*</code>, the glob operator:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">collections</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+</code></pre></div></div>
+<p>This <code class="highlighter-rouge">use</code> statement brings all public items defined in <code class="highlighter-rouge">std::collections</code> into the current scope. Be careful when using the glob operator! Glob can make it harder to tell what names are in scope and where a name used in your program was defined.</p>
+
+<p>The glob operator is <strong>often used when testing to bring everything under test into the tests module</strong>; we’ll talk about that in the “How to Write Tests” section in Chapter 11. The glob operator is also sometimes used as part of the prelude pattern: see the standard library documentation for more information on that pattern.</p>
+
+<h2 id="separating-modules-into-different-files">Separating Modules into Different Files</h2>
+<p>So far, all the examples in this chapter defined multiple modules in one file. When modules get large, you might want to move their definitions to a separate file to make the code easier to navigate.</p>
+
+<p>For example, let’s start from the code in Listing 7-17 and move the <code class="highlighter-rouge">front_of_house</code> module to its own file <em>src/front_of_house.rs</em> by changing the crate root file so it contains the code shown in Listing 7-21. In this case, the crate root file is src/lib.rs, but this procedure also works with binary crates whose crate root file is src/main.rs.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<span class="k">mod</span> <span class="n">front_of_house</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-21-declaring-the-front_of_house-module-whose-body-will-be-in-srcfront_of_housers">Listing 7-21: Declaring the front_of_house module whose body will be in src/front_of_house.rs</h4>
+
+<p>And <em>src/front_of_house.rs</em> gets the definitions from the body of the <code class="highlighter-rouge">front_of_house</code> module, as shown in Listing 7-22.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house.rs</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-7-22-definitions-inside-the-front_of_house-module-in-srcfront_of_housers">Listing 7-22: Definitions inside the front_of_house module in src/front_of_house.rs</h4>
+<p>Using a semicolon after <code class="highlighter-rouge">mod front_of_house</code> rather than using a block tells Rust to load the contents of the module from another file with the same name as the module. To continue with our example and extract the hosting module to its own file as well, we change src/front_of_house.rs to contain only the declaration of the hosting module:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house.rs</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Then we create a src/front_of_house directory and a file src/front_of_house/hosting.rs to contain the definitions made in the <code class="highlighter-rouge">hosting</code> module:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house/hosting.rs</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
+</code></pre></div></div>
+<p>The module tree remains the same, and the function calls in eat_at_restaurant will work without any modification, even though the definitions live in different files. This technique lets you move modules to new files as they grow in size.</p>
+
+<p>Note that the pub use crate::front_of_house::hosting statement in src/lib.rs also hasn’t changed, nor does use have any impact on what files are compiled as part of the crate. The mod keyword declares modules, and Rust looks in a file with the same name as the module for the code that goes into that module.</p>
+
+<h2 id="summary">Summary</h2>
+<p>Rust lets you split a package into multiple crates and a crate into modules so you can refer to items defined in one module from another module. You can do this by specifying absolute or relative paths. These paths can be brought into scope with a use statement so you can use a shorter path for multiple uses of the item in that scope. Module code is private by default, but you can make definitions public by adding the pub keyword.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#crates" class="page__taxonomy-item" rel="tag">Crates</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#module" class="page__taxonomy-item" rel="tag">Module</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#mod" class="page__taxonomy-item" rel="tag">Mod</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#package" class="page__taxonomy-item" rel="tag">Package</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#paths" class="page__taxonomy-item" rel="tag">Paths</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#private" class="page__taxonomy-item" rel="tag">Private</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#public" class="page__taxonomy-item" rel="tag">Public</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-02-27T00:00:00+00:00">February 27, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+7.+Managing+Growing+Projects+with+Packages%2C+Crates%2C+and+Modules%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F7.Managing-Growing-Projects-with-Packages%2C-Crates%2C-and-Modules%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F7.Managing-Growing-Projects-with-Packages%2C-Crates%2C-and-Modules%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F7.Managing-Growing-Projects-with-Packages%2C-Crates%2C-and-Modules%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/6.Enums-and-Pattern-Matching/" class="pagination--pager" title="RUST : 6. Enums and Pattern Matching
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/6.Enums-and-Pattern-Matching/" rel="permalink">RUST : 6. Enums and Pattern Matching
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  22 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Enums allow you to define a type by enumerating its possible variants. 
+Next, we’ll explore a particularly useful enum, called Option, which expresses that a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/5.Using-Structs-to-Structure-Related-Data/" rel="permalink">RUST : 5. Using structs to structure related data
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A struct, or structure, is a custom data type that lets you name and package together multiple related values that make up a meaningful group.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/4.Understanding-Ownership/" rel="permalink">RUST : 4. Understanding Ownership
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  28 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/3.Common-Programming-Concepts/" rel="permalink">RUST : 3. Common Programming Concepts
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Variables and Mutability
+Default variables are immutable.
+If you want mutable variable, can make them mutable by adding mut in front of the variable name.
+fn...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
