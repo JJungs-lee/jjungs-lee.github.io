@@ -1,0 +1,1225 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Rust’s commitment to reliability extends to error handling. Errors are a fact of life in software, so Rust has a number of features for handling situations in which something goes wrong. In many cases, Rust requires you to acknowledge the possibility of an error and take some action before your code will compile. This requirement makes your program more robust by ensuring that you’ll discover errors and handle them appropriately before you’ve deployed your code to production!">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : 9. Error Handling">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/9.Error-Handling/">
+
+
+  <meta property="og:description" content="Rust’s commitment to reliability extends to error handling. Errors are a fact of life in software, so Rust has a number of features for handling situations in which something goes wrong. In many cases, Rust requires you to acknowledge the possibility of an error and take some action before your code will compile. This requirement makes your program more robust by ensuring that you’ll discover errors and handle them appropriately before you’ve deployed your code to production!">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-29T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/9.Error-Handling/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : 9. Error Handling">
+    <meta itemprop="description" content="Rust’s commitment to reliability extends to error handling. Errors are a fact of life in software, so Rust has a number of features for handling situations in which something goes wrong. In many cases, Rust requires you to acknowledge the possibility of an error and take some action before your code will compile. This requirement makes your program more robust by ensuring that you’ll discover errors and handle them appropriately before you’ve deployed your code to production!">
+    <meta itemprop="datePublished" content="2020-02-29T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : 9. Error Handling
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  35 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Rust’s commitment to reliability extends to error handling. Errors are a fact of life in software, so Rust has a number of features for handling situations in which something goes wrong. In many cases, Rust requires you to acknowledge the possibility of an error and take some action before your code will compile. This requirement makes your program more robust by ensuring that you’ll discover errors and handle them appropriately before you’ve deployed your code to production!</p>
+
+<p>Rust groups errors into <strong>two</strong> major categories: <code class="highlighter-rouge">recoverable</code> and <code class="highlighter-rouge">unrecoverable</code> errors. For a recoverable error, such as a file not found error, it’s reasonable to report the problem to the user and retry the operation. Unrecoverable errors are always symptoms of bugs, like trying to access a location beyond the end of an array.</p>
+
+<p>Most languages don’t distinguish between these two kinds of errors and handle both in the same way, using mechanisms such as exceptions. Rust doesn’t have exceptions. 
+Instead, it has the type<code class="highlighter-rouge"> Result&lt;T, E&gt;</code> for recoverable errors and the <code class="highlighter-rouge">panic!</code> macro that stops execution when the program encounters an unrecoverable error. 
+This chapter covers calling <code class="highlighter-rouge">panic!</code> first and then talks about returning <code class="highlighter-rouge">Result&lt;T, E&gt;</code> values. Additionally, we’ll explore considerations when deciding whether to try to recover from an error or to stop execution.</p>
+
+<h2 id="unrecoverable-errors-with-panic">Unrecoverable Errors with panic!</h2>
+<p>Sometimes, bad things happen in your code, and there’s nothing you can do about it. In these cases, Rust has the panic! macro. 
+When the <code class="highlighter-rouge">panic!</code> macro executes, your program will print a failure message, unwind and clean up the stack, and then quit. 
+This most commonly occurs when a bug of some kind has been detected and it’s not clear to the programmer how to handle the error.</p>
+
+<blockquote class="notice--info">
+  <h3 id="unwinding-the-stack-or-aborting-in-response-to-a-panic">Unwinding the Stack or Aborting in Response to a Panic</h3>
+  <p>By default, when a panic occurs, the program starts <em>unwinding</em>, which means Rust walks back up the stack and cleans up the data from each function it encounters. 
+But this walking back and cleanup is a lot of work. The alternative is to immediately <em>abort</em>, which ends the program without cleaning up. 
+Memory that the program was using will then need to be cleaned up by the operating system. 
+If in your project you need to make the resulting binary as small as possible, you can switch from unwinding to aborting upon a panic by adding <code class="highlighter-rouge">panic = 'abort'</code> to the appropriate [<code class="highlighter-rouge">profile]</code> sections in your <em>Cargo.toml</em> file. 
+For example, if you want to abort on panic in release mode, add this:</p>
+  <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">profile</span><span class="py">.release</span><span class="p">]</span>  
+<span class="n">panic</span> <span class="o">=</span> <span class="nv">'abort</span><span class="err">'</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<p>Let’s try calling panic! in a simple program:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">panic!</span><span class="p">(</span><span class="s">"crash and burn"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>When you run the program, you’ll see something like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
+   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/panic)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.25</span><span class="n">s</span>
+     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
+<span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'crash</span> <span class="n">and</span> <span class="n">burn</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span>
+<span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="err">.</span>
+</code></pre></div></div>
+<p>The call to <code class="highlighter-rouge">panic!</code> causes the error message contained in the last two lines.
+The first line shows our panic message and the place in our source code where
+the panic occurred: <em>src/main.rs:2:5</em> indicates that it’s the second line,
+fifth character of our <em>src/main.rs</em> file.</p>
+
+<p>In this case, the line indicated is part of our code, and if we go to that
+line, we see the <code class="highlighter-rouge">panic!</code> macro call. In other cases, the <code class="highlighter-rouge">panic!</code> call might
+be in code that our code calls, and the filename and line number reported by
+the error message will be someone else’s code where the <code class="highlighter-rouge">panic!</code> macro is
+called, not the line of our code that eventually led to the <code class="highlighter-rouge">panic!</code> call. We
+can use the backtrace of the functions the <code class="highlighter-rouge">panic!</code> call came from to figure
+out the part of our code that is causing the problem. We’ll discuss what a
+backtrace is in more detail next.</p>
+
+<h3 id="using-a-panic-backtrace">Using a <code class="highlighter-rouge">panic!</code> Backtrace</h3>
+
+<p>Let’s look at another example to see what it’s like when a <code class="highlighter-rouge">panic!</code> call comes from a library because of a bug in our code instead of from our code calling
+the macro directly. Listing 9-1 has some code that attempts to access an element by index in a vector.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+    <span class="n">v</span><span class="p">[</span><span class="mi">99</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-1-attempting-to-access-an-element-beyond-the-end-of-a-vector-which-will-cause-a-call-to-panic">Listing 9-1: Attempting to access an element beyond the end of a vector, which will cause a call to panic!</h4>
+
+<p>Here, we’re attempting to access the 100th element of our vector (which is at index 99 because indexing starts at zero), but it has only 3 elements. 
+In this situation, Rust will panic. Using <code class="highlighter-rouge">[]</code> is supposed to return an element, but if you pass an invalid index, there’s no element that Rust could return here that would be correct.</p>
+
+<p>Other languages, like C, will attempt to give you exactly what you asked for in this situation, even though it isn’t what you want: you’ll get whatever is at the location in memory that would correspond to that element in the vector, even though the memory doesn’t belong to the vector. 
+This is called a <code class="highlighter-rouge">buffer overread</code> and can lead to security vulnerabilities if an attacker is able to manipulate the index in such a way as to read data they shouldn’t be allowed to that is stored after the array.</p>
+
+<p>To protect your program from this sort of vulnerability, if you try to read an element at an index that doesn’t exist, Rust will stop execution and refuse to continue. 
+Let’s try it and see:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
+   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/panic)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.27</span><span class="n">s</span>
+     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
+<span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'index</span> <span class="n">out</span> <span class="n">of</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">the</span> <span class="n">len</span> <span class="n">is</span> <span class="mi">3</span> <span class="n">but</span> <span class="n">the</span> <span class="n">index</span> <span class="n">is</span> <span class="mi">99</span><span class="err">'</span><span class="p">,</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2448</span><span class="p">:</span><span class="mi">10</span>
+<span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="err">.</span>
+</code></pre></div></div>
+<p>This error points at a file we didn’t write, <em>libcore/slice/mod.rs</em>. 
+That’s the implementation of slice in the Rust source code. 
+The code that gets run when we use <code class="highlighter-rouge">[]</code> on our vector <code class="highlighter-rouge">v</code> is in <em>libcore/slice/mod.rs</em>, and that is where the <code class="highlighter-rouge">panic!</code> is actually happening.</p>
+
+<p>The next note line tells us that we can set the <code class="highlighter-rouge">RUST_BACKTRACE</code> environment variable to get a backtrace of exactly what happened to cause the error. 
+A <em>backtrace</em> is a <strong>list of all the functions</strong> that have been called to get to this point. 
+Backtraces in Rust work as they do in other languages: the key to reading the backtrace is to start from the top and read until you see files you wrote. 
+That’s the spot where the problem originated. 
+The lines above the lines mentioning your files are code that your code called; the lines below are code that called your code. 
+These lines might include core Rust code, standard library code, or crates that you’re using. 
+Let’s try getting a backtrace by setting the RUST_BACKTRACE environment variable to any value except 0. 
+Listing 9-2 shows output similar to what you’ll see.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span> <span class="n">cargo</span> <span class="n">run</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.00</span><span class="n">s</span>
+     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
+<span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'index</span> <span class="n">out</span> <span class="n">of</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">the</span> <span class="n">len</span> <span class="n">is</span> <span class="mi">3</span> <span class="n">but</span> <span class="n">the</span> <span class="n">index</span> <span class="n">is</span> <span class="mi">99</span><span class="err">'</span><span class="p">,</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2448</span><span class="p">:</span><span class="mi">10</span>
+<span class="n">stack</span> <span class="n">backtrace</span><span class="p">:</span>
+   <span class="mi">0</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sys</span><span class="p">::</span><span class="nn">unix</span><span class="p">::</span><span class="nn">backtrace</span><span class="p">::</span><span class="nn">tracing</span><span class="p">::</span><span class="nn">imp</span><span class="p">::</span><span class="n">unwind_backtrace</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">unix</span><span class="o">/</span><span class="n">backtrace</span><span class="o">/</span><span class="n">tracing</span><span class="o">/</span><span class="n">gcc_s</span><span class="py">.rs</span><span class="p">:</span><span class="mi">49</span>
+   <span class="mi">1</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sys_common</span><span class="p">::</span><span class="nn">backtrace</span><span class="p">::</span><span class="n">print</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">sys_common</span><span class="o">/</span><span class="n">backtrace</span><span class="py">.rs</span><span class="p">:</span><span class="mi">71</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">sys_common</span><span class="o">/</span><span class="n">backtrace</span><span class="py">.rs</span><span class="p">:</span><span class="mi">59</span>
+   <span class="mi">2</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">default_hook</span><span class="p">::</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">211</span>
+   <span class="mi">3</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="n">default_hook</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">227</span>
+   <span class="mi">4</span><span class="p">:</span> <span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">begin_panic</span><span class="p">::</span><span class="n">PanicPayload</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="k">as</span> <span class="nn">core</span><span class="p">::</span><span class="nn">panic</span><span class="p">::</span><span class="n">BoxMeUp</span><span class="o">&gt;</span><span class="p">::</span><span class="n">get</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">476</span>
+   <span class="mi">5</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="n">continue_panic_fmt</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">390</span>
+   <span class="mi">6</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">try</span><span class="p">::</span><span class="n">do_call</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">325</span>
+   <span class="mi">7</span><span class="p">:</span> <span class="nn">core</span><span class="p">::</span><span class="nn">ptr</span><span class="p">::</span><span class="n">drop_in_place</span>
+             <span class="n">at</span> <span class="n">libcore</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">77</span>
+   <span class="mi">8</span><span class="p">:</span> <span class="nn">core</span><span class="p">::</span><span class="nn">ptr</span><span class="p">::</span><span class="n">drop_in_place</span>
+             <span class="n">at</span> <span class="n">libcore</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">59</span>
+   <span class="mi">9</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">usize</span> <span class="k">as</span> <span class="nn">core</span><span class="p">::</span><span class="nn">slice</span><span class="p">::</span><span class="n">SliceIndex</span><span class="o">&lt;</span><span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="p">::</span><span class="n">index</span>
+             <span class="n">at</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2448</span>
+  <span class="mi">10</span><span class="p">:</span> <span class="nn">core</span><span class="p">::</span><span class="nn">slice</span><span class="p">::</span><span class="o">&lt;</span><span class="k">impl</span> <span class="nn">core</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nn">index</span><span class="p">::</span><span class="nb">Index</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> <span class="k">for</span> <span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="o">&gt;</span><span class="p">::</span><span class="n">index</span>
+             <span class="n">at</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2316</span>
+  <span class="mi">11</span><span class="p">:</span> <span class="o">&lt;</span><span class="nn">alloc</span><span class="p">::</span><span class="nn">vec</span><span class="p">::</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="k">as</span> <span class="nn">core</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nn">index</span><span class="p">::</span><span class="nb">Index</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;&gt;</span><span class="p">::</span><span class="n">index</span>
+             <span class="n">at</span> <span class="n">liballoc</span><span class="o">/</span><span class="n">vec</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1653</span>
+  <span class="mi">12</span><span class="p">:</span> <span class="nn">panic</span><span class="p">::</span><span class="n">main</span>
+             <span class="n">at</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span>
+  <span class="mi">13</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rt</span><span class="p">::</span><span class="nn">lang_start</span><span class="p">::</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">74</span>
+  <span class="mi">14</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">try</span><span class="p">::</span><span class="n">do_call</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">59</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">310</span>
+  <span class="mi">15</span><span class="p">:</span> <span class="n">macho_symbol_search</span>
+             <span class="n">at</span> <span class="n">libpanic_unwind</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">102</span>
+  <span class="mi">16</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">alloc</span><span class="p">::</span><span class="n">default_alloc_error_hook</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">289</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panic</span><span class="py">.rs</span><span class="p">:</span><span class="mi">392</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">58</span>
+  <span class="mi">17</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rt</span><span class="p">::</span><span class="n">lang_start</span>
+             <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">74</span>
+  <span class="mi">18</span><span class="p">:</span> <span class="nn">panic</span><span class="p">::</span><span class="n">main</span>
+</code></pre></div></div>
+<h4 id="listing-9-2-the-backtrace-generated-by-a-call-to-panic-displayed-when-the-environment-variable-rust_backtrace-is-set">Listing 9-2: The backtrace generated by a call to panic! displayed when the environment variable RUST_BACKTRACE is set</h4>
+
+<p>That’s a lot of output! The exact output you see might be different depending on your operating system and Rust version. 
+In order to get backtraces with this information, debug symbols must be enabled. 
+Debug symbols are enabled by default when using <code class="highlighter-rouge">cargo build</code> or <code class="highlighter-rouge">cargo run</code> without the <code class="highlighter-rouge">--release</code> flag, as we have here.</p>
+
+<p>In the output in Listing 9-2, line 12 of the backtrace points to the line in our project that’s causing the problem: line 4 of <code class="highlighter-rouge">src/main.rs</code>. 
+If we don’t want our program to panic, the location pointed to by the first line mentioning a file we wrote is where we should start investigating. 
+In Listing 9-1, where we deliberately wrote code that would panic in order to demonstrate how to use backtraces, the way to fix the panic is to not request an element at index 99 from a vector that only contains 3 items. 
+When your code panics in the future, you’ll need to figure out what action the code is taking with what values to cause the panic and what the code should do instead.</p>
+
+<p>We’ll come back to <code class="highlighter-rouge">panic!</code> and when we should and should not use <code class="highlighter-rouge">panic!</code> to handle error conditions in the “To <code class="highlighter-rouge">panic!</code> or Not to <code class="highlighter-rouge">panic!</code>” section later in this chapter. Next, we’ll look at how to recover from an error using <code class="highlighter-rouge">Result</code>.</p>
+
+<h2 id="recoverable-errors-with-result">Recoverable Errors with Result</h2>
+<p>Most errors aren’t serious enough to require the program to stop entirely. 
+Sometimes, when a function fails, it’s for a reason that you can easily interpret and respond to. 
+For example, if you try to open a file and that operation fails because the file doesn’t exist, you might want to create the file instead of terminating the process.</p>
+
+<p>Recall from “Handling Potential Failure with the Result Type” in Chapter 2 that the <code class="highlighter-rouge">Result</code> enum is defined as having two variants, <code class="highlighter-rouge">Ok</code> and <code class="highlighter-rouge">Err</code>, as follows</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
+    <span class="nf">Err</span><span class="p">(</span><span class="n">E</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">T</code> and <code class="highlighter-rouge">E</code> are generic type parameters: we’ll discuss generics in more detail in Chapter 10. 
+What you need to know right now is that <code class="highlighter-rouge">T</code> represents the type of the value that will be returned in a success case within the <code class="highlighter-rouge">Ok</code> variant, and <code class="highlighter-rouge">E </code>represents the type of the error that will be returned in a failure case within the <code class="highlighter-rouge">Err</code> variant. 
+Because <code class="highlighter-rouge">Result</code> has these generic type parameters, we can use the <code class="highlighter-rouge">Result</code> type and the functions that the standard library has defined on it in many different situations where the successful value and error value we want to return may differ.</p>
+
+<p>Let’s call a function that returns a <code class="highlighter-rouge">Result</code> value because the function could fail. In Listing 9-3 we try to open a file.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-3-opening-a-file">Listing 9-3: Opening a file</h4>
+<p>How do we know <code class="highlighter-rouge">File::open</code> returns a Result? We could look at the <a href="https://doc.rust-lang.org/std/index.html">standard library API documentation</a>, or we could ask the compiler! 
+If we give <code class="highlighter-rouge">f</code> a type annotation that we know is <em>not</em> the return type of the function and then try to compile the code, the compiler will tell us that the types don’t match. The error message will then tell us what the type of <code class="highlighter-rouge">f</code> is. 
+Let’s try it! We know that the return type of <code class="highlighter-rouge">File::open</code> isn’t of type <code class="highlighter-rouge">u32</code>, so let’s change the <code class="highlighter-rouge">let f</code> statement to this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Attempting to compile now gives us the following output:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0308</span><span class="p">]:</span> <span class="n">mismatched</span> <span class="n">types</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">18</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+  <span class="p">|</span>                  <span class="o">^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">expected</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">found</span> <span class="k">enum</span>
+<span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="err">`</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="k">type</span> <span class="err">`</span><span class="nb">u32</span><span class="err">`</span>
+             <span class="n">found</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">,</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="err">`</span>
+</code></pre></div></div>
+<p>This tells us the return type of the <code class="highlighter-rouge">File::open</code> function is a <code class="highlighter-rouge">Result&lt;T, E&gt;</code>. 
+The generic parameter <code class="highlighter-rouge">T</code> has been filled in here with the type of the success value, <code class="highlighter-rouge">std::fs::File</code>, which is a file handle. 
+The type of <code class="highlighter-rouge">E</code> used in the error value is <code class="highlighter-rouge">std::io::Error</code>.</p>
+
+<p>This return type means the call to <code class="highlighter-rouge">File::open</code> might succeed and return a file handle that we can read from or write to. 
+The function call also might fail: for example, the file might not exist, or we might not have permission to access the file. 
+The <code class="highlighter-rouge">File::open</code> function needs to have a way to tell us whether it succeeded or failed and at the same time give us either the file handle or error information. This information is exactly what the <code class="highlighter-rouge">Result enum</code> conveys.</p>
+
+<p>In the case where <code class="highlighter-rouge">File::open</code> succeeds, the value in the variable <code class="highlighter-rouge">f</code> will be an instance of Ok that contains a file handle. In the case where it fails, the value in f will be an instance of Err that contains more information about the kind of error that happened.</p>
+
+<p>We need to add to the code in Listing 9-3 to take different actions depending on the value <code class="highlighter-rouge">File::open</code> returns. 
+Listing 9-4 shows one way to handle the Result using a basic tool, the match expression that we discussed in Chapter 6.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="k">match</span> <span class="n">f</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"Problem opening the file: {:?}"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="p">},</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-4-using-a-match-expression-to-handle-the-result-variants-that-might-be-returned">Listing 9-4: Using a match expression to handle the Result variants that might be returned</h4>
+
+<p>Note that, like the <code class="highlighter-rouge">Option</code> enum, the <code class="highlighter-rouge">Result</code> enum and its variants have been brought into scope by the prelude, 
+so we don’t need to specify <code class="highlighter-rouge">Result::</code> before the <code class="highlighter-rouge">Ok</code> and <code class="highlighter-rouge">Err</code> variants in the match arms.</p>
+
+<p>Here we tell Rust that when the result is <code class="highlighter-rouge">Ok</code>, return the inner <code class="highlighter-rouge">file</code> value out of the <code class="highlighter-rouge">Ok</code> variant, 
+and we then assign that file handle value to the variable <code class="highlighter-rouge">f</code>. After the <code class="highlighter-rouge">match</code>, we can use the file handle for reading or writing.</p>
+
+<p>The other arm of the <code class="highlighter-rouge">match</code> handles the case where we get an <code class="highlighter-rouge">Err</code> value from <code class="highlighter-rouge">File::open</code>. 
+In this example, we’ve chosen to call the <code class="highlighter-rouge">panic!</code> macro. 
+If there’s no file named <em>hello.txt</em> in our current directory and we run this code, we’ll see the following output from the <code class="highlighter-rouge">panic!</code> macro:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'Problem</span> <span class="n">opening</span> <span class="n">the</span> <span class="n">file</span><span class="p">:</span> <span class="n">Error</span> <span class="p">{</span> <span class="n">repr</span><span class="p">:</span>
+<span class="n">Os</span> <span class="p">{</span> <span class="n">code</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="s">"No such file or directory"</span> <span class="p">}</span> <span class="p">}</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">12</span>
+</code></pre></div></div>
+<p>As usual, this output tells us exactly what has gone wrong.</p>
+
+<h3 id="matching-on-different-errors">Matching on Different Errors</h3>
+<p>The code in Listing 9-4 will <code class="highlighter-rouge">panic!</code> no matter why <code class="highlighter-rouge">File::open</code> failed. 
+What we want to do instead is take different actions for different failure reasons: 
+if <code class="highlighter-rouge">File::open</code> failed because the file doesn’t exist, we want to create the file and return the handle to the new file. 
+If <code class="highlighter-rouge">File::open</code> failed for any other reason—for example, because we didn’t have permission to open the file—we still want the code to <code class="highlighter-rouge">panic!</code> in the same way as it did in Listing 9-4. 
+Look at Listing 9-5, which adds an inner match expression.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">ErrorKind</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="k">match</span> <span class="n">f</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">match</span> <span class="n">error</span><span class="nf">.kind</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">NotFound</span> <span class="k">=&gt;</span> <span class="k">match</span> <span class="nn">File</span><span class="p">::</span><span class="nf">create</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">Ok</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">fc</span><span class="p">,</span>
+                <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Problem creating the file: {:?}"</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span>
+            <span class="p">},</span>
+            <span class="n">other_error</span> <span class="k">=&gt;</span> <span class="nd">panic!</span><span class="p">(</span><span class="s">"Problem opening the file: {:?}"</span><span class="p">,</span> <span class="n">other_error</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-5-handling-different-kinds-of-errors-in-different-ways">Listing 9-5: Handling different kinds of errors in different ways</h4>
+
+<p>The type of the value that <code class="highlighter-rouge">File::open</code> returns inside the <code class="highlighter-rouge">Err</code> variant is <code class="highlighter-rouge">io::Error</code>, which is a struct provided by the standard library. 
+This struct has a method <code class="highlighter-rouge">kind</code> that we can call to get an <code class="highlighter-rouge">io::ErrorKind</code> value. 
+The enum <code class="highlighter-rouge">io::ErrorKind</code> is provided by the standard library and has variants representing the different kinds of errors that might result from an <code class="highlighter-rouge">io</code> operation. The variant we want to use is <code class="highlighter-rouge">ErrorKind::NotFound</code>, which indicates the file we’re trying to open doesn’t exist yet. So we match on <code class="highlighter-rouge">f</code>, but we also have an inner match on <code class="highlighter-rouge">error.kind()</code>.</p>
+
+<p>The condition we want to check in the inner match is whether the value returned by <code class="highlighter-rouge">error.kind()</code> is the <code class="highlighter-rouge">NotFound</code> variant of the <code class="highlighter-rouge">ErrorKind</code> enum. If it is, we try to create the file with <code class="highlighter-rouge">File::create</code>. 
+However, because <code class="highlighter-rouge">File::create</code> could also fail, we need a second arm in the inner <code class="highlighter-rouge">match</code> expression. 
+When the file can’t be created, a different error message is printed. 
+The second arm of the outer <code class="highlighter-rouge">match</code> stays the same, so the program panics on any error besides the missing file error.</p>
+
+<p>That’s a lot of <code class="highlighter-rouge">match</code>! The <code class="highlighter-rouge">match</code> expression is very useful but also very much a primitive. 
+In Chapter 13, you’ll learn about closures; the <code class="highlighter-rouge">Result&lt;T, E&gt;</code> type has many methods that accept a closure and are implemented using match expressions. 
+Using those methods will make your code more concise. A more seasoned Rustacean might write this code instead of Listing 9-5:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">ErrorKind</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="nf">.unwrap_or_else</span><span class="p">(|</span><span class="n">error</span><span class="p">|</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">error</span><span class="nf">.kind</span><span class="p">()</span> <span class="o">==</span> <span class="nn">ErrorKind</span><span class="p">::</span><span class="n">NotFound</span> <span class="p">{</span>
+            <span class="nn">File</span><span class="p">::</span><span class="nf">create</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="nf">.unwrap_or_else</span><span class="p">(|</span><span class="n">error</span><span class="p">|</span> <span class="p">{</span>
+                <span class="nd">panic!</span><span class="p">(</span><span class="s">"Problem creating the file: {:?}"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+            <span class="p">})</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"Problem opening the file: {:?}"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Although this code has the same behavior as Listing 9-5, it doesn’t contain any <code class="highlighter-rouge">match</code> expressions and is cleaner to read. 
+Come back to this example after you’ve read Chapter 13, and look up the <code class="highlighter-rouge">unwrap_or_else</code> method in the standard library documentation. 
+Many more of these methods can clean up huge nested <code class="highlighter-rouge">match</code> expressions when you’re dealing with errors.</p>
+
+<h3 id="shortcuts-for-panic-on-error-unwrap-and-expect">Shortcuts for Panic on Error: unwrap and expect</h3>
+<p>Using <code class="highlighter-rouge">match</code> works well enough, but it can be a bit verbose and doesn’t always communicate intent well. 
+The <code class="highlighter-rouge">Result&lt;T, E&gt;</code> type has many helper methods defined on it to do various tasks. 
+One of those methods, called <code class="highlighter-rouge">unwrap</code>, is a shortcut method that is implemented just like the match expression we wrote in Listing 9-4. 
+If the <code class="highlighter-rouge">Result</code> value is the <code class="highlighter-rouge">Ok</code> variant, <code class="highlighter-rouge">unwrap</code> will return the value inside the <code class="highlighter-rouge">Ok</code>. 
+If the <code class="highlighter-rouge">Result</code> is the <code class="highlighter-rouge">Err</code> variant, <code class="highlighter-rouge">unwrap</code> will call the <code class="highlighter-rouge">panic!</code> macro for us. Here is an example of unwrap in action:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>If we run this code without a <em>hello.txt</em> file, we’ll see an error message from the <code class="highlighter-rouge">panic!</code> call that the <code class="highlighter-rouge">unwrap</code> method makes:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'called</span> <span class="err">`</span><span class="nn">Result</span><span class="p">::</span><span class="nf">unwrap</span><span class="p">()</span><span class="err">`</span> <span class="n">on</span> <span class="n">an</span> <span class="err">`</span><span class="nb">Err</span><span class="err">`</span> <span class="n">value</span><span class="p">:</span> <span class="n">Error</span> <span class="p">{</span>
+<span class="n">repr</span><span class="p">:</span> <span class="n">Os</span> <span class="p">{</span> <span class="n">code</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="s">"No such file or directory"</span> <span class="p">}</span> <span class="p">}</span><span class="err">'</span><span class="p">,</span>
+<span class="n">src</span><span class="o">/</span><span class="n">libcore</span><span class="o">/</span><span class="n">result</span><span class="py">.rs</span><span class="p">:</span><span class="mi">906</span><span class="p">:</span><span class="mi">4</span>
+</code></pre></div></div>
+
+<p>Another method, <code class="highlighter-rouge">expect</code>, which is similar to <code class="highlighter-rouge">unwrap</code>, lets us also choose the <code class="highlighter-rouge">panic!</code> error message. 
+Using <code class="highlighter-rouge">expect</code> instead of <code class="highlighter-rouge">unwrap</code> and providing good error messages can convey your intent and make tracking down the source of a panic easier. 
+The syntax of <code class="highlighter-rouge">expect</code> looks like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="nf">.expect</span><span class="p">(</span><span class="s">"Failed to open hello.txt"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We use <code class="highlighter-rouge">expect</code> in the same way as <code class="highlighter-rouge">unwrap</code>: to return the file handle or call the <code class="highlighter-rouge">panic!</code> macro. 
+The error message used by <code class="highlighter-rouge">expect</code> in its call to <code class="highlighter-rouge">panic!</code> will be the parameter that we pass to expect, rather than the default<code class="highlighter-rouge"> panic!</code> message that unwrap uses. 
+Here’s what it looks like:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'Failed</span> <span class="n">to</span> <span class="n">open</span> <span class="n">hello</span><span class="py">.txt</span><span class="p">:</span> <span class="n">Error</span> <span class="p">{</span> <span class="n">repr</span><span class="p">:</span> <span class="n">Os</span> <span class="p">{</span> <span class="n">code</span><span class="p">:</span>
+<span class="mi">2</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="s">"No such file or directory"</span> <span class="p">}</span> <span class="p">}</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">libcore</span><span class="o">/</span><span class="n">result</span><span class="py">.rs</span><span class="p">:</span><span class="mi">906</span><span class="p">:</span><span class="mi">4</span>
+</code></pre></div></div>
+<p>Because this error message starts with the text we specified, <code class="highlighter-rouge">Failed to open hello.txt</code>, it will be easier to find where in the code this error message is coming from. 
+If we use <code class="highlighter-rouge">unwrap</code> in multiple places, it can take more time to figure out exactly which <code class="highlighter-rouge">unwrap</code> is causing the panic because all <code class="highlighter-rouge">unwrap</code> calls that panic print the same message.</p>
+
+<h3 id="propagating-errors">Propagating Errors</h3>
+<p>When you’re writing a function whose implementation calls something that might fail, instead of handling the error within this function, you can return the error to the calling code so that it can decide what to do. 
+This is known as <strong>propagating the error</strong> and gives more control to the calling code, where there might be more information or logic that dictates how the error should be handled than what you have available in the context of your code.</p>
+
+<p>For example, Listing 9-6 shows a function that reads a username from a file. 
+If the file doesn’t exist or can’t be read, this function will return those errors to the code that called this function.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="k">match</span> <span class="n">f</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+    <span class="p">};</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="k">match</span> <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-6-a-function-that-returns-errors-to-the-calling-code-using-match">Listing 9-6: A function that returns errors to the calling code using match</h4>
+
+<p>This function can be written in a much shorter way, but we’re going to start by doing a lot of it manually in order to explore error handling; at the end, we’ll show the shorter way. 
+Let’s look at the return type of the function first: <code class="highlighter-rouge">Result&lt;String, io::Error&gt;</code>. 
+This means the function is returning a value of the type <code class="highlighter-rouge">Result&lt;T, E&gt;</code> where the generic parameter <code class="highlighter-rouge">T</code> has been filled in with the concrete type <code class="highlighter-rouge">String</code> and the generic type <code class="highlighter-rouge">E</code> has been filled in with the concrete type <code class="highlighter-rouge">io::Error</code>. 
+If this function succeeds without any problems, the code that calls this function will receive an <code class="highlighter-rouge">Ok</code> value that holds a <code class="highlighter-rouge">String</code>—the username that this function read from the file. 
+If this function encounters any problems, the code that calls this function will receive an <code class="highlighter-rouge">Err</code> value that holds an instance of <code class="highlighter-rouge">io::Error</code> that contains more information about what the problems were. 
+We chose <code class="highlighter-rouge">io::Error</code> as the return type of this function because that happens to be the type of the error value returned from both of the operations we’re calling in this function’s body that might fail: the <code class="highlighter-rouge">File::open</code> function and the <code class="highlighter-rouge">read_to_string</code> method.</p>
+
+<p>The body of the function starts by calling the <code class="highlighter-rouge">File::open</code> function. Then we handle the <code class="highlighter-rouge">Result</code> value returned with a <code class="highlighter-rouge">match</code> similar to the <code class="highlighter-rouge">match</code> in Listing 9-4, only instead of calling <code class="highlighter-rouge">panic!</code> in the <code class="highlighter-rouge">Err</code> case, we return early from this function and pass the error value from <code class="highlighter-rouge">File::open</code> back to the calling code as this function’s error value. If File::open succeeds, we store the file handle in the variable <code class="highlighter-rouge">f</code> and continue.</p>
+
+<p>Then we create a new String in variable <code class="highlighter-rouge">s</code> and call the <code class="highlighter-rouge">read_to_string</code> method on the file handle in <code class="highlighter-rouge">f</code> to read the contents of the file into <code class="highlighter-rouge">s</code>. 
+The <code class="highlighter-rouge">read_to_string</code> method also returns a <code class="highlighter-rouge">Result</code> because it might fail, even though <code class="highlighter-rouge">File::open</code> succeeded. 
+So we need another <code class="highlighter-rouge">match</code> to handle that <code class="highlighter-rouge">Result</code>: if <code class="highlighter-rouge">read_to_string</code> succeeds, then our function has succeeded, and we return the username from the file that’s now in s wrapped in an <code class="highlighter-rouge">Ok</code>. 
+If <code class="highlighter-rouge">read_to_string</code> fails, we return the error value in the same way that we returned the error value in the <code class="highlighter-rouge">match</code> that handled the return value of <code class="highlighter-rouge">File::open</code>. 
+However, we don’t need to explicitly say <code class="highlighter-rouge">return</code>, because this is the last expression in the function.</p>
+
+<p>The code that calls this code will then handle getting either an <code class="highlighter-rouge">Ok</code> value that contains a username or an <code class="highlighter-rouge">Err</code> value that contains an <code class="highlighter-rouge">io::Error</code>. 
+We don’t know what the calling code will do with those values. 
+If the calling code gets an <code class="highlighter-rouge">Err</code> value, it could call <code class="highlighter-rouge">panic!</code> and crash the program, use a default username, or look up the username from somewhere other than a file, for example. 
+We don’t have enough information on what the calling code is actually trying to do, so we propagate all the success or error information upward for it to handle appropriately.</p>
+
+<p>This pattern of propagating errors is so common in Rust that Rust provides the question mark operator <code class="highlighter-rouge">?</code> to make this easier.</p>
+
+<h3 id="a-shortcut-for-propagating-errors-the--operator">A Shortcut for Propagating Errors: the ? Operator</h3>
+<p>Listing 9-7 shows an implementation of <code class="highlighter-rouge">read_username_from_file</code> that has the same functionality as it had in Listing 9-6, but this implementation uses the <code class="highlighter-rouge">?</code> operator.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-7-a-function-that-returns-errors-to-the-calling-code-using-the--operator">Listing 9-7: A function that returns errors to the calling code using the ? operator</h4>
+<p><span style="color:blue;"> I don’t know about this section… So confusing </span>
+The <code class="highlighter-rouge">?</code> placed after a <code class="highlighter-rouge">Result</code> value is defined to work in almost the same way as the match expressions we defined to handle the Result values in Listing 9-6. 
+If the value of the <code class="highlighter-rouge">Result</code> is an <code class="highlighter-rouge">Ok</code>, the value inside the <code class="highlighter-rouge">Ok</code> will get returned from this expression, and the program will continue. 
+If the value is an <code class="highlighter-rouge">Err</code>, the <code class="highlighter-rouge">Err</code> will be returned from the whole function as if we had used the <code class="highlighter-rouge">return</code> keyword so the error value gets propagated to the calling code.</p>
+
+<p>There is a difference between what the <code class="highlighter-rouge">match</code> expression from Listing 9-6 and the <code class="highlighter-rouge">?</code> operator do: error values that have the <code class="highlighter-rouge">?</code> operator called on them go through the <code class="highlighter-rouge">from</code> function, defined in the <code class="highlighter-rouge">From</code> trait in the standard library, which is used to convert errors from one type into another. 
+When the <code class="highlighter-rouge">?</code> operator calls the <code class="highlighter-rouge">from</code> function, the error type received is converted into the error type defined in the return type of the current function. 
+This is useful when a function returns one error type to represent all the ways a function might fail, even if parts might fail for many different reasons. 
+As long as each error type implements the <code class="highlighter-rouge">from</code> function to define how to convert itself to the returned error type, the <code class="highlighter-rouge">?</code> operator takes care of the conversion automatically.</p>
+
+<p>In the context of Listing 9-7, the <code class="highlighter-rouge">?</code> at the end of the <code class="highlighter-rouge">File::open</code> call will return the value inside an <code class="highlighter-rouge">Ok</code> to the variable <code class="highlighter-rouge">f</code>. 
+If an error occurs, the <code class="highlighter-rouge">?</code> operator will return early out of the whole function and give any <code class="highlighter-rouge">Err</code> value to the calling code. 
+The same thing applies to the <code class="highlighter-rouge">?</code> at the end of the <code class="highlighter-rouge">read_to_string</code> call.</p>
+
+<p>The <code class="highlighter-rouge">?</code> operator eliminates a lot of boilerplate and makes this function’s implementation simpler. 
+We could even shorten this code further by chaining method calls immediately after the <code class="highlighter-rouge">?</code>, as shown in Listing 9-8.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-8-chaining-method-calls-after-the--operator">Listing 9-8: Chaining method calls after the ? operator</h4>
+
+<p>We’ve moved the creation of the new <code class="highlighter-rouge">String</code> in <code class="highlighter-rouge">s</code> to the beginning of the function; that part hasn’t changed. 
+Instead of creating a variable <code class="highlighter-rouge">f</code>, we’ve chained the call to <code class="highlighter-rouge">read_to_string</code> directly onto the result of <code class="highlighter-rouge">File::open("hello.txt")?</code>. 
+We still have a <code class="highlighter-rouge">?</code> at the end of the <code class="highlighter-rouge">read_to_string</code> call, and we still return an <code class="highlighter-rouge">Ok</code> value containing the username in <code class="highlighter-rouge">s</code> when both <code class="highlighter-rouge">File::open</code> and <code class="highlighter-rouge">read_to_string</code> succeed rather than returning errors. 
+The functionality is again the same as in Listing 9-6 and Listing 9-7; this is just a different, more ergonomic way to write it.</p>
+
+<p>Speaking of different ways to write this function, Listing 9-9 shows that there’s a way to make this even shorter.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Listing 9-9: Using fs::read_to_string instead of opening and then reading the file</p>
+
+<p>Reading a file into a string is a fairly common operation, so Rust provides the convenient <code class="highlighter-rouge">fs::read_to_string</code> function that opens the file, creates a new String, reads the contents of the file, puts the contents into that String, and returns it. Of course, using fs::read_to_string doesn’t give us the opportunity to explain all the error handling, so we did it the longer way first.</p>
+
+<h3 id="the--operator-can-be-used-in-functions-that-return-result">The ? Operator Can Be Used in Functions That Return Result</h3>
+<p>The <code class="highlighter-rouge">?</code> operator can be used in functions that have a return type of <code class="highlighter-rouge">Result</code>, because it is defined to work in the same way as the <code class="highlighter-rouge">match</code> expression we defined in Listing 9-6. The part of the <code class="highlighter-rouge">match</code> that requires a return type of <code class="highlighter-rouge">Result</code> is <code class="highlighter-rouge">return Err(e)</code>, so the return type of the function can be a <code class="highlighter-rouge">Result</code> to be compatible with this <code class="highlighter-rouge">return</code>.</p>
+
+<p>Let’s look at what happens if we use the <code class="highlighter-rouge">?</code> operator in the <code class="highlighter-rouge">main</code> function, which you’ll recall has a return type of <code class="highlighter-rouge">()</code>:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>When we compile this code, we get the following error message:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">a</span> <span class="n">function</span> <span class="n">that</span> <span class="n">returns</span>
+<span class="err">`</span><span class="n">Result</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="nb">Option</span><span class="err">`</span> <span class="p">(</span><span class="n">or</span> <span class="n">another</span> <span class="k">type</span> <span class="n">that</span> <span class="n">implements</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Try</span><span class="err">`</span><span class="p">)</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">13</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+  <span class="p">|</span>             <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">cannot</span> <span class="k">use</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="n">in</span> <span class="n">a</span>
+  <span class="n">function</span> <span class="n">that</span> <span class="n">returns</span> <span class="err">`</span><span class="p">()</span><span class="err">`</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Try</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">()</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">required</span> <span class="n">by</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nn">Try</span><span class="p">::</span><span class="n">from_error</span><span class="err">`</span>
+</code></pre></div></div>
+<p>This error points out that we’re only allowed to use the <code class="highlighter-rouge">?</code> operator in a function that returns <code class="highlighter-rouge">Result</code> or <code class="highlighter-rouge">Option</code> or another type that implements <code class="highlighter-rouge">std::ops::Try</code>. 
+When you’re writing code in a function that doesn’t return one of these types, and you want to use <code class="highlighter-rouge">?</code> when you call other functions that return <code class="highlighter-rouge">Result&lt;T, E&gt;</code>, you have two choices to fix this problem. 
+One technique is to change the return type of your function to be<code class="highlighter-rouge"> Result&lt;T, E&gt;</code> if you have no restrictions preventing that. 
+The other technique is to use a match or one of the <code class="highlighter-rouge">Result&lt;T, E&gt;</code> methods to handle the <code class="highlighter-rouge">Result&lt;T, E&gt;</code> in whatever way is appropriate.</p>
+
+<p>The main function is special, and there are restrictions on what its return type must be. One valid return type for main is (), and conveniently, another valid return type is <code class="highlighter-rouge">Result&lt;T, E&gt;</code>, as shown here:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">Box&lt;dyn Error&gt;</code> type is called a trait object, which we’ll talk about in the “Using Trait Objects that Allow for Values of Different Types” section in Chapter 17. 
+For now, you can read <code class="highlighter-rouge">Box&lt;dyn Error&gt;</code> to mean “any kind of error.” Using <code class="highlighter-rouge">?</code> in a main function with this return type is allowed.</p>
+
+<p>Now that we’ve discussed the details of calling <code class="highlighter-rouge">panic!</code> or returning <code class="highlighter-rouge">Result</code>, let’s return to the topic of how to decide which is appropriate to use in which cases.</p>
+
+<h2 id="to-panic-or-not-to-panic">To panic! or Not to panic!</h2>
+<p>So how do you decide when you should call <code class="highlighter-rouge">panic!</code> and when you should return <code class="highlighter-rouge">Result</code>? When code panics, there’s no way to recover. 
+You could call <code class="highlighter-rouge">panic!</code> for any error situation, whether there’s a possible way to recover or not, but then you’re making the decision on behalf of the code calling your code that a situation is unrecoverable. 
+When you choose to return a <code class="highlighter-rouge">Result</code> value, you give the calling code options rather than making the decision for it. 
+The calling code could choose to attempt to recover in a way that’s appropriate for its situation, or it could decide that an <code class="highlighter-rouge">Err</code> value in this case is unrecoverable, so it can call <code class="highlighter-rouge">panic!</code> and turn your recoverable error into an unrecoverable one. 
+Therefore, returning <code class="highlighter-rouge">Result</code> is a <strong>good</strong> default choice when you’re defining a function that might fail.</p>
+
+<p>In rare situations, it’s more appropriate to write code that <strong>panics</strong> instead of returning a <code class="highlighter-rouge">Result</code>. 
+Let’s explore why it’s appropriate to panic in examples, prototype code, and tests. 
+Then we’ll discuss situations in which the compiler can’t tell that failure is impossible, but you as a human can. 
+The chapter will conclude with some general guidelines on how to decide whether to panic in library code.</p>
+
+<h3 id="examples-prototype-code-and-tests">Examples, Prototype Code, and Tests</h3>
+<p>When you’re writing an example to illustrate some concept, having robust error-handling code in the example as well can make the example less clear. 
+In examples, it’s understood that a call to a method like <code class="highlighter-rouge">unwrap</code> that could panic is meant as a placeholder for the way you’d want your application to handle errors, which can differ based on what the rest of your code is doing.</p>
+
+<p>Similarly, the <code class="highlighter-rouge">unwrap</code> and <code class="highlighter-rouge">expect</code> methods are very handy when prototyping, before you’re ready to decide how to handle errors. 
+They leave clear markers in your code for when you’re ready to make your program more robust.</p>
+
+<p>If a method call fails in a test, you’d want the whole test to fail, even if that method isn’t the functionality under test. 
+Because <code class="highlighter-rouge">panic!</code> is how a test is marked as a failure, calling <code class="highlighter-rouge">unwrap</code> or <code class="highlighter-rouge">expect</code> is exactly what should happen.</p>
+
+<h3 id="cases-in-which-you-have-more-information-than-the-compiler">Cases in Which You Have More Information Than the Compiler</h3>
+<p>It would also be appropriate to call <code class="highlighter-rouge">unwrap</code> when you have some other logic that ensures the <code class="highlighter-rouge">Result</code> will have an <code class="highlighter-rouge">Ok</code> value, but the logic isn’t something the compiler understands. 
+You’ll still have a <code class="highlighter-rouge">Result</code> value that you need to handle: whatever operation you’re calling still has the possibility of failing in general, even though it’s logically impossible in your particular situation. 
+If you can ensure by manually inspecting the code that you’ll never have an <code class="highlighter-rouge">Err</code> variant, it’s perfectly acceptable to call <code class="highlighter-rouge">unwrap</code>. Here’s an example:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">net</span><span class="p">::</span><span class="n">IpAddr</span><span class="p">;</span>
+
+<span class="k">let</span> <span class="n">home</span><span class="p">:</span> <span class="n">IpAddr</span> <span class="o">=</span> <span class="s">"127.0.0.1"</span><span class="nf">.parse</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
+</code></pre></div></div>
+<p>We’re creating an <code class="highlighter-rouge">IpAddr</code> instance by parsing a hardcoded string. 
+We can see that 127.0.0.1 is a valid IP address, so it’s acceptable to use <code class="highlighter-rouge">unwrap</code> here. 
+However, having a hardcoded, valid string doesn’t change the return type of the <code class="highlighter-rouge">parse</code> method: we still get a <code class="highlighter-rouge">Result</code> value, and the compiler will still make us handle the <code class="highlighter-rouge">Result</code> as if the <code class="highlighter-rouge">Err</code> variant is a possibility because the compiler isn’t smart enough to see that this string is always a valid IP address. 
+If the IP address string came from a user rather than being hardcoded into the program and therefore <em>did</em> have a possibility of failure, we’d definitely want to handle the <code class="highlighter-rouge">Result</code> in a more robust way instead.</p>
+
+<h3 id="guidelines-for-error-handling">Guidelines for Error Handling</h3>
+<p>It’s advisable to have your code <code class="highlighter-rouge">panic</code> when it’s possible that your code could end up in a bad state. 
+In this context, a bad state is when some assumption, guarantee, contract, or invariant has been broken, such as when invalid values, contradictory values, or missing values are passed to your code—plus one or more of the following:</p>
+
+<ul>
+  <li>The bad state is not something that’s <em>expected</em> to happen occasionally.</li>
+  <li>Your code after this point needs to rely on not being in this bad state.</li>
+  <li>There’s not a good way to encode this information in the types you use.</li>
+</ul>
+
+<p>If someone calls your code and passes in values that don’t make sense, the best choice might be to call <code class="highlighter-rouge">panic!</code> and alert the person using your library to the bug in their code so they can fix it during development. Similarly, <code class="highlighter-rouge">panic!</code>is often appropriate if you’re calling external code that is out of your control and it returns an invalid state that you have no way of fixing.</p>
+
+<p>However, when failure is expected, it’s more appropriate to return a <code class="highlighter-rouge">Result</code> than to make a <code class="highlighter-rouge">panic!</code> call. 
+Examples include a parser being given malformed data or an HTTP request returning a status that indicates you have hit a rate limit. 
+In these cases, returning a <code class="highlighter-rouge">Result</code> indicates that failure is an expected possibility that the calling code must decide how to handle.</p>
+
+<p>When your code performs operations on values, your code should verify the values are valid first and panic if the values aren’t valid. 
+This is mostly for safety reasons: attempting to operate on invalid data can expose your code to vulnerabilities. 
+This is the main reason the standard library will call <code class="highlighter-rouge">panic!</code> if you attempt an out-of-bounds memory access: trying to access memory that doesn’t belong to the current data structure is a common security problem. 
+Functions often have contracts: their behavior is only guaranteed if the inputs meet particular requirements. 
+Panicking when the contract is violated makes sense because a contract violation always indicates a caller-side bug and it’s not a kind of error you want the calling code to have to explicitly handle. 
+In fact, there’s no reasonable way for calling code to recover; the calling programmers need to fix the code. 
+Contracts for a function, especially when a violation will cause a panic, should be explained in the API documentation for the function.</p>
+
+<p>However, having lots of error checks in all of your functions would be verbose and annoying. 
+Fortunately, you can use Rust’s type system (and thus the type checking the compiler does) to do many of the checks for you. 
+If your function has a particular type as a parameter, you can proceed with your code’s logic knowing that the compiler has already ensured you have a valid value. 
+For example, if you have a type rather than an <code class="highlighter-rouge">Option</code>, your program expects to have <em>something</em> rather than <em>nothing</em>. 
+Your code then doesn’t have to handle two cases for the <code class="highlighter-rouge">Some</code> and <code class="highlighter-rouge">None</code> variants: it will only have one case for definitely having a value. 
+Code trying to pass nothing to your function won’t even compile, so your function doesn’t have to check for that case at runtime. 
+Another example is using an unsigned integer type such as <code class="highlighter-rouge">u32</code>, which ensures the parameter is never negative.</p>
+
+<h3 id="creating-custom-types-for-validation">Creating Custom Types for Validation</h3>
+<p>Let’s take the idea of using Rust’s type system to ensure we have a valid value one step further and look at creating a custom type for validation. 
+Recall the guessing game in Chapter 2 in which our code asked the user to guess a number between 1 and 100. 
+We never validated that the user’s guess was between those numbers before checking it against our secret number; we only validated that the guess was positive. 
+In this case, the consequences were not very dire: our output of “Too high” or “Too low” would still be correct. 
+But it would be a useful enhancement to guide the user toward valid guesses and have different behavior when a user guesses a number that’s out of range versus when a user types, for example, letters instead.</p>
+
+<p>One way to do this would be to parse the guess as an <code class="highlighter-rouge">i32</code> instead of only a <code class="highlighter-rouge">u32</code> to allow potentially negative numbers, and then add a check for the number being in range, like so:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">loop</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+
+    <span class="k">let</span> <span class="n">guess</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="k">match</span> <span class="n">guess</span><span class="nf">.trim</span><span class="p">()</span><span class="nf">.parse</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">num</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">continue</span><span class="p">,</span>
+    <span class="p">};</span>
+
+    <span class="k">if</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">||</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"The secret number will be between 1 and 100."</span><span class="p">);</span>
+        <span class="n">continue</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">match</span> <span class="n">guess</span><span class="nf">.cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">secret_number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The <code class="highlighter-rouge">if</code> expression checks whether our value is out of range, tells the user about the problem, and calls <code class="highlighter-rouge">continue</code> to start the next iteration of the loop and ask for another guess. After the <code class="highlighter-rouge">if</code> expression, we can proceed with the comparisons between <code class="highlighter-rouge">guess</code> and the secret number knowing that <code class="highlighter-rouge">guess</code> is between 1 and 100.</p>
+
+<p>However, this is not an ideal solution: if it was absolutely critical that the program only operated on values between 1 and 100, and it had many functions with this requirement, having a check like this in every function would be tedious (and might impact performance).</p>
+
+<p>Instead, we can make a new type and put the validations in a function to create an instance of the type rather than repeating the validations everywhere. That way, it’s safe for functions to use the new type in their signatures and confidently use the values they receive. Listing 9-10 shows one way to define a Guess type that will only create an instance of 1 if the <code class="highlighter-rouge">new</code> function receives a value between 1 and 100.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">Guess</span> <span class="p">{</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Guess</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Guess</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">||</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"Guess value must be between 1 and 100, got {}."</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">Guess</span> <span class="p">{</span>
+            <span class="n">value</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">value</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.value</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-9-10-a-guess-type-that-will-only-continue-with-values-between-1-and-100">Listing 9-10: A Guess type that will only continue with values between 1 and 100</h4>
+
+<p>First, we define a struct named <code class="highlighter-rouge">Guess</code> that has a field named <code class="highlighter-rouge">value</code> that holds an <code class="highlighter-rouge">i32</code>. This is where the number will be stored.</p>
+
+<p>Then we implement an associated function named <code class="highlighter-rouge">new</code> on <code class="highlighter-rouge">Guess</code> that creates instances of Guess values. T
+he <code class="highlighter-rouge">new</code> function is defined to have one parameter named <code class="highlighter-rouge">value</code> of type <code class="highlighter-rouge">i32</code> and to return a Guess. 
+The code in the body of the <code class="highlighter-rouge">new</code> function tests <code class="highlighter-rouge">value</code> to make sure it’s between 1 and 100. 
+If <code class="highlighter-rouge">value</code> doesn’t pass this test, we make a <code class="highlighter-rouge">panic!</code> call, which will alert the programmer who is writing the calling code that they have a bug they need to fix, because creating a <code class="highlighter-rouge">Guess</code> with a <code class="highlighter-rouge">value</code> outside this range would violate the contract that <code class="highlighter-rouge">Guess::new</code> is relying on. 
+The conditions in which <code class="highlighter-rouge">Guess::new</code> might panic should be discussed in its public-facing API documentation; 
+we’ll cover documentation conventions indicating the possibility of a <code class="highlighter-rouge">panic!</code> in the API documentation that you create in Chapter 14. 
+If <code class="highlighter-rouge">value</code> does pass the test, we create a new <code class="highlighter-rouge">Guess</code> with its <code class="highlighter-rouge">value</code> field set to the <code class="highlighter-rouge">value</code> parameter and return the Guess.</p>
+
+<p>Next, we implement a method named <code class="highlighter-rouge">value</code> that borrows <code class="highlighter-rouge">self</code>, doesn’t have any other parameters, and returns an <code class="highlighter-rouge">i32</code>. 
+This kind of method is sometimes called a <em>getter</em>, because its purpose is to get some data from its fields and return it. 
+This public method is necessary because the <code class="highlighter-rouge">value</code> field of the <code class="highlighter-rouge">Guess</code> struct is private. 
+It’s important that the value field be private so code using the Guess struct is not allowed to set <code class="highlighter-rouge">value</code> directly: code outside the module must use the <code class="highlighter-rouge">Guess::new</code> function to create an instance of <code class="highlighter-rouge">Guess</code>, thereby ensuring there’s no way for a <code class="highlighter-rouge">Guess</code> to have a <code class="highlighter-rouge">value</code> that hasn’t been checked by the conditions in the <code class="highlighter-rouge">Guess::new</code> function.</p>
+
+<p>A function that has a parameter or returns only numbers between 1 and 100 could then declare in its signature that it takes or returns a Guess rather than an <code class="highlighter-rouge">i32</code> and wouldn’t need to do any additional checks in its body.</p>
+
+<h2 id="summary">Summary</h2>
+<p>Rust’s error handling features are designed to help you write more robust code. 
+The <code class="highlighter-rouge">panic!</code> macro signals that your program is in a state it can’t handle and lets you tell the process to stop instead of trying to proceed with invalid or incorrect values. 
+The Result enum uses Rust’s type system to indicate that operations might fail in a way that your code could recover from. 
+You can use Result to tell code that calls your code that it needs to handle potential success or failure as well. 
+Using panic! and Result in the appropriate situations will make your code more reliable in the face of inevitable problems.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#error" class="page__taxonomy-item" rel="tag">Error</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#handler" class="page__taxonomy-item" rel="tag">Handler</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#panic" class="page__taxonomy-item" rel="tag">Panic</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-02-29T00:00:00+00:00">February 29, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+9.+Error+Handling%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F9.Error-Handling%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F9.Error-Handling%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F9.Error-Handling%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/8.Common-Collections/" class="pagination--pager" title="RUST : 8. Common Collections
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/8.Common-Collections/" rel="permalink">RUST : 8. Common Collections
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  33 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Rust’s standard library includes a number of very useful data structures called collections. Most other data types represent one specific value, but collecti...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules/" rel="permalink">RUST : 7. Managing Growing Projects with Packages, Crates, and Modules
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  26 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">As you write large programs, organizing your code will be important because keeping track of your entire program in your head will become impossible. By grou...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/6.Enums-and-Pattern-Matching/" rel="permalink">RUST : 6. Enums and Pattern Matching
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  22 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Enums allow you to define a type by enumerating its possible variants. 
+Next, we’ll explore a particularly useful enum, called Option, which expresses that a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/5.Using-Structs-to-Structure-Related-Data/" rel="permalink">RUST : 5. Using structs to structure related data
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A struct, or structure, is a custom data type that lets you name and package together multiple related values that make up a meaningful group.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
