@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2020-03-12T10:49:22+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">RUST : 11. Writing Automated Tests</title><link href="https://jjungs-lee.github.io//rust/11.Writing-Automated-Tests" rel="alternate" type="text/html" title="RUST : 11. Writing Automated Tests" /><published>2020-03-09T00:00:00+00:00</published><updated>2020-03-09T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/11.Writing%20Automated%20Tests</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/11.Writing-Automated-Tests">&lt;p&gt;In his 1972 essay “The Humble Programmer,” Edsger W. Dijkstra said that “Program testing can be a very effective way to show the presence of bugs, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2020-03-12T11:45:37+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">RUST : 11. Writing Automated Tests</title><link href="https://jjungs-lee.github.io//rust/11.Writing-Automated-Tests" rel="alternate" type="text/html" title="RUST : 11. Writing Automated Tests" /><published>2020-03-09T00:00:00+00:00</published><updated>2020-03-09T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/11.Writing%20Automated%20Tests</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/11.Writing-Automated-Tests">&lt;p&gt;In his 1972 essay “The Humble Programmer,” Edsger W. Dijkstra said that “Program testing can be a very effective way to show the presence of bugs, 
 but it is hopelessly inadequate for showing their absence.” That doesn’t mean we shouldn’t try to test as much as we can!&lt;/p&gt;
 
 &lt;p&gt;Correctness in our programs is the extent to which our code does what we intend it to do. 
@@ -4903,15 +4903,15 @@ Plz follow the below link. Thx :D&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Getting Started&lt;/li&gt;
   &lt;li&gt;Programming a Guessing Game&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/3.Common-Programming-Concepts/&quot;&gt;3. Common Programming Concepts&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/4.Understanding-Ownership/&quot;&gt;4. Understanding Ownership&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/5.Using-Structs-to-Structure-Related-Data/&quot;&gt;5. Using Structs to Structure Related Data&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/6.Enums-and-Pattern-Matching/&quot;&gt;6. Enums and Pattern Matching&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules/&quot;&gt;7. Managing Growing Projects with Packages, Crates, and Modules&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;rust/8.Common-Collections/&quot;&gt;8. Common Collections&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;rust/9.Error-Handling/&quot;&gt;9. Error Handling&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/10.Generic-Types,-Traits,-and-Lifetimes/&quot;&gt;10. Generic Types, Traits, and Lifetimes&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/rust/11.Writing-Automated-Tests/&quot;&gt;11. Writing Automated Tests&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/3.Common-Programming-Concepts&quot;&gt;3. Common Programming Concepts&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/4.Understanding-Ownership&quot;&gt;4. Understanding Ownership&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/5.Using-Structs-to-Structure-Related-Data&quot;&gt;5. Using Structs to Structure Related Data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/6.Enums-and-Pattern-Matching&quot;&gt;6. Enums and Pattern Matching&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules&quot;&gt;7. Managing Growing Projects with Packages, Crates, and Modules&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;rust/8.Common-Collections&quot;&gt;8. Common Collections&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;rust/9.Error-Handling&quot;&gt;9. Error Handling&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/10.Generic-Types,-Traits,-and-Lifetimes&quot;&gt;10. Generic Types, Traits, and Lifetimes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/rust/11.Writing-Automated-Tests&quot;&gt;11. Writing Automated Tests&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;An I/O Project: Building a Command Line Program&lt;/li&gt;
   &lt;li&gt;Functional Language Features: Iterators and Closures&lt;/li&gt;
   &lt;li&gt;More about Cargo and Crates.io&lt;/li&gt;
