@@ -1,0 +1,1557 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Functional Language Features: Iterators and ClosuresRust’s design has taken inspiration from many existing languages and techniques, and one significant influence is functional programming. Programming in a functional style often includes using functions as values by passing them in arguments, returning them from other functions, assigning them to variables for later execution, and so forth.">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : 13. Functional Language Features: Iterators and Closures">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/13.Functional-Language-Features_Iterators-and-Closures">
+
+
+  <meta property="og:description" content="Functional Language Features: Iterators and ClosuresRust’s design has taken inspiration from many existing languages and techniques, and one significant influence is functional programming. Programming in a functional style often includes using functions as values by passing them in arguments, returning them from other functions, assigning them to variables for later execution, and so forth.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-04-07T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/13.Functional-Language-Features_Iterators-and-Closures">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : 13. Functional Language Features: Iterators and Closures">
+    <meta itemprop="description" content="Functional Language Features: Iterators and ClosuresRust’s design has taken inspiration from many existing languages and techniques, and one significant influence is functional programming. Programming in a functional style often includes using functions as values by passing them in arguments, returning them from other functions, assigning them to variables for later execution, and so forth.">
+    <meta itemprop="datePublished" content="2020-04-07T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : 13. Functional Language Features: Iterators and Closures
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  45 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="functional-language-features-iterators-and-closures">Functional Language Features: Iterators and Closures</h2>
+<p>Rust’s design has taken inspiration from many existing languages and techniques, and one significant influence is <em>functional programming</em>. 
+Programming in a functional style often includes using functions as values by passing them in arguments, returning them from other functions, assigning them to variables for later execution, and so forth.</p>
+
+<p>In this chapter, we won’t debate the issue of what functional programming is or isn’t but will instead discuss some features of Rust that are similar to features in many languages often referred to as functional.</p>
+
+<p>More specifically, we’ll cover:</p>
+
+<ul>
+  <li><strong>Closures</strong>, a function-like construct you can store in a variable</li>
+  <li><strong>Iterators</strong>, a way of processing a series of elements</li>
+  <li>How to use these two features to improve the I/O project in Chapter 12</li>
+  <li>The performance of these two features (Spoiler alert: they’re faster than you might think!)</li>
+</ul>
+
+<p>Other Rust features, such as pattern matching and enums, which we’ve covered in other chapters, are influenced by the functional style as well. Mastering closures and iterators is an important part of writing idiomatic, fast Rust code, so we’ll devote this entire chapter to them.</p>
+
+<h2 id="closures-anonymous-functions-that-can-capture-their-environment">Closures: Anonymous Functions that Can Capture Their Environment</h2>
+<p>Rust’s closures are anonymous functions you can save in a variable or pass as arguments to other functions. 
+You can create the closure in one place and then call the closure to evaluate it in a different context. 
+Unlike functions, closures can capture values from the scope in which they’re defined. 
+We’ll demonstrate how these closure features allow for code reuse and behavior customization.</p>
+
+<h3 id="creating-an-abstraction-of-behavior-with-closures">Creating an Abstraction of Behavior with Closures</h3>
+<p>Let’s work on an example of a situation in which it’s useful to store a closure to be executed later. 
+Along the way, we’ll talk about the syntax of closures, type inference, and traits.</p>
+
+<p>Consider this hypothetical situation: we work at a startup that’s making an app to generate custom exercise workout plans. 
+The backend is written in Rust, and the algorithm that generates the workout plan takes into account many factors, such as the app user’s age, body mass index, exercise preferences, recent workouts, and an intensity number they specify. 
+The actual algorithm used isn’t important in this example; what’s important is that this calculation takes a few seconds. 
+We want to call this algorithm only when we need to and only call it once so we don’t make the user wait more than necessary.</p>
+
+<p>We’ll simulate calling this hypothetical algorithm with the function <code class="highlighter-rouge">simulated_expensive_calculation</code> shown in Listing 13-1, which will print <code class="highlighter-rouge">calculating slowly...</code>, wait for two seconds, and then return whatever number we passed in.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">simulated_expensive_calculation</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
+    <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+    <span class="n">intensity</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-1-a-function-to-stand-in-for-a-hypothetical-calculation-that-takes-about-2-seconds-to-run">Listing 13-1: A function to stand in for a hypothetical calculation that takes about 2 seconds to run</h4>
+
+<p>Next is the <code class="highlighter-rouge">main</code> function, which contains the parts of the workout app important for this example. This function represents the code that the app will call when a user asks for a workout plan. Because the interaction with the app’s frontend isn’t relevant to the use of closures, we’ll hardcode values representing inputs to our program and print the outputs.</p>
+
+<p>The required inputs are these:</p>
+<ul>
+  <li>An intensity number from the user, which is specified when they request a workout to indicate whether they want a low-intensity workout or a high-intensity workout</li>
+  <li>A random number that will generate some variety in the workout plans
+The output will be the recommended workout plan. Listing 13-2 shows the <code class="highlighter-rouge">main</code> function we’ll use.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">simulated_user_specified_value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">simulated_random_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+
+    <span class="nf">generate_workout</span><span class="p">(</span>
+        <span class="n">simulated_user_specified_value</span><span class="p">,</span>
+        <span class="n">simulated_random_number</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-2-a-main-function-with-hardcoded-values-to-simulate-user-input-and-random-number-generation">Listing 13-2: A main function with hardcoded values to simulate user input and random number generation</h4>
+
+<p>We’ve hardcoded the variable <code class="highlighter-rouge">simulated_user_specified_value</code> as 10 and the variable <code class="highlighter-rouge">simulated_random_number</code> as 7 for simplicity’s sake; in an actual program, we’d get the intensity number from the app frontend, and we’d use the <code class="highlighter-rouge">rand</code> crate to generate a random number, as we did in the Guessing Game example in Chapter 2. The <code class="highlighter-rouge">main</code> function calls a <code class="highlighter-rouge">generate_workout</code> function with the simulated input values.</p>
+
+<p>Now that we have the context, let’s get to the algorithm. The function <code class="highlighter-rouge">generate_workout</code> in Listing 13-3 contains the business logic of the app that we’re most concerned with in this example. The rest of the code changes in this example will be made to this function.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Today, do {} pushups!"</span><span class="p">,</span>
+            <span class="nf">simulated_expensive_calculation</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Next, do {} situps!"</span><span class="p">,</span>
+            <span class="nf">simulated_expensive_calculation</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Take a break today! Remember to stay hydrated!"</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span>
+                <span class="s">"Today, run for {} minutes!"</span><span class="p">,</span>
+                <span class="nf">simulated_expensive_calculation</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-3-the-business-logic-that-prints-the-workout-plans-based-on-the-inputs-and-calls-to-the-simulated_expensive_calculation-function">Listing 13-3: The business logic that prints the workout plans based on the inputs and calls to the simulated_expensive_calculation function</h4>
+
+<p>The code in Listing 13-3 has multiple calls to the slow calculation function. 
+The first <code class="highlighter-rouge">if</code> block calls <code class="highlighter-rouge">simulated_expensive_calculation</code> twice, the <code class="highlighter-rouge">if</code> inside the outer <code class="highlighter-rouge">else</code> doesn’t call it at all, and the code inside the second <code class="highlighter-rouge">else</code> case calls it once.</p>
+
+<p>The desired behavior of the <code class="highlighter-rouge">generate_workout</code> function is to first check whether the user wants a low-intensity workout (indicated by a number less than 25) or a high-intensity workout (a number of 25 or greater).</p>
+
+<p>Low-intensity workout plans will recommend a number of push-ups and sit-ups based on the complex algorithm we’re simulating.</p>
+
+<p>If the user wants a high-intensity workout, there’s some additional logic: if the value of the random number generated by the app happens to be 3, the app will recommend a break and hydration. If not, the user will get a number of minutes of running based on the complex algorithm.</p>
+
+<p>This code works the way the business wants it to now, but let’s say the data science team decides that we need to make some changes to the way we call the <code class="highlighter-rouge">simulated_expensive_calculation</code> function in the future. 
+To simplify the update when those changes happen, we want to refactor this code so it calls the <code class="highlighter-rouge">simulated_expensive_calculation</code> function only once. 
+We also want to cut the place where we’re currently unnecessarily calling the function twice without adding any other calls to that function in the process. That is, we don’t want to call it if the result isn’t needed, and we still want to call it only once.</p>
+
+<h3 id="refactoring-using-functions">Refactoring Using Functions</h3>
+<p>We could restructure the workout program in many ways. First, we’ll try extracting the duplicated call to the <code class="highlighter-rouge">simulated_expensive_calculation</code> function into a variable, as shown in Listing 13-4.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">expensive_result</span> <span class="o">=</span>
+        <span class="nf">simulated_expensive_calculation</span><span class="p">(</span><span class="n">intensity</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Today, do {} pushups!"</span><span class="p">,</span>
+            <span class="n">expensive_result</span>
+        <span class="p">);</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Next, do {} situps!"</span><span class="p">,</span>
+            <span class="n">expensive_result</span>
+        <span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Take a break today! Remember to stay hydrated!"</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span>
+                <span class="s">"Today, run for {} minutes!"</span><span class="p">,</span>
+                <span class="n">expensive_result</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-4-extracting-the-calls-to-simulated_expensive_calculation-to-one-place-and-storing-the-result-in-the-expensive_result-variable">Listing 13-4: Extracting the calls to simulated_expensive_calculation to one place and storing the result in the expensive_result variable</h4>
+
+<p>This change unifies all the calls to <code class="highlighter-rouge">simulated_expensive_calculation</code> and solves the problem of the first <code class="highlighter-rouge">if</code> block unnecessarily calling the function twice. Unfortunately, we’re now calling this function and waiting for the result in all cases, which includes the inner <code class="highlighter-rouge">if</code> block that doesn’t use the result value at all.</p>
+
+<p>We want to define code in one place in our program, but only <em>execute</em> that code where we actually need the result. This is a use case for closures!</p>
+
+<h3 id="refactoring-with-closures-to-store-code">Refactoring with Closures to Store Code</h3>
+<p>Instead of always calling the <code class="highlighter-rouge">simulated_expensive_calculation</code> function before the <code class="highlighter-rouge">if</code> blocks, we can define a closure and store the <em>closure</em> in a variable rather than storing the result of the function call, as shown in Listing 13-5. We can actually move the whole body of <code class="highlighter-rouge">simulated_expensive_calculation</code> within the closure we’re introducing here.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
+    <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+    <span class="n">num</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<h4 id="listing-13-5-defining-a-closure-and-storing-it-in-the-expensive_closure-variable">Listing 13-5: Defining a closure and storing it in the expensive_closure variable</h4>
+
+<p>The closure definition comes after the <code class="highlighter-rouge">=</code> to assign it to the variable <code class="highlighter-rouge">expensive_closure</code>. 
+To define a closure, we start with a pair of vertical pipes (<code class="highlighter-rouge">|</code>), inside which we specify the parameters to the closure; this syntax was chosen because of its similarity to closure definitions in Smalltalk and Ruby. 
+This closure has one parameter named <code class="highlighter-rouge">num</code>: if we had more than one parameter, we would separate them with commas, like <code class="highlighter-rouge">|param1, param2|</code>.</p>
+
+<p>After the parameters, we place curly brackets that hold the body of the closure—these are optional if the closure body is a single expression. 
+The end of the closure, after the curly brackets, needs a semicolon to complete the <code class="highlighter-rouge">let</code> statement. 
+The value returned from the last line in the closure body (<code class="highlighter-rouge">num</code>) will be the value returned from the closure when it’s called, because that line doesn’t end in a semicolon; just as in function bodies.</p>
+
+<p>Note that this <code class="highlighter-rouge">let</code> statement means <code class="highlighter-rouge">expensive_closure</code> contains the <em>definition</em> of an anonymous function, not the <em>resulting</em> value of calling the anonymous function. 
+Recall that we’re using a closure because we want to define the code to call at one point, store that code, and call it at a later point; the code we want to call is now stored in <code class="highlighter-rouge">expensive_closure</code>.</p>
+
+<p>With the closure defined, we can change the code in the <code class="highlighter-rouge">if</code> blocks to call the closure to execute the code and get the resulting value. We call a closure like we do a function: we specify the variable name that holds the closure definition and follow it with parentheses containing the argument values we want to use, as shown in Listing 13-6.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
+        <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+        <span class="n">num</span>
+    <span class="p">};</span>
+
+    <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Today, do {} pushups!"</span><span class="p">,</span>
+            <span class="nf">expensive_closure</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Next, do {} situps!"</span><span class="p">,</span>
+            <span class="nf">expensive_closure</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Take a break today! Remember to stay hydrated!"</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span>
+                <span class="s">"Today, run for {} minutes!"</span><span class="p">,</span>
+                <span class="nf">expensive_closure</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-6-calling-the-expensive_closure-weve-defined">Listing 13-6: Calling the expensive_closure we’ve defined</h4>
+
+<p>Now the expensive calculation is called in only one place, and we’re only executing that code where we need the results.</p>
+
+<p>However, we’ve reintroduced one of the problems from Listing 13-3: we’re still calling the closure twice in the first <code class="highlighter-rouge">if</code> block, which will call the expensive code twice and make the user wait twice as long as they need to. We could fix this problem by creating a variable local to that <code class="highlighter-rouge">if</code> block to hold the result of calling the closure, but closures provide us with another solution. We’ll talk about that solution in a bit. But first let’s talk about why there aren’t type annotations in the closure definition and the traits involved with closures.</p>
+
+<h3 id="closure-type-inference-and-annotation">Closure Type Inference and Annotation</h3>
+<p>Closures don’t require you to annotate the types of the parameters or the return value like fn functions do. Type annotations are required on functions because they’re part of an explicit interface exposed to your users. Defining this interface rigidly is important for ensuring that everyone agrees on what types of values a function uses and returns. But closures aren’t used in an exposed interface like this: they’re stored in variables and used without naming them and exposing them to users of our library.</p>
+
+<p>Closures are usually short and relevant only within a narrow context rather than in any arbitrary scenario. Within these limited contexts, the compiler is reliably able to infer the types of the parameters and the return type, similar to how it’s able to infer the types of most variables.</p>
+
+<p>Making programmers annotate the types in these small, anonymous functions would be annoying and largely redundant with the information the compiler already has available.</p>
+
+<p>As with variables, we can add type annotations if we want to increase explicitness and clarity at the cost of being more verbose than is strictly necessary. Annotating the types for the closure we defined in Listing 13-5 would look like the definition shown in Listing 13-7.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">:</span> <span class="nb">u32</span><span class="p">|</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
+    <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+    <span class="n">num</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<h4 id="listing-13-7-adding-optional-type-annotations-of-the-parameter-and-return-value-types-in-the-closure">Listing 13-7: Adding optional type annotations of the parameter and return value types in the closure</h4>
+
+<p>With type annotations added, the syntax of closures looks more similar to the syntax of functions. The following is a vertical comparison of the syntax for the definition of a function that adds 1 to its parameter and a closure that has the same behavior. We’ve added some spaces to line up the relevant parts. This illustrates how closure syntax is similar to function syntax except for the use of pipes and the amount of syntax that is optional:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span>  <span class="nf">add_one_v1</span>   <span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+<span class="k">let</span> <span class="n">add_one_v2</span> <span class="o">=</span> <span class="p">|</span><span class="n">x</span><span class="p">:</span> <span class="nb">u32</span><span class="p">|</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="k">let</span> <span class="n">add_one_v3</span> <span class="o">=</span> <span class="p">|</span><span class="n">x</span><span class="p">|</span>             <span class="p">{</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="k">let</span> <span class="n">add_one_v4</span> <span class="o">=</span> <span class="p">|</span><span class="n">x</span><span class="p">|</span>               <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>  <span class="p">;</span>
+</code></pre></div></div>
+<p>The first line shows a function definition, and the second line shows a fully annotated closure definition. The third line removes the type annotations from the closure definition, and the fourth line removes the brackets, which are optional because the closure body has only one expression. These are all valid definitions that will produce the same behavior when they’re called.</p>
+
+<p>Closure definitions will have one concrete type inferred for each of their parameters and for their return value. For instance, Listing 13-8 shows the definition of a short closure that just returns the value it receives as a parameter. This closure isn’t very useful except for the purposes of this example. Note that we haven’t added any type annotations to the definition: if we then try to call the closure twice, using a <code class="highlighter-rouge">String</code> as an argument the first time and a <code class="highlighter-rouge">u32</code> the second time, we’ll get an error.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">let</span> <span class="n">example_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span><span class="p">;</span>
+
+<span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nf">example_closure</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">));</span>
+<span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nf">example_closure</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</code></pre></div></div>
+<h4 id="listing-13-8-attempting-to-call-a-closure-whose-types-are-inferred-with-two-different-types">Listing 13-8: Attempting to call a closure whose types are inferred with two different types</h4>
+
+<p>The compiler gives us this error:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0308</span><span class="p">]:</span> <span class="n">mismatched</span> <span class="n">types</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span>
+  <span class="p">|</span>
+  <span class="p">|</span> <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nf">example_closure</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="p">|</span>                         <span class="o">^</span> <span class="n">expected</span> <span class="k">struct</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">string</span><span class="p">::</span><span class="nb">String</span><span class="err">`</span><span class="p">,</span> <span class="n">found</span>
+  <span class="n">integer</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">string</span><span class="p">::</span><span class="nb">String</span><span class="err">`</span>
+             <span class="n">found</span> <span class="k">type</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
+</code></pre></div></div>
+<p>The first time we call <code class="highlighter-rouge">example_closure</code> with the <code class="highlighter-rouge">String</code> value, the compiler infers the type of <code class="highlighter-rouge">x</code> and the return type of the closure to be <code class="highlighter-rouge">String</code>. Those types are then locked in to the closure in <code class="highlighter-rouge">example_closure</code>, and we get a type error if we try to use a different type with the same closure.</p>
+
+<h3 id="storing-closures-using-generic-parameters-and-the-fn-traits">Storing Closures Using Generic Parameters and the Fn Traits</h3>
+<p>Let’s return to our workout generation app. In Listing 13-6, our code was still calling the expensive calculation closure more times than it needed to. One option to solve this issue is to save the result of the expensive closure in a variable for reuse and use the variable in each place we need the result, instead of calling the closure again. However, this method could result in a lot of repeated code.</p>
+
+<p>Fortunately, another solution is available to us. We can create a struct that will hold the closure and the resulting value of calling the closure. The struct will execute the closure only if we need the resulting value, and it will cache the resulting value so the rest of our code doesn’t have to be responsible for saving and reusing the result. You may know this pattern as memoization or lazy evaluation.</p>
+
+<p>To make a struct that holds a closure, we need to specify the type of the closure, because a struct definition needs to know the types of each of its fields. Each closure instance has its own unique anonymous type: that is, even if two closures have the same signature, their types are still considered different. To define structs, enums, or function parameters that use closures, we use generics and trait bounds, as we discussed in Chapter 10.</p>
+
+<p>The <code class="highlighter-rouge">Fn</code> traits are provided by the standard library. All closures implement at least one of the traits: <code class="highlighter-rouge">Fn</code>, <code class="highlighter-rouge">FnMut</code>, or <code class="highlighter-rouge">FnOnce</code>. We’ll discuss the difference between these traits in the “Capturing the Environment with Closures” section; in this example, we can use the <code class="highlighter-rouge">Fn</code> trait.</p>
+
+<p>We add types to the <code class="highlighter-rouge">Fn</code> trait bound to represent the types of the parameters and return values the closures must have to match this trait bound. In this case, our closure has a parameter of type <code class="highlighter-rouge">u32</code> and returns a <code class="highlighter-rouge">u32</code>, so the trait bound we specify is <code class="highlighter-rouge">Fn(u32) -&gt; u32</code>.</p>
+
+<p>Listing 13-9 shows the definition of the <code class="highlighter-rouge">Cacher</code> struct that holds a closure and an optional result value.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">struct</span> <span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span>
+<span class="p">{</span>
+    <span class="n">calculation</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-9-defining-a-cacher-struct-that-holds-a-closure-in-calculation-and-an-optional-result-in-value">Listing 13-9: Defining a Cacher struct that holds a closure in calculation and an optional result in value</h4>
+
+<p>The <code class="highlighter-rouge">Cacher</code> struct has a <code class="highlighter-rouge">calculation</code> field of the generic type <code class="highlighter-rouge">T</code>. The trait bounds on <code class="highlighter-rouge">T</code> specify that it’s a closure by using the <code class="highlighter-rouge">Fn</code> trait. Any closure we want to store in the <code class="highlighter-rouge">calculation</code> field must have one <code class="highlighter-rouge">u32</code> parameter (specified within the parentheses after <code class="highlighter-rouge">Fn</code>) and must return a <code class="highlighter-rouge">u32</code> (specified after the <code class="highlighter-rouge">-&gt;</code>).</p>
+
+<p class="notice--info"><strong>Note</strong>: Functions can implement all three of the <code class="highlighter-rouge">Fn</code> traits too. If what we want to do doesn’t require capturing a value from the environment, we can use a function rather than a closure where we need something that implements an <code class="highlighter-rouge">Fn</code> trait.</p>
+
+<p>The <code class="highlighter-rouge">value</code> field is of type <code class="highlighter-rouge">Option&lt;u32&gt;</code>. Before we execute the closure, <code class="highlighter-rouge">value</code> will be <code class="highlighter-rouge">None</code>. When code using a <code class="highlighter-rouge">Cacher</code> asks for the <em>result</em> of the closure, the <code class="highlighter-rouge">Cacher</code> will execute the closure at that time and store the result within a <code class="highlighter-rouge">Some</code> variant in the <code class="highlighter-rouge">value</code> field. Then if the code asks for the result of the closure again, instead of executing the closure again, the <code class="highlighter-rouge">Cacher</code> will return the result held in the <code class="highlighter-rouge">Some</code> variant.</p>
+
+<p>The logic around the <code class="highlighter-rouge">value</code> field we’ve just described is defined in Listing 13-10.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/main.rs</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span>
+<span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">calculation</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="n">Cacher</span> <span class="p">{</span>
+            <span class="n">calculation</span><span class="p">,</span>
+            <span class="n">value</span><span class="p">:</span> <span class="nb">None</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">value</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+        <span class="k">match</span> <span class="k">self</span><span class="py">.value</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">v</span><span class="p">,</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="k">self</span><span class="py">.calculation</span><span class="p">)(</span><span class="n">arg</span><span class="p">);</span>
+                <span class="k">self</span><span class="py">.value</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+                <span class="n">v</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-10-the-caching-logic-of-cacher">Listing 13-10: The caching logic of Cacher</h4>
+
+<p>We want <code class="highlighter-rouge">Cacher</code> to manage the struct fields’ values rather than letting the calling code potentially change the values in these fields directly, so these fields are private.</p>
+
+<p>The <code class="highlighter-rouge">Cacher::new</code> function takes a generic parameter <code class="highlighter-rouge">T</code>, which we’ve defined as having the same trait bound as the <code class="highlighter-rouge">Cacher</code> struct. Then <code class="highlighter-rouge">Cacher::new</code> returns a <code class="highlighter-rouge">Cacher</code> instance that holds the closure specified in the <code class="highlighter-rouge">calculation</code> field and a <code class="highlighter-rouge">None</code> value in the <code class="highlighter-rouge">value</code> field, because we haven’t executed the closure yet.</p>
+
+<p>When the calling code needs the result of evaluating the closure, instead of calling the closure directly, it will call the <code class="highlighter-rouge">value</code> method. This method checks whether we already have a resulting value in <code class="highlighter-rouge">self.value</code> in a <code class="highlighter-rouge">Some</code>; if we do, it returns the value within the <code class="highlighter-rouge">Some</code> without executing the closure again.</p>
+
+<p>If <code class="highlighter-rouge">self.value</code> is <code class="highlighter-rouge">None</code>, the code calls the closure stored in <code class="highlighter-rouge">self.calculation</code>, saves the result in <code class="highlighter-rouge">self.value</code> for future use, and returns the value as well.</p>
+
+<p>Listing 13-11 shows how we can use this <code class="highlighter-rouge">Cacher</code> struct in the function <code class="highlighter-rouge">generate_workout</code> from Listing 13-6.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">expensive_result</span> <span class="o">=</span> <span class="nn">Cacher</span><span class="p">::</span><span class="nf">new</span><span class="p">(|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
+        <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+        <span class="n">num</span>
+    <span class="p">});</span>
+
+    <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Today, do {} pushups!"</span><span class="p">,</span>
+            <span class="n">expensive_result</span><span class="nf">.value</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nd">println!</span><span class="p">(</span>
+            <span class="s">"Next, do {} situps!"</span><span class="p">,</span>
+            <span class="n">expensive_result</span><span class="nf">.value</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"Take a break today! Remember to stay hydrated!"</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span>
+                <span class="s">"Today, run for {} minutes!"</span><span class="p">,</span>
+                <span class="n">expensive_result</span><span class="nf">.value</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-11-using-cacher-in-the-generate_workout-function-to-abstract-away-the-caching-logic">Listing 13-11: Using Cacher in the generate_workout function to abstract away the caching logic</h4>
+
+<p>Instead of saving the closure in a variable directly, we save a new instance of <code class="highlighter-rouge">Cacher</code> that holds the closure. Then, in each place we want the result, we call the <code class="highlighter-rouge">value</code> method on the <code class="highlighter-rouge">Cacher</code> instance. We can call the <code class="highlighter-rouge">value</code> method as many times as we want, or not call it at all, and the expensive calculation will be run a maximum of once.</p>
+
+<p>Try running this program with the <code class="highlighter-rouge">main</code> function from Listing 13-2. Change the values in the <code class="highlighter-rouge">simulated_user_specified_value</code> and <code class="highlighter-rouge">simulated_random_number</code> variables to verify that in all the cases in the various <code class="highlighter-rouge">if</code> and <code class="highlighter-rouge">else</code> blocks, <code class="highlighter-rouge">calculating slowly...</code> appears only once and only when needed. The <code class="highlighter-rouge">Cacher</code> takes care of the logic necessary to ensure we aren’t calling the expensive calculation more than we need to so <code class="highlighter-rouge">generate_workout</code> can focus on the business logic.</p>
+
+<h3 id="limitations-of-the-cacher-implementation">Limitations of the Cacher Implementation</h3>
+<p>Caching values is a generally useful behavior that we might want to use in other parts of our code with different closures. However, there are two problems with the current implementation of <code class="highlighter-rouge">Cacher</code> that would make reusing it in different contexts difficult.</p>
+
+<p>The first problem is that a <code class="highlighter-rouge">Cacher</code> instance assumes it will always get the same value for the parameter <code class="highlighter-rouge">arg</code> to the <code class="highlighter-rouge">value</code> method. That is, this test of <code class="highlighter-rouge">Cacher</code> will fail:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">call_with_different_values</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">c</span> <span class="o">=</span> <span class="nn">Cacher</span><span class="p">::</span><span class="nf">new</span><span class="p">(|</span><span class="n">a</span><span class="p">|</span> <span class="n">a</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">c</span><span class="nf">.value</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">c</span><span class="nf">.value</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>This test creates a new <code class="highlighter-rouge">Cacher</code> instance with a closure that returns the value passed into it. We call the <code class="highlighter-rouge">value</code> method on this <code class="highlighter-rouge">Cacher</code> instance with an <code class="highlighter-rouge">arg</code> value of 1 and then an <code class="highlighter-rouge">arg</code> value of 2, and we expect the call to <code class="highlighter-rouge">value</code> with the <code class="highlighter-rouge">arg</code> value of 2 to return 2.</p>
+
+<p>Run this test with the <code class="highlighter-rouge">Cacher</code> implementation in Listing 13-9 and Listing 13-10, and the test will fail on the <code class="highlighter-rouge">assert_eq!</code> with this message:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">thread</span> <span class="nv">'call_with_different_values</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'assertion</span> <span class="n">failed</span><span class="p">:</span> <span class="err">`</span><span class="p">(</span><span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span><span class="err">`</span>
+  <span class="n">left</span><span class="p">:</span> <span class="err">`</span><span class="mi">1</span><span class="err">`</span><span class="p">,</span>
+ <span class="n">right</span><span class="p">:</span> <span class="err">`</span><span class="mi">2</span><span class="err">`'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span>
+</code></pre></div></div>
+
+<p>The problem is that the first time we called <code class="highlighter-rouge">c.value</code> with 1, the <code class="highlighter-rouge">Cacher</code> instance saved <code class="highlighter-rouge">Some(1)</code> in <code class="highlighter-rouge">self.value</code>. Thereafter, no matter what we pass in to the <code class="highlighter-rouge">value</code> method, it will always return 1.</p>
+
+<p>Try modifying <code class="highlighter-rouge">Cacher</code> to hold a hash map rather than a single value. The keys of the hash map will be the <code class="highlighter-rouge">arg</code> values that are passed in, and the values of the hash map will be the result of calling the closure on that key. Instead of looking at whether <code class="highlighter-rouge">self.value</code> directly has a <code class="highlighter-rouge">Some</code> or a <code class="highlighter-rouge">None</code> value, the <code class="highlighter-rouge">value</code> function will look up the <code class="highlighter-rouge">arg</code> in the hash map and return the value if it’s present. If it’s not present, the <code class="highlighter-rouge">Cacher</code> will call the closure and save the resulting value in the hash map associated with its <code class="highlighter-rouge">arg</code> value.</p>
+
+<p>The second problem with the current <code class="highlighter-rouge">Cacher</code> implementation is that it only accepts closures that take one parameter of type <code class="highlighter-rouge">u32</code> and return a <code class="highlighter-rouge">u32</code>. We might want to cache the results of closures that take a string slice and return <code class="highlighter-rouge">usize</code> values, for example. To fix this issue, try introducing more generic parameters to increase the flexibility of the <code class="highlighter-rouge">Cacher</code> functionality.</p>
+
+<h3 id="capturing-the-environment-with-closures">Capturing the Environment with Closures</h3>
+<p>In the workout generator example, we only used closures as inline anonymous functions. However, closures have an additional capability that functions don’t have: they can capture their environment and access variables from the scope in which they’re defined.</p>
+
+<p>Listing 13-12 has an example of a closure stored in the <code class="highlighter-rouge">equal_to_x</code> variable that uses the x variable from the closure’s surrounding environment.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">equal_to_x</span> <span class="o">=</span> <span class="p">|</span><span class="n">z</span><span class="p">|</span> <span class="n">z</span> <span class="o">==</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-12-example-of-a-closure-that-refers-to-a-variable-in-its-enclosing-scope">Listing 13-12: Example of a closure that refers to a variable in its enclosing scope</h4>
+
+<p>Here, even though <code class="highlighter-rouge">x</code> is not one of the parameters of <code class="highlighter-rouge">equal_to_x</code>, the <code class="highlighter-rouge">equal_to_x</code> closure is allowed to use the <code class="highlighter-rouge">x</code> variable that’s defined in the same scope that <code class="highlighter-rouge">equal_to_x</code> is defined in.</p>
+
+<p>We can’t do the same with functions; if we try with the following example, our code won’t compile:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="k">fn</span> <span class="nf">equal_to_x</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span> <span class="n">z</span> <span class="o">==</span> <span class="n">x</span> <span class="p">}</span>
+
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We get an error:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0434</span><span class="p">]:</span> <span class="n">can</span><span class="nv">'t</span> <span class="n">capture</span> <span class="n">dynamic</span> <span class="n">environment</span> <span class="n">in</span> <span class="n">a</span> <span class="k">fn</span> <span class="n">item</span><span class="p">;</span> <span class="k">use</span> <span class="n">the</span> <span class="p">||</span> <span class="p">{</span> <span class="o">...</span>
+<span class="p">}</span> <span class="n">closure</span> <span class="n">form</span> <span class="n">instead</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">fn</span> <span class="nf">equal_to_x</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span> <span class="n">z</span> <span class="o">==</span> <span class="n">x</span> <span class="p">}</span>
+  <span class="p">|</span>                                          <span class="o">^</span>
+</code></pre></div></div>
+<p>The compiler even reminds us that this only works with closures!</p>
+
+<p>When a closure captures a value from its environment, it uses memory to store the values for use in the closure body. This use of memory is overhead that we don’t want to pay in more common cases where we want to execute code that doesn’t capture its environment. Because functions are never allowed to capture their environment, defining and using functions will never incur this overhead.</p>
+
+<p>Closures can capture values from their environment in three ways, which directly map to the three ways a function can take a parameter: taking ownership, borrowing mutably, and borrowing immutably. These are encoded in the three <code class="highlighter-rouge">Fn</code> traits as follows:</p>
+
+<ul>
+  <li><strong>FnOnce</strong> consumes the variables it captures from its enclosing scope, known as the closure’s <em>environment</em>. To consume the captured variables, the closure must take ownership of these variables and move them into the closure when it is defined. The <code class="highlighter-rouge">Once</code> part of the name represents the fact that the closure can’t take ownership of the same variables more than once, so it can be called only once.</li>
+  <li><strong>FnMut</strong> can change the environment because it mutably borrows values.</li>
+  <li><strong>Fn</strong> borrows values from the environment immutably.</li>
+</ul>
+
+<p>When you create a closure, Rust infers which trait to use based on how the closure uses the values from the environment. All closures implement <code class="highlighter-rouge">FnOnce</code> because they can all be called at least once. Closures that don’t move the captured variables also implement <code class="highlighter-rouge">FnMut</code>, and closures that don’t need mutable access to the captured variables also implement <code class="highlighter-rouge">Fn</code>. In Listing 13-12, the <code class="highlighter-rouge">equal_to_x</code> closure borrows <code class="highlighter-rouge">x</code> immutably (so <code class="highlighter-rouge">equal_to_x</code> has the <code class="highlighter-rouge">Fn</code> trait) because the body of the closure only needs to read the value in <code class="highlighter-rouge">x</code>.</p>
+
+<p>If you want to force the closure to take ownership of the values it uses in the environment, you can use the <code class="highlighter-rouge">move</code> keyword before the parameter list. This technique is mostly useful when passing a closure to a new thread to move the data so it’s owned by the new thread.</p>
+
+<p>We’ll have more examples of <code class="highlighter-rouge">move</code> closures in Chapter 16 when we talk about concurrency. For now, here’s the code from Listing 13-12 with the <code class="highlighter-rouge">move</code> keyword added to the closure definition and using vectors instead of integers, because integers can be copied rather than moved; note that this code will not yet compile.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+    <span class="k">let</span> <span class="n">equal_to_x</span> <span class="o">=</span> <span class="k">move</span> <span class="p">|</span><span class="n">z</span><span class="p">|</span> <span class="n">z</span> <span class="o">==</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"can't use x here: {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We receive the following error:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">40</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">equal_to_x</span> <span class="o">=</span> <span class="k">move</span> <span class="p">|</span><span class="n">z</span><span class="p">|</span> <span class="n">z</span> <span class="o">==</span> <span class="n">x</span><span class="p">;</span>
+  <span class="p">|</span>                      <span class="o">--------</span> <span class="n">value</span> <span class="nf">moved</span> <span class="p">(</span><span class="n">into</span> <span class="n">closure</span><span class="p">)</span> <span class="n">here</span>
+<span class="mi">5</span> <span class="p">|</span>
+<span class="mi">6</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"can't use x here: {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+  <span class="p">|</span>                                        <span class="o">^</span> <span class="n">value</span> <span class="n">used</span> <span class="n">here</span> <span class="n">after</span> <span class="k">move</span>
+  <span class="p">|</span><span class="n">U</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">move</span> <span class="n">occurs</span> <span class="n">because</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="n">has</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">vec</span><span class="p">::</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">does</span> <span class="n">not</span>
+  <span class="n">implement</span> <span class="n">the</span> <span class="err">`</span><span class="nb">Copy</span><span class="err">`</span> <span class="k">trait</span>
+
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">x</code> value is moved into the closure when the closure is defined, because we added the <code class="highlighter-rouge">move</code> keyword. The closure then has ownership of <code class="highlighter-rouge">x</code>, and <code class="highlighter-rouge">main</code> isn’t allowed to use <code class="highlighter-rouge">x</code> anymore in the <code class="highlighter-rouge">println!</code> statement. Removing <code class="highlighter-rouge">println!</code> will fix this example.</p>
+
+<p>Most of the time when specifying one of the <code class="highlighter-rouge">Fn</code> trait bounds, you can start with <code class="highlighter-rouge">Fn</code> and the compiler will tell you if you need <code class="highlighter-rouge">FnMut</code> or <code class="highlighter-rouge">FnOnce</code> based on what happens in the closure body.</p>
+
+<p>To illustrate situations where closures that can capture their environment are useful as function parameters, let’s move on to our next topic: iterators.</p>
+
+<h2 id="processing-a-series-of-items-with-iterators">Processing a Series of Items with Iterators</h2>
+<p>The iterator pattern allows you to perform some task on a sequence of items in turn. An iterator is responsible for the logic of iterating over each item and determining when the sequence has finished. When you use iterators, you don’t have to reimplement that logic yourself.</p>
+
+<p>In Rust, iterators are <em>lazy</em>, meaning they have no effect until you call methods that consume the iterator to use it up. For example, the code in Listing 13-13 creates an iterator over the items in the vector <code class="highlighter-rouge">v1</code> by calling the <code class="highlighter-rouge">iter</code> method defined on <code class="highlighter-rouge">Vec&lt;T&gt;</code>. This code by itself doesn’t do anything useful.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="k">let</span> <span class="n">v1_iter</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">();</span>
+</code></pre></div></div>
+<h4 id="listing-13-13-creating-an-iterator">Listing 13-13: Creating an iterator</h4>
+
+<p>Once we’ve created an iterator, we can use it in a variety of ways. In Listing 3-5 in Chapter 3, we used iterators with <code class="highlighter-rouge">for</code> loops to execute some code on each item, although we glossed over what the call to <code class="highlighter-rouge">iter</code> did until now.</p>
+
+<p>The example in Listing 13-14 separates the creation of the iterator from the use of the iterator in the <code class="highlighter-rouge">for</code> loop. The iterator is stored in the <code class="highlighter-rouge">v1_iter</code> variable, and no iteration takes place at that time. When the <code class="highlighter-rouge">for</code> loop is called using the iterator in <code class="highlighter-rouge">v1_iter</code>, each element in the iterator is used in one iteration of the loop, which prints out each value.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="k">let</span> <span class="n">v1_iter</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">();</span>
+
+<span class="k">for</span> <span class="n">val</span> <span class="n">in</span> <span class="n">v1_iter</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"Got: {}"</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-14-using-an-iterator-in-a-for-loop">Listing 13-14: Using an iterator in a for loop</h4>
+
+<p>In languages that don’t have iterators provided by their standard libraries, you would likely write this same functionality by starting a variable at index 0, using that variable to index into the vector to get a value, and incrementing the variable value in a loop until it reached the total number of items in the vector.</p>
+
+<p>Iterators handle all that logic for you, cutting down on repetitive code you could potentially mess up. Iterators give you more flexibility to use the same logic with many different kinds of sequences, not just data structures you can index into, like vectors. Let’s examine how iterators do that.</p>
+
+<h3 id="the-iterator-trait-and-the-next-method">The Iterator Trait and the next Method</h3>
+<p>All iterators implement a trait named <code class="highlighter-rouge">Iterator</code> that is defined in the standard library. The definition of the trait looks like this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Iterator</span> <span class="p">{</span>
+    <span class="k">type</span> <span class="n">Item</span><span class="p">;</span>
+
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
+
+    <span class="c">// methods with default implementations elided</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Notice this definition uses some new syntax: <code class="highlighter-rouge">type Item</code> and <code class="highlighter-rouge">Self::Item</code>, which are defining an <em>associated type</em> with this trait. We’ll talk about associated types in depth in Chapter 19. For now, all you need to know is that this code says implementing the <code class="highlighter-rouge">Iterator</code> trait requires that you also define an <code class="highlighter-rouge">Item</code> type, and this <code class="highlighter-rouge">Item</code> type is used in the return type of the <code class="highlighter-rouge">next</code> method. In other words, the <code class="highlighter-rouge">Item</code> type will be the type returned from the iterator.</p>
+
+<p>The <code class="highlighter-rouge">Iterator</code> trait only requires implementors to define one method: the <code class="highlighter-rouge">next</code> method, which returns one item of the iterator at a time wrapped in <code class="highlighter-rouge">Some</code> and, when iteration is over, returns <code class="highlighter-rouge">None</code>.</p>
+
+<p>We can call the <code class="highlighter-rouge">next</code> method on iterators directly; Listing 13-15 demonstrates what values are returned from repeated calls to <code class="highlighter-rouge">next</code> on the iterator created from the vector.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">iterator_demonstration</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">v1_iter</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">();</span>
+
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v1_iter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v1_iter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v1_iter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v1_iter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nb">None</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-15-calling-the-next-method-on-an-iterator">Listing 13-15: Calling the next method on an iterator</h4>
+
+<p>Note that we needed to make <code class="highlighter-rouge">v1_iter</code> mutable: calling the <code class="highlighter-rouge">next</code> method on an iterator changes internal state that the iterator uses to keep track of where it is in the sequence. In other words, this code consumes, or uses up, the iterator. Each call to <code class="highlighter-rouge">next</code> eats up an item from the iterator. We didn’t need to make <code class="highlighter-rouge">v1_iter</code> mutable when we used a <code class="highlighter-rouge">for</code> loop because the loop took ownership of <code class="highlighter-rouge">v1_iter</code> and made it mutable behind the scenes.</p>
+
+<p>Also note that the values we get from the calls to <code class="highlighter-rouge">next</code> are immutable references to the values in the vector. The <code class="highlighter-rouge">iter</code> method produces an iterator over immutable references. If we want to create an iterator that takes ownership of <code class="highlighter-rouge">v1</code> and returns owned values, we can call <code class="highlighter-rouge">into_iter</code> instead of <code class="highlighter-rouge">iter</code>. Similarly, if we want to iterate over mutable references, we can call <code class="highlighter-rouge">iter_mut</code> instead of iter.</p>
+
+<h3 id="methods-that-consume-the-iterator">Methods that Consume the Iterator</h3>
+<p>The <code class="highlighter-rouge">Iterator</code> trait has a number of different methods with default implementations provided by the standard library; you can find out about these methods by looking in the standard library API documentation for the <code class="highlighter-rouge">Iterator</code> trait. Some of these methods call the <code class="highlighter-rouge">next</code> method in their definition, which is why you’re required to implement the <code class="highlighter-rouge">next</code> method when implementing the <code class="highlighter-rouge">Iterator</code> trait.</p>
+
+<p>Methods that call <code class="highlighter-rouge">next</code> are called <em>consuming adaptors</em>, because calling them uses up the iterator. One example is the <code class="highlighter-rouge">sum</code> method, which takes ownership of the iterator and iterates through the items by repeatedly calling <code class="highlighter-rouge">next</code>, thus consuming the iterator. As it iterates through, it adds each item to a running total and returns the total when iteration is complete. Listing 13-16 has a test illustrating a use of the <code class="highlighter-rouge">sum</code> method:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">iterator_sum</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+    <span class="k">let</span> <span class="n">v1_iter</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="n">total</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="n">v1_iter</span><span class="nf">.sum</span><span class="p">();</span>
+
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-16-calling-the-sum-method-to-get-the-total-of-all-items-in-the-iterator">Listing 13-16: Calling the sum method to get the total of all items in the iterator</h4>
+<p>We aren’t allowed to use <code class="highlighter-rouge">v1_iter</code> after the call to <code class="highlighter-rouge">sum</code> because <code class="highlighter-rouge">sum</code> takes ownership of the iterator we call it on.</p>
+
+<h3 id="methods-that-produce-other-iterators">Methods that Produce Other Iterators</h3>
+<p>Other methods defined on the <code class="highlighter-rouge">Iterator</code> trait, known as <em>iterator adaptors</em>, allow you to change iterators into different kinds of iterators. You can chain multiple calls to iterator adaptors to perform complex actions in a readable way. But because all iterators are lazy, you have to call one of the consuming adaptor methods to get results from calls to iterator adaptors.</p>
+
+<p>Listing 13-17 shows an example of calling the iterator adaptor method <code class="highlighter-rouge">map</code>, which takes a closure to call on each item to produce a new iterator. The closure here creates a new iterator in which each item from the vector has been incremented by 1. However, this code produces a warning:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">let</span> <span class="n">v1</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+<h4 id="listing-13-17-calling-the-iterator-adaptor-map-to-create-a-new-iterator">Listing 13-17: Calling the iterator adaptor map to create a new iterator</h4>
+
+<p>The warning we get is this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">warning</span><span class="p">:</span> <span class="n">unused</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">iter</span><span class="p">::</span><span class="n">Map</span><span class="err">`</span> <span class="n">which</span> <span class="n">must</span> <span class="n">be</span> <span class="n">used</span><span class="p">:</span> <span class="n">iterator</span> <span class="n">adaptors</span> <span class="n">are</span> <span class="n">lazy</span>
+<span class="n">and</span> <span class="k">do</span> <span class="n">nothing</span> <span class="n">unless</span> <span class="n">consumed</span>
+ <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">5</span>
+  <span class="p">|</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">|</span>     <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+  <span class="p">|</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="nd">#[warn(unused_must_use)]</span> <span class="n">on</span> <span class="n">by</span> <span class="n">default</span>
+</code></pre></div></div>
+<p>The code in Listing 13-17 doesn’t do anything; the closure we’ve specified never gets called. The warning reminds us why: iterator adaptors are lazy, and we need to consume the iterator here.</p>
+
+<p>To fix this and consume the iterator, we’ll use the <code class="highlighter-rouge">collect</code> method, which we used in Chapter 12 with <code class="highlighter-rouge">env::args</code> in Listing 12-1. This method consumes the iterator and collects the resulting values into a collection data type.</p>
+
+<p>In Listing 13-18, we collect the results of iterating over the iterator that’s returned from the call to <code class="highlighter-rouge">map</code> into a vector. This vector will end up containing each item from the original vector incremented by 1.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">let</span> <span class="n">v1</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="k">let</span> <span class="n">v2</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="nf">.collect</span><span class="p">();</span>
+
+<span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
+</code></pre></div></div>
+<h4 id="listing-13-18-calling-the-map-method-to-create-a-new-iterator-and-then-calling-the-collect-method-to-consume-the-new-iterator-and-create-a-vector">Listing 13-18: Calling the map method to create a new iterator and then calling the collect method to consume the new iterator and create a vector</h4>
+
+<p>Because <code class="highlighter-rouge">map</code> takes a closure, we can specify any operation we want to perform on each item. This is a great example of how closures let you customize some behavior while reusing the iteration behavior that the <code class="highlighter-rouge">Iterator</code> trait provides.</p>
+
+<h3 id="using-closures-that-capture-their-environment">Using Closures that Capture Their Environment</h3>
+<p>Now that we’ve introduced iterators, we can demonstrate a common use of closures that capture their environment by using the <code class="highlighter-rouge">filter</code> iterator adaptor. The <code class="highlighter-rouge">filter</code> method on an iterator takes a closure that takes each item from the iterator and returns a Boolean. If the closure returns <code class="highlighter-rouge">true</code>, the value will be included in the iterator produced by <code class="highlighter-rouge">filter</code>. If the closure returns <code class="highlighter-rouge">false</code>, the value won’t be included in the resulting iterator.</p>
+
+<p>In Listing 13-19, we use <code class="highlighter-rouge">filter</code> with a closure that captures the <code class="highlighter-rouge">shoe_size</code> variable from its environment to iterate over a collection of <code class="highlighter-rouge">Shoe</code> struct instances. It will return only shoes that are the specified size.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="nd">#[derive(PartialEq,</span> <span class="nd">Debug)]</span>
+<span class="k">struct</span> <span class="n">Shoe</span> <span class="p">{</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span>
+    <span class="n">style</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">shoes_in_my_size</span><span class="p">(</span><span class="n">shoes</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">shoe_size</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">shoes</span><span class="nf">.into_iter</span><span class="p">()</span>
+        <span class="nf">.filter</span><span class="p">(|</span><span class="n">s</span><span class="p">|</span> <span class="n">s</span><span class="py">.size</span> <span class="o">==</span> <span class="n">shoe_size</span><span class="p">)</span>
+        <span class="nf">.collect</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">filters_by_size</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">shoes</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span>
+        <span class="n">Shoe</span> <span class="p">{</span> <span class="n">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"sneaker"</span><span class="p">)</span> <span class="p">},</span>
+        <span class="n">Shoe</span> <span class="p">{</span> <span class="n">size</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"sandal"</span><span class="p">)</span> <span class="p">},</span>
+        <span class="n">Shoe</span> <span class="p">{</span> <span class="n">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"boot"</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">];</span>
+
+    <span class="k">let</span> <span class="n">in_my_size</span> <span class="o">=</span> <span class="nf">shoes_in_my_size</span><span class="p">(</span><span class="n">shoes</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+    <span class="nd">assert_eq!</span><span class="p">(</span>
+        <span class="n">in_my_size</span><span class="p">,</span>
+        <span class="nd">vec!</span><span class="p">[</span>
+            <span class="n">Shoe</span> <span class="p">{</span> <span class="n">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"sneaker"</span><span class="p">)</span> <span class="p">},</span>
+            <span class="n">Shoe</span> <span class="p">{</span> <span class="n">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"boot"</span><span class="p">)</span> <span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-19-using-the-filter-method-with-a-closure-that-captures-shoe_size">Listing 13-19: Using the filter method with a closure that captures shoe_size</h4>
+
+<p>The <code class="highlighter-rouge">shoes_in_my_size</code> function takes ownership of a vector of shoes and a shoe size as parameters. It returns a vector containing only shoes of the specified size.</p>
+
+<p>In the body of <code class="highlighter-rouge">shoes_in_my_size</code>, we call <code class="highlighter-rouge">into_iter</code> to create an iterator that takes ownership of the vector. Then we call <code class="highlighter-rouge">filter</code> to adapt that iterator into a new iterator that only contains elements for which the closure returns <code class="highlighter-rouge">true</code>.</p>
+
+<p>The closure captures the <code class="highlighter-rouge">shoe_size</code> parameter from the environment and compares the value with each shoe’s size, keeping only shoes of the size specified. Finally, calling <code class="highlighter-rouge">collect</code> gathers the values returned by the adapted iterator into a vector that’s returned by the function.</p>
+
+<p>The test shows that when we call <code class="highlighter-rouge">shoes_in_my_size</code>, we get back only shoes that have the same size as the value we specified.</p>
+
+<h3 id="creating-our-own-iterators-with-the-iterator-trait">Creating Our Own Iterators with the Iterator Trait</h3>
+<p>We’ve shown that you can create an iterator by calling <code class="highlighter-rouge">iter</code>, <code class="highlighter-rouge">into_iter</code>, or <code class="highlighter-rouge">iter_mut</code> on a vector. You can create iterators from the other collection types in the standard library, such as hash map. You can also create iterators that do anything you want by implementing the <code class="highlighter-rouge">Iterator</code> trait on your own types. As previously mentioned, the only method you’re required to provide a definition for is the <code class="highlighter-rouge">next</code> method. Once you’ve done that, you can use all other methods that have default implementations provided by the <code class="highlighter-rouge">Iterator</code> trait!</p>
+
+<p>To demonstrate, let’s create an iterator that will only ever count from 1 to 5. First, we’ll create a struct to hold some values. Then we’ll make this struct into an iterator by implementing the <code class="highlighter-rouge">Iterator</code> trait and using the values in that implementation.</p>
+
+<p>Listing 13-20 has the definition of the <code class="highlighter-rouge">Counter</code> struct and an associated <code class="highlighter-rouge">new</code> function to create instances of <code class="highlighter-rouge">Counter</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">struct</span> <span class="n">Counter</span> <span class="p">{</span>
+    <span class="n">count</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Counter</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Counter</span> <span class="p">{</span>
+        <span class="n">Counter</span> <span class="p">{</span> <span class="n">count</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-20-defining-the-counter-struct-and-a-new-function-that-creates-instances-of-counter-with-an-initial-value-of-0-for-count">Listing 13-20: Defining the Counter struct and a new function that creates instances of Counter with an initial value of 0 for count</h4>
+
+<p>The <code class="highlighter-rouge">Counter</code> struct has one field named <code class="highlighter-rouge">count</code>. This field holds a <code class="highlighter-rouge">u32</code> value that will keep track of where we are in the process of iterating from 1 to 5. The <code class="highlighter-rouge">count</code> field is private because we want the implementation of <code class="highlighter-rouge">Counter</code> to manage its value. The <code class="highlighter-rouge">new</code> function enforces the behavior of always starting new instances with a value of 0 in the <code class="highlighter-rouge">count</code> field.</p>
+
+<p>Next, we’ll implement the <code class="highlighter-rouge">Iterator</code> trait for our <code class="highlighter-rouge">Counter</code> type by defining the body of the <code class="highlighter-rouge">next</code> method to specify what we want to happen when this iterator is used, as shown in Listing 13-21:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">impl</span> <span class="n">Iterator</span> <span class="k">for</span> <span class="n">Counter</span> <span class="p">{</span>
+    <span class="k">type</span> <span class="n">Item</span> <span class="o">=</span> <span class="nb">u32</span><span class="p">;</span>
+
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="k">self</span><span class="py">.count</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="k">self</span><span class="py">.count</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nb">None</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-21-implementing-the-iterator-trait-on-our-counter-struct">Listing 13-21: Implementing the Iterator trait on our Counter struct</h4>
+
+<p>We set the associated <code class="highlighter-rouge">Item</code> type for our iterator to <code class="highlighter-rouge">u32</code>, meaning the iterator will return <code class="highlighter-rouge">u32</code> values. Again, don’t worry about associated types yet, we’ll cover them in Chapter 19.</p>
+
+<p>We want our iterator to add 1 to the current state, so we initialized <code class="highlighter-rouge">count</code> to 0 so it would return 1 first. If the value of <code class="highlighter-rouge">count</code> is less than 6, <code class="highlighter-rouge">next</code> will return the current value wrapped in <code class="highlighter-rouge">Some</code>, but if <code class="highlighter-rouge">count</code> is 6 or higher, our iterator will return <code class="highlighter-rouge">None</code>.</p>
+
+<h3 id="using-our-counter-iterators-next-method">Using Our Counter Iterator’s next Method</h3>
+<p>Once we’ve implemented the <code class="highlighter-rouge">Iterator</code> trait, we have an iterator! Listing 13-22 shows a test demonstrating that we can use the iterator functionality of our <code class="highlighter-rouge">Counter</code> struct by calling the <code class="highlighter-rouge">next</code> method on it directly, just as we did with the iterator created from a vector in Listing 13-15.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">calling_next_directly</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Counter</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">counter</span><span class="nf">.next</span><span class="p">(),</span> <span class="nb">None</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-22-testing-the-functionality-of-the-next-method-implementation">Listing 13-22: Testing the functionality of the next method implementation</h4>
+
+<p>This test creates a new <code class="highlighter-rouge">Counter</code> instance in the <code class="highlighter-rouge">counter</code> variable and then calls <code class="highlighter-rouge">next</code> repeatedly, verifying that we have implemented the behavior we want this iterator to have: returning the values from 1 to 5.</p>
+
+<h3 id="using-other-iterator-trait-methods">Using Other Iterator Trait Methods</h3>
+<p>We implemented the <code class="highlighter-rouge">Iterator</code> trait by defining the <code class="highlighter-rouge">next</code> method, so we can now use any <code class="highlighter-rouge">Iterator</code> trait method’s default implementations as defined in the standard library, because they all use the <code class="highlighter-rouge">next</code> method’s functionality.</p>
+
+<p>For example, if for some reason we wanted to take the values produced by an instance of <code class="highlighter-rouge">Counter</code>, pair them with values produced by another <code class="highlighter-rouge">Counter</code> instance after skipping the first value, multiply each pair together, keep only those results that are divisible by 3, and add all the resulting values together, we could do so, as shown in the test in Listing 13-23:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/lib.rs</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">using_other_iterator_trait_methods</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">sum</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="nn">Counter</span><span class="p">::</span><span class="nf">new</span><span class="p">()</span><span class="nf">.zip</span><span class="p">(</span><span class="nn">Counter</span><span class="p">::</span><span class="nf">new</span><span class="p">()</span><span class="nf">.skip</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                                 <span class="nf">.map</span><span class="p">(|(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)|</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+                                 <span class="nf">.filter</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                                 <span class="nf">.sum</span><span class="p">();</span>
+    <span class="nd">assert_eq!</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">sum</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-23-using-a-variety-of-iterator-trait-methods-on-our-counter-iterator">Listing 13-23: Using a variety of Iterator trait methods on our Counter iterator</h4>
+
+<p>Note that <code class="highlighter-rouge">zip</code> produces only four pairs; the theoretical fifth pair <code class="highlighter-rouge">(5, None)</code> is never produced because <code class="highlighter-rouge">zip</code> returns <code class="highlighter-rouge">None</code> when either of its input iterators return <code class="highlighter-rouge">None</code>.</p>
+
+<p>All of these method calls are possible because we specified how the <code class="highlighter-rouge">next</code> method works, and the standard library provides default implementations for other methods that call <code class="highlighter-rouge">next</code>.</p>
+
+<h2 id="improving-our-io-project">Improving Our I/O Project</h2>
+<p>With this new knowledge about iterators, we can improve the I/O project in Chapter 12 by using iterators to make places in the code clearer and more concise. Let’s look at how iterators can improve our implementation of the <code class="highlighter-rouge">Config::new</code> function and the <code class="highlighter-rouge">search</code> function.</p>
+
+<h3 id="removing-a-clone-using-an-iterator">Removing a clone Using an Iterator</h3>
+<p>In Listing 12-6, we added code that took a slice of <code class="highlighter-rouge">String</code> values and created an instance of the <code class="highlighter-rouge">Config</code> struct by indexing into the slice and cloning the values, allowing the <code class="highlighter-rouge">Config</code> struct to own those values. In Listing 13-24, we’ve reproduced the implementation of the <code class="highlighter-rouge">Config::new</code> function as it was in Listing 12-23:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"not enough arguments"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="nf">.clone</span><span class="p">();</span>
+        <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="nf">.clone</span><span class="p">();</span>
+
+        <span class="k">let</span> <span class="n">case_sensitive</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">var</span><span class="p">(</span><span class="s">"CASE_INSENSITIVE"</span><span class="p">)</span><span class="nf">.is_err</span><span class="p">();</span>
+
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">Config</span> <span class="p">{</span> <span class="n">query</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">case_sensitive</span> <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-24-reproduction-of-the-confignew-function-from-listing-12-23">Listing 13-24: Reproduction of the Config::new function from Listing 12-23</h4>
+
+<p>At the time, we said not to worry about the inefficient <code class="highlighter-rouge">clone</code> calls because we would remove them in the future. Well, that time is now!</p>
+
+<p>We needed <code class="highlighter-rouge">clone</code> here because we have a slice with <code class="highlighter-rouge">String</code> elements in the parameter <code class="highlighter-rouge">args</code>, but the <code class="highlighter-rouge">new</code> function doesn’t own <code class="highlighter-rouge">args</code>. To return ownership of a <code class="highlighter-rouge">Config</code> instance, we had to clone the values from the <code class="highlighter-rouge">query</code> and <code class="highlighter-rouge">filename</code> fields of <code class="highlighter-rouge">Config</code> so the <code class="highlighter-rouge">Config</code> instance can own its values.</p>
+
+<p>With our new knowledge about iterators, we can change the <code class="highlighter-rouge">new</code> function to take ownership of an iterator as its argument instead of borrowing a slice. We’ll use the iterator functionality instead of the code that checks the length of the slice and indexes into specific locations. This will clarify what the <code class="highlighter-rouge">Config::new</code> function is doing because the iterator will access the values.</p>
+
+<p>Once <code class="highlighter-rouge">Config::new</code> takes ownership of the iterator and stops using indexing operations that borrow, we can move the <code class="highlighter-rouge">String</code> values from the iterator into <code class="highlighter-rouge">Config</code> rather than calling <code class="highlighter-rouge">clone</code> and making a new allocation.</p>
+
+<h3 id="using-the-returned-iterator-directly">Using the Returned Iterator Directly</h3>
+<p>Open your I/O project’s <em>src/main.rs</em> file, which should look like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">args</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.collect</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="n">config</span> <span class="o">=</span> <span class="nn">Config</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">)</span><span class="nf">.unwrap_or_else</span><span class="p">(|</span><span class="n">err</span><span class="p">|</span> <span class="p">{</span>
+        <span class="nd">eprintln!</span><span class="p">(</span><span class="s">"Problem parsing arguments: {}"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+        <span class="nn">process</span><span class="p">::</span><span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’ll change the start of the <code class="highlighter-rouge">main</code> function that we had in Listing 12-24 to the code in Listing 13-25. This won’t compile until we update <code class="highlighter-rouge">Config::new</code> as well.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">config</span> <span class="o">=</span> <span class="nn">Config</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">())</span><span class="nf">.unwrap_or_else</span><span class="p">(|</span><span class="n">err</span><span class="p">|</span> <span class="p">{</span>
+        <span class="nd">eprintln!</span><span class="p">(</span><span class="s">"Problem parsing arguments: {}"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+        <span class="nn">process</span><span class="p">::</span><span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c">// --snip--</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-25-passing-the-return-value-of-envargs-to-confignew">Listing 13-25: Passing the return value of env::args to Config::new</h4>
+
+<p>The <code class="highlighter-rouge">env::args</code> function returns an iterator! Rather than collecting the iterator values into a vector and then passing a slice to <code class="highlighter-rouge">Config::new</code>, now we’re passing ownership of the iterator returned from <code class="highlighter-rouge">env::args</code> to <code class="highlighter-rouge">Config::new</code> directly.</p>
+
+<p>Next, we need to update the definition of <code class="highlighter-rouge">Config::new</code>. 
+In your I/O project’s <em>src/lib.rs</em> file, let’s change the signature of <code class="highlighter-rouge">Config::new</code> to look like Listing 13-26. 
+This still won’t compile because we need to update the function body.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="c">// --snip--</span>
+</code></pre></div></div>
+<h4 id="listing-13-26-updating-the-signature-of-confignew-to-expect-an-iterator">Listing 13-26: Updating the signature of Config::new to expect an iterator</h4>
+
+<p>The standard library documentation for the <code class="highlighter-rouge">env::args</code> function shows that the type of the iterator it returns is <code class="highlighter-rouge">std::env::Args</code>. We’ve updated the signature of the <code class="highlighter-rouge">Config::new</code> function so the parameter <code class="highlighter-rouge">args</code> has the type <code class="highlighter-rouge">std::env::Args</code> instead of <code class="highlighter-rouge">&amp;[String]</code>. Because we’re taking ownership of <code class="highlighter-rouge">args</code> and we’ll be mutating <code class="highlighter-rouge">args</code> by iterating over it, we can add the <code class="highlighter-rouge">mut</code> keyword into the specification of the <code class="highlighter-rouge">args</code> parameter to make it mutable.</p>
+
+<h3 id="using-iterator-trait-methods-instead-of-indexing">Using Iterator Trait Methods Instead of Indexing</h3>
+<p>Next, we’ll fix the body of <code class="highlighter-rouge">Config::new</code>. The standard library documentation also mentions that <code class="highlighter-rouge">std::env::Args</code> implements the <code class="highlighter-rouge">Iterator</code> trait, so we know we can call the <code class="highlighter-rouge">next</code> method on it! Listing 13-27 updates the code from Listing 12-23 to use the <code class="highlighter-rouge">next</code> method:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="n">args</span><span class="nf">.next</span><span class="p">();</span>
+
+        <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="k">match</span> <span class="n">args</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">arg</span><span class="p">,</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"Didn't get a query string"</span><span class="p">),</span>
+        <span class="p">};</span>
+
+        <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="k">match</span> <span class="n">args</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">arg</span><span class="p">,</span>
+            <span class="nb">None</span> <span class="k">=&gt;</span> <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"Didn't get a file name"</span><span class="p">),</span>
+        <span class="p">};</span>
+
+        <span class="k">let</span> <span class="n">case_sensitive</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">var</span><span class="p">(</span><span class="s">"CASE_INSENSITIVE"</span><span class="p">)</span><span class="nf">.is_err</span><span class="p">();</span>
+
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">Config</span> <span class="p">{</span> <span class="n">query</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">case_sensitive</span> <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-27-changing-the-body-of-confignew-to-use-iterator-methods">Listing 13-27: Changing the body of Config::new to use iterator methods</h4>
+
+<p>Remember that the first value in the return value of <code class="highlighter-rouge">env::args</code> is the name of the program. We want to ignore that and get to the next value, so first we call <code class="highlighter-rouge">next</code> and do nothing with the return value. Second, we call <code class="highlighter-rouge">next</code> to get the value we want to put in the <code class="highlighter-rouge">query</code> field of <code class="highlighter-rouge">Config</code>. If <code class="highlighter-rouge">next</code> returns a <code class="highlighter-rouge">Some</code>, we use a <code class="highlighter-rouge">match</code> to extract the value. If it returns <code class="highlighter-rouge">None</code>, it means not enough arguments were given and we return early with an <code class="highlighter-rouge">Err</code> value. We do the same thing for the <code class="highlighter-rouge">filename</code> value.</p>
+
+<h3 id="making-code-clearer-with-iterator-adaptors">Making Code Clearer with Iterator Adaptors</h3>
+<p>We can also take advantage of iterators in the <code class="highlighter-rouge">search</code> function in our I/O project, which is reproduced here in Listing 13-28 as it was in Listing 12-19:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">results</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">line</span><span class="nf">.contains</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">results</span><span class="nf">.push</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">results</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-28-the-implementation-of-the-search-function-from-listing-12-19">Listing 13-28: The implementation of the search function from Listing 12-19</h4>
+
+<p>We can write this code in a more concise way using iterator adaptor methods. Doing so also lets us avoid having a mutable intermediate <code class="highlighter-rouge">results</code> vector. The functional programming style prefers to minimize the amount of mutable state to make code clearer. Removing the mutable state might enable a future enhancement to make searching happen in parallel, because we wouldn’t have to manage concurrent access to the <code class="highlighter-rouge">results</code> vector. Listing 13-29 shows this change:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+
+<span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span>
+        <span class="nf">.filter</span><span class="p">(|</span><span class="n">line</span><span class="p">|</span> <span class="n">line</span><span class="nf">.contains</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+        <span class="nf">.collect</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="listing-13-29-using-iterator-adaptor-methods-in-the-implementation-of-the-search-function">Listing 13-29: Using iterator adaptor methods in the implementation of the search function</h4>
+
+<p>Recall that the purpose of the <code class="highlighter-rouge">search</code> function is to return all lines in <code class="highlighter-rouge">contents</code> that contain the <code class="highlighter-rouge">query</code>. Similar to the <code class="highlighter-rouge">filter</code> example in Listing 13-19, this code uses the <code class="highlighter-rouge">filter</code> adaptor to keep only the lines that <code class="highlighter-rouge">line.contains(query)</code> returns <code class="highlighter-rouge">true</code> for. We then collect the matching lines into another vector with <code class="highlighter-rouge">collect</code>. Much simpler! Feel free to make the same change to use iterator methods in the <code class="highlighter-rouge">search_case_insensitive</code> function as well.</p>
+
+<p>The next logical question is which style you should choose in your own code and why: the original implementation in Listing 13-28 or the version using iterators in Listing 13-29. 
+Most Rust programmers prefer to use the iterator style. 
+It’s a bit tougher to get the hang of at first, but once you get a feel for the various iterator adaptors and what they do, iterators can be easier to understand. 
+Instead of fiddling with the various bits of looping and building new vectors, the code focuses on the high-level objective of the loop. 
+This abstracts away some of the commonplace code so it’s easier to see the concepts that are unique to this code, such as the filtering condition each element in the iterator must pass.</p>
+
+<p>But are the two implementations truly equivalent? The intuitive assumption might be that the more low-level loop will be faster. Let’s talk about performance.</p>
+
+<h2 id="comparing-performance-loops-vs-iterators">Comparing Performance: Loops vs. Iterators</h2>
+<p>To determine whether to use loops or iterators, you need to know which version of our <code class="highlighter-rouge">search</code> functions is faster: the version with an explicit <code class="highlighter-rouge">for</code> loop or the version with iterators.</p>
+
+<p>We ran a benchmark by loading the entire contents of <em>The Adventures of Sherlock Holmes</em> by Sir Arthur Conan Doyle into a <code class="highlighter-rouge">String</code> and looking for the word <em>the</em> in the contents. Here are the results of the benchmark on the version of <code class="highlighter-rouge">search</code> using the <code class="highlighter-rouge">for</code> loop and the version using iterators:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span> <span class="n">bench_search_for</span>  <span class="o">...</span> <span class="n">bench</span><span class="p">:</span>  <span class="mi">19</span><span class="p">,</span><span class="mi">620</span><span class="p">,</span><span class="mi">300</span> <span class="n">ns</span><span class="o">/</span><span class="nf">iter</span> <span class="p">(</span><span class="o">+/-</span> <span class="mi">915</span><span class="p">,</span><span class="mi">700</span><span class="p">)</span>
+<span class="n">test</span> <span class="n">bench_search_iter</span> <span class="o">...</span> <span class="n">bench</span><span class="p">:</span>  <span class="mi">19</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">900</span> <span class="n">ns</span><span class="o">/</span><span class="nf">iter</span> <span class="p">(</span><span class="o">+/-</span> <span class="mi">657</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The iterator version was slightly faster! We won’t explain the benchmark code here, because the point is not to prove that the two versions are equivalent but to get a general sense of how these two implementations compare performance-wise.</p>
+
+<p>For a more comprehensive benchmark, you should check using various texts of various sizes as the <code class="highlighter-rouge">contents</code>, different words and words of different lengths as the <code class="highlighter-rouge">query</code>, and all kinds of other variations. The point is this: iterators, although a high-level abstraction, get compiled down to roughly the same code as if you’d written the lower-level code yourself. Iterators are one of Rust’s zero-cost abstractions, by which we mean using the abstraction imposes no additional runtime overhead. This is analogous to how Bjarne Stroustrup, the original designer and implementor of C++, defines zero-overhead in “Foundations of C++” (2012):</p>
+
+<blockquote>
+  <p>In general, C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better.</p>
+</blockquote>
+
+<p>As another example, the following code is taken from an audio decoder. The decoding algorithm uses the linear prediction mathematical operation to estimate future values based on a linear function of the previous samples. This code uses an iterator chain to do some math on three variables in scope: a <code class="highlighter-rouge">buffer</code> slice of data, an array of 12 <code class="highlighter-rouge">coefficients</code>, and an amount by which to shift data in <code class="highlighter-rouge">qlp_shift</code>. We’ve declared the variables within this example but not given them any values; although this code doesn’t have much meaning outside of its context, it’s still a concise, real-world example of how Rust translates high-level ideas to low-level code.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">buffer</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="p">[</span><span class="nb">i32</span><span class="p">];</span>
+<span class="k">let</span> <span class="n">coefficients</span><span class="p">:</span> <span class="p">[</span><span class="nb">i64</span><span class="p">;</span> <span class="mi">12</span><span class="p">];</span>
+<span class="k">let</span> <span class="n">qlp_shift</span><span class="p">:</span> <span class="nb">i16</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">12</span><span class="o">..</span><span class="n">buffer</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">prediction</span> <span class="o">=</span> <span class="n">coefficients</span><span class="nf">.iter</span><span class="p">()</span>
+                                 <span class="nf">.zip</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">12</span><span class="o">..</span><span class="n">i</span><span class="p">])</span>
+                                 <span class="nf">.map</span><span class="p">(|(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)|</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">)</span>
+                                 <span class="py">.sum</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">qlp_shift</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction</span> <span class="k">as</span> <span class="nb">i32</span> <span class="o">+</span> <span class="n">delta</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>To calculate the value of <code class="highlighter-rouge">prediction</code>, this code iterates through each of the 12 values in <code class="highlighter-rouge">coefficients</code> and uses the <code class="highlighter-rouge">zip</code> method to pair the coefficient values with the previous 12 values in <code class="highlighter-rouge">buffer</code>. Then, for each pair, we multiply the values together, sum all the results, and shift the bits in the sum <code class="highlighter-rouge">qlp_shift</code> bits to the right.</p>
+
+<p>Calculations in applications like audio decoders often prioritize performance most highly. Here, we’re creating an iterator, using two adaptors, and then consuming the value. What assembly code would this Rust code compile to? Well, as of this writing, it compiles down to the same assembly you’d write by hand. There’s no loop at all corresponding to the iteration over the values in <code class="highlighter-rouge">coefficients</code>: Rust knows that there are 12 iterations, so it “unrolls” the loop. <em>Unrolling</em> is an optimization that removes the overhead of the loop controlling code and instead generates repetitive code for each iteration of the loop.</p>
+
+<p>All of the coefficients get stored in registers, which means accessing the values is very fast. There are no bounds checks on the array access at runtime. All these optimizations that Rust is able to apply make the resulting code extremely efficient. Now that you know this, you can use iterators and closures without fear! They make code seem like it’s higher level but don’t impose a runtime performance penalty for doing so.</p>
+
+<h2 id="summary">Summary</h2>
+<p>Closures and iterators are Rust features inspired by functional programming language ideas. They contribute to Rust’s capability to clearly express high-level ideas at low-level performance. The implementations of closures and iterators are such that runtime performance is not affected. This is part of Rust’s goal to strive to provide zero-cost abstractions.</p>
+
+<p>Now that we’ve improved the expressiveness of our I/O project, let’s look at some more features of <code class="highlighter-rouge">cargo</code> that will help us share the project with the world.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#closure" class="page__taxonomy-item" rel="tag">Closure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#functional-programming" class="page__taxonomy-item" rel="tag">Functional programming</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#iterator" class="page__taxonomy-item" rel="tag">Iterator</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust-language" class="page__taxonomy-item" rel="tag">RUST Language</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-04-07T00:00:00+00:00">April 7, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+13.+Functional+Language+Features%3A+Iterators+and+Closures%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F13.Functional-Language-Features_Iterators-and-Closures" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F13.Functional-Language-Features_Iterators-and-Closures" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F13.Functional-Language-Features_Iterators-and-Closures" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/12.An-IO-Project-Building-a-Command-Line-Program" class="pagination--pager" title="RUST : 12. An I/O Project: Building a Command Line Program
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/12.An-IO-Project-Building-a-Command-Line-Program" rel="permalink">RUST : 12. An I/O Project: Building a Command Line Program
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  49 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">An I/O Project: Building a Command Line Program
+This chapter is a recap of the many skills you’ve learned so far and an exploration of a few more standard li...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/11.Writing-Automated-Tests" rel="permalink">RUST : 11. Writing Automated Tests
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  40 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In his 1972 essay “The Humble Programmer,” Edsger W. Dijkstra said that “Program testing can be a very effective way to show the presence of bugs, 
+but it is...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/ms-creating-a-new-Rust-like-programming-language/" rel="permalink">Microsoft: We’re creating a new Rust-like programming language for secure coding
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This link will be help :)
+
+  KimPopeTV
+  Article - Zdnet By Liam Tung
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/10.Generic-Types,-Traits,-and-Lifetimes" rel="permalink">RUST : 10. Generic Types, Traits, and Lifetimes
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  60 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Generic Types, Traits, and Lifetimes
+Every programming language has tools for effectively handling the duplication of concepts. 
+In Rust, one such tool is ge...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
