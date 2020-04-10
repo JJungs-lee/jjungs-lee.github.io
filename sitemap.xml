@@ -37,7 +37,7 @@
 <lastmod>2020-03-05T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://jjungs-lee.github.io//rust/ms-creating-a-new-Rust-like-programming-language/</loc>
+<loc>https://jjungs-lee.github.io//article/ms-creating-a-new-Rust-like-programming-language/</loc>
 <lastmod>2020-03-08T00:00:00+00:00</lastmod>
 </url>
 <url>
@@ -51,6 +51,10 @@
 <url>
 <loc>https://jjungs-lee.github.io//rust/13.Functional-Language-Features_Iterators-and-Closures</loc>
 <lastmod>2020-04-07T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://jjungs-lee.github.io//rust/How-to-call-C-function-in-rust</loc>
+<lastmod>2020-04-10T00:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>https://jjungs-lee.github.io//</loc>
