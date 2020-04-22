@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
+<meta name="description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
 
 
   <meta name="author" content="JJungs-lee">
@@ -21,30 +21,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Yes! I Take IT">
-<meta property="og:title" content="Microsoft: We’re creating a new Rust-like programming language for secure coding">
-<meta property="og:url" content="https://jjungs-lee.github.io//article/ms-creating-a-new-Rust-like-programming-language/">
+<meta property="og:title" content="RUST : How to check null value in rust">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust">
 
 
-  <meta property="og:description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2020-03-08T00:00:00+00:00">
+  <meta property="og:description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2020-04-22T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://jjungs-lee.github.io//article/ms-creating-a-new-Rust-like-programming-language/">
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust">
 
 
 
@@ -282,15 +282,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Microsoft: We’re creating a new Rust-like programming language for secure coding">
-    <meta itemprop="description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
-    <meta itemprop="datePublished" content="2020-03-08T00:00:00+00:00">
+    <meta itemprop="headline" content="RUST : How to check null value in rust">
+    <meta itemprop="description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
+    <meta itemprop="datePublished" content="2020-04-22T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Microsoft: We’re creating a new Rust-like programming language for secure coding
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : How to check null value in rust
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -307,29 +307,44 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>This link will be help :)</p>
+        <h2 id="how-to-check-null-value-in-rust">How to check null value in rust</h2>
+<p>A question arose When i linking C language with rust language. 
+That’s <strong>how to check null value in rust</strong>? Rust has <code class="highlighter-rouge">Option&lt;T&gt;</code> instead of <code class="highlighter-rouge">null</code>.
+because problem with null values is that if you try to use a null value as a not-null value. 
+So Rust made new type <code class="highlighter-rouge">Option&lt;T&gt;</code> to prevent error. If you get a more infomation click <a href="6.Enums-and-Pattern-Matching#the-option-enum-and-its-advantages-over-null-values">here!!</a></p>
+
+<p>Anyway I will try to new type. almost pointer has <em>null</em> value. I will replace the sample code written in C with rust.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// C language</span>
+<span class="nb">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="k">return</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+<p>How to change to rust? Let’s look at the code first and analyze it.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// rust language</span>
+<span class="k">let</span> <span class="n">ptr</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;*</span><span class="k">const</span> <span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">None</span><span class="p">;</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nb">None</span> <span class="o">=</span> <span class="n">ptr</span> <span class="p">{</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>What has changed?</p>
 <ul>
-  <li><a href="https://www.youtube.com/watch?v=VZ89rJPCEC4">KimPopeTV</a></li>
-  <li><a href="https://zd.net/2vtuLXV">Article - Zdnet By Liam Tung</a></li>
+  <li><code class="highlighter-rouge">Options&lt;T&gt;</code> type.</li>
+  <li><em>NULL</em> value to <em>None</em></li>
+  <li><code class="highlighter-rouge">if let</code> statment</li>
 </ul>
 
+<p>In brief, <code class="highlighter-rouge">Options&lt;T&gt;</code> type is enum. That has <code class="highlighter-rouge">Some(T)</code> and <code class="highlighter-rouge">None</code>. <code class="highlighter-rouge">Some(T)</code> means value is present, <code class="highlighter-rouge">None</code> means has nothing. If you want to know more, find it yourself.</p>
+
+<p>I thought I was scared of ‘new type’ or ‘not exist about null’. It was really difficult at first because there was no <code class="highlighter-rouge">null</code>. But it was changed so easily. 
+Now that you know it, take it well and let’s master the rust language !!</p>
+
 <hr />
-
-<p>Microsoft can’t just throw away older Windows code(C or C++), but the company’s Project <em>Verona</em> aims to make older low-level components in Windows 10 more secure by integrating Mozilla-developed Rust.</p>
-
-<p>Microsofte recently revealed that its trials with Rust over C and C++ to remove insecure code from Windows had hit its targets.
-The company has partially explained its security-related motives for experimenting with Rust, but hasn’t gone into much detail about the broader reasons for its move.</p>
-
-<p>Microsoft recently revealed that the vast majority of bugs being discovered these days are memory safety flaws, which is also why Microsoft is looking at Rust to improve the situation. Rust was designed to allow developers to code without having to worry about this class of bug. (<strong>this mean Rust is good for prenventing memory safety flaws</strong>)</p>
-
-<p><em>Memory safety</em> is the term for coding frameworks that help protect memory space from being abused by malware. Project Verona at Microsoft is meant to progress the company’s work here to close off this attack vector. 
-The other class of bugs Microsoft is working on to address relates to uninitialized memory in a way that also doesn’t kill performance.</p>
-
-<p>MS project <em>Verona</em> will have a lot of influence on the development of windows, and it will be helpful to the development of rust.
-I wonder why Microsoft doesn’t participate in rust open source. If Microsoft and other companies are involved in opensource development, it could be a better language than c or C ++. 
-But Microsofte will be made open souce “soon”(<code class="highlighter-rouge">Verona</code>), It is a new language for what Microsoft is calling “safe infrastructure programming”. (I think <strong>Rust+MS skill combined</strong>)</p>
-
-<p>So the possibilities of developing <strong>rust</strong> or <strong>verona</strong> are endless, and I think it will be a better language to solve problems that existed in C and C ++.</p>
+<p>reference)</p>
+<ul>
+  <li><a href="https://users.rust-lang.org/t/nullable-pointers-in-ffi/10255">Nullable Pointers in FFI</a></li>
+  <li><a href="http://patshaughnessy.net/2018/1/18/learning-rust-if-let-vs--match">learning-rust-if-let-vs–match</a></li>
+</ul>
 
         
       </section>
@@ -350,15 +365,15 @@ But Microsofte will be made open souce “soon”(<code class="highlighter-rouge
     
       
       
-      <a href="/tags/#microsoft" class="page__taxonomy-item" rel="tag">Microsoft</a><span class="sep">, </span>
+      <a href="/tags/#c-c" class="page__taxonomy-item" rel="tag">C / C++</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">RUST</a><span class="sep">, </span>
+      <a href="/tags/#ffi" class="page__taxonomy-item" rel="tag">FFI</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#verona" class="page__taxonomy-item" rel="tag">Verona</a>
+      <a href="/tags/#option" class="page__taxonomy-item" rel="tag">Option</a>
     
     </span>
   </p>
@@ -379,14 +394,14 @@ But Microsofte will be made open souce “soon”(<code class="highlighter-rouge
     
       
       
-      <a href="/categories/#article" class="page__taxonomy-item" rel="tag">Article</a>
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-03-08T00:00:00+00:00">March 8, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-04-22T00:00:00+00:00">April 22, 2020</time></p>
         
       </footer>
 
@@ -395,23 +410,22 @@ But Microsofte will be made open souce “soon”(<code class="highlighter-rouge
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Microsoft%3A+We%27re+creating+a+new+Rust-like+programming+language+for+secure+coding%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+How+to+check+null+value+in+rust%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/rust/10.Generic-Types,-Traits,-and-Lifetimes" class="pagination--pager" title="RUST : 10. Generic Types, Traits, and Lifetimes
+      <a href="/rust/14.More-About-Cargo-and-Crates.io" class="pagination--pager" title="RUST : 14. More About Cargo and Crates.io
 ">Previous</a>
     
     
-      <a href="/rust/11.Writing-Automated-Tests" class="pagination--pager" title="RUST : 11. Writing Automated Tests
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -435,36 +449,6 @@ But Microsofte will be made open souce “soon”(<code class="highlighter-rouge
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/rust/How-to-null-check-in-rust" rel="permalink">RUST : How to check null value in rust
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">How to check null value in rust
-A question arose When i linking C language with rust language. 
-That’s how to check null value in rust? Rust has Option&lt;T&...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
         <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
 </a>
       
@@ -475,7 +459,7 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
 
 
 
-  29 minute read
+  28 minute read
 
 </p>
     
@@ -534,12 +518,41 @@ I want to li...</p>
 
 
 
-  31 minute read
+  45 minute read
 
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
 Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/12.An-IO-Project-Building-a-Command-Line-Program" rel="permalink">RUST : 12. An I/O Project: Building a Command Line Program
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  49 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">An I/O Project: Building a Command Line Program
+This chapter is a recap of the many skills you’ve learned so far and an exploration of a few more standard li...</p>
   </article>
 </div>
 
