@@ -891,7 +891,7 @@ Here we store that mutable reference in the <code class="highlighter-rouge">coun
 The mutable reference goes out of scope at the end of the <code class="highlighter-rouge">for</code> loop, so all of these changes are safe and allowed by the borrowing rules.</p>
 
 <h3 id="hashing-functions">Hashing Functions</h3>
-<p>By default, <code class="highlighter-rouge">HashMap</code> uses a “cryptographically strong”<sup id="fnref:siphash"><a href="#fn:siphash" class="footnote">1</a></sup> hashing function that can provide resistance to Denial of Service (DoS) attacks. 
+<p>By default, <code class="highlighter-rouge">HashMap</code> uses a “cryptographically strong”<sup id="fnref:siphash" role="doc-noteref"><a href="#fn:siphash" class="footnote">1</a></sup> hashing function that can provide resistance to Denial of Service (DoS) attacks. 
 This is not the fastest hashing algorithm available, but the trade-off for better security that comes with the drop in performance is worth it. 
 If you profile your code and find that the default hash function is too slow for your purposes, you can switch to another function by specifying a different <em>hasher</em>. 
 A hasher is a type that implements the <code class="highlighter-rouge">BuildHasher</code> trait. We’ll talk about traits and how to implement them in Chapter 10. 
@@ -909,10 +909,10 @@ You don’t necessarily have to implement your own hasher from scratch; <a href=
 <p>The standard library API documentation describes methods that vectors, strings, and hash maps have that will be helpful for these exercises!</p>
 
 <hr />
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:siphash">
-      <p><a href="https://www.131002.net/siphash/siphash.pdf">https://www.131002.net/siphash/siphash.pdf</a> <a href="#fnref:siphash" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:siphash" role="doc-endnote">
+      <p><a href="https://www.131002.net/siphash/siphash.pdf">https://www.131002.net/siphash/siphash.pdf</a> <a href="#fnref:siphash" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
