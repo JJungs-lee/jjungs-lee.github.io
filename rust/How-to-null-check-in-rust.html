@@ -309,9 +309,9 @@
         
         <h2 id="how-to-check-null-value-in-rust">How to check null value in rust</h2>
 <p>A question arose When i linking C language with rust language. 
-That’s <strong>how to check null value in rust</strong>? Rust has <code class="highlighter-rouge">Option&lt;T&gt;</code> instead of <code class="highlighter-rouge">null</code>.
+That’s <strong>how to check null value in rust</strong>? Rust has <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> instead of <code class="language-plaintext highlighter-rouge">null</code>.
 because problem with null values is that if you try to use a null value as a not-null value. 
-So Rust made new type <code class="highlighter-rouge">Option&lt;T&gt;</code> to prevent error. If you get a more infomation click <a href="6.Enums-and-Pattern-Matching#the-option-enum-and-its-advantages-over-null-values">here!!</a></p>
+So Rust made new type <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> to prevent error. If you get a more infomation click <a href="6.Enums-and-Pattern-Matching#the-option-enum-and-its-advantages-over-null-values">here!!</a></p>
 
 <p>Anyway I will try to new type. almost pointer has <em>null</em> value. I will replace the sample code written in C with rust.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// C language</span>
@@ -329,14 +329,14 @@ So Rust made new type <code class="highlighter-rouge">Option&lt;T&gt;</code> to 
 </code></pre></div></div>
 <p>What has changed?</p>
 <ul>
-  <li><code class="highlighter-rouge">Options&lt;T&gt;</code> type.</li>
+  <li><code class="language-plaintext highlighter-rouge">Options&lt;T&gt;</code> type.</li>
   <li><em>NULL</em> value to <em>None</em></li>
-  <li><code class="highlighter-rouge">if let</code> statment</li>
+  <li><code class="language-plaintext highlighter-rouge">if let</code> statment</li>
 </ul>
 
-<p>In brief, <code class="highlighter-rouge">Options&lt;T&gt;</code> type is enum. That has <code class="highlighter-rouge">Some(T)</code> and <code class="highlighter-rouge">None</code>. <code class="highlighter-rouge">Some(T)</code> means value is present, <code class="highlighter-rouge">None</code> means has nothing. If you want to know more, find it yourself.</p>
+<p>In brief, <code class="language-plaintext highlighter-rouge">Options&lt;T&gt;</code> type is enum. That has <code class="language-plaintext highlighter-rouge">Some(T)</code> and <code class="language-plaintext highlighter-rouge">None</code>. <code class="language-plaintext highlighter-rouge">Some(T)</code> means value is present, <code class="language-plaintext highlighter-rouge">None</code> means has nothing. If you want to know more, find it yourself.</p>
 
-<p>I thought I was scared of ‘new type’ or ‘not exist about null’. It was really difficult at first because there was no <code class="highlighter-rouge">null</code>. But it was changed so easily. 
+<p>I thought I was scared of ‘new type’ or ‘not exist about null’. It was really difficult at first because there was no <code class="language-plaintext highlighter-rouge">null</code>. But it was changed so easily. 
 Now that you know it, take it well and let’s master the rust language !!</p>
 
 <hr />
@@ -421,7 +421,7 @@ Now that you know it, take it well and let’s master the rust language !!</p>
       
   <nav class="pagination">
     
-      <a href="/rust/14.More-About-Cargo-and-Crates.io" class="pagination--pager" title="RUST : 14. More About Cargo and Crates.io
+      <a href="/rust/15.Smart-Pointers" class="pagination--pager" title="RUST : 15. Smart Pointers
 ">Previous</a>
     
     
@@ -439,6 +439,37 @@ Now that you know it, take it well and let’s master the rust language !!</p>
     <div class="page__related">
       <h4 class="page__related-title">You may also enjoy</h4>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/15.Smart-Pointers" rel="permalink">RUST : 15. Smart Pointers
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  68 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Smart Pointers
+A pointer is a general concept for a variable that contains an address in memory. 
+This address refers to, or “points at,” some other data. 
+T...</p>
+  </article>
+</div>
+
         
           
 
@@ -524,35 +555,6 @@ I want to li...</p>
     
     <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
 Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/12.An-IO-Project-Building-a-Command-Line-Program" rel="permalink">RUST : 12. An I/O Project: Building a Command Line Program
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  49 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">An I/O Project: Building a Command Line Program
-This chapter is a recap of the many skills you’ve learned so far and an exploration of a few more standard li...</p>
   </article>
 </div>
 

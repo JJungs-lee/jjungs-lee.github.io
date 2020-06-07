@@ -309,12 +309,12 @@
         
         <h2 id="generic-types-traits-and-lifetimes">Generic Types, Traits, and Lifetimes</h2>
 <p>Every programming language has tools for effectively handling the duplication of concepts. 
-In Rust, one such tool is <code class="highlighter-rouge">generics</code>. Generics are abstract stand-ins for concrete types or other properties. 
+In Rust, one such tool is <code class="language-plaintext highlighter-rouge">generics</code>. Generics are abstract stand-ins for concrete types or other properties. 
 When we’re writing code, we can express the behavior of generics or how they relate to other generics without knowing what will be in their place when compiling and running the code.</p>
 
 <p>Similar to the way a function takes parameters with unknown values to run the same code on multiple concrete values, 
 functions can take parameters of some generic type instead of a concrete type, like i32 or String. 
-In fact, we’ve already used generics in Chapter 6 with <code class="highlighter-rouge">Option&lt;T&gt;</code>, Chapter 8 with <code class="highlighter-rouge">Vec&lt;T&gt;</code> and <code class="highlighter-rouge">HashMap&lt;K, V&gt;</code>, and Chapter 9 with <code class="highlighter-rouge">Result&lt;T, E&gt;</code>. 
+In fact, we’ve already used generics in Chapter 6 with <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>, Chapter 8 with <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> and <code class="language-plaintext highlighter-rouge">HashMap&lt;K, V&gt;</code>, and Chapter 9 with <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code>. 
 In this chapter, you’ll explore how to define your own types, functions, and methods with generics!</p>
 
 <p>First, we’ll review how to extract a function to reduce code duplication. Next, we’ll use the same technique to make a generic function from two functions that differ only in the types of their parameters. We’ll also explain how to use generic types in struct and enum definitions.</p>
@@ -345,10 +345,10 @@ Then we’ll apply this technique to extract a generic function! In the same way
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-1-code-to-find-the-largest-number-in-a-list-of-numbers">Listing 10-1: Code to find the largest number in a list of numbers</h4>
-<p>This code stores a list of integers in the variable <code class="highlighter-rouge">number_list</code> and places the first number in the list in a variable named <code class="highlighter-rouge">largest</code>. 
-Then it iterates through all the numbers in the list, and if the current number is greater than the number stored in <code class="highlighter-rouge">largest</code>, it replaces the number in that variable. 
+<p>This code stores a list of integers in the variable <code class="language-plaintext highlighter-rouge">number_list</code> and places the first number in the list in a variable named <code class="language-plaintext highlighter-rouge">largest</code>. 
+Then it iterates through all the numbers in the list, and if the current number is greater than the number stored in <code class="language-plaintext highlighter-rouge">largest</code>, it replaces the number in that variable. 
 However, if the current number is less than or equal to the largest number seen so far, the variable doesn’t change, and the code moves on to the next number in the list. 
-After considering all the numbers in the list, <code class="highlighter-rouge">largest</code> should hold the largest number, which in this case is 100.</p>
+After considering all the numbers in the list, <code class="language-plaintext highlighter-rouge">largest</code> should hold the largest number, which in this case is 100.</p>
 
 <p>To find the largest number in two different lists of numbers, we can duplicate the code in Listing 10-1 and use the same logic at two different places in the program, as shown in Listing 10-2.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -410,8 +410,8 @@ Unlike the code in Listing 10-1, which can find the largest number in only one p
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-3-abstracted-code-to-find-the-largest-number-in-two-lists">Listing 10-3: Abstracted code to find the largest number in two lists</h4>
-<p>The <code class="highlighter-rouge">largest</code> function has a parameter called <code class="highlighter-rouge">list</code>, 
-which represents any concrete slice of <code class="highlighter-rouge">i32</code> values that we might pass into the function. As a result, when we call the function, the code runs on the specific values that we pass in.</p>
+<p>The <code class="language-plaintext highlighter-rouge">largest</code> function has a parameter called <code class="language-plaintext highlighter-rouge">list</code>, 
+which represents any concrete slice of <code class="language-plaintext highlighter-rouge">i32</code> values that we might pass into the function. As a result, when we call the function, the code runs on the specific values that we pass in.</p>
 
 <p>In sum, here are the steps we took to change the code from Listing 10-2 to Listing 10-3:</p>
 
@@ -435,7 +435,7 @@ Then we’ll discuss how generics affect code performance.</p>
 <p>When defining a function that uses generics, we place the generics in the signature of the function where we would usually specify the data types of the parameters and return value. 
 Doing so makes our code more flexible and provides more functionality to callers of our function while preventing code duplication.</p>
 
-<p>Continuing with our <code class="highlighter-rouge">largest</code> function, Listing 10-4 shows two functions that both find the largest value in a slice.</p>
+<p>Continuing with our <code class="language-plaintext highlighter-rouge">largest</code> function, Listing 10-4 shows two functions that both find the largest value in a slice.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">largest_i32</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
@@ -474,25 +474,25 @@ Doing so makes our code more flexible and provides more functionality to callers
 </code></pre></div></div>
 <h4 id="listing-10-4-two-functions-that-differ-only-in-their-names-and-the-types-in-their-signatures">Listing 10-4: Two functions that differ only in their names and the types in their signatures</h4>
 
-<p>The <code class="highlighter-rouge">largest_i32</code> function is the one we extracted in Listing 10-3 that finds the largest <code class="highlighter-rouge">i32</code> in a slice. 
-The <code class="highlighter-rouge">largest_char</code> function finds the largest <code class="highlighter-rouge">char</code> in a slice. 
+<p>The <code class="language-plaintext highlighter-rouge">largest_i32</code> function is the one we extracted in Listing 10-3 that finds the largest <code class="language-plaintext highlighter-rouge">i32</code> in a slice. 
+The <code class="language-plaintext highlighter-rouge">largest_char</code> function finds the largest <code class="language-plaintext highlighter-rouge">char</code> in a slice. 
 The function bodies have the same code, so let’s eliminate the duplication by introducing a generic type parameter in a single function.</p>
 
 <p>To parameterize the types in the new function we’ll define, we need to name the type parameter, just as we do for the value parameters to a function. You can use any identifier as a type parameter name. 
-But we’ll use <code class="highlighter-rouge">T</code> because, by convention, parameter names in Rust are short, often just a letter, and Rust’s type-naming convention is CamelCase. Short for “type,” <code class="highlighter-rouge">T</code> is the default choice of most Rust programmers.</p>
+But we’ll use <code class="language-plaintext highlighter-rouge">T</code> because, by convention, parameter names in Rust are short, often just a letter, and Rust’s type-naming convention is CamelCase. Short for “type,” <code class="language-plaintext highlighter-rouge">T</code> is the default choice of most Rust programmers.</p>
 
 <p>When we use a parameter in the body of the function, we have to declare the parameter name in the signature so the compiler knows what that name means. 
 Similarly, when we use a type parameter name in a function signature, we have to declare the type parameter name before we use it. 
-To define the generic <code class="highlighter-rouge">largest</code> function, place type name declarations inside angle brackets, <code class="highlighter-rouge">&lt;&gt;</code>, between the name of the function and the parameter list, like this:</p>
+To define the generic <code class="language-plaintext highlighter-rouge">largest</code> function, place type name declarations inside angle brackets, <code class="language-plaintext highlighter-rouge">&lt;&gt;</code>, between the name of the function and the parameter list, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
 </code></pre></div></div>
 
-<p>We read this definition as: the function <code class="highlighter-rouge">largest</code> is generic over some type <code class="highlighter-rouge">T</code>. 
-This function has one parameter named <code class="highlighter-rouge">list</code>, which is a slice of values of type <code class="highlighter-rouge">T</code>. 
-The <code class="highlighter-rouge">largest</code> function will return a value of the same type <code class="highlighter-rouge">T</code>.</p>
+<p>We read this definition as: the function <code class="language-plaintext highlighter-rouge">largest</code> is generic over some type <code class="language-plaintext highlighter-rouge">T</code>. 
+This function has one parameter named <code class="language-plaintext highlighter-rouge">list</code>, which is a slice of values of type <code class="language-plaintext highlighter-rouge">T</code>. 
+The <code class="language-plaintext highlighter-rouge">largest</code> function will return a value of the same type <code class="language-plaintext highlighter-rouge">T</code>.</p>
 
 <p>Listing 10-5 shows the combined largest function definition using the generic data type in its signature. 
-The listing also shows how we can call the function with either a slice of <code class="highlighter-rouge">i32</code> values or <code class="highlighter-rouge">char</code> values. 
+The listing also shows how we can call the function with either a slice of <code class="language-plaintext highlighter-rouge">i32</code> values or <code class="language-plaintext highlighter-rouge">char</code> values. 
 Note that this code won’t compile yet, but we’ll fix it later in this chapter.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -531,16 +531,16 @@ Note that this code won’t compile yet, but we’ll fix it later in this chapte
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">PartialOrd</span><span class="err">`</span> 
           <span class="n">might</span> <span class="n">be</span> <span class="n">missing</span> <span class="k">for</span> <span class="err">`</span><span class="n">T</span><span class="err">`</span>
 </code></pre></div></div>
-<p>The note mentions <code class="highlighter-rouge">std::cmp::PartialOrd</code>, which is a <em>trait</em>. 
+<p>The note mentions <code class="language-plaintext highlighter-rouge">std::cmp::PartialOrd</code>, which is a <em>trait</em>. 
 We’ll talk about traits in the next section. 
-For now, this error states that the body of largest won’t work for all possible types that <code class="highlighter-rouge">T</code> could be. 
-Because we want to compare values of type <code class="highlighter-rouge">T</code> in the body, we can only use types whose values can be ordered. 
-To enable comparisons, the standard library has the <code class="highlighter-rouge">std::cmp::PartialOrd</code> trait that you can implement on types (see Appendix C for more on this trait). 
+For now, this error states that the body of largest won’t work for all possible types that <code class="language-plaintext highlighter-rouge">T</code> could be. 
+Because we want to compare values of type <code class="language-plaintext highlighter-rouge">T</code> in the body, we can only use types whose values can be ordered. 
+To enable comparisons, the standard library has the <code class="language-plaintext highlighter-rouge">std::cmp::PartialOrd</code> trait that you can implement on types (see Appendix C for more on this trait). 
 You’ll learn how to specify that a generic type has a particular trait in the “Traits as Parameters” section, but let’s first explore other ways of using generic type parameters.</p>
 
 <h3 id="in-struct-definitions">In Struct Definitions</h3>
-<p>We can also define structs to use a generic type parameter in one or more fields using the <code class="highlighter-rouge">&lt;&gt;</code> syntax. 
-Listing 10-6 shows how to define a <code class="highlighter-rouge">Point&lt;T&gt;</code> struct to hold <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> coordinate values of any type.</p>
+<p>We can also define structs to use a generic type parameter in one or more fields using the <code class="language-plaintext highlighter-rouge">&lt;&gt;</code> syntax. 
+Listing 10-6 shows how to define a <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code> struct to hold <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> coordinate values of any type.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
@@ -567,7 +567,7 @@ Listing 10-6: A Point<T> struct that holds x and y values of type T</T></p>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-7-the-fields-x-and-y-must-be-the-same-type-because-both-have-the-same-generic-data-type-t">Listing 10-7: The fields x and y must be the same type because both have the same generic data type T.</h4>
-<p>In this example, when we assign the integer value 5 to x, we let the compiler know that the generic type T will be an integer for this instance of <code class="highlighter-rouge">Point&lt;T&gt;</code>. Then when we specify 4.0 for y, which we’ve defined to have the same type as x, we’ll get a type mismatch error like this:</p>
+<p>In this example, when we assign the integer value 5 to x, we let the compiler know that the generic type T will be an integer for this instance of <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code>. Then when we specify 4.0 for y, which we’ve defined to have the same type as x, we’ll get a type mismatch error like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0308</span><span class="p">]:</span> <span class="n">mismatched</span> <span class="n">types</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">38</span>
   <span class="p">|</span>
@@ -596,32 +596,32 @@ For example, in Listing 10-8, we can change the definition of Point to be generi
 
 <h3 id="in-enum-definitions">In Enum Definitions</h3>
 <p>As we did with structs, we can define <strong>enums</strong> to hold generic data types in their variants. 
-Let’s take another look at the <code class="highlighter-rouge">Option&lt;T&gt;</code> enum that the standard library provides, which we used in Chapter 6:</p>
+Let’s take another look at the <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> enum that the standard library provides, which we used in Chapter 6:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Some</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
     <span class="nb">None</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>This definition should now make more sense to you. 
-As you can see, <code class="highlighter-rouge">Option&lt;T&gt;</code> is an enum that is generic over type <code class="highlighter-rouge">T</code> and has <strong>two</strong> variants: <code class="highlighter-rouge">Some</code>, which holds one value of type <code class="highlighter-rouge">T</code>, and a <code class="highlighter-rouge">None</code> variant that doesn’t hold any value. 
-By using the <code class="highlighter-rouge">Option&lt;T&gt;</code> enum, we can express the abstract concept of having an optional value, and because <code class="highlighter-rouge">Option&lt;T&gt;</code> is generic, we can use this abstraction no matter what the type of the optional value is.</p>
+As you can see, <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> is an enum that is generic over type <code class="language-plaintext highlighter-rouge">T</code> and has <strong>two</strong> variants: <code class="language-plaintext highlighter-rouge">Some</code>, which holds one value of type <code class="language-plaintext highlighter-rouge">T</code>, and a <code class="language-plaintext highlighter-rouge">None</code> variant that doesn’t hold any value. 
+By using the <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> enum, we can express the abstract concept of having an optional value, and because <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> is generic, we can use this abstraction no matter what the type of the optional value is.</p>
 
 <p>Enums can use multiple generic types as well. 
-The definition of the <code class="highlighter-rouge">Result</code> enum that we used in Chapter 9 is one example:</p>
+The definition of the <code class="language-plaintext highlighter-rouge">Result</code> enum that we used in Chapter 9 is one example:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Ok</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
     <span class="nf">Err</span><span class="p">(</span><span class="n">E</span><span class="p">),</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>The <code class="highlighter-rouge">Result</code> enum is generic over <strong>two</strong> types, <code class="highlighter-rouge">T</code> and <code class="highlighter-rouge">E</code>, and has two variants: <code class="highlighter-rouge">Ok</code>, which holds a value of type <code class="highlighter-rouge">T</code>, and <code class="highlighter-rouge">Err</code>, which holds a value of type <code class="highlighter-rouge">E</code>. 
-This definition makes it convenient to use the <code class="highlighter-rouge">Result</code> enum anywhere we have an operation that might succeed (return a value of some type <code class="highlighter-rouge">T</code>) or fail (return an error of some type <code class="highlighter-rouge">E</code>). 
-In fact, this is what we used to open a file in Listing 9-3, where <code class="highlighter-rouge">T</code> was filled in with the type <code class="highlighter-rouge">std::fs::File</code> when the file was opened successfully and <code class="highlighter-rouge">E</code> was filled in with the type <code class="highlighter-rouge">std::io::Error</code> when there were problems opening the file.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Result</code> enum is generic over <strong>two</strong> types, <code class="language-plaintext highlighter-rouge">T</code> and <code class="language-plaintext highlighter-rouge">E</code>, and has two variants: <code class="language-plaintext highlighter-rouge">Ok</code>, which holds a value of type <code class="language-plaintext highlighter-rouge">T</code>, and <code class="language-plaintext highlighter-rouge">Err</code>, which holds a value of type <code class="language-plaintext highlighter-rouge">E</code>. 
+This definition makes it convenient to use the <code class="language-plaintext highlighter-rouge">Result</code> enum anywhere we have an operation that might succeed (return a value of some type <code class="language-plaintext highlighter-rouge">T</code>) or fail (return an error of some type <code class="language-plaintext highlighter-rouge">E</code>). 
+In fact, this is what we used to open a file in Listing 9-3, where <code class="language-plaintext highlighter-rouge">T</code> was filled in with the type <code class="language-plaintext highlighter-rouge">std::fs::File</code> when the file was opened successfully and <code class="language-plaintext highlighter-rouge">E</code> was filled in with the type <code class="language-plaintext highlighter-rouge">std::io::Error</code> when there were problems opening the file.</p>
 
 <p>When you recognize situations in your code with multiple struct or enum definitions that differ only in the types of the values they hold, you can avoid duplication by using generic types instead.</p>
 
 <h3 id="in-method-definitions">In Method Definitions</h3>
 <p>We can implement methods on <strong>structs</strong> and <strong>enums</strong> (as we did in Chapter 5) and use generic types in their definitions, too. 
-Listing 10-9 shows the <code class="highlighter-rouge">Point&lt;T&gt;</code> struct we defined in Listing 10-6 with a method named <code class="highlighter-rouge">x</code> implemented on it.</p>
+Listing 10-9 shows the <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code> struct we defined in Listing 10-6 with a method named <code class="language-plaintext highlighter-rouge">x</code> implemented on it.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
@@ -641,13 +641,13 @@ Listing 10-9 shows the <code class="highlighter-rouge">Point&lt;T&gt;</code> str
 </code></pre></div></div>
 <h4 id="listing-10-9-implementing-a-method-named-x-on-the-point-struct-that-will-return-a-reference-to-the-x-field-of-type-t">Listing 10-9: Implementing a method named x on the Point<T> struct that will return a reference to the x field of type T</T></h4>
 
-<p>Here, we’ve defined a method named <code class="highlighter-rouge">x</code> on <code class="highlighter-rouge">Point&lt;T&gt;</code> that returns a reference to the data in the field x.</p>
+<p>Here, we’ve defined a method named <code class="language-plaintext highlighter-rouge">x</code> on <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code> that returns a reference to the data in the field x.</p>
 
-<p>Note that we have to declare <code class="highlighter-rouge">T</code> just after <code class="highlighter-rouge">impl</code> so we can use it to specify that we’re implementing methods on the type <code class="highlighter-rouge">Point&lt;T&gt;</code>. 
-By declaring <code class="highlighter-rouge">T</code> as a generic type after <code class="highlighter-rouge">impl</code>, Rust can identify that the type in the angle brackets in <code class="highlighter-rouge">Point</code> is a generic type rather than a concrete type.</p>
+<p>Note that we have to declare <code class="language-plaintext highlighter-rouge">T</code> just after <code class="language-plaintext highlighter-rouge">impl</code> so we can use it to specify that we’re implementing methods on the type <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code>. 
+By declaring <code class="language-plaintext highlighter-rouge">T</code> as a generic type after <code class="language-plaintext highlighter-rouge">impl</code>, Rust can identify that the type in the angle brackets in <code class="language-plaintext highlighter-rouge">Point</code> is a generic type rather than a concrete type.</p>
 
-<p>We could, for example, implement methods only on <code class="highlighter-rouge">Point&lt;f32&gt;</code> instances rather than on <code class="highlighter-rouge">Point&lt;T&gt;</code> instances with any generic type. 
-In Listing 10-10 we use the concrete type <code class="highlighter-rouge">f32</code>, meaning we don’t declare any types after <code class="highlighter-rouge">impl</code>.</p>
+<p>We could, for example, implement methods only on <code class="language-plaintext highlighter-rouge">Point&lt;f32&gt;</code> instances rather than on <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code> instances with any generic type. 
+In Listing 10-10 we use the concrete type <code class="language-plaintext highlighter-rouge">f32</code>, meaning we don’t declare any types after <code class="language-plaintext highlighter-rouge">impl</code>.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">Point</span><span class="o">&lt;</span><span class="nb">f32</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">distance_from_origin</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">f32</span> <span class="p">{</span>
@@ -656,13 +656,13 @@ In Listing 10-10 we use the concrete type <code class="highlighter-rouge">f32</c
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-10-an-impl-block-that-only-applies-to-a-struct-with-a-particular-concrete-type-for-the-generic-type-parameter-t">Listing 10-10: An impl block that only applies to a struct with a particular concrete type for the generic type parameter T</h4>
-<p>This code means the type <code class="highlighter-rouge">Point&lt;f32&gt;</code> will have a method named <code class="highlighter-rouge">distance_from_origin</code> and other instances of <code class="highlighter-rouge">Point&lt;T&gt;</code> where <code class="highlighter-rouge">T</code> is not of type <code class="highlighter-rouge">f32</code> will not have this method defined. 
+<p>This code means the type <code class="language-plaintext highlighter-rouge">Point&lt;f32&gt;</code> will have a method named <code class="language-plaintext highlighter-rouge">distance_from_origin</code> and other instances of <code class="language-plaintext highlighter-rouge">Point&lt;T&gt;</code> where <code class="language-plaintext highlighter-rouge">T</code> is not of type <code class="language-plaintext highlighter-rouge">f32</code> will not have this method defined. 
 The method measures how far our point is from the point at coordinates (0.0, 0.0) and uses mathematical operations that are available only for floating point types.</p>
 
 <p>Generic type parameters in a struct definition aren’t always the same as those you use in that struct’s method signatures. 
-For example, Listing 10-11 defines the method <code class="highlighter-rouge">mixup</code> on the <code class="highlighter-rouge">Point&lt;T, U&gt;</code> struct from Listing 10-8. 
-The method takes another <code class="highlighter-rouge">Point</code> as a parameter, which might have different types from the <code class="highlighter-rouge">self</code> <code class="highlighter-rouge">Point</code> we’re calling <code class="highlighter-rouge">mixup</code> on. 
-The method creates a new <code class="highlighter-rouge">Point</code> instance with the <code class="highlighter-rouge">x</code> value from the <code class="highlighter-rouge">self</code> <code class="highlighter-rouge">Point</code> (of type <code class="highlighter-rouge">T</code>) and the <code class="highlighter-rouge">y</code> value from the passed-in <code class="highlighter-rouge">Point</code> (of type <code class="highlighter-rouge">W</code>).</p>
+For example, Listing 10-11 defines the method <code class="language-plaintext highlighter-rouge">mixup</code> on the <code class="language-plaintext highlighter-rouge">Point&lt;T, U&gt;</code> struct from Listing 10-8. 
+The method takes another <code class="language-plaintext highlighter-rouge">Point</code> as a parameter, which might have different types from the <code class="language-plaintext highlighter-rouge">self</code> <code class="language-plaintext highlighter-rouge">Point</code> we’re calling <code class="language-plaintext highlighter-rouge">mixup</code> on. 
+The method creates a new <code class="language-plaintext highlighter-rouge">Point</code> instance with the <code class="language-plaintext highlighter-rouge">x</code> value from the <code class="language-plaintext highlighter-rouge">self</code> <code class="language-plaintext highlighter-rouge">Point</code> (of type <code class="language-plaintext highlighter-rouge">T</code>) and the <code class="language-plaintext highlighter-rouge">y</code> value from the passed-in <code class="language-plaintext highlighter-rouge">Point</code> (of type <code class="language-plaintext highlighter-rouge">W</code>).</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">U</span><span class="p">,</span>
@@ -687,14 +687,14 @@ The method creates a new <code class="highlighter-rouge">Point</code> instance w
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-11-a-method-that-uses-different-generic-types-from-its-structs-definition">Listing 10-11: A method that uses different generic types from its struct’s definition</h4>
-<p>In <code class="highlighter-rouge">main</code>, we’ve defined a <code class="highlighter-rouge">Point</code> that has an <code class="highlighter-rouge">i32</code> for <code class="highlighter-rouge">x</code> (with value <code class="highlighter-rouge">5</code>) and an <code class="highlighter-rouge">f64</code> for <code class="highlighter-rouge">y</code> (with value 10.4). 
-The <code class="highlighter-rouge">p2</code> variable is a <code class="highlighter-rouge">Point</code> struct that has a <code class="highlighter-rouge">string slice</code> for <code class="highlighter-rouge">x</code> (with value <code class="highlighter-rouge">"Hello"</code>) and a <code class="highlighter-rouge">char</code> for <code class="highlighter-rouge">y</code> (with value <code class="highlighter-rouge">c</code>). 
-Calling <code class="highlighter-rouge">mixup</code> on <code class="highlighter-rouge">p1</code> with the argument <code class="highlighter-rouge">p2</code> gives us <code class="highlighter-rouge">p3</code>, which will have an <code class="highlighter-rouge">i32</code> for <code class="highlighter-rouge">x</code>, because <code class="highlighter-rouge">x</code> came from <code class="highlighter-rouge">p1</code>. 
-The <code class="highlighter-rouge">p3</code> variable will have a char for <code class="highlighter-rouge">y</code>, because <code class="highlighter-rouge">y</code> came from <code class="highlighter-rouge">p2</code>. The println! macro call will print <code class="highlighter-rouge">p3.x = 5, p3.y = c</code>.</p>
+<p>In <code class="language-plaintext highlighter-rouge">main</code>, we’ve defined a <code class="language-plaintext highlighter-rouge">Point</code> that has an <code class="language-plaintext highlighter-rouge">i32</code> for <code class="language-plaintext highlighter-rouge">x</code> (with value <code class="language-plaintext highlighter-rouge">5</code>) and an <code class="language-plaintext highlighter-rouge">f64</code> for <code class="language-plaintext highlighter-rouge">y</code> (with value 10.4). 
+The <code class="language-plaintext highlighter-rouge">p2</code> variable is a <code class="language-plaintext highlighter-rouge">Point</code> struct that has a <code class="language-plaintext highlighter-rouge">string slice</code> for <code class="language-plaintext highlighter-rouge">x</code> (with value <code class="language-plaintext highlighter-rouge">"Hello"</code>) and a <code class="language-plaintext highlighter-rouge">char</code> for <code class="language-plaintext highlighter-rouge">y</code> (with value <code class="language-plaintext highlighter-rouge">c</code>). 
+Calling <code class="language-plaintext highlighter-rouge">mixup</code> on <code class="language-plaintext highlighter-rouge">p1</code> with the argument <code class="language-plaintext highlighter-rouge">p2</code> gives us <code class="language-plaintext highlighter-rouge">p3</code>, which will have an <code class="language-plaintext highlighter-rouge">i32</code> for <code class="language-plaintext highlighter-rouge">x</code>, because <code class="language-plaintext highlighter-rouge">x</code> came from <code class="language-plaintext highlighter-rouge">p1</code>. 
+The <code class="language-plaintext highlighter-rouge">p3</code> variable will have a char for <code class="language-plaintext highlighter-rouge">y</code>, because <code class="language-plaintext highlighter-rouge">y</code> came from <code class="language-plaintext highlighter-rouge">p2</code>. The println! macro call will print <code class="language-plaintext highlighter-rouge">p3.x = 5, p3.y = c</code>.</p>
 
-<p>The purpose of this example is to demonstrate a situation in which some generic parameters are declared with <code class="highlighter-rouge">impl</code> and some are declared with the method definition. 
-Here, the generic parameters <code class="highlighter-rouge">T</code> and <code class="highlighter-rouge">U</code> are declared after <code class="highlighter-rouge">impl</code>, because they go with the struct definition. 
-The generic parameters <code class="highlighter-rouge">V</code> and <code class="highlighter-rouge">W</code> are declared after <code class="highlighter-rouge">fn mixup</code>, because they’re only relevant to the method.</p>
+<p>The purpose of this example is to demonstrate a situation in which some generic parameters are declared with <code class="language-plaintext highlighter-rouge">impl</code> and some are declared with the method definition. 
+Here, the generic parameters <code class="language-plaintext highlighter-rouge">T</code> and <code class="language-plaintext highlighter-rouge">U</code> are declared after <code class="language-plaintext highlighter-rouge">impl</code>, because they go with the struct definition. 
+The generic parameters <code class="language-plaintext highlighter-rouge">V</code> and <code class="language-plaintext highlighter-rouge">W</code> are declared after <code class="language-plaintext highlighter-rouge">fn mixup</code>, because they’re only relevant to the method.</p>
 
 <h3 id="performance-of-code-using-generics">Performance of Code Using Generics</h3>
 <p>You might be wondering whether there is a runtime cost when you’re using generic type parameters. 
@@ -706,15 +706,15 @@ The good news is that Rust implements generics in such a way that your code does
 <p>In this process, the compiler does the opposite of the steps we used to create the generic function in Listing 10-5: 
 the compiler looks at all the places where generic code is called and generates code for the concrete types the generic code is called with.</p>
 
-<p>Let’s look at how this works with an example that uses the standard library’s <code class="highlighter-rouge">Option&lt;T&gt;</code> enum:</p>
+<p>Let’s look at how this works with an example that uses the standard library’s <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> enum:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">integer</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="k">let</span> <span class="nb">float</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span>
 </code></pre></div></div>
 <p>When Rust compiles this code, it performs monomorphization. 
-During that process, the compiler reads the values that have been used in <code class="highlighter-rouge">Option&lt;T&gt;</code> instances and identifies two kinds of <code class="highlighter-rouge">Option&lt;T&gt;</code>: one is <code class="highlighter-rouge">i32</code> and the other is <code class="highlighter-rouge">f64</code>. 
-As such, it expands the generic definition of <code class="highlighter-rouge">Option&lt;T&gt;</code> into <code class="highlighter-rouge">Option_i32</code> and <code class="highlighter-rouge">Option_f64</code>, thereby <strong>replacing</strong> the generic definition with the specific ones.</p>
+During that process, the compiler reads the values that have been used in <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> instances and identifies two kinds of <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code>: one is <code class="language-plaintext highlighter-rouge">i32</code> and the other is <code class="language-plaintext highlighter-rouge">f64</code>. 
+As such, it expands the generic definition of <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> into <code class="language-plaintext highlighter-rouge">Option_i32</code> and <code class="language-plaintext highlighter-rouge">Option_f64</code>, thereby <strong>replacing</strong> the generic definition with the specific ones.</p>
 
-<p>The monomorphized version of the code looks like the following. The generic <code class="highlighter-rouge">Option&lt;T&gt;</code> is replaced with the specific definitions created by the compiler:</p>
+<p>The monomorphized version of the code looks like the following. The generic <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> is replaced with the specific definitions created by the compiler:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Option_i32</span> <span class="p">{</span>
     <span class="nf">Some</span><span class="p">(</span><span class="nb">i32</span><span class="p">),</span>
     <span class="nb">None</span><span class="p">,</span>
@@ -746,30 +746,30 @@ We can use <strong>trait bounds</strong> to specify that a generic can be any ty
 Different types share the same behavior if we can call the same methods on all of those types. 
 <strong>Trait definitions are a way to group method signatures together to define a set of behaviors necessary to accomplish some purpose</strong>.</p>
 
-<p>For example, let’s say we have multiple structs that hold various kinds and amounts of text: a <code class="highlighter-rouge">NewsArticle</code> struct that holds a news story filed in a particular location and a <code class="highlighter-rouge">Tweet</code> that can have at most 280 characters along with metadata that indicates whether it was a new tweet, a retweet, or a reply to another tweet.</p>
+<p>For example, let’s say we have multiple structs that hold various kinds and amounts of text: a <code class="language-plaintext highlighter-rouge">NewsArticle</code> struct that holds a news story filed in a particular location and a <code class="language-plaintext highlighter-rouge">Tweet</code> that can have at most 280 characters along with metadata that indicates whether it was a new tweet, a retweet, or a reply to another tweet.</p>
 
-<p>We want to make a media aggregator library that can display summaries of data that might be stored in a <code class="highlighter-rouge">NewsArticle</code> or <code class="highlighter-rouge">Tweet</code> instance. 
-To do this, we need a summary from each type, and we need to request that summary by calling a <code class="highlighter-rouge">summarize</code> method on an instance. 
-Listing 10-12 shows the definition of a <code class="highlighter-rouge">Summary</code> trait that expresses this behavior.</p>
+<p>We want to make a media aggregator library that can display summaries of data that might be stored in a <code class="language-plaintext highlighter-rouge">NewsArticle</code> or <code class="language-plaintext highlighter-rouge">Tweet</code> instance. 
+To do this, we need a summary from each type, and we need to request that summary by calling a <code class="language-plaintext highlighter-rouge">summarize</code> method on an instance. 
+Listing 10-12 shows the definition of a <code class="language-plaintext highlighter-rouge">Summary</code> trait that expresses this behavior.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Summary</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">summarize</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-12-a-summary-trait-that-consists-of-the-behavior-provided-by-a-summarize-method">Listing 10-12: A Summary trait that consists of the behavior provided by a summarize method</h4>
-<p>Here, we declare a trait using the <code class="highlighter-rouge">trait</code> keyword and then the trait’s name, which is <code class="highlighter-rouge">Summary</code> in this case. 
-Inside the curly brackets, we declare the method signatures that describe the behaviors of the types that implement this trait, which in this case is <code class="highlighter-rouge">fn summarize(&amp;self) -&gt; String</code>.</p>
+<p>Here, we declare a trait using the <code class="language-plaintext highlighter-rouge">trait</code> keyword and then the trait’s name, which is <code class="language-plaintext highlighter-rouge">Summary</code> in this case. 
+Inside the curly brackets, we declare the method signatures that describe the behaviors of the types that implement this trait, which in this case is <code class="language-plaintext highlighter-rouge">fn summarize(&amp;self) -&gt; String</code>.</p>
 
 <p>After the method signature, instead of providing an implementation within curly brackets, we use a semicolon. 
 Each type implementing this trait must provide its own custom behavior for the body of the method. 
-The compiler will enforce that any type that has the <code class="highlighter-rouge">Summary</code> trait will have the method <code class="highlighter-rouge">summarize</code> defined with this signature exactly.</p>
+The compiler will enforce that any type that has the <code class="language-plaintext highlighter-rouge">Summary</code> trait will have the method <code class="language-plaintext highlighter-rouge">summarize</code> defined with this signature exactly.</p>
 
 <p>A trait can have multiple <strong>methods</strong> in its body: the method signatures are listed one per line and each line ends in a semicolon.</p>
 
 <h3 id="implementing-a-trait-on-a-type">Implementing a Trait on a Type</h3>
-<p>Now that we’ve defined the desired behavior using the <code class="highlighter-rouge">Summary</code> trait, we can implement it on the types in our media aggregator. 
-Listing 10-13 shows an implementation of the <code class="highlighter-rouge">Summary</code> trait on the <code class="highlighter-rouge">NewsArticle</code> struct that uses the headline, the author, and the location to create the return value of <code class="highlighter-rouge">summarize</code>. 
-For the <code class="highlighter-rouge">Tweet</code> struct, we define <code class="highlighter-rouge">summarize</code> as the username followed by the entire text of the tweet, assuming that tweet content is already limited to 280 characters.</p>
+<p>Now that we’ve defined the desired behavior using the <code class="language-plaintext highlighter-rouge">Summary</code> trait, we can implement it on the types in our media aggregator. 
+Listing 10-13 shows an implementation of the <code class="language-plaintext highlighter-rouge">Summary</code> trait on the <code class="language-plaintext highlighter-rouge">NewsArticle</code> struct that uses the headline, the author, and the location to create the return value of <code class="language-plaintext highlighter-rouge">summarize</code>. 
+For the <code class="language-plaintext highlighter-rouge">Tweet</code> struct, we define <code class="language-plaintext highlighter-rouge">summarize</code> as the username followed by the entire text of the tweet, assuming that tweet content is already limited to 280 characters.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">NewsArticle</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="n">headline</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="k">pub</span> <span class="n">location</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -799,11 +799,11 @@ For the <code class="highlighter-rouge">Tweet</code> struct, we define <code cla
 <h4 id="listing-10-13-implementing-the-summary-trait-on-the-newsarticle-and-tweet-types">Listing 10-13: Implementing the Summary trait on the NewsArticle and Tweet types</h4>
 
 <p>Implementing a trait on a type is similar to implementing regular methods. 
-The difference is that after <code class="highlighter-rouge">impl</code>, we put the <code class="highlighter-rouge">trait name</code> that we want to implement, then use the <code class="highlighter-rouge">for</code> keyword, and then <code class="highlighter-rouge">specify the name of the type</code> we want to implement the trait for. 
-Within the <code class="highlighter-rouge">impl</code> block, we put the method signatures that the trait definition has defined. 
+The difference is that after <code class="language-plaintext highlighter-rouge">impl</code>, we put the <code class="language-plaintext highlighter-rouge">trait name</code> that we want to implement, then use the <code class="language-plaintext highlighter-rouge">for</code> keyword, and then <code class="language-plaintext highlighter-rouge">specify the name of the type</code> we want to implement the trait for. 
+Within the <code class="language-plaintext highlighter-rouge">impl</code> block, we put the method signatures that the trait definition has defined. 
 Instead of adding a semicolon after each signature, we use curly brackets and fill in the method body with the specific behavior that we want the methods of the trait to have for the particular type.</p>
 
-<p>After implementing the trait, we can call the methods on instances of <code class="highlighter-rouge">NewsArticle</code> and <code class="highlighter-rouge">Tweet</code> in the same way we call regular methods, like this:</p>
+<p>After implementing the trait, we can call the methods on instances of <code class="language-plaintext highlighter-rouge">NewsArticle</code> and <code class="language-plaintext highlighter-rouge">Tweet</code> in the same way we call regular methods, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span> <span class="p">{</span>
     <span class="n">username</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"horse_ebooks"</span><span class="p">),</span>
     <span class="n">content</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"of course, as you probably already know, people"</span><span class="p">),</span>
@@ -813,12 +813,12 @@ Instead of adding a semicolon after each signature, we use curly brackets and fi
 
 <span class="nd">println!</span><span class="p">(</span><span class="s">"1 new tweet: {}"</span><span class="p">,</span> <span class="n">tweet</span><span class="nf">.summarize</span><span class="p">());</span>
 </code></pre></div></div>
-<p>This code prints <code class="highlighter-rouge">1 new tweet: horse_ebooks: of course, as you probably already know, people</code>.</p>
+<p>This code prints <code class="language-plaintext highlighter-rouge">1 new tweet: horse_ebooks: of course, as you probably already know, people</code>.</p>
 
-<p>Note that because we defined the <code class="highlighter-rouge">Summary</code> trait and the <code class="highlighter-rouge">NewsArticle</code> and <code class="highlighter-rouge">Tweet</code> types in the same <em>lib.rs</em> in Listing 10-13, they’re all in the same scope. 
-Let’s say this <em>lib.rs</em> is for a crate we’ve called <code class="highlighter-rouge">aggregator</code> and someone else wants to use our crate’s functionality to implement the <code class="highlighter-rouge">Summary</code> trait on a struct defined within their library’s scope. 
+<p>Note that because we defined the <code class="language-plaintext highlighter-rouge">Summary</code> trait and the <code class="language-plaintext highlighter-rouge">NewsArticle</code> and <code class="language-plaintext highlighter-rouge">Tweet</code> types in the same <em>lib.rs</em> in Listing 10-13, they’re all in the same scope. 
+Let’s say this <em>lib.rs</em> is for a crate we’ve called <code class="language-plaintext highlighter-rouge">aggregator</code> and someone else wants to use our crate’s functionality to implement the <code class="language-plaintext highlighter-rouge">Summary</code> trait on a struct defined within their library’s scope. 
 They would need to bring the trait into their scope first. 
-They would do so by <code class="highlighter-rouge">specifying use aggregator::Summary;</code>, which then would enable them to implement <code class="highlighter-rouge">Summary</code> for their type.</p>
+They would do so by <code class="language-plaintext highlighter-rouge">specifying use aggregator::Summary;</code>, which then would enable them to implement <code class="language-plaintext highlighter-rouge">Summary</code> for their type.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="n">crate</span> <span class="n">aggregator</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nn">aggregator</span><span class="p">::</span><span class="n">Summary</span><span class="p">;</span>
@@ -837,14 +837,14 @@ They would do so by <code class="highlighter-rouge">specifying use aggregator::S
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>The <code class="highlighter-rouge">Summary</code> trait would also need to be a public trait for another crate to implement it, which it is because we put the pub keyword before trait in Listing 10-12.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Summary</code> trait would also need to be a public trait for another crate to implement it, which it is because we put the pub keyword before trait in Listing 10-12.</p>
 
 <p>One restriction to note with trait implementations is that we can implement a trait on a type only if either the <strong>trait</strong> or the <strong>type is local to our crate</strong>. 
-For example, we can implement standard library traits like <code class="highlighter-rouge">Display</code> on a custom type like <code class="highlighter-rouge">Tweet</code> as part of our <code class="highlighter-rouge">aggregator</code> crate functionality, because the type <code class="highlighter-rouge">Tweet</code> is local to our <code class="highlighter-rouge">aggregator</code> crate. 
-We can also implement <code class="highlighter-rouge">Summary</code> on <code class="highlighter-rouge">Vec&lt;T&gt;</code> in our <code class="highlighter-rouge">aggregator</code> crate, because the trait <code class="highlighter-rouge">Summary</code> is local to our <code class="highlighter-rouge">aggregator</code> crate.</p>
+For example, we can implement standard library traits like <code class="language-plaintext highlighter-rouge">Display</code> on a custom type like <code class="language-plaintext highlighter-rouge">Tweet</code> as part of our <code class="language-plaintext highlighter-rouge">aggregator</code> crate functionality, because the type <code class="language-plaintext highlighter-rouge">Tweet</code> is local to our <code class="language-plaintext highlighter-rouge">aggregator</code> crate. 
+We can also implement <code class="language-plaintext highlighter-rouge">Summary</code> on <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> in our <code class="language-plaintext highlighter-rouge">aggregator</code> crate, because the trait <code class="language-plaintext highlighter-rouge">Summary</code> is local to our <code class="language-plaintext highlighter-rouge">aggregator</code> crate.</p>
 
 <p>But we can’t implement external traits on external types. 
-For example, we can’t implement the <code class="highlighter-rouge">Display</code> trait on <code class="highlighter-rouge">Vec&lt;T&gt;</code> within our <code class="highlighter-rouge">aggregator</code> crate, because <code class="highlighter-rouge">Display</code> and <code class="highlighter-rouge">Vec&lt;T&gt;</code> are defined in the standard library and aren’t local to our <code class="highlighter-rouge">aggregator</code> crate. 
+For example, we can’t implement the <code class="language-plaintext highlighter-rouge">Display</code> trait on <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> within our <code class="language-plaintext highlighter-rouge">aggregator</code> crate, because <code class="language-plaintext highlighter-rouge">Display</code> and <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> are defined in the standard library and aren’t local to our <code class="language-plaintext highlighter-rouge">aggregator</code> crate. 
 This restriction is part of a property of programs called <em>coherence</em>, and more specifically the <em>orphan rule</em>, so named because the parent type is not present. 
 This rule ensures that other people’s code can’t break your code and vice versa. 
 Without the rule, two crates could implement the same trait for the same type, and Rust wouldn’t know which implementation to use.</p>
@@ -853,7 +853,7 @@ Without the rule, two crates could implement the same trait for the same type, a
 <p>Sometimes it’s useful to have default behavior for some or all of the methods in a trait instead of requiring implementations for all methods on every type. 
 Then, as we implement the trait on a particular type, we can keep or override each method’s default behavior.</p>
 
-<p>Listing 10-14 shows how to specify a default string for the <code class="highlighter-rouge">summarize</code> method of the <code class="highlighter-rouge">Summary</code> trait instead of only defining the method signature, as we did in Listing 10-12.</p>
+<p>Listing 10-14 shows how to specify a default string for the <code class="language-plaintext highlighter-rouge">summarize</code> method of the <code class="language-plaintext highlighter-rouge">Summary</code> trait instead of only defining the method signature, as we did in Listing 10-12.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Summary</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">summarize</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
         <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"(Read more...)"</span><span class="p">)</span>
@@ -861,11 +861,11 @@ Then, as we implement the trait on a particular type, we can keep or override ea
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-10-14-definition-of-a-summary-trait-with-a-default-implementation-of-the-summarize-method">Listing 10-14: Definition of a Summary trait with a default implementation of the summarize method</h4>
-<p>To use a default implementation to summarize instances of <code class="highlighter-rouge">NewsArticle</code> instead of defining a custom implementation, we specify an empty <code class="highlighter-rouge">impl</code> block with <code class="highlighter-rouge">impl Summary for NewsArticle {}</code>.</p>
+<p>To use a default implementation to summarize instances of <code class="language-plaintext highlighter-rouge">NewsArticle</code> instead of defining a custom implementation, we specify an empty <code class="language-plaintext highlighter-rouge">impl</code> block with <code class="language-plaintext highlighter-rouge">impl Summary for NewsArticle {}</code>.</p>
 
-<p>Even though we’re no longer defining the <code class="highlighter-rouge">summarize</code> method on <code class="highlighter-rouge">NewsArticle</code> directly, 
-we’ve provided a default implementation and specified that <code class="highlighter-rouge">NewsArticle</code> implements the <code class="highlighter-rouge">Summary</code> trait. 
-As a result, we can still call the <code class="highlighter-rouge">summarize</code> method on an instance of <code class="highlighter-rouge">NewsArticle</code>, like this:</p>
+<p>Even though we’re no longer defining the <code class="language-plaintext highlighter-rouge">summarize</code> method on <code class="language-plaintext highlighter-rouge">NewsArticle</code> directly, 
+we’ve provided a default implementation and specified that <code class="language-plaintext highlighter-rouge">NewsArticle</code> implements the <code class="language-plaintext highlighter-rouge">Summary</code> trait. 
+As a result, we can still call the <code class="language-plaintext highlighter-rouge">summarize</code> method on an instance of <code class="language-plaintext highlighter-rouge">NewsArticle</code>, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">article</span> <span class="o">=</span> <span class="n">NewsArticle</span> <span class="p">{</span>
     <span class="n">headline</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Penguins win the Stanley Cup Championship!"</span><span class="p">),</span>
     <span class="n">location</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Pittsburgh, PA, USA"</span><span class="p">),</span>
@@ -876,14 +876,14 @@ As a result, we can still call the <code class="highlighter-rouge">summarize</co
 
 <span class="nd">println!</span><span class="p">(</span><span class="s">"New article available! {}"</span><span class="p">,</span> <span class="n">article</span><span class="nf">.summarize</span><span class="p">());</span>
 </code></pre></div></div>
-<p>This code prints <code class="highlighter-rouge">New article available! (Read more...)</code>.</p>
+<p>This code prints <code class="language-plaintext highlighter-rouge">New article available! (Read more...)</code>.</p>
 
-<p>Creating a default implementation for <code class="highlighter-rouge">summarize</code> doesn’t require us to change anything about the implementation of <code class="highlighter-rouge">Summary</code> on <code class="highlighter-rouge">Tweet</code> in Listing 10-13. 
+<p>Creating a default implementation for <code class="language-plaintext highlighter-rouge">summarize</code> doesn’t require us to change anything about the implementation of <code class="language-plaintext highlighter-rouge">Summary</code> on <code class="language-plaintext highlighter-rouge">Tweet</code> in Listing 10-13. 
 The reason is that the syntax for overriding a default implementation is the same as the syntax for implementing a trait method that doesn’t have a default implementation.</p>
 
 <p>Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation. 
 In this way, a trait can provide a lot of useful functionality and only require implementors to specify a small part of it. 
-For example, we could define the <code class="highlighter-rouge">Summary</code> trait to have a <code class="highlighter-rouge">summarize_author</code> method whose implementation is required, and then define a <code class="highlighter-rouge">summarize</code> method that has a default implementation that calls the <code class="highlighter-rouge">summarize_author</code> method:</p>
+For example, we could define the <code class="language-plaintext highlighter-rouge">Summary</code> trait to have a <code class="language-plaintext highlighter-rouge">summarize_author</code> method whose implementation is required, and then define a <code class="language-plaintext highlighter-rouge">summarize</code> method that has a default implementation that calls the <code class="language-plaintext highlighter-rouge">summarize_author</code> method:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Summary</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">summarize_author</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span><span class="p">;</span>
 
@@ -892,15 +892,15 @@ For example, we could define the <code class="highlighter-rouge">Summary</code> 
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>To use this version of <code class="highlighter-rouge">Summary</code>, we only need to define <code class="highlighter-rouge">summarize_author</code> when we implement the trait on a type:</p>
+<p>To use this version of <code class="language-plaintext highlighter-rouge">Summary</code>, we only need to define <code class="language-plaintext highlighter-rouge">summarize_author</code> when we implement the trait on a type:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">Summary</span> <span class="k">for</span> <span class="n">Tweet</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">summarize_author</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
         <span class="nd">format!</span><span class="p">(</span><span class="s">"@{}"</span><span class="p">,</span> <span class="k">self</span><span class="py">.username</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>After we define <code class="highlighter-rouge">summarize_author</code>, we can call summa<code class="highlighter-rouge">rize on instances of the </code>Tweet<code class="highlighter-rouge"> struct, and the default implementation of </code>summarize<code class="highlighter-rouge"> will call the definition of </code>summarize_author<code class="highlighter-rouge"> that we’ve provided. 
-Because we’ve implemented </code>summarize_author<code class="highlighter-rouge">, the </code>Summary<code class="highlighter-rouge"> trait has given us the behavior of the </code>summarize` method without requiring us to write any more code.</p>
+<p>After we define <code class="language-plaintext highlighter-rouge">summarize_author</code>, we can call summa<code class="language-plaintext highlighter-rouge">rize on instances of the </code>Tweet<code class="language-plaintext highlighter-rouge"> struct, and the default implementation of </code>summarize<code class="language-plaintext highlighter-rouge"> will call the definition of </code>summarize_author<code class="language-plaintext highlighter-rouge"> that we’ve provided. 
+Because we’ve implemented </code>summarize_author<code class="language-plaintext highlighter-rouge">, the </code>Summary<code class="language-plaintext highlighter-rouge"> trait has given us the behavior of the </code>summarize` method without requiring us to write any more code.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span> <span class="p">{</span>
     <span class="n">username</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"horse_ebooks"</span><span class="p">),</span>
     <span class="n">content</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"of course, as you probably already know, people"</span><span class="p">),</span>
@@ -910,28 +910,28 @@ Because we’ve implemented </code>summarize_author<code class="highlighter-roug
 
 <span class="nd">println!</span><span class="p">(</span><span class="s">"1 new tweet: {}"</span><span class="p">,</span> <span class="n">tweet</span><span class="nf">.summarize</span><span class="p">());</span>
 </code></pre></div></div>
-<p>This code prints <code class="highlighter-rouge">1 new tweet: (Read more from @horse_ebooks...)</code>.
+<p>This code prints <code class="language-plaintext highlighter-rouge">1 new tweet: (Read more from @horse_ebooks...)</code>.
 Note that it isn’t possible to call the default implementation from an overriding implementation of that same method.</p>
 
 <h3 id="traits-as-parameters">Traits as Parameters</h3>
 <p>Now that you know how to define and implement traits, we can explore how to use traits to define functions that accept many different types.</p>
 
-<p>For example, in Listing 10-13, we implemented the <code class="highlighter-rouge">Summary</code> trait on the <code class="highlighter-rouge">NewsArticle</code> and <code class="highlighter-rouge">Tweet</code> types. 
-We can define a <code class="highlighter-rouge">notify</code> function that calls the <code class="highlighter-rouge">summarize</code> method on its <code class="highlighter-rouge">item</code> parameter, which is of some type that implements the <code class="highlighter-rouge">Summary</code> trait. 
-To do this, we can use the <code class="highlighter-rouge">impl Trait</code> syntax, like this:</p>
+<p>For example, in Listing 10-13, we implemented the <code class="language-plaintext highlighter-rouge">Summary</code> trait on the <code class="language-plaintext highlighter-rouge">NewsArticle</code> and <code class="language-plaintext highlighter-rouge">Tweet</code> types. 
+We can define a <code class="language-plaintext highlighter-rouge">notify</code> function that calls the <code class="language-plaintext highlighter-rouge">summarize</code> method on its <code class="language-plaintext highlighter-rouge">item</code> parameter, which is of some type that implements the <code class="language-plaintext highlighter-rouge">Summary</code> trait. 
+To do this, we can use the <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax, like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="nf">notify</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="k">impl</span> <span class="n">Summary</span><span class="p">)</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Breaking news! {}"</span><span class="p">,</span> <span class="n">item</span><span class="nf">.summarize</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Instead of a concrete type for the <code class="highlighter-rouge">item</code> parameter, we specify the <code class="highlighter-rouge">impl</code> keyword and the trait name. 
+<p>Instead of a concrete type for the <code class="language-plaintext highlighter-rouge">item</code> parameter, we specify the <code class="language-plaintext highlighter-rouge">impl</code> keyword and the trait name. 
 This parameter accepts any type that implements the specified trait. 
-In the body of <code class="highlighter-rouge">notify</code>, we can call any methods on <code class="highlighter-rouge">item</code> that come from the <code class="highlighter-rouge">Summary</code> trait, such as <code class="highlighter-rouge">summarize</code>. 
-We can call <code class="highlighter-rouge">notify</code> and pass in any instance of <code class="highlighter-rouge">NewsArticle</code> or <code class="highlighter-rouge">Tweet</code>. 
-Code that calls the function with any other type, such as a <code class="highlighter-rouge">String</code> or an <code class="highlighter-rouge">i32</code>, won’t compile because those types don’t implement <code class="highlighter-rouge">Summary</code>.</p>
+In the body of <code class="language-plaintext highlighter-rouge">notify</code>, we can call any methods on <code class="language-plaintext highlighter-rouge">item</code> that come from the <code class="language-plaintext highlighter-rouge">Summary</code> trait, such as <code class="language-plaintext highlighter-rouge">summarize</code>. 
+We can call <code class="language-plaintext highlighter-rouge">notify</code> and pass in any instance of <code class="language-plaintext highlighter-rouge">NewsArticle</code> or <code class="language-plaintext highlighter-rouge">Tweet</code>. 
+Code that calls the function with any other type, such as a <code class="language-plaintext highlighter-rouge">String</code> or an <code class="language-plaintext highlighter-rouge">i32</code>, won’t compile because those types don’t implement <code class="language-plaintext highlighter-rouge">Summary</code>.</p>
 
 <h3 id="trait-bound-syntax">Trait Bound Syntax</h3>
-<p>The <code class="highlighter-rouge">impl Trait</code> syntax works for straightforward cases but is actually syntax sugar for a longer form, which is called a <strong>trait bound</strong>; it looks like this:</p>
+<p>The <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax works for straightforward cases but is actually syntax sugar for a longer form, which is called a <strong>trait bound</strong>; it looks like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="n">notify</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Summary</span><span class="o">&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Breaking news! {}"</span><span class="p">,</span> <span class="n">item</span><span class="nf">.summarize</span><span class="p">());</span>
 <span class="p">}</span>
@@ -939,28 +939,28 @@ Code that calls the function with any other type, such as a <code class="highlig
 <p>This longer form is equivalent to the example in the previous section but is more verbose. 
 We place trait bounds with the declaration of the generic type parameter after a colon and inside angle brackets.</p>
 
-<p>The <code class="highlighter-rouge">impl Trait</code> syntax is convenient and makes for more concise code in simple cases. 
+<p>The <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax is convenient and makes for more concise code in simple cases. 
 The trait bound syntax can express more complexity in other cases. 
-For example, we can have two parameters that implement <code class="highlighter-rouge">Summary</code>. Using the <code class="highlighter-rouge">impl Trait</code> syntax looks like this:</p>
+For example, we can have two parameters that implement <code class="language-plaintext highlighter-rouge">Summary</code>. Using the <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax looks like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="nf">notify</span><span class="p">(</span><span class="n">item1</span><span class="p">:</span> <span class="k">impl</span> <span class="n">Summary</span><span class="p">,</span> <span class="n">item2</span><span class="p">:</span> <span class="k">impl</span> <span class="n">Summary</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
-<p>If we wanted this function to allow <code class="highlighter-rouge">item1</code> and <code class="highlighter-rouge">item2</code> to have different types, using <code class="highlighter-rouge">impl Trait</code> would be appropriate (as long as both types implement <code class="highlighter-rouge">Summary</code>). 
+<p>If we wanted this function to allow <code class="language-plaintext highlighter-rouge">item1</code> and <code class="language-plaintext highlighter-rouge">item2</code> to have different types, using <code class="language-plaintext highlighter-rouge">impl Trait</code> would be appropriate (as long as both types implement <code class="language-plaintext highlighter-rouge">Summary</code>). 
 If we wanted to force both parameters to have the same type, that’s only possible to express using a trait bound, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="n">notify</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Summary</span><span class="o">&gt;</span><span class="p">(</span><span class="n">item1</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">item2</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
-<p>The generic type <code class="highlighter-rouge">T</code> specified as the type of the <code class="highlighter-rouge">item1</code> and <code class="highlighter-rouge">item2</code> parameters constrains the function such that the concrete type of the value passed as an argument for <code class="highlighter-rouge">item1</code> and <code class="highlighter-rouge">item2</code> must be the same.</p>
+<p>The generic type <code class="language-plaintext highlighter-rouge">T</code> specified as the type of the <code class="language-plaintext highlighter-rouge">item1</code> and <code class="language-plaintext highlighter-rouge">item2</code> parameters constrains the function such that the concrete type of the value passed as an argument for <code class="language-plaintext highlighter-rouge">item1</code> and <code class="language-plaintext highlighter-rouge">item2</code> must be the same.</p>
 
 <h3 id="specifying-multiple-trait-bounds-with-the--syntax">Specifying Multiple Trait Bounds with the + Syntax</h3>
 <p>We can also specify more than one trait bound. 
-Say we wanted <code class="highlighter-rouge">notify</code> to use display formatting on <code class="highlighter-rouge">item</code> as well as the <code class="highlighter-rouge">summarize</code> method: 
-we specify in the <code class="highlighter-rouge">notify</code> definition that <code class="highlighter-rouge">item</code> must implement both <code class="highlighter-rouge">Display</code> and <code class="highlighter-rouge">Summary</code>. 
-We can do so using the <code class="highlighter-rouge">+</code> syntax:</p>
+Say we wanted <code class="language-plaintext highlighter-rouge">notify</code> to use display formatting on <code class="language-plaintext highlighter-rouge">item</code> as well as the <code class="language-plaintext highlighter-rouge">summarize</code> method: 
+we specify in the <code class="language-plaintext highlighter-rouge">notify</code> definition that <code class="language-plaintext highlighter-rouge">item</code> must implement both <code class="language-plaintext highlighter-rouge">Display</code> and <code class="language-plaintext highlighter-rouge">Summary</code>. 
+We can do so using the <code class="language-plaintext highlighter-rouge">+</code> syntax:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="nf">notify</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="k">impl</span> <span class="n">Summary</span> <span class="o">+</span> <span class="n">Display</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
-<p>The <code class="highlighter-rouge">+</code> syntax is also valid with <code class="highlighter-rouge">trait bounds</code> on generic types:</p>
+<p>The <code class="language-plaintext highlighter-rouge">+</code> syntax is also valid with <code class="language-plaintext highlighter-rouge">trait bounds</code> on generic types:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">fn</span> <span class="n">notify</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Summary</span> <span class="o">+</span> <span class="n">Display</span><span class="o">&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
-<p>With the two trait bounds specified, the body of <code class="highlighter-rouge">notify</code> can call <code class="highlighter-rouge">summarize</code> and use <code class="highlighter-rouge">{}</code> to format item.</p>
+<p>With the two trait bounds specified, the body of <code class="language-plaintext highlighter-rouge">notify</code> can call <code class="language-plaintext highlighter-rouge">summarize</code> and use <code class="language-plaintext highlighter-rouge">{}</code> to format item.</p>
 
 <h3 id="clearer-trait-bounds-with-where-clauses">Clearer Trait Bounds with where Clauses</h3>
 <p>Using too many trait bounds has its downsides. 
@@ -978,7 +978,7 @@ So instead of writing this:</p>
 <p>This function’s signature is less cluttered: the function name, parameter list, and return type are close together, similar to a function without lots of trait bounds.</p>
 
 <h3 id="returning-types-that-implement-traits">Returning Types that Implement Traits</h3>
-<p>We can also use the <code class="highlighter-rouge">impl Trait</code> syntax in the return position to return a value of some type that implements a trait, as shown here:</p>
+<p>We can also use the <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax in the return position to return a value of some type that implements a trait, as shown here:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_summarizable</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="k">impl</span> <span class="n">Summary</span> <span class="p">{</span>
     <span class="n">Tweet</span> <span class="p">{</span>
@@ -989,15 +989,15 @@ So instead of writing this:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>By using <code class="highlighter-rouge">impl Summary</code> for the return type, we specify that the <code class="highlighter-rouge">returns_summarizable</code> function returns some type that implements the <code class="highlighter-rouge">Summary</code> trait without naming the concrete type. 
-In this case, <code class="highlighter-rouge">returns_summarizable</code> returns a <code class="highlighter-rouge">Tweet</code>, but the code calling this function doesn’t know that.</p>
+<p>By using <code class="language-plaintext highlighter-rouge">impl Summary</code> for the return type, we specify that the <code class="language-plaintext highlighter-rouge">returns_summarizable</code> function returns some type that implements the <code class="language-plaintext highlighter-rouge">Summary</code> trait without naming the concrete type. 
+In this case, <code class="language-plaintext highlighter-rouge">returns_summarizable</code> returns a <code class="language-plaintext highlighter-rouge">Tweet</code>, but the code calling this function doesn’t know that.</p>
 
 <p>The ability to return a type that is only specified by the trait it implements is especially useful in the context of closures and iterators, which we cover in Chapter 13. 
 Closures and iterators create types that only the compiler knows or types that are very long to specify. 
-The <code class="highlighter-rouge">impl Trait</code> syntax lets you concisely specify that a function returns some type that implements the <code class="highlighter-rouge">Iterator</code> trait without needing to write out a very long type.</p>
+The <code class="language-plaintext highlighter-rouge">impl Trait</code> syntax lets you concisely specify that a function returns some type that implements the <code class="language-plaintext highlighter-rouge">Iterator</code> trait without needing to write out a very long type.</p>
 
-<p>However, you can only use <code class="highlighter-rouge">impl Trait</code> if you’re returning a single type. 
-For example, this code that returns either a <code class="highlighter-rouge">NewsArticle</code> or a <code class="highlighter-rouge">Tweet</code> with the return type specified as <code class="highlighter-rouge">impl Summary</code> wouldn’t work:</p>
+<p>However, you can only use <code class="language-plaintext highlighter-rouge">impl Trait</code> if you’re returning a single type. 
+For example, this code that returns either a <code class="language-plaintext highlighter-rouge">NewsArticle</code> or a <code class="language-plaintext highlighter-rouge">Tweet</code> with the return type specified as <code class="language-plaintext highlighter-rouge">impl Summary</code> wouldn’t work:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_summarizable</span><span class="p">(</span><span class="n">switch</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">impl</span> <span class="n">Summary</span> <span class="p">{</span>
     <span class="k">if</span> <span class="n">switch</span> <span class="p">{</span>
         <span class="n">NewsArticle</span> <span class="p">{</span>
@@ -1017,7 +1017,7 @@ For example, this code that returns either a <code class="highlighter-rouge">New
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Returning either a <code class="highlighter-rouge">NewsArticle</code> or a <code class="highlighter-rouge">Tweet</code> isn’t allowed due to restrictions around how the impl Trait syntax is implemented in the compiler. 
+<p>Returning either a <code class="language-plaintext highlighter-rouge">NewsArticle</code> or a <code class="language-plaintext highlighter-rouge">Tweet</code> isn’t allowed due to restrictions around how the impl Trait syntax is implemented in the compiler. 
 We’ll cover how to write a function with this behavior in the “Using Trait Objects That Allow for Values of Different Types” section of Chapter 17.</p>
 
 <h3 id="fixing-the-largest-function-with-trait-bounds">Fixing the largest Function with Trait Bounds</h3>
@@ -1031,9 +1031,9 @@ Last time we tried to run that code, we received this error:</p>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">PartialOrd</span><span class="err">`</span> <span class="n">might</span> <span class="n">be</span> <span class="n">missing</span> <span class="k">for</span> <span class="err">`</span><span class="n">T</span><span class="err">`</span>
 </code></pre></div></div>
-<p>In the body of <code class="highlighter-rouge">largest</code> we wanted to compare two values of type <code class="highlighter-rouge">T</code> using the greater than (<code class="highlighter-rouge">&gt;</code>) operator. 
-Because that operator is defined as a default method on the standard <code class="highlighter-rouge">library trait std::cmp::PartialOrd</code>, we need to specify <code class="highlighter-rouge">PartialOrd</code> in the trait bounds for <code class="highlighter-rouge">T</code> so the <code class="highlighter-rouge">largest</code> function can work on slices of any type that we can compare. 
-We don’t need to bring <code class="highlighter-rouge">PartialOrd</code> into scope because it’s in the prelude. 
+<p>In the body of <code class="language-plaintext highlighter-rouge">largest</code> we wanted to compare two values of type <code class="language-plaintext highlighter-rouge">T</code> using the greater than (<code class="language-plaintext highlighter-rouge">&gt;</code>) operator. 
+Because that operator is defined as a default method on the standard <code class="language-plaintext highlighter-rouge">library trait std::cmp::PartialOrd</code>, we need to specify <code class="language-plaintext highlighter-rouge">PartialOrd</code> in the trait bounds for <code class="language-plaintext highlighter-rouge">T</code> so the <code class="language-plaintext highlighter-rouge">largest</code> function can work on slices of any type that we can compare. 
+We don’t need to bring <code class="language-plaintext highlighter-rouge">PartialOrd</code> into scope because it’s in the prelude. 
 Change the signature of largest to look like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">PartialOrd</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
 </code></pre></div></div>
@@ -1056,14 +1056,14 @@ Change the signature of largest to look like this:</p>
   <span class="p">|</span>         <span class="p">|</span><span class="n">hint</span><span class="p">:</span> <span class="n">to</span> <span class="n">prevent</span> <span class="k">move</span><span class="p">,</span> <span class="k">use</span> <span class="err">`</span><span class="k">ref</span> <span class="n">item</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="k">ref</span> <span class="k">mut</span> <span class="n">item</span><span class="err">`</span>
   <span class="p">|</span>         <span class="n">cannot</span> <span class="k">move</span> <span class="n">out</span> <span class="n">of</span> <span class="n">borrowed</span> <span class="n">content</span>
 </code></pre></div></div>
-<p>The key line in this error is <code class="highlighter-rouge">cannot move out of type [T], a non-copy slice</code>. 
-With our non-generic versions of the largest function, we were only trying to find the largest <code class="highlighter-rouge">i32</code> or <code class="highlighter-rouge">char</code>. 
-As discussed in the “Stack-Only Data: Copy” section in Chapter 4, types like <code class="highlighter-rouge">i32</code> and <code class="highlighter-rouge">char</code> that have a known size can be stored on the stack, so they implement the <code class="highlighter-rouge">Copy</code> trait. 
-But when we made the largest function generic, it became possible for the <code class="highlighter-rouge">list</code> parameter to have types in it that don’t implement the <code class="highlighter-rouge">Copy</code> trait. 
-Consequently, we wouldn’t be able to move the value out of <code class="highlighter-rouge">list[0]</code> and into the <code class="highlighter-rouge">largest</code> variable, resulting in this error.</p>
+<p>The key line in this error is <code class="language-plaintext highlighter-rouge">cannot move out of type [T], a non-copy slice</code>. 
+With our non-generic versions of the largest function, we were only trying to find the largest <code class="language-plaintext highlighter-rouge">i32</code> or <code class="language-plaintext highlighter-rouge">char</code>. 
+As discussed in the “Stack-Only Data: Copy” section in Chapter 4, types like <code class="language-plaintext highlighter-rouge">i32</code> and <code class="language-plaintext highlighter-rouge">char</code> that have a known size can be stored on the stack, so they implement the <code class="language-plaintext highlighter-rouge">Copy</code> trait. 
+But when we made the largest function generic, it became possible for the <code class="language-plaintext highlighter-rouge">list</code> parameter to have types in it that don’t implement the <code class="language-plaintext highlighter-rouge">Copy</code> trait. 
+Consequently, we wouldn’t be able to move the value out of <code class="language-plaintext highlighter-rouge">list[0]</code> and into the <code class="language-plaintext highlighter-rouge">largest</code> variable, resulting in this error.</p>
 
-<p>To call this code with only those types that implement the <code class="highlighter-rouge">Copy</code> trait, we can add <code class="highlighter-rouge">Copy</code> to the trait bounds of <code class="highlighter-rouge">T</code>! 
-Listing 10-15 shows the complete code of a generic largest function that will compile as long as the types of the values in the slice that we pass into the function implement the <code class="highlighter-rouge">PartialOrd</code> and <code class="highlighter-rouge">Copy</code> traits, like <code class="highlighter-rouge">i32</code> and <code class="highlighter-rouge">char</code> do.</p>
+<p>To call this code with only those types that implement the <code class="language-plaintext highlighter-rouge">Copy</code> trait, we can add <code class="language-plaintext highlighter-rouge">Copy</code> to the trait bounds of <code class="language-plaintext highlighter-rouge">T</code>! 
+Listing 10-15 shows the complete code of a generic largest function that will compile as long as the types of the values in the slice that we pass into the function implement the <code class="language-plaintext highlighter-rouge">PartialOrd</code> and <code class="language-plaintext highlighter-rouge">Copy</code> traits, like <code class="language-plaintext highlighter-rouge">i32</code> and <code class="language-plaintext highlighter-rouge">char</code> do.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">PartialOrd</span> <span class="o">+</span> <span class="nb">Copy</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
@@ -1090,18 +1090,18 @@ Listing 10-15 shows the complete code of a generic largest function that will co
 </code></pre></div></div>
 <h4 id="listing-10-15-a-working-definition-of-the-largest-function-that-works-on-any-generic-type-that-implements-the-partialord-and-copy-traits">Listing 10-15: A working definition of the largest function that works on any generic type that implements the PartialOrd and Copy traits</h4>
 
-<p>If we don’t want to restrict the <code class="highlighter-rouge">largest</code> function to the types that implement the <code class="highlighter-rouge">Copy</code> trait, we could specify that <code class="highlighter-rouge">T</code> has the trait bound <code class="highlighter-rouge">Clone</code> instead of <code class="highlighter-rouge">Copy</code>. 
-Then we could clone each value in the slice when we want the <code class="highlighter-rouge">largest</code> function to have ownership. 
-Using the <code class="highlighter-rouge">clone</code> function means we’re potentially making more heap allocations in the case of types that own heap data like <code class="highlighter-rouge">String</code>, and heap allocations can be slow if we’re working with large amounts of data.</p>
+<p>If we don’t want to restrict the <code class="language-plaintext highlighter-rouge">largest</code> function to the types that implement the <code class="language-plaintext highlighter-rouge">Copy</code> trait, we could specify that <code class="language-plaintext highlighter-rouge">T</code> has the trait bound <code class="language-plaintext highlighter-rouge">Clone</code> instead of <code class="language-plaintext highlighter-rouge">Copy</code>. 
+Then we could clone each value in the slice when we want the <code class="language-plaintext highlighter-rouge">largest</code> function to have ownership. 
+Using the <code class="language-plaintext highlighter-rouge">clone</code> function means we’re potentially making more heap allocations in the case of types that own heap data like <code class="language-plaintext highlighter-rouge">String</code>, and heap allocations can be slow if we’re working with large amounts of data.</p>
 
-<p>Another way we could implement <code class="highlighter-rouge">largest</code> is for the function to return a reference to a <code class="highlighter-rouge">T</code> value in the slice. 
-If we change the return type to <code class="highlighter-rouge">&amp;T</code> instead of <code class="highlighter-rouge">T</code>, thereby changing the body of the function to return a reference, we wouldn’t need the <code class="highlighter-rouge">Clone</code> or <code class="highlighter-rouge">Copy</code> trait bounds and we could avoid heap allocations. 
+<p>Another way we could implement <code class="language-plaintext highlighter-rouge">largest</code> is for the function to return a reference to a <code class="language-plaintext highlighter-rouge">T</code> value in the slice. 
+If we change the return type to <code class="language-plaintext highlighter-rouge">&amp;T</code> instead of <code class="language-plaintext highlighter-rouge">T</code>, thereby changing the body of the function to return a reference, we wouldn’t need the <code class="language-plaintext highlighter-rouge">Clone</code> or <code class="language-plaintext highlighter-rouge">Copy</code> trait bounds and we could avoid heap allocations. 
 Try implementing these alternate solutions on your own!</p>
 
 <h3 id="using-trait-bounds-to-conditionally-implement-methods">Using Trait Bounds to Conditionally Implement Methods</h3>
-<p>By using a trait bound with an <code class="highlighter-rouge">impl</code> block that uses generic type parameters, we can implement methods conditionally for types that implement the specified traits. 
-For example, the type <code class="highlighter-rouge">Pair&lt;T&gt;</code> in Listing 10-16 always implements the <code class="highlighter-rouge">new</code> function. 
-But <code class="highlighter-rouge">Pair&lt;T&gt;</code> only implements the <code class="highlighter-rouge">cmp_display</code> method if its inner type <code class="highlighter-rouge">T</code> implements the <code class="highlighter-rouge">PartialOrd</code> trait that enables comparison <em>and</em> the <code class="highlighter-rouge">Display</code> trait that enables printing.</p>
+<p>By using a trait bound with an <code class="language-plaintext highlighter-rouge">impl</code> block that uses generic type parameters, we can implement methods conditionally for types that implement the specified traits. 
+For example, the type <code class="language-plaintext highlighter-rouge">Pair&lt;T&gt;</code> in Listing 10-16 always implements the <code class="language-plaintext highlighter-rouge">new</code> function. 
+But <code class="language-plaintext highlighter-rouge">Pair&lt;T&gt;</code> only implements the <code class="language-plaintext highlighter-rouge">cmp_display</code> method if its inner type <code class="language-plaintext highlighter-rouge">T</code> implements the <code class="language-plaintext highlighter-rouge">PartialOrd</code> trait that enables comparison <em>and</em> the <code class="language-plaintext highlighter-rouge">Display</code> trait that enables printing.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#![allow(unused_variables)]</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -1135,14 +1135,14 @@ But <code class="highlighter-rouge">Pair&lt;T&gt;</code> only implements the <co
 <h4 id="listing-10-16-conditionally-implement-methods-on-a-generic-type-depending-on-trait-bounds">Listing 10-16: Conditionally implement methods on a generic type depending on trait bounds</h4>
 <p>We can also conditionally implement a trait for any type that implements another trait. 
 Implementations of a trait on any type that satisfies the trait bounds are called <em>blanket implementations</em> and are extensively used in the Rust standard library. 
-For example, the standard library implements the <code class="highlighter-rouge">ToString</code> trait on any type that implements the <code class="highlighter-rouge">Display</code> trait. 
-The <code class="highlighter-rouge">impl</code> block in the standard library looks similar to this code:</p>
+For example, the standard library implements the <code class="language-plaintext highlighter-rouge">ToString</code> trait on any type that implements the <code class="language-plaintext highlighter-rouge">Display</code> trait. 
+The <code class="language-plaintext highlighter-rouge">impl</code> block in the standard library looks similar to this code:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span><span class="o">&gt;</span> <span class="n">ToString</span> <span class="k">for</span> <span class="n">T</span> <span class="p">{</span>
     <span class="c">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Because the standard library has this blanket implementation, we can call the <code class="highlighter-rouge">to_string</code> method defined by the <code class="highlighter-rouge">ToString</code> trait on any type that implements the <code class="highlighter-rouge">Display</code> trait. 
-For example, we can turn integers into their corresponding <code class="highlighter-rouge">String</code> values like this because integers implement <code class="highlighter-rouge">Display</code>:</p>
+<p>Because the standard library has this blanket implementation, we can call the <code class="language-plaintext highlighter-rouge">to_string</code> method defined by the <code class="language-plaintext highlighter-rouge">ToString</code> trait on any type that implements the <code class="language-plaintext highlighter-rouge">Display</code> trait. 
+For example, we can turn integers into their corresponding <code class="language-plaintext highlighter-rouge">String</code> values like this because integers implement <code class="language-plaintext highlighter-rouge">Display</code>:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">3</span><span class="nf">.to_string</span><span class="p">();</span>
 </code></pre></div></div>
 <p>Blanket implementations appear in the documentation for the trait in the “Implementors” section.</p>
@@ -1186,10 +1186,10 @@ Consider the program in Listing 10-17, which has an outer scope and an inner sco
 
 <p class="notice--info"><strong>Note</strong>: The examples in Listings 10-17, 10-18, and 10-24 declare variables without giving them an initial value, so the variable name exists in the outer scope. At first glance, this might appear to be in conflict with Rust’s having no null values. However, if we try to use a variable before giving it a value, we’ll get a compile-time error, which shows that Rust indeed does not allow null values.</p>
 
-<p>The outer scope declares a variable named <code class="highlighter-rouge">r</code> with no initial value, and the inner scope declares a variable named <code class="highlighter-rouge">x</code> with the initial value of 5. 
-Inside the inner scope, we attempt to set the value of <code class="highlighter-rouge">r</code> as a reference to <code class="highlighter-rouge">x</code>. 
-Then the inner scope ends, and we attempt to print the value in <code class="highlighter-rouge">r</code>. 
-This code won’t compile because the value <code class="highlighter-rouge">r</code> is referring to has gone out of scope before we try to use it. 
+<p>The outer scope declares a variable named <code class="language-plaintext highlighter-rouge">r</code> with no initial value, and the inner scope declares a variable named <code class="language-plaintext highlighter-rouge">x</code> with the initial value of 5. 
+Inside the inner scope, we attempt to set the value of <code class="language-plaintext highlighter-rouge">r</code> as a reference to <code class="language-plaintext highlighter-rouge">x</code>. 
+Then the inner scope ends, and we attempt to print the value in <code class="language-plaintext highlighter-rouge">r</code>. 
+This code won’t compile because the value <code class="language-plaintext highlighter-rouge">r</code> is referring to has gone out of scope before we try to use it. 
 Here is the error message:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0597</span><span class="p">]:</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="n">does</span> <span class="n">not</span> <span class="n">live</span> <span class="n">long</span> <span class="n">enough</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">5</span>
@@ -1202,10 +1202,10 @@ Here is the error message:</p>
 <span class="mi">10</span> <span class="p">|</span> <span class="p">}</span>
    <span class="p">|</span> <span class="o">-</span> <span class="n">borrowed</span> <span class="n">value</span> <span class="n">needs</span> <span class="n">to</span> <span class="n">live</span> <span class="n">until</span> <span class="n">here</span>
 </code></pre></div></div>
-<p>The variable <code class="highlighter-rouge">x</code> doesn’t “live long enough.” 
-The reason is that <code class="highlighter-rouge">x</code> will be out of scope when the inner scope ends on line 7. 
-But <code class="highlighter-rouge">r</code> is still valid for the outer scope; because its scope is larger, we say that it “lives longer.” 
-If Rust allowed this code to work, <code class="highlighter-rouge">r</code> would be referencing memory that was deallocated when <code class="highlighter-rouge">x</code> went out of scope, and anything we tried to do with <code class="highlighter-rouge">r</code> wouldn’t work correctly. 
+<p>The variable <code class="language-plaintext highlighter-rouge">x</code> doesn’t “live long enough.” 
+The reason is that <code class="language-plaintext highlighter-rouge">x</code> will be out of scope when the inner scope ends on line 7. 
+But <code class="language-plaintext highlighter-rouge">r</code> is still valid for the outer scope; because its scope is larger, we say that it “lives longer.” 
+If Rust allowed this code to work, <code class="language-plaintext highlighter-rouge">r</code> would be referencing memory that was deallocated when <code class="language-plaintext highlighter-rouge">x</code> went out of scope, and anything we tried to do with <code class="language-plaintext highlighter-rouge">r</code> wouldn’t work correctly. 
 So how does Rust determine that this code is invalid? It uses a borrow checker.</p>
 
 <h3 id="the-borrow-checker">The Borrow Checker</h3>
@@ -1224,9 +1224,9 @@ Listing 10-18 shows the same code as Listing 10-17 but with annotations showing 
 </code></pre></div></div>
 <h4 id="listing-10-18-annotations-of-the-lifetimes-of-r-and-x-named-a-and-b-respectively">Listing 10-18: Annotations of the lifetimes of r and x, named ‘a and ‘b, respectively</h4>
 
-<p>Here, we’ve annotated the lifetime of <code class="highlighter-rouge">r</code> with <code class="highlighter-rouge">'a</code> and the lifetime of <code class="highlighter-rouge">x</code> with <code class="highlighter-rouge">'b</code>. 
-As you can see, the inner <code class="highlighter-rouge">'b</code> block is much smaller than the outer <code class="highlighter-rouge">'a</code> lifetime block. 
-At compile time, Rust compares the size of the two lifetimes and sees that <code class="highlighter-rouge">r</code> has a lifetime of <code class="highlighter-rouge">'a</code> but that it refers to memory with a lifetime of <code class="highlighter-rouge">'b</code>. 
+<p>Here, we’ve annotated the lifetime of <code class="language-plaintext highlighter-rouge">r</code> with <code class="language-plaintext highlighter-rouge">'a</code> and the lifetime of <code class="language-plaintext highlighter-rouge">x</code> with <code class="language-plaintext highlighter-rouge">'b</code>. 
+As you can see, the inner <code class="language-plaintext highlighter-rouge">'b</code> block is much smaller than the outer <code class="language-plaintext highlighter-rouge">'a</code> lifetime block. 
+At compile time, Rust compares the size of the two lifetimes and sees that <code class="language-plaintext highlighter-rouge">r</code> has a lifetime of <code class="language-plaintext highlighter-rouge">'a</code> but that it refers to memory with a lifetime of <code class="language-plaintext highlighter-rouge">'b</code>. 
 The program is rejected because ‘b is shorter than ‘a: the subject of the reference doesn’t live as long as the reference.</p>
 
 <p>Listing 10-19 fixes the code so it doesn’t have a dangling reference and compiles without any errors.</p>
@@ -1241,7 +1241,7 @@ The program is rejected because ‘b is shorter than ‘a: the subject of the re
 </code></pre></div></div>
 <h4 id="listing-10-19-a-valid-reference-because-the-data-has-a-longer-lifetime-than-the-reference">Listing 10-19: A valid reference because the data has a longer lifetime than the reference</h4>
 
-<p>Here, <code class="highlighter-rouge">x</code> has the lifetime <code class="highlighter-rouge">'b</code>, which in this case is larger than <code class="highlighter-rouge">'a</code>. This means <code class="highlighter-rouge">r</code> can reference <code class="highlighter-rouge">x</code> because Rust knows that the reference in r will always be valid while <code class="highlighter-rouge">x</code> is valid.</p>
+<p>Here, <code class="language-plaintext highlighter-rouge">x</code> has the lifetime <code class="language-plaintext highlighter-rouge">'b</code>, which in this case is larger than <code class="language-plaintext highlighter-rouge">'a</code>. This means <code class="language-plaintext highlighter-rouge">r</code> can reference <code class="language-plaintext highlighter-rouge">x</code> because Rust knows that the reference in r will always be valid while <code class="language-plaintext highlighter-rouge">x</code> is valid.</p>
 
 <p>Now that you know where the lifetimes of references are and how Rust analyzes lifetimes to ensure references will always be valid, let’s explore generic lifetimes of parameters and return values in the context of functions.</p>
 
@@ -1260,12 +1260,12 @@ After we’ve implemented the longest function, the code in Listing 10-20 should
 </code></pre></div></div>
 <h4 id="listing-10-20-a-main-function-that-calls-the-longest-function-to-find-the-longer-of-two-string-slices">Listing 10-20: A main function that calls the longest function to find the longer of two string slices</h4>
 
-<p>Note that we want the function to take string slices, which are references, because we don’t want the <code class="highlighter-rouge">longest</code> function to take ownership of its parameters. 
-We want to allow the function to accept slices of a <code class="highlighter-rouge">String</code> (the type stored in the variable <code class="highlighter-rouge">string1</code>) as well as string literals (which is what variable <code class="highlighter-rouge">string2</code> contains).</p>
+<p>Note that we want the function to take string slices, which are references, because we don’t want the <code class="language-plaintext highlighter-rouge">longest</code> function to take ownership of its parameters. 
+We want to allow the function to accept slices of a <code class="language-plaintext highlighter-rouge">String</code> (the type stored in the variable <code class="language-plaintext highlighter-rouge">string1</code>) as well as string literals (which is what variable <code class="language-plaintext highlighter-rouge">string2</code> contains).</p>
 
 <p>Refer to the “String Slices as Parameters” section in Chapter 4 for more discussion about why the parameters we use in Listing 10-20 are the ones we want.</p>
 
-<p>If we try to implement the <code class="highlighter-rouge">longest</code> function as shown in Listing 10-21, it won’t compile.</p>
+<p>If we try to implement the <code class="language-plaintext highlighter-rouge">longest</code> function as shown in Listing 10-21, it won’t compile.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">longest</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
     <span class="k">if</span> <span class="n">x</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">y</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
@@ -1289,12 +1289,12 @@ We want to allow the function to accept slices of a <code class="highlighter-rou
 <span class="n">signature</span> <span class="n">does</span> <span class="n">not</span> <span class="n">say</span> <span class="n">whether</span> <span class="n">it</span> <span class="n">is</span> <span class="n">borrowed</span> <span class="n">from</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="n">y</span><span class="err">`</span>
 </code></pre></div></div>
 
-<p>The help text reveals that the return type needs a generic lifetime parameter on it because Rust can’t tell whether the reference being returned refers to <code class="highlighter-rouge">x</code> or <code class="highlighter-rouge">y</code>. 
-Actually, we don’t know either, because the <code class="highlighter-rouge">if</code> block in the body of this function returns a reference to <code class="highlighter-rouge">x</code> and the <code class="highlighter-rouge">else</code> block returns a reference to <code class="highlighter-rouge">y</code>!</p>
+<p>The help text reveals that the return type needs a generic lifetime parameter on it because Rust can’t tell whether the reference being returned refers to <code class="language-plaintext highlighter-rouge">x</code> or <code class="language-plaintext highlighter-rouge">y</code>. 
+Actually, we don’t know either, because the <code class="language-plaintext highlighter-rouge">if</code> block in the body of this function returns a reference to <code class="language-plaintext highlighter-rouge">x</code> and the <code class="language-plaintext highlighter-rouge">else</code> block returns a reference to <code class="language-plaintext highlighter-rouge">y</code>!</p>
 
-<p>When we’re defining this function, we don’t know the concrete values that will be passed into this function, so we don’t know whether the <code class="highlighter-rouge">if</code> case or the <code class="highlighter-rouge">else</code> case will execute. 
+<p>When we’re defining this function, we don’t know the concrete values that will be passed into this function, so we don’t know whether the <code class="language-plaintext highlighter-rouge">if</code> case or the <code class="language-plaintext highlighter-rouge">else</code> case will execute. 
 We also don’t know the concrete lifetimes of the references that will be passed in, so we can’t look at the scopes as we did in Listings 10-18 and 10-19 to determine whether the reference we return will always be valid. 
-The borrow checker can’t determine this either, because it doesn’t know how the lifetimes of <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> relate to the lifetime of the return value. 
+The borrow checker can’t determine this either, because it doesn’t know how the lifetimes of <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> relate to the lifetime of the return value. 
 To fix this error, we’ll add generic lifetime parameters that define the relationship between the references so the borrow checker can perform its analysis.</p>
 
 <h3 id="lifetime-annotation-syntax">Lifetime Annotation Syntax</h3>
@@ -1302,25 +1302,25 @@ To fix this error, we’ll add generic lifetime parameters that define the relat
 Just as functions can accept any type when the signature specifies a generic type parameter, functions can accept references with any lifetime by specifying a generic lifetime parameter. 
 Lifetime annotations describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.</p>
 
-<p><strong>Lifetime annotations</strong> have a slightly unusual syntax: the names of lifetime parameters must start with an apostrophe (<code class="highlighter-rouge">'</code>) and are usually all lowercase and very short, like generic types. 
-Most people use the name <code class="highlighter-rouge">'a</code>. 
-We place lifetime parameter annotations after the <code class="highlighter-rouge">&amp;</code> of a reference, using a space to separate the annotation from the reference’s type.</p>
+<p><strong>Lifetime annotations</strong> have a slightly unusual syntax: the names of lifetime parameters must start with an apostrophe (<code class="language-plaintext highlighter-rouge">'</code>) and are usually all lowercase and very short, like generic types. 
+Most people use the name <code class="language-plaintext highlighter-rouge">'a</code>. 
+We place lifetime parameter annotations after the <code class="language-plaintext highlighter-rouge">&amp;</code> of a reference, using a space to separate the annotation from the reference’s type.</p>
 
-<p>Here are some examples: a reference to an <code class="highlighter-rouge">i32</code> without a lifetime parameter, a reference to an <code class="highlighter-rouge">i32</code> that has a lifetime parameter named <code class="highlighter-rouge">'a</code>, and a mutable reference to an <code class="highlighter-rouge">i32</code> that also has the lifetime <code class="highlighter-rouge">'a</code>.</p>
+<p>Here are some examples: a reference to an <code class="language-plaintext highlighter-rouge">i32</code> without a lifetime parameter, a reference to an <code class="language-plaintext highlighter-rouge">i32</code> that has a lifetime parameter named <code class="language-plaintext highlighter-rouge">'a</code>, and a mutable reference to an <code class="language-plaintext highlighter-rouge">i32</code> that also has the lifetime <code class="language-plaintext highlighter-rouge">'a</code>.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="nb">i32</span>        <span class="c">// a reference</span>
 <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span>     <span class="c">// a reference with an explicit lifetime</span>
 <span class="o">&amp;</span><span class="nv">'a</span> <span class="k">mut</span> <span class="nb">i32</span> <span class="c">// a mutable reference with an explicit lifetime</span>
 </code></pre></div></div>
 <p>One lifetime annotation by itself doesn’t have much meaning, because the annotations are meant to tell Rust how generic lifetime parameters of multiple references relate to each other. 
-For example, let’s say we have a function with the parameter <code class="highlighter-rouge">first</code> that is a reference to an <code class="highlighter-rouge">i32</code> with lifetime <code class="highlighter-rouge">'a</code>. 
-The function also has another parameter named <code class="highlighter-rouge">second</code> that is another reference to an <code class="highlighter-rouge">i32</code> that also has the lifetime <code class="highlighter-rouge">'a</code>. 
-The lifetime annotations indicate that the references <code class="highlighter-rouge">first</code> and <code class="highlighter-rouge">second</code> must both live as long as that generic lifetime.</p>
+For example, let’s say we have a function with the parameter <code class="language-plaintext highlighter-rouge">first</code> that is a reference to an <code class="language-plaintext highlighter-rouge">i32</code> with lifetime <code class="language-plaintext highlighter-rouge">'a</code>. 
+The function also has another parameter named <code class="language-plaintext highlighter-rouge">second</code> that is another reference to an <code class="language-plaintext highlighter-rouge">i32</code> that also has the lifetime <code class="language-plaintext highlighter-rouge">'a</code>. 
+The lifetime annotations indicate that the references <code class="language-plaintext highlighter-rouge">first</code> and <code class="language-plaintext highlighter-rouge">second</code> must both live as long as that generic lifetime.</p>
 
 <h3 id="lifetime-annotations-in-function-signatures">Lifetime Annotations in Function Signatures</h3>
 <p>Now let’s examine lifetime annotations in the context of the longest function. 
 As with generic type parameters, we need to declare generic lifetime parameters inside angle brackets between the function name and the parameter list. 
 The constraint we want to express in this signature is that all the references in the parameters and the return value must have the same lifetime. 
-We’ll name the lifetime <code class="highlighter-rouge">'a</code> and then add it to each reference, as shown in Listing 10-22.</p>
+We’ll name the lifetime <code class="language-plaintext highlighter-rouge">'a</code> and then add it to each reference, as shown in Listing 10-22.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">longest</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span> <span class="p">{</span>
     <span class="k">if</span> <span class="n">x</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">y</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
@@ -1332,26 +1332,26 @@ We’ll name the lifetime <code class="highlighter-rouge">'a</code> and then add
 </code></pre></div></div>
 <h4 id="listing-10-22-the-longest-function-definition-specifying-that-all-the-references-in-the-signature-must-have-the-same-lifetime-a">Listing 10-22: The longest function definition specifying that all the references in the signature must have the same lifetime ‘a</h4>
 
-<p>This code should compile and produce the result we want when we use it with the <code class="highlighter-rouge">main</code> function in Listing 10-20.</p>
+<p>This code should compile and produce the result we want when we use it with the <code class="language-plaintext highlighter-rouge">main</code> function in Listing 10-20.</p>
 
-<p>The function signature now tells Rust that for some lifetime <code class="highlighter-rouge">'a</code>, the function takes two parameters, both of which are string slices that live at least as long as lifetime <code class="highlighter-rouge">'a</code>. 
-The function signature also tells Rust that the string slice returned from the function will live at least as long as lifetime <code class="highlighter-rouge">'a</code>. 
+<p>The function signature now tells Rust that for some lifetime <code class="language-plaintext highlighter-rouge">'a</code>, the function takes two parameters, both of which are string slices that live at least as long as lifetime <code class="language-plaintext highlighter-rouge">'a</code>. 
+The function signature also tells Rust that the string slice returned from the function will live at least as long as lifetime <code class="language-plaintext highlighter-rouge">'a</code>. 
 In practice, it means that the lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the references passed in. 
 These constraints are what we want Rust to enforce. 
 Remember, when we specify the lifetime parameters in this function signature, we’re not changing the lifetimes of any values passed in or returned. 
 Rather, we’re specifying that the borrow checker should reject any values that don’t adhere to these constraints. 
-Note that the <code class="highlighter-rouge">longest</code> function doesn’t need to know exactly how long <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> will live, only that some scope can be substituted for <code class="highlighter-rouge">'a</code> that will satisfy this signature.</p>
+Note that the <code class="language-plaintext highlighter-rouge">longest</code> function doesn’t need to know exactly how long <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> will live, only that some scope can be substituted for <code class="language-plaintext highlighter-rouge">'a</code> that will satisfy this signature.</p>
 
 <p>When annotating lifetimes in functions, the annotations go in the function signature, not in the function body. 
 Rust can analyze the code within the function without any help. 
 However, when a function has references to or from code outside that function, it becomes almost impossible for Rust to figure out the lifetimes of the parameters or return values on its own. 
 The lifetimes might be different each time the function is called. This is why we need to annotate the lifetimes manually.</p>
 
-<p>When we pass concrete references to <code class="highlighter-rouge">longest</code>, the concrete lifetime that is substituted for <code class="highlighter-rouge">'a</code> is the part of the scope of <code class="highlighter-rouge">x</code> that overlaps with the scope of <code class="highlighter-rouge">y</code>. 
-In other words, the generic lifetime <code class="highlighter-rouge">'a</code> will get the concrete lifetime that is equal to the smaller of the lifetimes of <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code>. 
-Because we’ve annotated the returned reference with the same lifetime parameter <code class="highlighter-rouge">'a</code>, the returned reference will also be valid for the length of the smaller of the lifetimes of <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code>.</p>
+<p>When we pass concrete references to <code class="language-plaintext highlighter-rouge">longest</code>, the concrete lifetime that is substituted for <code class="language-plaintext highlighter-rouge">'a</code> is the part of the scope of <code class="language-plaintext highlighter-rouge">x</code> that overlaps with the scope of <code class="language-plaintext highlighter-rouge">y</code>. 
+In other words, the generic lifetime <code class="language-plaintext highlighter-rouge">'a</code> will get the concrete lifetime that is equal to the smaller of the lifetimes of <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>. 
+Because we’ve annotated the returned reference with the same lifetime parameter <code class="language-plaintext highlighter-rouge">'a</code>, the returned reference will also be valid for the length of the smaller of the lifetimes of <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>.</p>
 
-<p>Let’s look at how the lifetime annotations restrict the <code class="highlighter-rouge">longest</code> function by passing in references that have different concrete lifetimes. Listing 10-23 is a straightforward example.</p>
+<p>Let’s look at how the lifetime annotations restrict the <code class="language-plaintext highlighter-rouge">longest</code> function by passing in references that have different concrete lifetimes. Listing 10-23 is a straightforward example.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">string1</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"long string is long"</span><span class="p">);</span>
 
@@ -1364,12 +1364,12 @@ Because we’ve annotated the returned reference with the same lifetime paramete
 </code></pre></div></div>
 <h4 id="listing-10-23-using-the-longest-function-with-references-to-string-values-that-have-different-concrete-lifetimes">Listing 10-23: Using the longest function with references to String values that have different concrete lifetimes</h4>
 
-<p>In this example, <code class="highlighter-rouge">string1</code> is valid until the end of the outer scope, <code class="highlighter-rouge">string2</code> is valid until the end of the inner scope, and <code class="highlighter-rouge">result</code> references something that is valid until the end of the inner scope. 
-Run this code, and you’ll see that the borrow checker approves of this code; it will compile and print <code class="highlighter-rouge">The longest string is long string is long</code>.</p>
+<p>In this example, <code class="language-plaintext highlighter-rouge">string1</code> is valid until the end of the outer scope, <code class="language-plaintext highlighter-rouge">string2</code> is valid until the end of the inner scope, and <code class="language-plaintext highlighter-rouge">result</code> references something that is valid until the end of the inner scope. 
+Run this code, and you’ll see that the borrow checker approves of this code; it will compile and print <code class="language-plaintext highlighter-rouge">The longest string is long string is long</code>.</p>
 
-<p>Next, let’s try an example that shows that the lifetime of the reference in <code class="highlighter-rouge">result</code> must be the smaller lifetime of the two arguments. 
-We’ll move the declaration of the <code class="highlighter-rouge">result</code> variable outside the inner scope but leave the assignment of the value to the <code class="highlighter-rouge">result</code> variable inside the scope with <code class="highlighter-rouge">string2</code>. 
-Then we’ll move the <code class="highlighter-rouge">println!</code> that uses <code class="highlighter-rouge">result</code> outside the inner scope, after the inner scope has ended. 
+<p>Next, let’s try an example that shows that the lifetime of the reference in <code class="language-plaintext highlighter-rouge">result</code> must be the smaller lifetime of the two arguments. 
+We’ll move the declaration of the <code class="language-plaintext highlighter-rouge">result</code> variable outside the inner scope but leave the assignment of the value to the <code class="language-plaintext highlighter-rouge">result</code> variable inside the scope with <code class="language-plaintext highlighter-rouge">string2</code>. 
+Then we’ll move the <code class="language-plaintext highlighter-rouge">println!</code> that uses <code class="language-plaintext highlighter-rouge">result</code> outside the inner scope, after the inner scope has ended. 
 The code in Listing 10-24 will not compile.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -1397,37 +1397,37 @@ The code in Listing 10-24 will not compile.</p>
 <span class="mi">17</span> <span class="p">|</span> <span class="p">}</span>
    <span class="p">|</span> <span class="o">-</span> <span class="n">borrowed</span> <span class="n">value</span> <span class="n">needs</span> <span class="n">to</span> <span class="n">live</span> <span class="n">until</span> <span class="n">here</span>
 </code></pre></div></div>
-<p>The error shows that for <code class="highlighter-rouge">result</code> to be valid for the <code class="highlighter-rouge">println!</code> statement, <code class="highlighter-rouge">string2</code> would need to be valid until the end of the outer scope. 
-Rust knows this because we annotated the lifetimes of the function parameters and return values using the same lifetime parameter <code class="highlighter-rouge">'a</code>.</p>
+<p>The error shows that for <code class="language-plaintext highlighter-rouge">result</code> to be valid for the <code class="language-plaintext highlighter-rouge">println!</code> statement, <code class="language-plaintext highlighter-rouge">string2</code> would need to be valid until the end of the outer scope. 
+Rust knows this because we annotated the lifetimes of the function parameters and return values using the same lifetime parameter <code class="language-plaintext highlighter-rouge">'a</code>.</p>
 
-<p>As humans, we can look at this code and see that <code class="highlighter-rouge">string1</code> is longer than <code class="highlighter-rouge">string2</code> and therefore <code class="highlighter-rouge">result</code> will contain a reference to <code class="highlighter-rouge">string1</code>. 
-Because <code class="highlighter-rouge">string1</code> has not gone out of scope yet, a reference to <code class="highlighter-rouge">string1</code> will still be valid for the <code class="highlighter-rouge">println!</code> statement. 
+<p>As humans, we can look at this code and see that <code class="language-plaintext highlighter-rouge">string1</code> is longer than <code class="language-plaintext highlighter-rouge">string2</code> and therefore <code class="language-plaintext highlighter-rouge">result</code> will contain a reference to <code class="language-plaintext highlighter-rouge">string1</code>. 
+Because <code class="language-plaintext highlighter-rouge">string1</code> has not gone out of scope yet, a reference to <code class="language-plaintext highlighter-rouge">string1</code> will still be valid for the <code class="language-plaintext highlighter-rouge">println!</code> statement. 
 However, the compiler can’t see that the reference is valid in this case. 
-We’ve told Rust that the lifetime of the reference returned by the <code class="highlighter-rouge">longest</code> function is the same as the smaller of the lifetimes of the references passed in. 
+We’ve told Rust that the lifetime of the reference returned by the <code class="language-plaintext highlighter-rouge">longest</code> function is the same as the smaller of the lifetimes of the references passed in. 
 Therefore, the borrow checker disallows the code in Listing 10-24 as possibly having an invalid reference.</p>
 
-<p>Try designing more experiments that vary the values and lifetimes of the references passed in to the <code class="highlighter-rouge">longest</code> function and how the returned reference is used. 
+<p>Try designing more experiments that vary the values and lifetimes of the references passed in to the <code class="language-plaintext highlighter-rouge">longest</code> function and how the returned reference is used. 
 Make hypotheses about whether or not your experiments will pass the borrow checker before you compile; then check to see if you’re right!</p>
 
 <h3 id="thinking-in-terms-of-lifetimes">Thinking in Terms of Lifetimes</h3>
 <p>The way in which you need to specify lifetime parameters depends on what your function is doing. 
-For example, if we changed the implementation of the <code class="highlighter-rouge">longest</code> function to always return the first parameter rather than the longest string slice, we wouldn’t need to specify a lifetime on the <code class="highlighter-rouge">y</code> parameter. 
+For example, if we changed the implementation of the <code class="language-plaintext highlighter-rouge">longest</code> function to always return the first parameter rather than the longest string slice, we wouldn’t need to specify a lifetime on the <code class="language-plaintext highlighter-rouge">y</code> parameter. 
 The following code will compile:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">longest</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span> <span class="p">{</span>
     <span class="n">x</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>In this example, we’ve specified a lifetime parameter <code class="highlighter-rouge">'a</code> for the parameter <code class="highlighter-rouge">x</code> and the return type, but not for the parameter <code class="highlighter-rouge">y</code>, because the lifetime of <code class="highlighter-rouge">y</code> does not have any relationship with the lifetime of <code class="highlighter-rouge">x</code> or the return value.</p>
+<p>In this example, we’ve specified a lifetime parameter <code class="language-plaintext highlighter-rouge">'a</code> for the parameter <code class="language-plaintext highlighter-rouge">x</code> and the return type, but not for the parameter <code class="language-plaintext highlighter-rouge">y</code>, because the lifetime of <code class="language-plaintext highlighter-rouge">y</code> does not have any relationship with the lifetime of <code class="language-plaintext highlighter-rouge">x</code> or the return value.</p>
 
 <p>When returning a reference from a function, the lifetime parameter for the return type needs to match the lifetime parameter for one of the parameters. 
 If the reference returned does <em>not</em> refer to one of the parameters, it must refer to a value created within this function, which would be a <strong>dangling reference</strong> because the value will go out of scope at the end of the function. 
-Consider this attempted implementation of the <code class="highlighter-rouge">longest</code> function that won’t compile:</p>
+Consider this attempted implementation of the <code class="language-plaintext highlighter-rouge">longest</code> function that won’t compile:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">longest</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"really long string"</span><span class="p">);</span>
     <span class="n">result</span><span class="nf">.as_str</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Here, even though we’ve specified a lifetime parameter <code class="highlighter-rouge">'a</code> for the return type, this implementation will fail to compile because the return value lifetime is not related to the lifetime of the parameters at all. 
+<p>Here, even though we’ve specified a lifetime parameter <code class="language-plaintext highlighter-rouge">'a</code> for the return type, this implementation will fail to compile because the return value lifetime is not related to the lifetime of the parameters at all. 
 Here is the error message we get:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0597</span><span class="p">]:</span> <span class="err">`</span><span class="n">result</span><span class="err">`</span> <span class="n">does</span> <span class="n">not</span> <span class="n">live</span> <span class="n">long</span> <span class="n">enough</span>
@@ -1448,8 +1448,8 @@ Here is the error message we get:</p>
 <span class="mi">4</span> <span class="p">|</span> <span class="p">|</span> <span class="p">}</span>
   <span class="p">|</span> <span class="p">|</span><span class="mi">_</span><span class="o">^</span>
 </code></pre></div></div>
-<p>The problem is that <code class="highlighter-rouge">result</code> goes out of scope and gets cleaned up at the end of the <code class="highlighter-rouge">longest</code> function. 
-We’re also trying to return a reference to <code class="highlighter-rouge">result</code> from the function. 
+<p>The problem is that <code class="language-plaintext highlighter-rouge">result</code> goes out of scope and gets cleaned up at the end of the <code class="language-plaintext highlighter-rouge">longest</code> function. 
+We’re also trying to return a reference to <code class="language-plaintext highlighter-rouge">result</code> from the function. 
 There is no way we can specify lifetime parameters that would change the dangling reference, and Rust won’t let us create a dangling reference. 
 In this case, the best fix would be to return an owned data type rather than a reference so the calling function is then responsible for cleaning up the value.</p>
 
@@ -1459,7 +1459,7 @@ Once they’re connected, Rust has enough information to allow memory-safe opera
 <h3 id="lifetime-annotations-in-struct-definitions">Lifetime Annotations in Struct Definitions</h3>
 <p>So far, we’ve only defined structs to hold owned types. 
 It’s possible for structs to hold references, but in that case we would need to add a lifetime annotation on every reference in the struct’s definition. 
-Listing 10-25 has a struct named <code class="highlighter-rouge">ImportantExcerpt</code> that holds a string slice.</p>
+Listing 10-25 has a struct named <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> that holds a string slice.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">ImportantExcerpt</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="n">part</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">}</span>
@@ -1474,13 +1474,13 @@ Listing 10-25 has a struct named <code class="highlighter-rouge">ImportantExcerp
 </code></pre></div></div>
 <h4 id="listing-10-25-a-struct-that-holds-a-reference-so-its-definition-needs-a-lifetime-annotation">Listing 10-25: A struct that holds a reference, so its definition needs a lifetime annotation</h4>
 
-<p>This struct has one field, <code class="highlighter-rouge">part</code>, that holds a string slice, which is a reference. 
+<p>This struct has one field, <code class="language-plaintext highlighter-rouge">part</code>, that holds a string slice, which is a reference. 
 As with generic data types, we declare the name of the generic lifetime parameter inside angle brackets after the name of the struct so we can use the lifetime parameter in the body of the struct definition. 
-This annotation means an instance of <code class="highlighter-rouge">ImportantExcerpt</code> can’t outlive the reference it holds in its <code class="highlighter-rouge">part</code> field.</p>
+This annotation means an instance of <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> can’t outlive the reference it holds in its <code class="language-plaintext highlighter-rouge">part</code> field.</p>
 
-<p>The <code class="highlighter-rouge">main</code> function here creates an instance of the <code class="highlighter-rouge">ImportantExcerpt</code> struct that holds a reference to the first sentence of the <code class="highlighter-rouge">String</code> owned by the variable <code class="highlighter-rouge">novel</code>. 
-The data in <code class="highlighter-rouge">novel</code> exists before the <code class="highlighter-rouge">ImportantExcerpt</code> instance is created. 
-In addition, <code class="highlighter-rouge">novel</code> doesn’t go out of scope until after the <code class="highlighter-rouge">ImportantExcerpt</code> goes out of scope, so the reference in the <code class="highlighter-rouge">ImportantExcerpt</code> instance is valid.</p>
+<p>The <code class="language-plaintext highlighter-rouge">main</code> function here creates an instance of the <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> struct that holds a reference to the first sentence of the <code class="language-plaintext highlighter-rouge">String</code> owned by the variable <code class="language-plaintext highlighter-rouge">novel</code>. 
+The data in <code class="language-plaintext highlighter-rouge">novel</code> exists before the <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> instance is created. 
+In addition, <code class="language-plaintext highlighter-rouge">novel</code> doesn’t go out of scope until after the <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> goes out of scope, so the reference in the <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> instance is valid.</p>
 
 <h3 id="lifetime-elision">Lifetime Elision</h3>
 <p>You’ve learned that every reference has a lifetime and that you need to specify lifetime parameters for functions or structs that use references. 
@@ -1524,11 +1524,11 @@ The first rule applies to input lifetimes, and the second and third rules apply 
 If the compiler gets to the end of the three rules and there are still references for which it can’t figure out lifetimes, the compiler will stop with an error. These rules apply to fn definitions as well as impl blocks.</p>
 
 <p>The <strong>first rule</strong> is that each parameter that is a reference gets its own lifetime parameter. 
-In other words, a function with one parameter gets one lifetime parameter: <code class="highlighter-rouge">fn foo&lt;'a&gt;(x: &amp;'a i32)</code>; a function with two parameters gets two separate lifetime parameters: <code class="highlighter-rouge">fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>; and so on.</p>
+In other words, a function with one parameter gets one lifetime parameter: <code class="language-plaintext highlighter-rouge">fn foo&lt;'a&gt;(x: &amp;'a i32)</code>; a function with two parameters gets two separate lifetime parameters: <code class="language-plaintext highlighter-rouge">fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>; and so on.</p>
 
-<p>The <strong>second rule</strong> is if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters: <code class="highlighter-rouge">fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code>.</p>
+<p>The <strong>second rule</strong> is if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters: <code class="language-plaintext highlighter-rouge">fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code>.</p>
 
-<p>The <strong>third rule</strong> is if there are multiple input lifetime parameters, but one of them is <code class="highlighter-rouge">&amp;self</code> or <code class="highlighter-rouge">&amp;mut self</code> because this is a method, the lifetime of <code class="highlighter-rouge">self</code> is assigned to all output lifetime parameters. 
+<p>The <strong>third rule</strong> is if there are multiple input lifetime parameters, but one of them is <code class="language-plaintext highlighter-rouge">&amp;self</code> or <code class="language-plaintext highlighter-rouge">&amp;mut self</code> because this is a method, the lifetime of <code class="language-plaintext highlighter-rouge">self</code> is assigned to all output lifetime parameters. 
 This third rule makes methods much nicer to read and write because fewer symbols are necessary.</p>
 
 <p>Let’s pretend we’re the compiler. 
@@ -1539,7 +1539,7 @@ The signature starts without any lifetimes associated with the references:</p>
 </code></pre></div></div>
 
 <p>Then the compiler applies the <strong>first rule</strong>, which specifies that each parameter gets its own lifetime. 
-We’ll call it <code class="highlighter-rouge">'a</code> as usual, so now the signature is this:</p>
+We’ll call it <code class="language-plaintext highlighter-rouge">'a</code> as usual, so now the signature is this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">first_word</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
 </code></pre></div></div>
 
@@ -1568,20 +1568,20 @@ This is why we got an <strong>error</strong> trying to compile the code in Listi
 <p>When we implement methods on a struct with lifetimes, we use the same syntax as that of generic type parameters shown in Listing 10-11. 
 Where we declare and use the lifetime parameters depends on whether they’re related to the struct fields or the method parameters and return values.</p>
 
-<p>Lifetime names for struct fields always need to be declared after the <code class="highlighter-rouge">impl</code> keyword and then used after the struct’s name, because those lifetimes are part of the struct’s type.</p>
+<p>Lifetime names for struct fields always need to be declared after the <code class="language-plaintext highlighter-rouge">impl</code> keyword and then used after the struct’s name, because those lifetimes are part of the struct’s type.</p>
 
-<p>In method signatures inside the <code class="highlighter-rouge">impl</code> block, references might be tied to the lifetime of references in the struct’s fields, or they might be independent. 
+<p>In method signatures inside the <code class="language-plaintext highlighter-rouge">impl</code> block, references might be tied to the lifetime of references in the struct’s fields, or they might be independent. 
 In addition, the lifetime elision rules often make it so that lifetime annotations aren’t necessary in method signatures. 
-Let’s look at some examples using the struct named <code class="highlighter-rouge">ImportantExcerpt</code> that we defined in Listing 10-25.</p>
+Let’s look at some examples using the struct named <code class="language-plaintext highlighter-rouge">ImportantExcerpt</code> that we defined in Listing 10-25.</p>
 
-<p>First, we’ll use a method named <code class="highlighter-rouge">level</code> whose only parameter is a reference to <code class="highlighter-rouge">self</code> and whose return value is an <code class="highlighter-rouge">i32</code>, which is not a reference to anything:</p>
+<p>First, we’ll use a method named <code class="language-plaintext highlighter-rouge">level</code> whose only parameter is a reference to <code class="language-plaintext highlighter-rouge">self</code> and whose return value is an <code class="language-plaintext highlighter-rouge">i32</code>, which is not a reference to anything:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="n">ImportantExcerpt</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">level</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
         <span class="mi">3</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>The lifetime parameter declaration after <code class="highlighter-rouge">impl</code> and its use after the type name are required, but we’re <strong>not required</strong> to annotate the lifetime of the reference to <code class="highlighter-rouge">self</code> because of the first elision rule.</p>
+<p>The lifetime parameter declaration after <code class="language-plaintext highlighter-rouge">impl</code> and its use after the type name are required, but we’re <strong>not required</strong> to annotate the lifetime of the reference to <code class="language-plaintext highlighter-rouge">self</code> because of the first elision rule.</p>
 
 <p>Here is an example where the third lifetime elision rule applies:</p>
 
@@ -1592,22 +1592,22 @@ Let’s look at some examples using the struct named <code class="highlighter-ro
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>There are two input lifetimes, so Rust applies the first lifetime elision rule and gives both <code class="highlighter-rouge">&amp;self</code> and <code class="highlighter-rouge">announcement</code> their own lifetimes. 
-Then, because one of the parameters is <code class="highlighter-rouge">&amp;self</code>, the return type gets the lifetime of <code class="highlighter-rouge">&amp;self</code>, and all lifetimes have been accounted for.</p>
+<p>There are two input lifetimes, so Rust applies the first lifetime elision rule and gives both <code class="language-plaintext highlighter-rouge">&amp;self</code> and <code class="language-plaintext highlighter-rouge">announcement</code> their own lifetimes. 
+Then, because one of the parameters is <code class="language-plaintext highlighter-rouge">&amp;self</code>, the return type gets the lifetime of <code class="language-plaintext highlighter-rouge">&amp;self</code>, and all lifetimes have been accounted for.</p>
 
 <h3 id="the-static-lifetime">The Static Lifetime</h3>
-<p>One special lifetime we need to discuss is <code class="highlighter-rouge">'static</code>, which means that this reference can live for the entire duration of the program. 
-All string literals have the <code class="highlighter-rouge">'static</code> lifetime, which we can annotate as follows:</p>
+<p>One special lifetime we need to discuss is <code class="language-plaintext highlighter-rouge">'static</code>, which means that this reference can live for the entire duration of the program. 
+All string literals have the <code class="language-plaintext highlighter-rouge">'static</code> lifetime, which we can annotate as follows:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span> <span class="o">=</span> <span class="s">"I have a static lifetime."</span><span class="p">;</span>
 </code></pre></div></div>
 <p>The text of this string is stored directly in the program’s binary, which is always available. 
-Therefore, the lifetime of all string literals is <code class="highlighter-rouge">'static</code>.</p>
+Therefore, the lifetime of all string literals is <code class="language-plaintext highlighter-rouge">'static</code>.</p>
 
-<p>You might see suggestions to use the <code class="highlighter-rouge">'static</code> lifetime in error messages. 
-But before specifying <code class="highlighter-rouge">'static</code> as the lifetime for a reference, think about whether the reference you have actually lives the entire lifetime of your program or not. 
+<p>You might see suggestions to use the <code class="language-plaintext highlighter-rouge">'static</code> lifetime in error messages. 
+But before specifying <code class="language-plaintext highlighter-rouge">'static</code> as the lifetime for a reference, think about whether the reference you have actually lives the entire lifetime of your program or not. 
 You might consider whether you want it to live that long, even if it could. 
 Most of the time, the problem results from attempting to create a dangling reference or a mismatch of the available lifetimes. 
-In such cases, the solution is fixing those problems, not specifying the <code class="highlighter-rouge">'static</code> lifetime.</p>
+In such cases, the solution is fixing those problems, not specifying the <code class="language-plaintext highlighter-rouge">'static</code> lifetime.</p>
 
 <h3 id="generic-type-parameters-trait-bounds-and-lifetimes-together">Generic Type Parameters, Trait Bounds, and Lifetimes Together</h3>
 <p>Let’s briefly look at the syntax of specifying generic type parameters, trait bounds, and lifetimes all in one function!</p>
@@ -1624,10 +1624,10 @@ In such cases, the solution is fixing those problems, not specifying the <code c
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>This is the <code class="highlighter-rouge">longest</code> function from Listing 10-22 that returns the longer of two string slices. 
-But now it has an extra parameter named <code class="highlighter-rouge">ann</code> of the generic type <code class="highlighter-rouge">T</code>, which can be filled in by any type that implements the <code class="highlighter-rouge">Display</code> trait as specified by the <code class="highlighter-rouge">where</code> clause. 
-This extra parameter will be printed before the function compares the lengths of the string slices, which is why the <code class="highlighter-rouge">Display</code> trait bound is necessary. 
-Because lifetimes are a type of generic, the declarations of the lifetime parameter <code class="highlighter-rouge">'a</code> and the generic type parameter <code class="highlighter-rouge">T</code> go in the same list inside the angle brackets after the function name.</p>
+<p>This is the <code class="language-plaintext highlighter-rouge">longest</code> function from Listing 10-22 that returns the longer of two string slices. 
+But now it has an extra parameter named <code class="language-plaintext highlighter-rouge">ann</code> of the generic type <code class="language-plaintext highlighter-rouge">T</code>, which can be filled in by any type that implements the <code class="language-plaintext highlighter-rouge">Display</code> trait as specified by the <code class="language-plaintext highlighter-rouge">where</code> clause. 
+This extra parameter will be printed before the function compares the lengths of the string slices, which is why the <code class="language-plaintext highlighter-rouge">Display</code> trait bound is necessary. 
+Because lifetimes are a type of generic, the declarations of the lifetime parameter <code class="language-plaintext highlighter-rouge">'a</code> and the generic type parameter <code class="language-plaintext highlighter-rouge">T</code> go in the same list inside the angle brackets after the function name.</p>
 
 <h2 id="summary">Summary</h2>
 <p>We covered a lot in this chapter! Now that you know about generic type parameters, traits and trait bounds, and generic lifetime parameters, you’re ready to write code without repetition that works in many different situations.</p>
@@ -1775,6 +1775,37 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/15.Smart-Pointers" rel="permalink">RUST : 15. Smart Pointers
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  69 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Smart Pointers
+A pointer is a general concept for a variable that contains an address in memory. 
+This address refers to, or “points at,” some other data. 
+T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
 </a>
       
@@ -1821,35 +1852,6 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     <p class="archive__item-excerpt" itemprop="description">How to call RUST function from C
 I make programs mainly using C or C++ language. Recently I’m studying Rust. So I wanna interact to C and Rust. 
 I want to li...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/13.Functional-Language-Features_Iterators-and-Closures" rel="permalink">RUST : 13. Functional Language Features: Iterators and Closures
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  31 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
-Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
   </article>
 </div>
 

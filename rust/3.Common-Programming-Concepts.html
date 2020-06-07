@@ -309,7 +309,7 @@
         
         <h2 id="variables-and-mutability">Variables and Mutability</h2>
 <p>Default variables are immutable.<br />
-If you want mutable variable, can make them mutable by adding <code class="highlighter-rouge">mut</code> in front of the variable name.</p>
+If you want mutable variable, can make them mutable by adding <code class="language-plaintext highlighter-rouge">mut</code> in front of the variable name.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
@@ -317,11 +317,11 @@ If you want mutable variable, can make them mutable by adding <code class="highl
     <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of x is: {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re <code class="highlighter-rouge">always</code> immutable.<br />
+<p>First, you aren’t allowed to use mut with constants. Constants aren’t just immutable by default—they’re <code class="language-plaintext highlighter-rouge">always</code> immutable.<br />
 You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">MAX_POINTS</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">100_000</span><span class="p">;</span>
 </code></pre></div></div>
-<p class="notice--warning"><strong>Note:</strong> Rust’s naming convention for constants is to <code class="highlighter-rouge">use all uppercase with underscores between words</code>, and <code class="highlighter-rouge">underscores can be inserted in numeric literals to improve readability</code></p>
+<p class="notice--warning"><strong>Note:</strong> Rust’s naming convention for constants is to <code class="language-plaintext highlighter-rouge">use all uppercase with underscores between words</code>, and <code class="language-plaintext highlighter-rouge">underscores can be inserted in numeric literals to improve readability</code></p>
 
 <h2 id="data-types">Data Types</h2>
 <p>Keep in mind that Rust is a statically typed language, which means that it must know the types of all variables at compile time.</p>
@@ -437,8 +437,8 @@ You declare constants using the const keyword instead of the let keyword, and th
 </code></pre></div></div>
 
 <h2 id="functions">Functions</h2>
-<p><code class="highlighter-rouge">fn</code> keyword, which allows you to declare new functions.<br />
-Rust doesn’t care where you define your functions, <code class="highlighter-rouge">only that they’re defined somewhere.</code></p>
+<p><code class="language-plaintext highlighter-rouge">fn</code> keyword, which allows you to declare new functions.<br />
+Rust doesn’t care where you define your functions, <code class="language-plaintext highlighter-rouge">only that they’re defined somewhere.</code></p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">);</span>
 
@@ -461,8 +461,8 @@ Rust doesn’t care where you define your functions, <code class="highlighter-ro
 </code></pre></div></div>
 
 <h3 id="function-bodies-contain-statements-and-expressions">Function Bodies Contain Statements and Expressions</h3>
-<p><code class="highlighter-rouge">Statements</code> are instructions that perform some action and do not return a value. <br />
-<code class="highlighter-rouge">Expressions</code> evaluate to a resulting value.</p>
+<p><code class="language-plaintext highlighter-rouge">Statements</code> are instructions that perform some action and do not return a value. <br />
+<code class="language-plaintext highlighter-rouge">Expressions</code> evaluate to a resulting value.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c">// This is Statemnets</span>
 
@@ -473,8 +473,8 @@ Rust doesn’t care where you define your functions, <code class="highlighter-ro
 <p class="notice--warning"><strong>Note:</strong> This is different from what happens in other languages, such as C and Ruby, where the assignment returns the value of the assignment. 
 In those languages, you can write x = y = 6 and have both x and y have the value 6; that is not the case in Rust.</p>
 
-<p>Expressions can be part of statements: the <code class="highlighter-rouge">6</code> in the statement <code class="highlighter-rouge">let y = 6;</code> is an expression that evaluates to the value <code class="highlighter-rouge">6</code>. 
-Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, <code class="highlighter-rouge">{}</code>, is an expression, for example:</p>
+<p>Expressions can be part of statements: the <code class="language-plaintext highlighter-rouge">6</code> in the statement <code class="language-plaintext highlighter-rouge">let y = 6;</code> is an expression that evaluates to the value <code class="language-plaintext highlighter-rouge">6</code>. 
+Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, <code class="language-plaintext highlighter-rouge">{}</code>, is an expression, for example:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 
@@ -492,8 +492,8 @@ Calling a function is an expression. Calling a macro is an expression. The block
     <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p class="notice--warning"><strong>Note:</strong> the <code class="highlighter-rouge">x + 1</code> line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. 
-<code class="highlighter-rouge">Expressions do not include ending semicolons.</code> If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.</p>
+<p class="notice--warning"><strong>Note:</strong> the <code class="language-plaintext highlighter-rouge">x + 1</code> line without a semicolon at the end, which is unlike most of the lines you’ve seen so far. 
+<code class="language-plaintext highlighter-rouge">Expressions do not include ending semicolons.</code> If you add a semicolon to the end of an expression, you turn it into a statement, which will then not return a value. Keep this in mind as you explore function return values and expressions next.</p>
 
 <h3 id="functions-with-return-values">Functions with Return Values</h3>
 <p>We don’t name return values, but we do declare their type after an arrow (-&gt;)
@@ -535,11 +535,11 @@ You can return early from a function by using the return keyword and specifying 
     <span class="c">// explain what’s going on.</span>
     <span class="k">let</span> <span class="n">lucky_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c">// I’m feeling lucky today.</span>
 </code></pre></div></div>
-<p>Rust also has another kind of comment, <code class="highlighter-rouge">documentation comments</code>, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.</p>
+<p>Rust also has another kind of comment, <code class="language-plaintext highlighter-rouge">documentation comments</code>, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.</p>
 
 <h2 id="control-flow">Control Flow</h2>
 <p>The most common constructs that let you control the flow of execution of Rust code are if expressions and loops.</p>
-<h3 id="if-expressions"><code class="highlighter-rouge">if</code> Expressions</h3>
+<h3 id="if-expressions"><code class="language-plaintext highlighter-rouge">if</code> Expressions</h3>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
@@ -590,9 +590,9 @@ You can return early from a function by using the return keyword and specifying 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="loop-expressions"><code class="highlighter-rouge">loop</code> Expressions</h3>
+<h3 id="loop-expressions"><code class="language-plaintext highlighter-rouge">loop</code> Expressions</h3>
 <p>The loop keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. <br />
-Most terminals support a keyboard shortcut, <code class="highlighter-rouge">ctrl-c</code>, to interrupt a program that is stuck in a continual loop. The symbol <code class="highlighter-rouge">^C</code> represents where you pressed <code class="highlighter-rouge">ctrl-c</code>. You may or may not see the word again! printed after the <code class="highlighter-rouge">^C</code>, depending on where the code was in the loop when it received the interrupt signal.</p>
+Most terminals support a keyboard shortcut, <code class="language-plaintext highlighter-rouge">ctrl-c</code>, to interrupt a program that is stuck in a continual loop. The symbol <code class="language-plaintext highlighter-rouge">^C</code> represents where you pressed <code class="language-plaintext highlighter-rouge">ctrl-c</code>. You may or may not see the word again! printed after the <code class="language-plaintext highlighter-rouge">^C</code>, depending on where the code was in the loop when it received the interrupt signal.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">loop</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"again!"</span><span class="p">);</span>
@@ -615,7 +615,7 @@ Most terminals support a keyboard shortcut, <code class="highlighter-rouge">ctrl
     <span class="nd">println!</span><span class="p">(</span><span class="s">"The result is {}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<h3 id="while-expressions"><code class="highlighter-rouge">while</code> Expressions</h3>
+<h3 id="while-expressions"><code class="language-plaintext highlighter-rouge">while</code> Expressions</h3>
 <p>While the condition is true, the loop runs. When the condition ceases to be true, the program calls break, stopping the loop. This loop type could be implemented using a combination of loop, if, else, and break; you could try that now in a program, if you’d like.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
@@ -630,7 +630,7 @@ Most terminals support a keyboard shortcut, <code class="highlighter-rouge">ctrl
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="for-expressions"><code class="highlighter-rouge">for</code> Expressions</h3>
+<h3 id="for-expressions"><code class="language-plaintext highlighter-rouge">for</code> Expressions</h3>
 <p>You could use the while construct to loop over the elements of a collection, such as an array.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">];</span>
@@ -792,6 +792,37 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/15.Smart-Pointers" rel="permalink">RUST : 15. Smart Pointers
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  69 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Smart Pointers
+A pointer is a general concept for a variable that contains an address in memory. 
+This address refers to, or “points at,” some other data. 
+T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
 </a>
       
@@ -838,35 +869,6 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     <p class="archive__item-excerpt" itemprop="description">How to call RUST function from C
 I make programs mainly using C or C++ language. Recently I’m studying Rust. So I wanna interact to C and Rust. 
 I want to li...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/13.Functional-Language-Features_Iterators-and-Closures" rel="permalink">RUST : 13. Functional Language Features: Iterators and Closures
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  31 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
-Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
   </article>
 </div>
 

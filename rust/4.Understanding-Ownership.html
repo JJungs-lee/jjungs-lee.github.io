@@ -344,8 +344,8 @@
 For example, what if we want to take user input and store it? For these situations, Rust has a second string type, String. This type is <strong>allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time.</strong> You can create a String from a string literal using the from function, like so:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
 </code></pre></div></div>
-<p>The double colon (<code class="highlighter-rouge">::</code>) is an operator that allows us to namespace this particular <code class="highlighter-rouge">from</code> function under the String type rather than using some sort of name like <code class="highlighter-rouge">string_from</code>. <br />
-Why can String be mutated but literals cannot? <code class="highlighter-rouge">The difference is how these two types deal with memory.</code></p>
+<p>The double colon (<code class="language-plaintext highlighter-rouge">::</code>) is an operator that allows us to namespace this particular <code class="language-plaintext highlighter-rouge">from</code> function under the String type rather than using some sort of name like <code class="language-plaintext highlighter-rouge">string_from</code>. <br />
+Why can String be mutated but literals cannot? <code class="language-plaintext highlighter-rouge">The difference is how these two types deal with memory.</code></p>
 
 <h3 id="memory-and-allocation">Memory and Allocation</h3>
 <p>With the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:</p>
@@ -354,7 +354,7 @@ Why can String be mutated but literals cannot? <code class="highlighter-rouge">T
   <li>We need a way of returning this memory to the operating system when we’re done with our String.</li>
 </ol>
 
-<p>That first part is done by us: when we call <code class="highlighter-rouge">String::from</code>, its implementation requests the memory it needs. <br />
+<p>That first part is done by us: when we call <code class="language-plaintext highlighter-rouge">String::from</code>, its implementation requests the memory it needs. <br />
 However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. <strong>We need to pair exactly one allocate with exactly one free.</strong></p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
     <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// s is valid from this point forward</span>
@@ -362,7 +362,7 @@ However, the second part is different. In languages with a garbage collector (GC
 <span class="p">}</span>                                  <span class="c">// this scope is now over, and s is no</span>
                                    <span class="c">// longer valid</span>
 </code></pre></div></div>
-<p>There is a natural point at which we can return the memory our String needs to the operating system: when <code class="highlighter-rouge">s</code> goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called <code class="highlighter-rouge">drop</code>, and it’s where the author of String can put the code to return the memory. Rust calls <code class="highlighter-rouge">drop</code> automatically at the closing curly bracket.</p>
+<p>There is a natural point at which we can return the memory our String needs to the operating system: when <code class="language-plaintext highlighter-rouge">s</code> goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called <code class="language-plaintext highlighter-rouge">drop</code>, and it’s where the author of String can put the code to return the memory. Rust calls <code class="language-plaintext highlighter-rouge">drop</code> automatically at the closing curly bracket.</p>
 
 <p class="notice--info"><strong>Note:</strong> In C++, this pattern of deallocating resources at the end of an item’s lifetime is sometimes called Resource Acquisition Is Initialization (RAII). The drop function in Rust will be familiar to you if you’ve used RAII patterns.</p>
 
@@ -415,14 +415,14 @@ However, the second part is different. In languages with a garbage collector (GC
 </code></pre></div></div>
 
 <h3 id="stack-only-data-copy">Stack-Only Data: Copy</h3>
-<p>This code seems to contradict what we just learned: we don’t have a call to <code class="highlighter-rouge">clone</code>, but <code class="highlighter-rouge">x</code> is still valid and wasn’t moved into <code class="highlighter-rouge">y</code>. <br />
-The reason is that types such as integers that have a known size at compile time are <code class="highlighter-rouge">stored entirely on the stack</code>, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.</p>
+<p>This code seems to contradict what we just learned: we don’t have a call to <code class="language-plaintext highlighter-rouge">clone</code>, but <code class="language-plaintext highlighter-rouge">x</code> is still valid and wasn’t moved into <code class="language-plaintext highlighter-rouge">y</code>. <br />
+The reason is that types such as integers that have a known size at compile time are <code class="language-plaintext highlighter-rouge">stored entirely on the stack</code>, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
 
 <span class="nd">println!</span><span class="p">(</span><span class="s">"x = {}, y = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 </code></pre></div></div>
-<p>Rust has a special annotation called the <code class="highlighter-rouge">Copy</code> trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).
+<p>Rust has a special annotation called the <code class="language-plaintext highlighter-rouge">Copy</code> trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10).
 So what types are Copy?</p>
 <ul>
   <li>All the integer types, such as u32.</li>
@@ -514,7 +514,7 @@ So what types are Copy?</p>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-4-5-returning-ownership-of-parameters">Listing 4-5: Returning ownership of parameters</h4>
-<p>But this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called <code class="highlighter-rouge">references</code>.</p>
+<p>But this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for this concept, called <code class="language-plaintext highlighter-rouge">references</code>.</p>
 
 <h2 id="references-and-borrowing">References and Borrowing</h2>
 <p>Here is how you would define and use a calculate_length function that has a reference to an object as a parameter instead of taking ownership of the value:</p>
@@ -530,7 +530,7 @@ So what types are Copy?</p>
     <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass <code class="highlighter-rouge">&amp;s1</code> into calculate_length and, in its definition, we take <code class="highlighter-rouge">&amp;String</code> rather than String. <br />
+<p>First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass <code class="language-plaintext highlighter-rouge">&amp;s1</code> into calculate_length and, in its definition, we take <code class="language-plaintext highlighter-rouge">&amp;String</code> rather than String. <br />
 These ampersands are references, and they allow you to refer to some value without taking ownership of it <br />
 <img src="/assets/images/rust/trpl04-05.svg" alt="Figure 4-1" width="50%" height="40%" /></p>
 <h4 id="figure-4-5-a-diagram-of-string-s-pointing-at-string-s1">Figure 4-5: A diagram of &amp;String s pointing at String s1</h4>
@@ -540,9 +540,9 @@ These ampersands are references, and they allow you to refer to some value witho
 
 <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s1</span><span class="p">);</span>
 </code></pre></div></div>
-<p>The <code class="highlighter-rouge">&amp;s1</code> syntax lets us create a reference that refers to the value of <code class="highlighter-rouge">s1</code> but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.</p>
+<p>The <code class="language-plaintext highlighter-rouge">&amp;s1</code> syntax lets us create a reference that refers to the value of <code class="language-plaintext highlighter-rouge">s1</code> but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.</p>
 
-<p>Likewise, the signature of the function uses <code class="highlighter-rouge">&amp;</code> to indicate that the type of the parameter <code class="highlighter-rouge">s</code> is a reference. Let’s add some explanatory annotations:</p>
+<p>Likewise, the signature of the function uses <code class="language-plaintext highlighter-rouge">&amp;</code> to indicate that the type of the parameter <code class="language-plaintext highlighter-rouge">s</code> is a reference. Let’s add some explanatory annotations:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span> <span class="c">// s is a reference to a String</span>
     <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
 <span class="p">}</span> <span class="c">// Here, s goes out of scope. But because it does not have ownership of what</span>
@@ -585,7 +585,7 @@ We call having <strong>references as function parameters <em>borrowing</em></str
     <span class="n">some_string</span><span class="nf">.push_str</span><span class="p">(</span><span class="s">", world"</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>First, we had to change <code class="highlighter-rouge">s</code> to be <code class="highlighter-rouge">mut</code>. Then we had to create a mutable reference with <code class="highlighter-rouge">&amp;mut s</code> and accept a mutable reference with <code class="highlighter-rouge">some_string: &amp;mut String</code>.</p>
+<p>First, we had to change <code class="language-plaintext highlighter-rouge">s</code> to be <code class="language-plaintext highlighter-rouge">mut</code>. Then we had to create a mutable reference with <code class="language-plaintext highlighter-rouge">&amp;mut s</code> and accept a mutable reference with <code class="language-plaintext highlighter-rouge">some_string: &amp;mut String</code>.</p>
 
 <p>But mutable references have one big restriction: <strong>you can have only one mutable reference to a particular piece of data in a particular scope.</strong> This code will fail:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
@@ -607,7 +607,7 @@ We call having <strong>references as function parameters <em>borrowing</em></str
   <span class="p">|</span>                        <span class="o">--</span> <span class="n">first</span> <span class="n">borrow</span> <span class="n">later</span> <span class="n">used</span> <span class="n">here</span>
 </code></pre></div></div>
 <p>This restriction allows for mutation but in a very controlled fashion. It’s something that new Rustaceans struggle with, because most languages let you mutate whenever you’d like. <br />
-The benefit of having this restriction is that Rust can prevent <code class="highlighter-rouge">data races</code> at compile time. A data race is similar to a race condition and happens when these three behaviors occur:</p>
+The benefit of having this restriction is that Rust can prevent <code class="language-plaintext highlighter-rouge">data races</code> at compile time. A data race is similar to a race condition and happens when these three behaviors occur:</p>
 <ul>
   <li>Two or more pointers access the same data at the same time.</li>
   <li>At least one of the pointers is being used to write to the data.</li>
@@ -615,7 +615,7 @@ The benefit of having this restriction is that Rust can prevent <code class="hig
 </ul>
 
 <p>Data races cause undefined behavior and can be difficult to diagnose and fix when you’re trying to track them down at runtime; Rust prevents this problem from happening because it won’t even compile code with data races! <br />
-As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not <code class="highlighter-rouge">simultaneous</code> ones:</p>
+As always, we can use curly brackets to create a new scope, allowing for multiple mutable references, just not <code class="language-plaintext highlighter-rouge">simultaneous</code> ones:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
 
@@ -730,7 +730,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">?</span>
 </code></pre></div></div>
 
-<p>This function, <code class="highlighter-rouge">first_word</code>, has a <code class="highlighter-rouge">&amp;String</code> as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.</p>
+<p>This function, <code class="language-plaintext highlighter-rouge">first_word</code>, has a <code class="language-plaintext highlighter-rouge">&amp;String</code> as a parameter. We don’t want ownership, so this is fine. But what should we return? We don’t really have a way to talk about part of a string. However, we could return the index of the end of the word. Let’s try that, as shown in Listing 4-7.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
@@ -753,11 +753,11 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <p>Next, we create an iterator over the array of bytes using the iter method:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
 </code></pre></div></div>
-<p>We’ll discuss iterators in more detail in Chapter 13. For now, know that <code class="highlighter-rouge">iter</code> is a method that returns each element in a collection and that <code class="highlighter-rouge">enumerate</code> wraps the result of <code class="highlighter-rouge">iter</code> and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.</p>
+<p>We’ll discuss iterators in more detail in Chapter 13. For now, know that <code class="language-plaintext highlighter-rouge">iter</code> is a method that returns each element in a collection and that <code class="language-plaintext highlighter-rouge">enumerate</code> wraps the result of <code class="language-plaintext highlighter-rouge">iter</code> and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.</p>
 
-<p>Because the <code class="highlighter-rouge">enumerate</code> method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the <code class="highlighter-rouge">for</code> loop, we specify a pattern that has <code class="highlighter-rouge">i</code> for the index in the tuple and <code class="highlighter-rouge">&amp;item</code> for the single byte in the tuple. Because we get a reference to the element from <code class="highlighter-rouge">.iter().enumerate()</code>, we use <code class="highlighter-rouge">&amp;</code> in the pattern.</p>
+<p>Because the <code class="language-plaintext highlighter-rouge">enumerate</code> method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the <code class="language-plaintext highlighter-rouge">for</code> loop, we specify a pattern that has <code class="language-plaintext highlighter-rouge">i</code> for the index in the tuple and <code class="language-plaintext highlighter-rouge">&amp;item</code> for the single byte in the tuple. Because we get a reference to the element from <code class="language-plaintext highlighter-rouge">.iter().enumerate()</code>, we use <code class="language-plaintext highlighter-rouge">&amp;</code> in the pattern.</p>
 
-<p>Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using <code class="highlighter-rouge">s.len()</code>:</p>
+<p>Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using <code class="language-plaintext highlighter-rouge">s.len()</code>:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
     <span class="p">}</span>
@@ -778,9 +778,9 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 </code></pre></div></div>
 <h4 id="listing-4-8-storing-the-result-from-calling-the-first_word-function-and-then-changing-the-string-contents">Listing 4-8: Storing the result from calling the first_word function and then changing the String contents</h4>
 
-<p>This program compiles without any errors and would also do so if we used <code class="highlighter-rouge">word</code> after calling <code class="highlighter-rouge">s.clear()</code>. Because <code class="highlighter-rouge">word</code> isn’t connected to the state of <code class="highlighter-rouge">s</code> at all, <code class="highlighter-rouge">word</code> still contains the value <code class="highlighter-rouge">5</code>. We could use that value <code class="highlighter-rouge">5</code> with the variable <code class="highlighter-rouge">s</code> to try to extract the first word out, but this would be a <strong>bug</strong> because the contents of <code class="highlighter-rouge">s</code> have changed since we saved <code class="highlighter-rouge">5</code> in <code class="highlighter-rouge">word</code>.</p>
+<p>This program compiles without any errors and would also do so if we used <code class="language-plaintext highlighter-rouge">word</code> after calling <code class="language-plaintext highlighter-rouge">s.clear()</code>. Because <code class="language-plaintext highlighter-rouge">word</code> isn’t connected to the state of <code class="language-plaintext highlighter-rouge">s</code> at all, <code class="language-plaintext highlighter-rouge">word</code> still contains the value <code class="language-plaintext highlighter-rouge">5</code>. We could use that value <code class="language-plaintext highlighter-rouge">5</code> with the variable <code class="language-plaintext highlighter-rouge">s</code> to try to extract the first word out, but this would be a <strong>bug</strong> because the contents of <code class="language-plaintext highlighter-rouge">s</code> have changed since we saved <code class="language-plaintext highlighter-rouge">5</code> in <code class="language-plaintext highlighter-rouge">word</code>.</p>
 
-<p>Having to worry about the index in <code class="highlighter-rouge">word</code> getting out of sync with the data in <code class="highlighter-rouge">s</code> is tedious and error prone! Managing these indices is even more brittle if we write a <code class="highlighter-rouge">second_word</code> function. Its signature would have to look like this:</p>
+<p>Having to worry about the index in <code class="language-plaintext highlighter-rouge">word</code> getting out of sync with the data in <code class="language-plaintext highlighter-rouge">s</code> is tedious and error prone! Managing these indices is even more brittle if we write a <code class="language-plaintext highlighter-rouge">second_word</code> function. Its signature would have to look like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">second_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="nb">usize</span><span class="p">,</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></div></div>
@@ -799,7 +799,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 </code></pre></div></div>
 <p>This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.</p>
 
-<p>We can create slices using a range within brackets by specifying <code class="highlighter-rouge">[starting_index..ending_index]</code>, where <code class="highlighter-rouge">starting_index</code> is the first position in the slice and <code class="highlighter-rouge">ending_index</code> is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to <code class="highlighter-rouge">ending_index</code> minus <code class="highlighter-rouge">starting_index</code>. So in the case of <code class="highlighter-rouge">let world = &amp;s[6..11];</code>, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.
+<p>We can create slices using a range within brackets by specifying <code class="language-plaintext highlighter-rouge">[starting_index..ending_index]</code>, where <code class="language-plaintext highlighter-rouge">starting_index</code> is the first position in the slice and <code class="language-plaintext highlighter-rouge">ending_index</code> is one more than the last position in the slice. Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to <code class="language-plaintext highlighter-rouge">ending_index</code> minus <code class="language-plaintext highlighter-rouge">starting_index</code>. So in the case of <code class="language-plaintext highlighter-rouge">let world = &amp;s[6..11];</code>, world would be a slice that contains a pointer to the 7th byte (counting from 1) of s with a length value of 5.
 <img src="/assets/images/rust/trpl04-06.svg" alt="Figure 4-6" width="50%" height="40%" /></p>
 <h4 id="figure-4-6-string-slice-referring-to-part-of-a-string">Figure 4-6: String slice referring to part of a String</h4>
 
@@ -820,7 +820,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 
 <p class="notice--info"><strong>Note:</strong> String slice range indices must occur at valid UTF-8 character boundaries. If you attempt to create a string slice in the middle of a multibyte character, your program will exit with an error. For the purposes of introducing string slices, we are assuming ASCII only in this section; a more thorough discussion of UTF-8 handling is in the “Storing UTF-8 Encoded Text with Strings” section of Chapter 8.</p>
 
-<p>With all this information in mind, let’s rewrite <code class="highlighter-rouge">first_word</code> to return a slice. The type that signifies “string slice” is written as <code class="highlighter-rouge">&amp;str</code>:</p>
+<p>With all this information in mind, let’s rewrite <code class="language-plaintext highlighter-rouge">first_word</code> to return a slice. The type that signifies “string slice” is written as <code class="language-plaintext highlighter-rouge">&amp;str</code>:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
 
@@ -863,10 +863,10 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <span class="mi">20</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"the first word is: {}"</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
    <span class="p">|</span>                                       <span class="o">----</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">later</span> <span class="n">used</span> <span class="n">here</span>
 </code></pre></div></div>
-<p><strong>Recall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference.</strong> Because <code class="highlighter-rouge">clear</code> needs to truncate the <code class="highlighter-rouge">String</code>, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!</p>
+<p><strong>Recall from the borrowing rules that if we have an immutable reference to something, we cannot also take a mutable reference.</strong> Because <code class="language-plaintext highlighter-rouge">clear</code> needs to truncate the <code class="language-plaintext highlighter-rouge">String</code>, it needs to get a mutable reference. Rust disallows this, and compilation fails. Not only has Rust made our API easier to use, but it has also eliminated an entire class of errors at compile time!</p>
 
 <h3 id="string-literals-are-slices">String Literals Are Slices</h3>
-<p>The type of <code class="highlighter-rouge">s</code> here is <code class="highlighter-rouge">&amp;str</code>: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; <code class="highlighter-rouge">&amp;str</code> is an immutable reference.</p>
+<p>The type of <code class="language-plaintext highlighter-rouge">s</code> here is <code class="language-plaintext highlighter-rouge">&amp;str</code>: it’s a slice pointing to that specific point of the binary. This is also why string literals are immutable; <code class="language-plaintext highlighter-rouge">&amp;str</code> is an immutable reference.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"Hello, world!"</span><span class="p">;</span>
 </code></pre></div></div>
 
@@ -880,7 +880,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 </code></pre></div></div>
 <h4 id="listing-4-9-improving-the-first_word-function-by-using-a-string-slice-for-the-type-of-the-s-parameter">Listing 4-9: Improving the first_word function by using a string slice for the type of the s parameter</h4>
 
-<p>If we have a string slice, we can pass that directly. If we have a <code class="highlighter-rouge">String</code>, we can pass a slice of the entire <code class="highlighter-rouge">String</code>. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:</p>
+<p>If we have a string slice, we can pass that directly. If we have a <code class="language-plaintext highlighter-rouge">String</code>, we can pass a slice of the entire <code class="language-plaintext highlighter-rouge">String</code>. Defining a function to take a string slice instead of a reference to a String makes our API more general and useful without losing any functionality:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">my_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
@@ -910,12 +910,12 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 
 <span class="k">let</span> <span class="n">slice</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">3</span><span class="p">];</span>
 </code></pre></div></div>
-<p>This slice has the type <code class="highlighter-rouge">&amp;[i32]</code>. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.</p>
+<p>This slice has the type <code class="language-plaintext highlighter-rouge">&amp;[i32]</code>. It works the same way as string slices do, by storing a reference to the first element and a length. You’ll use this kind of slice for all sorts of other collections. We’ll discuss these collections in detail when we talk about vectors in Chapter 8.</p>
 
 <h2 id="summary">Summary</h2>
 <p>The concepts of ownership, borrowing, and slices ensure memory safety in Rust programs at compile time. The Rust language gives you control over your memory usage in the same way as other systems programming languages, but having the owner of data automatically clean up that data when the owner goes out of scope means you don’t have to write and debug extra code to get this control.</p>
 
-<p>Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a <code class="highlighter-rouge">struct</code>.</p>
+<p>Ownership affects how lots of other parts of Rust work, so we’ll talk about these concepts further throughout the rest of the book. Let’s move on to Chapter 5 and look at grouping pieces of data together in a <code class="language-plaintext highlighter-rouge">struct</code>.</p>
 
         
       </section>
@@ -1051,6 +1051,37 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/15.Smart-Pointers" rel="permalink">RUST : 15. Smart Pointers
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  69 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Smart Pointers
+A pointer is a general concept for a variable that contains an address in memory. 
+This address refers to, or “points at,” some other data. 
+T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
 </a>
       
@@ -1097,35 +1128,6 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     <p class="archive__item-excerpt" itemprop="description">How to call RUST function from C
 I make programs mainly using C or C++ language. Recently I’m studying Rust. So I wanna interact to C and Rust. 
 I want to li...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/13.Functional-Language-Features_Iterators-and-Closures" rel="permalink">RUST : 13. Functional Language Features: Iterators and Closures
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  31 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
-Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
   </article>
 </div>
 

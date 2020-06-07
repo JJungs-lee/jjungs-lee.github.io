@@ -309,7 +309,7 @@
         
         <h2 id="how-to-call-rust-function-from-c">How to call RUST function from C</h2>
 <p>I make programs mainly using C or C++ language. Recently I’m studying Rust. So I wanna interact to C and Rust. 
-I want to link each <strong>source file</strong>(<code class="highlighter-rouge">.c</code> or <code class="highlighter-rouge">.rs</code>) after compiling it as an object file.</p>
+I want to link each <strong>source file</strong>(<code class="language-plaintext highlighter-rouge">.c</code> or <code class="language-plaintext highlighter-rouge">.rs</code>) after compiling it as an object file.</p>
 
 <p>Let’s say I want to call a Rust function in C. <br />
 How do I do this? What does it mean to call a rust function from c? Actually I don’t know about it.
@@ -361,7 +361,7 @@ First, let’s make the main function.</p>
 <span class="mi">10</span>
 </code></pre></div></div>
 <p>Now step is calling <strong>RUST</strong> function from <strong>C</strong>.<br />
-Write the function to use for c in <code class="highlighter-rouge">pub extern "C" fn ~~~</code>.  <br />
+Write the function to use for c in <code class="language-plaintext highlighter-rouge">pub extern "C" fn ~~~</code>.  <br />
 At this time, it should be the same as the prototype implemented in C.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
@@ -393,7 +393,7 @@ At this time, it should be the same as the prototype implemented in C.</p>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>When this code(<code class="highlighter-rouge">main.c</code>) build, maybe we can see the error.</p>
+<p>When this code(<code class="language-plaintext highlighter-rouge">main.c</code>) build, maybe we can see the error.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">clang</span> <span class="o">-</span><span class="n">o</span> <span class="n">main</span> <span class="n">main</span><span class="py">.c</span>
 <span class="n">main</span><span class="py">.c</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span> <span class="n">warning</span><span class="p">:</span> <span class="n">implicit</span> <span class="n">declaration</span> <span class="n">of</span> <span class="n">function</span> <span class="nv">'call_from_c</span><span class="err">'</span> <span class="n">is</span> 
       <span class="n">invalid</span> <span class="n">in</span> <span class="n">C99</span> <span class="p">[</span><span class="o">-</span><span class="n">Wimplicit</span><span class="o">-</span><span class="n">function</span><span class="o">-</span><span class="n">declaration</span><span class="p">]</span>
@@ -406,7 +406,7 @@ At this time, it should be the same as the prototype implemented in C.</p>
 <span class="p">(</span><span class="k">use</span> <span class="o">-</span><span class="n">v</span> <span class="n">to</span> <span class="n">see</span> <span class="n">invocation</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Compiler doesn’t know where <code class="highlighter-rouge">call_from_c</code> function is. So declare function and parameter same as rust function. <br />
+<p>Compiler doesn’t know where <code class="language-plaintext highlighter-rouge">call_from_c</code> function is. So declare function and parameter same as rust function. <br />
 fix like this :</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : main.c</span>
@@ -457,8 +457,8 @@ fix like this :</p>
 </code></pre></div></div>
 
 <p>Hum… Why don’t make executable file?… Let’s fix it. <br />
-I think rust file(<code class="highlighter-rouge">rust_ffi.rs</code>) has a problem…   because <strong>multiple definition of ‘main’</strong> is very important build error. <br />
-<code class="highlighter-rouge">rust_ffi.rs</code> file has a main function and comment. <br />
+I think rust file(<code class="language-plaintext highlighter-rouge">rust_ffi.rs</code>) has a problem…   because <strong>multiple definition of ‘main’</strong> is very important build error. <br />
+<code class="language-plaintext highlighter-rouge">rust_ffi.rs</code> file has a main function and comment. <br />
 Delete main as comment. like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
@@ -482,8 +482,8 @@ Delete main as comment. like this:</p>
 
 <span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0601</span><span class="err">`.</span>
 </code></pre></div></div>
-<p>This time, error occureed because there is now main function <code class="highlighter-rouge">(error[E0601]: </code>main<code class="highlighter-rouge"> function not found in crate 'rust_ffi')</code>
-Let me know “main function” isn’t exist in file to RUST using <code class="highlighter-rouge">#![no_main]</code> keyword.</p>
+<p>This time, error occureed because there is now main function <code class="language-plaintext highlighter-rouge">(error[E0601]: </code>main<code class="language-plaintext highlighter-rouge"> function not found in crate 'rust_ffi')</code>
+Let me know “main function” isn’t exist in file to RUST using <code class="language-plaintext highlighter-rouge">#![no_main]</code> keyword.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
 <span class="nd">#![no_main]</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">rust_pow_num</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
@@ -503,10 +503,10 @@ Oh finally!! Can we complete it successfully?</p>
 <span class="n">clang</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">linker</span> <span class="n">command</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span> 
 <span class="p">(</span><span class="k">use</span> <span class="o">-</span><span class="n">v</span> <span class="n">to</span> <span class="n">see</span> <span class="n">invocation</span><span class="p">)</span>
 </code></pre></div></div>
-<p><code class="highlighter-rouge">call_from_c</code> function could not be found.
+<p><code class="language-plaintext highlighter-rouge">call_from_c</code> function could not be found.
 Maybe We should declare something more in the rust file.</p>
 
-<p>Oh other sample code has <code class="highlighter-rouge">#[no_mangle]</code> keyword.. we will try this..</p>
+<p>Oh other sample code has <code class="language-plaintext highlighter-rouge">#[no_mangle]</code> keyword.. we will try this..</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
 <span class="nd">#![no_main]</span>
 <span class="nd">#[no_mangle]</span>
@@ -678,6 +678,37 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/15.Smart-Pointers" rel="permalink">RUST : 15. Smart Pointers
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  69 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Smart Pointers
+A pointer is a general concept for a variable that contains an address in memory. 
+This address refers to, or “points at,” some other data. 
+T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
 </a>
       
@@ -723,35 +754,6 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
     
     <p class="archive__item-excerpt" itemprop="description">Functional Language Features: Iterators and Closures
 Rust’s design has taken inspiration from many existing languages and techniques, and one significant inf...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/12.An-IO-Project-Building-a-Command-Line-Program" rel="permalink">RUST : 12. An I/O Project: Building a Command Line Program
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  49 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">An I/O Project: Building a Command Line Program
-This chapter is a recap of the many skills you’ve learned so far and an exploration of a few more standard li...</p>
   </article>
 </div>
 

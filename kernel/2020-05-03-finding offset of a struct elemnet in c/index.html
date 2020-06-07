@@ -311,7 +311,7 @@ The macro is <strong>offsetof</strong>. You can define it as below and use it.</
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">define</span> <span class="nf">OFFSETOF</span><span class="p">(</span><span class="k">type</span><span class="p">,</span> <span class="n">member</span><span class="p">)</span> <span class="o">&amp;</span><span class="p">((</span><span class="k">type</span> <span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span><span class="k">-&gt;</span><span class="n">member</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>But standard libray or kernel has a header file(<code class="highlighter-rouge">stddef.h</code>). <br />
+<p>But standard libray or kernel has a header file(<code class="language-plaintext highlighter-rouge">stddef.h</code>). <br />
 This macro already defined, and see the man page to use it.</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">OFFSETOF</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>           <span class="n">Linux</span> <span class="n">Programmer</span><span class="err">'</span><span class="n">s</span> <span class="n">Manual</span>           <span class="nf">OFFSETOF</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -384,7 +384,7 @@ This macro already defined, and see the man page to use it.</p>
 <span class="n">GNU</span>                           <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">08</span>                     <span class="n">OFFSETOF</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>In the kernel, it is declared in the following path(<code class="highlighter-rouge">include/linux/stddef.h</code>), and It is used a lot in the kernel.</p>
+<p>In the kernel, it is declared in the following path(<code class="language-plaintext highlighter-rouge">include/linux/stddef.h</code>), and It is used a lot in the kernel.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* SPDX-License-Identifier: GPL-2.0 */</span>
 <span class="err">#</span><span class="n">ifndef</span> <span class="mi">_</span><span class="n">LINUX_STDDEF_H</span>
