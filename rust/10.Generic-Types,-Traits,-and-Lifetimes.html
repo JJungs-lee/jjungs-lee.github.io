@@ -899,8 +899,8 @@ For example, we could define the <code class="language-plaintext highlighter-rou
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>After we define <code class="language-plaintext highlighter-rouge">summarize_author</code>, we can call summa<code class="language-plaintext highlighter-rouge">rize on instances of the </code>Tweet<code class="language-plaintext highlighter-rouge"> struct, and the default implementation of </code>summarize<code class="language-plaintext highlighter-rouge"> will call the definition of </code>summarize_author<code class="language-plaintext highlighter-rouge"> that we’ve provided. 
-Because we’ve implemented </code>summarize_author<code class="language-plaintext highlighter-rouge">, the </code>Summary<code class="language-plaintext highlighter-rouge"> trait has given us the behavior of the </code>summarize` method without requiring us to write any more code.</p>
+<p>After we define <code class="language-plaintext highlighter-rouge">summarize_author</code>, we can call <code class="language-plaintext highlighter-rouge">summarize</code> on instances of the <code class="language-plaintext highlighter-rouge">Tweet</code> struct, and the default implementation of <code class="language-plaintext highlighter-rouge">summarize</code> will call the definition of <code class="language-plaintext highlighter-rouge">summarize_author</code> that we’ve provided. 
+Because we’ve implemented <code class="language-plaintext highlighter-rouge">summarize_author</code>, the <code class="language-plaintext highlighter-rouge">Summary</code> trait has given us the behavior of the <code class="language-plaintext highlighter-rouge">summarize</code> method without requiring us to write any more code.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span> <span class="p">{</span>
     <span class="n">username</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"horse_ebooks"</span><span class="p">),</span>
     <span class="n">content</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"of course, as you probably already know, people"</span><span class="p">),</span>
@@ -1745,6 +1745,36 @@ And all of this analysis happens at compile time, which doesn’t affect runtime
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/16.Fearless-Concurrency" rel="permalink">RUST : 16. Fearless Concurrency
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  39 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Fearless Concurrency
+Handling concurrent programming safely and efficiently is another of Rust’s major goals. 
+Concurrent programming, where different parts ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/How-to-null-check-in-rust" rel="permalink">RUST : How to check null value in rust
 </a>
       
@@ -1822,36 +1852,6 @@ T...</p>
     
     <p class="archive__item-excerpt" itemprop="description">More About Cargo and Crates.io
 </p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/How-to-call-C-function-in-rust" rel="permalink">RUST : How To call RUST function from C
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  4 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">How to call RUST function from C
-I make programs mainly using C or C++ language. Recently I’m studying Rust. So I wanna interact to C and Rust. 
-I want to li...</p>
   </article>
 </div>
 
