@@ -377,20 +377,20 @@ This assertion serves as an example of the format for a typical test. Let’s ru
 <p>The <code class="language-plaintext highlighter-rouge">cargo test</code> command runs all tests in our project, as shown in Listing 11-2.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.22</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">it_works</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
    <span class="n">Doc</span><span class="o">-</span><span class="n">tests</span> <span class="n">adder</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <h4 id="listing-11-2-the-output-from-running-the-automatically-generated-test">Listing 11-2: The output from running the automatically generated test</h4>
 
@@ -423,7 +423,7 @@ Change the <code class="language-plaintext highlighter-rouge">it_works</code> fu
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">exploration</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 
 <p>Let’s add another test, but this time we’ll make a test that fails! 
@@ -460,7 +460,7 @@ Enter the new test, another, so your <code class="language-plaintext highlighter
 failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">another</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">test</span> <span class="n">failed</span>
 </code></pre></div></div>
@@ -528,7 +528,7 @@ This expression is supposed to return <code class="language-plaintext highlighte
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">larger_can_hold_smaller</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 
 <p>It does pass! Let’s add another test, this time asserting that a smaller rectangle cannot hold a larger rectangle:</p>
@@ -558,7 +558,7 @@ As a result, our test will pass if <code class="language-plaintext highlighter-r
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">smaller_cannot_hold_larger</span> <span class="o">...</span> <span class="n">ok</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">larger_can_hold_smaller</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">2</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 2</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 
 <p>Two tests that pass! Now let’s see what happens to our test results when we introduce a bug in our code. 
@@ -588,7 +588,7 @@ Let’s change the implementation of the <code class="language-plaintext highlig
 failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">larger_can_hold_smaller</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Our tests caught the <strong>bug</strong>! 
 Because <code class="language-plaintext highlighter-rouge">larger.width</code> is 8 and <code class="language-plaintext highlighter-rouge">smaller.width</code> is 5, the comparison of the widths in <code class="language-plaintext highlighter-rouge">can_hold</code> now returns false: 8 is not less than 5.</p>
@@ -626,7 +626,7 @@ Then we test this function using the <code class="language-plaintext highlighter
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">it_adds_two</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 
 <p>The first argument we gave to the <code class="language-plaintext highlighter-rouge">assert_eq!</code> macro, <code class="language-plaintext highlighter-rouge">4</code>, is equal to the result of calling <code class="language-plaintext highlighter-rouge">add_two(2)</code>. 
@@ -654,7 +654,7 @@ Change the implementation of the <code class="language-plaintext highlighter-rou
 failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">it_adds_two</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Our test caught the <strong>bug</strong>! 
 The <code class="language-plaintext highlighter-rouge">it_adds_two</code> test failed, displaying the message assertion failed: <code class="language-plaintext highlighter-rouge">'(left == right)'</code> and showing that <code class="language-plaintext highlighter-rouge">left</code> was <code class="language-plaintext highlighter-rouge">4</code> and <code class="language-plaintext highlighter-rouge">right</code> was <code class="language-plaintext highlighter-rouge">5</code>. 
@@ -787,7 +787,7 @@ Let’s look at the result when this test passes:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">greater_than_100</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Looks good! Now let’s introduce a bug in our code by removing the condition that the <code class="language-plaintext highlighter-rouge">new</code> function will panic if the value is greater than 100:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// --snip--</span>
@@ -813,7 +813,7 @@ Let’s look at the result when this test passes:</p>
 <span class="n">failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">greater_than_100</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>We don’t get a very helpful message in this case, but when we look at the test function, we see that it’s annotated with <code class="language-plaintext highlighter-rouge">#[should_panic]</code>. 
 The failure we got means that the code in the test function did not cause a panic.</p>
@@ -885,7 +885,7 @@ note</span><span class="p">:</span> <span class="n">Panic</span> <span class="n"
 <span class="n">failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">greater_than_100</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>The failure message indicates that this test did indeed panic as we expected, but the panic message did not include the expected string ‘<code class="language-plaintext highlighter-rouge">Guess value must be less than or equal to 100'</code>. 
 The panic message that we did get in this case was <code class="language-plaintext highlighter-rouge">Guess value must be greater than or equal to 1, got 200.</code> Now we can start figuring out where our bug is!</p>
@@ -995,7 +995,7 @@ If a test fails, we’ll see whatever was printed to standard output with the re
 failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">this_test_will_fail</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Note that nowhere in this output do we see <code class="language-plaintext highlighter-rouge">I got the value 4</code>, which is what is printed when the test that passes runs. 
 That output has been captured. 
@@ -1022,7 +1022,7 @@ test</span> <span class="nn">tests</span><span class="p">::</span><span class="n
 <span class="n">failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">this_test_will_fail</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Note that the output for the tests and the test results are interleaved; 
 the reason is that the tests are running in parallel, as we talked about in the previous section. 
@@ -1068,7 +1068,7 @@ You can choose which tests to run by passing <code class="language-plaintext hig
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">add_three_and_two</span> <span class="o">...</span> <span class="n">ok</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">one_hundred</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">3</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 3</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <h3 id="running-single-tests">Running Single Tests</h3>
 <p>We can pass the name of any test function to <code class="language-plaintext highlighter-rouge">cargo test</code> to run only that test:</p>
@@ -1080,7 +1080,7 @@ You can choose which tests to run by passing <code class="language-plaintext hig
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">one_hundred</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">2</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">2</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Only the test with the name <code class="language-plaintext highlighter-rouge">one_hundred</code> ran; the other two tests didn’t match that name. 
 The test output lets us know we had more tests than what this command ran by displaying <code class="language-plaintext highlighter-rouge">2 filtered out</code> at the end of the summary line.</p>
@@ -1100,7 +1100,7 @@ For example, because two of our tests’ names contain <code class="language-pla
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">add_two_and_two</span> <span class="o">...</span> <span class="n">ok</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">add_three_and_two</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">2</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">1</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 2</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">1</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>This command ran all tests with <code class="language-plaintext highlighter-rouge">add</code> in the name and filtered out the test named <code class="language-plaintext highlighter-rouge">one_hundred</code>. 
 Also note that the module in which a test appears becomes part of the test’s name, so we can run all the tests in a module by filtering on the module’s name.</p>
@@ -1127,7 +1127,7 @@ Rather than listing as arguments all tests you do want to run, you can instead a
 Now when we run our tests, <code class="language-plaintext highlighter-rouge">it_works</code> runs, but <code class="language-plaintext highlighter-rouge">expensive_test</code> doesn’t:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.24</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
@@ -1135,7 +1135,7 @@ Now when we run our tests, <code class="language-plaintext highlighter-rouge">it
 <span class="n">test</span> <span class="n">expensive_test</span> <span class="o">...</span> <span class="n">ignored</span>
 <span class="n">test</span> <span class="n">it_works</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>The <code class="language-plaintext highlighter-rouge">expensive_test</code> function is listed as ignored. 
 If we want to run only the ignored tests, we can use <code class="language-plaintext highlighter-rouge">cargo test -- --ignored</code>:</p>
@@ -1147,7 +1147,7 @@ If we want to run only the ignored tests, we can use <code class="language-plain
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="n">expensive_test</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">1</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">1</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>By controlling which tests run, you can make sure your <code class="language-plaintext highlighter-rouge">cargo test</code> results will be fast. 
 When you’re at a point where it makes sense to check the results of the <code class="language-plaintext highlighter-rouge">ignored</code> tests and you have time to wait for the results, you can run <code class="language-plaintext highlighter-rouge">cargo test -- --ignored</code> instead.</p>
@@ -1247,27 +1247,27 @@ Cargo treats the <code class="language-plaintext highlighter-rouge">tests</code>
 Run cargo test now:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.31</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">abcabcabc</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">internal</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">integration_test</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="n">it_adds_two</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
    <span class="n">Doc</span><span class="o">-</span><span class="n">tests</span> <span class="n">adder</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 
 <p>The three sections of output include the unit tests, the integration test, and the doc tests. 
@@ -1289,7 +1289,7 @@ To run all the tests in a particular integration test file, use the <code class=
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="n">it_adds_two</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>This command runs only the tests in the <em>tests/integration_test.rs</em> file.</p>
 
@@ -1313,26 +1313,26 @@ For example, if we create <em>tests/common.rs</em> and place a function named <c
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">internal</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">common</span><span class="o">-</span><span class="n">b8b07b6f1be2db70</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">integration_test</span><span class="o">-</span><span class="n">d993c68b431d39df</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="n">it_adds_two</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
    <span class="n">Doc</span><span class="o">-</span><span class="n">tests</span> <span class="n">adder</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Having <code class="language-plaintext highlighter-rouge">common</code> appear in the test results with <code class="language-plaintext highlighter-rouge">running 0 tests</code> displayed for it is not what we wanted. 
 We just wanted to share some code with the other integration test files.</p>

@@ -438,7 +438,7 @@ If we run <code class="language-plaintext highlighter-rouge">cargo test</code> w
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span> <span class="o">-</span> <span class="nf">add_one</span> <span class="p">(</span><span class="n">line</span> <span class="mi">5</span><span class="p">)</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Now if we change either the function or the example so the <code class="language-plaintext highlighter-rouge">assert_eq!</code> in the example panics and run <code class="language-plaintext highlighter-rouge">cargo test</code> again, we’ll see that the doc tests catch that the example and the code are out of sync with each other!</p>
 
@@ -671,12 +671,12 @@ However, there is no limit to the number of crate versions you can publish.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">publish</span>
  <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c">//github.com/rust-lang/crates.io-index`</span>
-<span class="n">Packaging</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
-<span class="n">Verifying</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
-<span class="n">Compiling</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span>
+<span class="n">Packaging</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
+<span class="n">Verifying</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
+<span class="n">Compiling</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span>
 <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game/target/package/guessing_game-0.1.0)</span>
  <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.19</span> <span class="n">secs</span>
-<span class="n">Uploading</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
+<span class="n">Uploading</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
 </code></pre></div></div>
 <p>Congratulations! You’ve now shared your code with the Rust community, and anyone can easily add your crate as a dependency of their project.</p>
 
@@ -693,12 +693,12 @@ This is useful when a crate version is broken for one reason or another. In such
 
 <p>To yank a version of a crate, run <code class="language-plaintext highlighter-rouge">cargo yank</code> and specify which version you want to yank:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">yank</span> <span class="o">--</span><span class="n">vers</span> <span class="mf">1.0</span><span class="err">.</span><span class="mi">1</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">yank</span> <span class="o">--</span><span class="n">vers</span> <span class="mf">1.0</span><span class="na">.1</span>
 </code></pre></div></div>
 
 <p>By adding <code class="language-plaintext highlighter-rouge">--undo</code> to the command, you can also undo a yank and allow projects to start depending on a version again:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">yank</span> <span class="o">--</span><span class="n">vers</span> <span class="mf">1.0</span><span class="err">.</span><span class="mi">1</span> <span class="o">--</span><span class="n">undo</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">yank</span> <span class="o">--</span><span class="n">vers</span> <span class="mf">1.0</span><span class="na">.1</span> <span class="o">--</span><span class="n">undo</span>
 </code></pre></div></div>
 
 <p>A yank <strong>does not</strong> delete any code. 
@@ -824,8 +824,8 @@ Then change the <code class="language-plaintext highlighter-rouge">main</code> f
 <p>Let’s build the workspace by running <code class="language-plaintext highlighter-rouge">cargo build</code> in the top-level add directory!</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.68</span> <span class="n">secs</span>
 </code></pre></div></div>
 <p>To run the binary crate from the <em>add</em> directory, we need to specify which package in the workspace we want to use by using the <code class="language-plaintext highlighter-rouge">-p</code> argument and the package name with <code class="language-plaintext highlighter-rouge">cargo run</code>:</p>
@@ -854,11 +854,11 @@ Let’s add the <code class="language-plaintext highlighter-rouge">rand</code> c
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
     <span class="n">Updating</span> <span class="n">crates</span><span class="py">.io</span> <span class="n">index</span>
-  <span class="n">Downloaded</span> <span class="n">rand</span> <span class="n">v0</span><span class="err">.</span><span class="mf">5.5</span>
+  <span class="n">Downloaded</span> <span class="n">rand</span> <span class="n">v0</span><span class="na">.5.5</span>
    <span class="o">--</span><span class="n">snip</span><span class="o">--</span>
-   <span class="n">Compiling</span> <span class="n">rand</span> <span class="n">v0</span><span class="err">.</span><span class="mf">5.5</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
+   <span class="n">Compiling</span> <span class="n">rand</span> <span class="n">v0</span><span class="na">.5.5</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">10.18</span> <span class="n">secs</span>
 </code></pre></div></div>
 <p>The top-level <em>Cargo.lock</em> now contains information about the dependency of <code class="language-plaintext highlighter-rouge">add-one</code> on <code class="language-plaintext highlighter-rouge">rand</code>. 
@@ -866,7 +866,7 @@ However, even though <code class="language-plaintext highlighter-rouge">rand</co
 For example, if we add <code class="language-plaintext highlighter-rouge">use rand;</code> to the <em>adder/src/main.rs</em> file for the <code class="language-plaintext highlighter-rouge">adder</code> crate, we’ll get an error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
 <span class="n">error</span><span class="p">:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">unstable</span> <span class="n">library</span> <span class="n">feature</span> <span class="nv">'rand</span><span class="err">'</span><span class="p">:</span> <span class="k">use</span> <span class="err">`</span><span class="n">rand</span><span class="err">`</span> <span class="n">from</span> <span class="n">crates</span><span class="nf">.io</span> <span class="p">(</span><span class="n">see</span>
 <span class="n">issue</span> <span class="err">#</span><span class="mi">27703</span><span class="p">)</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">adder</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
@@ -901,27 +901,27 @@ Using the same version of <code class="language-plaintext highlighter-rouge">ran
 <p>Now run <code class="language-plaintext highlighter-rouge">cargo test</code> in the top-level add directory:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.27</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">add_one</span><span class="o">-</span><span class="n">f0253159197f7841</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">it_works</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">f88af9d2cc175a5e</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
    <span class="n">Doc</span><span class="o">-</span><span class="n">tests</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>The first section of the output shows that the <code class="language-plaintext highlighter-rouge">it_works</code> test in the <code class="language-plaintext highlighter-rouge">add-one</code> crate passed. 
 The next section shows that zero tests were found in the <code class="language-plaintext highlighter-rouge">adder</code> crate, and then the last section shows zero documentation tests were found in the <code class="language-plaintext highlighter-rouge">add-one</code> crate. Running <code class="language-plaintext highlighter-rouge">cargo test</code> in a workspace structured like this one will run the tests for all the crates in the workspace.</p>
@@ -935,13 +935,13 @@ The next section shows that zero tests were found in the <code class="language-p
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
 <span class="n">test</span> <span class="nn">tests</span><span class="p">::</span><span class="n">it_works</span> <span class="o">...</span> <span class="n">ok</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
    <span class="n">Doc</span><span class="o">-</span><span class="n">tests</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span>
 
 <span class="n">running</span> <span class="mi">0</span> <span class="n">tests</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>This output shows <code class="language-plaintext highlighter-rouge">cargo test</code> only ran the tests for the <code class="language-plaintext highlighter-rouge">add-one</code> crate and didn’t run the <code class="language-plaintext highlighter-rouge">adder</code> crate tests.</p>
 
@@ -968,9 +968,9 @@ If we want to install <code class="language-plaintext highlighter-rouge">ripgrep
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">install</span> <span class="n">ripgrep</span>
 <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c">//github.com/rust-lang/crates.io-index`</span>
- <span class="n">Downloading</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="err">.</span><span class="mf">3.2</span>
+ <span class="n">Downloading</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="na">.3.2</span>
  <span class="o">--</span><span class="n">snip</span><span class="o">--</span>
-   <span class="n">Compiling</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="err">.</span><span class="mf">3.2</span>
+   <span class="n">Compiling</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="na">.3.2</span>
     <span class="n">Finished</span> <span class="n">release</span> <span class="p">[</span><span class="n">optimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">97.91</span> <span class="n">secs</span>
   <span class="n">Installing</span> <span class="o">~/</span><span class="py">.cargo</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rg</span>
 </code></pre></div></div>

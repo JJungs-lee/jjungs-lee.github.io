@@ -542,7 +542,7 @@ Because <code class="language-plaintext highlighter-rouge">thread::spawn</code> 
 But when we compile this example, we get the following error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
+   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0373</span><span class="p">]:</span> <span class="n">closure</span> <span class="n">may</span> <span class="n">outlive</span> <span class="n">the</span> <span class="n">current</span> <span class="n">function</span><span class="p">,</span> <span class="n">but</span> <span class="n">it</span> <span class="n">borrows</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">is</span> <span class="n">owned</span> <span class="n">by</span> <span class="n">the</span> <span class="n">current</span> <span class="n">function</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">32</span>
   <span class="p">|</span>
@@ -628,7 +628,7 @@ we would get a different error because what Listing 16-4 is trying to do isn’t
 If we added <code class="language-plaintext highlighter-rouge">move</code> to the closure, we would move <code class="language-plaintext highlighter-rouge">v</code> into the closure’s environment, and we could no longer call <code class="language-plaintext highlighter-rouge">drop</code> on it in the main thread. We would get this compiler error instead:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
+   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span>
    <span class="p">|</span>
@@ -791,7 +791,7 @@ Allowing this would be a bad idea: once the value has been sent to another threa
 Potentially, the other thread’s modifications could cause errors or unexpected results due to inconsistent or nonexistent data. 
 However, Rust gives us an error if we try to compile the code in Listing 16-9:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">message</span><span class="o">-</span><span class="n">passing</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/message-passing)</span>
+   <span class="n">Compiling</span> <span class="n">message</span><span class="o">-</span><span class="n">passing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/message-passing)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="n">borrow</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">val</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">31</span>
    <span class="p">|</span>
@@ -1043,7 +1043,7 @@ At that point, the main thread will acquire the lock and print the result of thi
 <p>We hinted that this example wouldn’t compile. Now let’s find out why!</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
+   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">counter</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">36</span>
    <span class="p">|</span>
@@ -1105,7 +1105,7 @@ Now that we’ve seen the errors, we’ll also switch back to using the for loop
 <p>Once again, we compile and get… different errors! The compiler is teaching us a lot.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
+   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">sent</span> <span class="n">between</span> <span class="n">threads</span> <span class="n">safely</span>
    <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">22</span>
     <span class="p">|</span>

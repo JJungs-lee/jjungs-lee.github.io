@@ -447,7 +447,7 @@ This <code class="language-plaintext highlighter-rouge">List</code> value is one
 <p>If we try to compile the code in Listing 15-3, we get the error shown in Listing 15-4:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0072</span><span class="p">]:</span> <span class="n">recursive</span> <span class="k">type</span> <span class="err">`</span><span class="n">List</span><span class="err">`</span> <span class="n">has</span> <span class="n">infinite</span> <span class="n">size</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
   <span class="p">|</span>
@@ -589,7 +589,7 @@ Once we dereference <code class="language-plaintext highlighter-rouge">y</code>,
 
 <p>If we tried to write <code class="language-plaintext highlighter-rouge">assert_eq!(5, y);</code> instead, we would get this compilation error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
+   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">can</span><span class="nv">'t</span> <span class="n">compare</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span> <span class="n">with</span> <span class="err">`</span><span class="o">&amp;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
@@ -660,7 +660,7 @@ Then we’ll look at how to add the ability to use the dereference operator.</p>
 
 <p>Here’s the resulting compilation error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
+   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0614</span><span class="p">]:</span> <span class="k">type</span> <span class="err">`</span><span class="n">MyBox</span><span class="o">&lt;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="o">&gt;</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">dereferenced</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">19</span>
    <span class="p">|</span>
@@ -689,7 +689,7 @@ Listing 15-10 contains an implementation of <code class="language-plaintext high
     <span class="k">type</span> <span class="n">Target</span> <span class="o">=</span> <span class="n">T</span><span class="p">;</span>
 
     <span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="n">T</span> <span class="p">{</span>
-        <span class="o">&amp;</span><span class="k">self</span><span class="err">.</span><span class="mi">0</span>
+        <span class="o">&amp;</span><span class="k">self</span><span class="na">.0</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -843,7 +843,7 @@ Note that we didn’t need to call the drop method explicitly.</p>
 <p>When we run this program, we’ll see the following output:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
+   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.60</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="k">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">CustomSmartPointers</span> <span class="n">created</span><span class="py">.
@@ -876,7 +876,7 @@ Rust doesn’t let you call the <code class="language-plaintext highlighter-roug
 <p>When we try to compile this code, we’ll get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
+   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0040</span><span class="p">]:</span> <span class="n">explicit</span> <span class="k">use</span> <span class="n">of</span> <span class="n">destructor</span> <span class="n">method</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">7</span>
    <span class="p">|</span>
@@ -919,7 +919,7 @@ The function is in the prelude, so we can modify <code class="language-plaintext
 <p>Running this code will print the following:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
+   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.73</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="k">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">CustomSmartPointer</span> <span class="n">created</span><span class="py">.
@@ -982,7 +982,7 @@ In other words, both lists will share the first list containing 5 and 10.</p>
 <p>When we compile this code, we get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">30</span>
    <span class="p">|</span>
@@ -1058,7 +1058,7 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 
 <p>This code prints the following:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.45</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">count</span> <span class="n">after</span> <span class="n">creating</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1115,7 +1115,7 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 <p>If you tried to compile this code, you’d get the following error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">borrowing</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/borrowing)</span>
+   <span class="n">Compiling</span> <span class="n">borrowing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/borrowing)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0596</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span><span class="p">,</span> <span class="k">as</span> <span class="n">it</span> <span class="n">is</span> <span class="n">not</span> <span class="n">declared</span> <span class="k">as</span> <span class="n">mutable</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">13</span>
   <span class="p">|</span>
@@ -1233,7 +1233,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>However, there’s one problem with this test, as shown here:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
+   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0596</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="k">self</span><span class="py">.sent_messages</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span><span class="p">,</span> <span class="k">as</span> <span class="n">it</span> <span class="n">is</span> <span class="n">behind</span> <span class="n">a</span> <span class="err">`</span><span class="o">&amp;</span><span class="err">`</span> <span class="n">reference</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">13</span>
    <span class="p">|</span>
@@ -1319,7 +1319,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>We create a variable <code class="language-plaintext highlighter-rouge">one_borrow</code> for the <code class="language-plaintext highlighter-rouge">RefMut&lt;T&gt;</code> smart pointer returned from <code class="language-plaintext highlighter-rouge">borrow_mut</code>. Then we create another mutable borrow in the same way in the variable <code class="language-plaintext highlighter-rouge">two_borrow</code>. This makes two mutable references in the same scope, which isn’t allowed. When we run the tests for our library, the code in Listing 15-23 will compile without any errors, but the test will fail:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
+   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
     <span class="n">Finished</span> <span class="n">test</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.91</span><span class="n">s</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">limit_tracker</span><span class="o">-</span><span class="n">d1b2637139dca6ca</span>
 
@@ -1336,7 +1336,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 failures</span><span class="p">:</span>
     <span class="nn">tests</span><span class="p">::</span><span class="n">it_sends_an_over_75_percent_warning_message</span>
 
-<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="err">.</span> <span class="mi">0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
+<span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">FAILED</span><span class="na">. 0</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">1</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">test</span> <span class="n">failed</span><span class="p">,</span> <span class="n">to</span> <span class="n">rerun</span> <span class="n">pass</span> <span class="err">'</span><span class="o">--</span><span class="n">lib</span><span class="err">'</span>
 </code></pre></div></div>
@@ -1386,7 +1386,7 @@ failures</span><span class="p">:</span>
 <p>When we print <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">b</code>, and <code class="language-plaintext highlighter-rouge">c</code>, we can see that they all have the modified value of 15 rather than 5:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.63</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">a</span> <span class="n">after</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="n">RefCell</span> <span class="p">{</span> <span class="n">value</span><span class="p">:</span> <span class="mi">15</span> <span class="p">},</span> <span class="nb">Nil</span><span class="p">)</span>
@@ -1475,7 +1475,7 @@ Then we use the <code class="language-plaintext highlighter-rouge">borrow_mut</c
 <p>When we run this code, keeping the last <code class="language-plaintext highlighter-rouge">println!</code> commented out for the moment, we’ll get this output:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="err">.</span><span class="mf">1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
     <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.53</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">a</span> <span class="n">initial</span> <span class="n">rc</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
