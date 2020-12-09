@@ -873,12 +873,12 @@ But it would be a useful enhancement to guide the user toward valid guesses and 
 
     <span class="k">let</span> <span class="n">guess</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="k">match</span> <span class="n">guess</span><span class="nf">.trim</span><span class="p">()</span><span class="nf">.parse</span><span class="p">()</span> <span class="p">{</span>
         <span class="nf">Ok</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">num</span><span class="p">,</span>
-        <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">continue</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">continue</span><span class="p">,</span>
     <span class="p">};</span>
 
     <span class="k">if</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">||</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"The secret number will be between 1 and 100."</span><span class="p">);</span>
-        <span class="n">continue</span><span class="p">;</span>
+        <span class="k">continue</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">match</span> <span class="n">guess</span><span class="nf">.cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">secret_number</span><span class="p">)</span> <span class="p">{</span>
@@ -1041,6 +1041,37 @@ Using panic! and Result in the appropriate situations will make your code more r
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/17.Object-Oriented-Programming-Features-of-Rust" rel="permalink">RUST : 17. Object Oriented Programming Features of Rust
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  42 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Object Oriented Programming Features of Rust
+Object-oriented programming (OOP) is a way of modeling programs. 
+Objects came from Simula in the 1960s. 
+Those ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/rust/16.Fearless-Concurrency" rel="permalink">RUST : 16. Fearless Concurrency
 </a>
       
@@ -1119,35 +1150,6 @@ That’s how to check null value in rust? Rust has Option&lt;T&...</p>
 A pointer is a general concept for a variable that contains an address in memory. 
 This address refers to, or “points at,” some other data. 
 T...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/rust/14.More-About-Cargo-and-Crates.io" rel="permalink">RUST : 14. More About Cargo and Crates.io
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  29 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">More About Cargo and Crates.io
-</p>
   </article>
 </div>
 
