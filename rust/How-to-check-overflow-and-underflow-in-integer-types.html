@@ -1,0 +1,677 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="What is overflow and underflow?Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="RUST : How to check overflow and underflow in integer types">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/How-to-check-overflow-and-underflow-in-integer-types">
+
+
+  <meta property="og:description" content="What is overflow and underflow?Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-10T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/How-to-check-overflow-and-underflow-in-integer-types">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RUST : How to check overflow and underflow in integer types">
+    <meta itemprop="description" content="What is overflow and underflow?Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).">
+    <meta itemprop="datePublished" content="2021-01-10T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">RUST : How to check overflow and underflow in integer types
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h3 id="what-is-overflow-and-underflow">What is overflow and underflow?</h3>
+<p>Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. 
+Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).</p>
+
+<p>Simply put, overflow and underflow happen when we assign a value that is <strong>out of range</strong> of the declared data type of the variable.
+If the (absolute) value is too big, we call it <code class="language-plaintext highlighter-rouge">overflow</code>, if the value is too small, we call it <code class="language-plaintext highlighter-rouge">underflow</code>.</p>
+
+<p>Instead of an error in the program, it usually causes the result to be unexpected. 
+Data overflows have been listed as the number 8 most <strong>dangerous</strong> software error in the most recent CWE 2019 list, mostly because they often lead to <code class="language-plaintext highlighter-rouge">buffer overflows</code>, which are currently the number 1 most dangerous software error according to that list.</p>
+
+<p>Most integer overflow and underflow conditions lead to erroneous program behavior but don’t cause any vulnerabilities. There is no error, there is no warning, you simply get a wrong result of the operation. So, they are very hard to discover and prevent.</p>
+
+<p>So let’s see how to prevent these things in Rust.</p>
+
+<h3 id="preventing-integer-overflows">Preventing Integer Overflows</h3>
+<p>Rust provides standard library integer types have <code class="language-plaintext highlighter-rouge">checked_*</code> methods for common operations, such as checked_add for addition, etc.</p>
+
+<p>The API form of each function is variable as follows.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Checked integer addition. Computes self + rhs, </span>
+<span class="c">// returning None if overflow occurred.</span>
+<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_add</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="c">//Checked integer subtraction. Computes self - rhs, </span>
+<span class="c">// returning None if overflow occurred.</span>
+<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_sub</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="c">// Checked integer multiplication. Computes self * rhs, </span>
+<span class="c">// returning None if overflow occurred.</span>
+<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_mul</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="c">// Checked integer division. Computes self / rhs, </span>
+<span class="c">// returning None if rhs == 0.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">checked_div</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Looking at API form, Each function returns as an <code class="language-plaintext highlighter-rouge">Option</code> type. When an overflow or underflow problem occurs, it returns None and the rest return Some(T).</p>
+
+<p>So, it is good to implement programming whether to proceed with the operation by checking the return or to cause panic.</p>
+
+<p>Below code is a simple example. Let’s make a bug-free program by referring to the following.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">u32</span><span class="p">::</span><span class="nf">max_value</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+<span class="k">match</span> <span class="n">x</span><span class="nf">.checked_add</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">Some</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"{} + {} = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"overflow!"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// count checker</span>
+<span class="k">let</span> <span class="n">x</span><span class="p">:</span><span class="nb">u64</span> <span class="o">=</span> <span class="nn">u64</span><span class="p">::</span><span class="nf">min_value</span><span class="p">();</span>
+<span class="k">if</span> <span class="n">x</span><span class="nf">.checked_sub</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="nf">.is_none</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"This operation's result is underflow"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+<p>reference)</p>
+<ul>
+  <li><a href="https://doc.rust-lang.org/std/primitive.u32.html">RUST API document</a></li>
+  <li><a href="https://stackoverflow.com/questions/52646755/checking-for-integer-overflow-in-rust">Stack overflow</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#checked-add" class="page__taxonomy-item" rel="tag">checked_add</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#checked-sub" class="page__taxonomy-item" rel="tag">checked_sub</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#data-types" class="page__taxonomy-item" rel="tag">Data types</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#overflow" class="page__taxonomy-item" rel="tag">overflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#underflow" class="page__taxonomy-item" rel="tag">underflow</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-01-10T00:00:00+00:00">January 10, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+How+to+check+overflow+and+underflow+in+integer+types%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-check-overflow-and-underflow-in-integer-types" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-check-overflow-and-underflow-in-integer-types" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-check-overflow-and-underflow-in-integer-types" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/19.Advanced-Features" class="pagination--pager" title="RUST : 19. Advanced Features
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/19.Advanced-Features" rel="permalink">RUST : 19. Advanced Features
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  71 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Advanced Features
+By now, you’ve learned the most commonly used parts of the Rust programming language. 
+Before we do one more project in Chapter 20, we’ll l...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/18.Patterns-and-Matching" rel="permalink">RUST : 18. Patterns and Matching
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  38 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Patterns and Matching
+Patterns are a special syntax in Rust for matching against the structure of types, both complex and simple. 
+Using patterns in conjunct...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/17.Object-Oriented-Programming-Features-of-Rust" rel="permalink">RUST : 17. Object Oriented Programming Features of Rust
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  42 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Object Oriented Programming Features of Rust
+Object-oriented programming (OOP) is a way of modeling programs. 
+Objects came from Simula in the 1960s. 
+Those ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/16.Fearless-Concurrency" rel="permalink">RUST : 16. Fearless Concurrency
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  39 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Fearless Concurrency
+Handling concurrent programming safely and efficiently is another of Rust’s major goals. 
+Concurrent programming, where different parts ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
