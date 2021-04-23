@@ -1,6 +1,6 @@
 var store = [{
         "title": "My Opensource Contribution Lists",
-        "excerpt":"Linux Kernel          dm verity: add “panic_on_corruption” error handling mode  patch link            dm verity: fix DM_VERITY_OPTS_MAX value  patch link       Android     In the future  ","categories": ["kernel"],
+        "excerpt":"Linux Kernel          dm verity: add “panic_on_corruption” error handling mode  patch link            dm verity: fix DM_VERITY_OPTS_MAX value  patch link       Android          libavb: Add new dm-verity error handling mode  patch link            system/core: Add new dm-verity error handling mode  patch link      ","categories": ["kernel"],
         "tags": ["Contribution","Linux","Kernel","Device mapper","DM-Verity","Android"],
         "url": "https://jjungs-lee.github.io//kernel/2019-09-01-My%20Opensource%20Contribution%20Lists/",
         "teaser":null},{
