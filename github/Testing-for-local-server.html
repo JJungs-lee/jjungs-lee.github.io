@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
+<meta name="description" content="Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!">
 
 
   <meta name="author" content="JJungs-lee">
@@ -21,30 +21,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Yes! I Take IT">
-<meta property="og:title" content="RUST : How to check null value in rust">
-<meta property="og:url" content="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust">
+<meta property="og:title" content="Github Pages: Testing for local server">
+<meta property="og:url" content="https://jjungs-lee.github.io//github/Testing-for-local-server">
 
 
-  <meta property="og:description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2020-04-22T00:00:00+00:00">
+  <meta property="og:description" content="Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2021-05-05T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust">
+
+<link rel="canonical" href="https://jjungs-lee.github.io//github/Testing-for-local-server">
 
 
 
@@ -282,15 +282,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="RUST : How to check null value in rust">
-    <meta itemprop="description" content="How to check null value in rustA question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&lt;T&gt; instead of null.because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&lt;T&gt; to prevent error. If you get a more infomation click here!!">
-    <meta itemprop="datePublished" content="2020-04-22T00:00:00+00:00">
+    <meta itemprop="headline" content="Github Pages: Testing for local server">
+    <meta itemprop="description" content="Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!">
+    <meta itemprop="datePublished" content="2021-05-05T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">RUST : How to check null value in rust
+          <h1 id="page-title" class="page__title" itemprop="headline">Github Pages: Testing for local server
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -298,7 +298,7 @@
 
 
 
-  1 minute read
+  2 minute read
 
 </p>
           
@@ -307,44 +307,92 @@
 
       <section class="page__content" itemprop="text">
         
-        <h2 id="how-to-check-null-value-in-rust">How to check null value in rust</h2>
-<p>A question arose When i linking C language with rust language. 
-That’s <strong>how to check null value in rust</strong>? Rust has <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> instead of <code class="language-plaintext highlighter-rouge">null</code>.
-because problem with null values is that if you try to use a null value as a not-null value. 
-So Rust made new type <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> to prevent error. If you get a more infomation click <a href="6.Enums-and-Pattern-Matching#the-option-enum-and-its-advantages-over-null-values">here!!</a></p>
+        <p>Before committing to github pages, you can upload your homepage locally through <strong>ruby</strong> and <strong>jekyll serve</strong>!</p>
 
-<p>Anyway I will try to new type. almost pointer has <em>null</em> value. I will replace the sample code written in C with rust.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// C language</span>
-<span class="nb">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="p">{</span> 
-  <span class="k">return</span><span class="p">;</span> 
-<span class="p">}</span>
+<h2 id="installing-ruby--devkit--jekyll">Installing Ruby + Devkit &amp; Jekyll</h2>
+<p>After downloading <a href="https://rubyinstaller.org/downloads/">Ruby</a>, open the ruby prompt and enter <code class="language-plaintext highlighter-rouge">gem install jekyll bundler</code> to proceed with the installation.<br />
+After completing the installation, check if the installation was successful with <code class="language-plaintext highlighter-rouge">jekyll -v</code>.</p>
+
+<h2 id="trobleshooting">TrobleShooting</h2>
+
+<h3 id="1-using-bundle-exec-jekyll-serve-instead-of-jekyll-serve">1) Using <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> instead of <code class="language-plaintext highlighter-rouge">jekyll serve</code></h3>
+<p>When I try to run <code class="language-plaintext highlighter-rouge">jekyll serve</code> command, sometimes I keep getting bundle errors. 
+In this case, it can be easily solved by using the <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> command. 
+It tells you what to do, so just follow the instructions in the <code class="language-plaintext highlighter-rouge">Ruby prompt</code>.</p>
+
+<p>A message prompting you to bundle install or bundle update appears saying that bundle is not installed, so you can install it as it is.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D:\jjungs-page&gt;jekyll serve
+Traceback (most recent call last):
+ 10: from C:/Ruby26-x64/bin/jekyll:23:in `&lt;main&gt;'
+  9: from C:/Ruby26-x64/bin/jekyll:23:in `load'
+  8: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/jekyll-4.0.0/exe/jekyll:11:in `&lt;top (required)&gt;'
+  7: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/jekyll-4.0.0/lib/jekyll/plugin_manager.rb:52:in `require_from_bundler'
+  6: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler.rb:149:in `setup'
+  5: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/runtime.rb:26:in `setup'
+  4: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/runtime.rb:26:in `map'
+  3: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/spec_set.rb:147:in `each'
+  2: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/spec_set.rb:147:in `each'
+  1: from C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/runtime.rb:31:in `block in setup'
+C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/bundler-2.1.4/lib/bundler/runtime.rb:312:in `check_for_activated_spec!': You have already activated i18n 1.7.0, 
+but your Gemfile requires i18n 0.9.5. Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
 </code></pre></div></div>
-<p>How to change to rust? Let’s look at the code first and analyze it.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// rust language</span>
-<span class="k">let</span> <span class="n">ptr</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;*</span><span class="k">const</span> <span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">None</span><span class="p">;</span>
-<span class="k">if</span> <span class="k">let</span> <span class="nb">None</span> <span class="o">=</span> <span class="n">ptr</span> <span class="p">{</span>
-  <span class="k">return</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<p>What has changed?</p>
+
+<h3 id="2-change-gemfile-and-_configyml-files">2) Change <code class="language-plaintext highlighter-rouge">Gemfile</code> and <code class="language-plaintext highlighter-rouge">_config.yml</code> files</h3>
+<p>If you get a message that your gemfile is a problem, updating Gemfile
+To solve the problem, you can do one of the two below.</p>
+
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">Options&lt;T&gt;</code> type.</li>
-  <li><em>NULL</em> value to <em>None</em></li>
-  <li><code class="language-plaintext highlighter-rouge">if let</code> statment</li>
+  <li>Comment out the gem to remove(using #)</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">Gem</code> to the <code class="language-plaintext highlighter-rouge">Gemfile</code>, and add it to the <code class="language-plaintext highlighter-rouge">plugins:</code> part of the<code class="language-plaintext highlighter-rouge"> _config.yml</code> file.</li>
 </ul>
 
-<p>In brief, <code class="language-plaintext highlighter-rouge">Options&lt;T&gt;</code> type is enum. That has <code class="language-plaintext highlighter-rouge">Some(T)</code> and <code class="language-plaintext highlighter-rouge">None</code>. <code class="language-plaintext highlighter-rouge">Some(T)</code> means value is present, <code class="language-plaintext highlighter-rouge">None</code> means has nothing. If you want to know more, find it yourself.</p>
+<h3 id="3-run-chcp-65001-cmd">3) run <code class="language-plaintext highlighter-rouge">chcp 65001</code> cmd</h3>
+<p>If you get an <code class="language-plaintext highlighter-rouge">Invalid CP949 character "\xE2"</code> error message, this may be an encoding problem on <strong>Windows</strong>.</p>
 
-<p>I thought I was scared of ‘new type’ or ‘not exist about null’. It was really difficult at first because there was no <code class="language-plaintext highlighter-rouge">null</code>. But it was changed so easily. 
-Now that you know it, take it well and let’s master the rust language !!</p>
+<blockquote>
+  <p>If you use UTF-8 encoding, Jekyll will break if a file starts with characters representing a BOM. 
+Therefore, remove this sequence of bytes if it appears at the beginning of your file.<br />
+refer : <a href="https://jekyllrb.com/docs/installation/windows/">jekyll page</a></p>
+</blockquote>
 
-<hr />
-<p>reference)</p>
-<ul>
-  <li><a href="https://users.rust-lang.org/t/nullable-pointers-in-ffi/10255">Nullable Pointers in FFI</a></li>
-  <li><a href="http://patshaughnessy.net/2018/1/18/learning-rust-if-let-vs--match">learning-rust-if-let-vs–match</a></li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D:\jjungs-page&gt;bundle exec jekyll serve
+Configuration file: D:/jjungs-page/_config.yml
+            Source: D:/jjungs-page
+       Destination: ./publishing
+ Incremental build: disabled. Enable with --incremental
+      Generating...
+         AutoPages: Disabled/Not configured in site.config.
+        Pagination: Complete, processed 2 pagination page(s)
+       Jekyll Feed: Generating feed for posts
+  Conversion error: Jekyll::Converters::Scss encountered an error while converting 'assets/css/main.scss':
+                    Invalid CP949 character "\xE2" on line 54
+jekyll 3.8.6 | Error:  Invalid CP949 character "\xE2" on line 54
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D:\jjungs-page&gt;chcp 65001
+Active code page: 65001
+
+D:\jjungs-page&gt;bundle exec jekyll serve
+</code></pre></div></div>
+
+<h2 id="finish">Finish</h2>
+<p>Go to local page(http://127.0.0.1:4000/) and testing local test. Then Update and pushing it.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D:\jjungs-page&gt;bundle exec jekyll serve
+Configuration file: D:/jjungs-page/_config.yml
+            Source: D:/jjungs-page
+       Destination: ./publishing
+ Incremental build: disabled. Enable with --incremental
+      Generating...
+         AutoPages: Disabled/Not configured in site.config.
+        Pagination: Complete, processed 2 pagination page(s)
+       Jekyll Feed: Generating feed for posts
+                    done in 6.677 seconds.
+ Auto-regeneration: enabled for 'D:/jjungs-page'
+    Server address: http://127.0.0.1:4000
+  Server running... press ctrl-c to stop.
+      Regenerating: 1 file(s) changed at 2021-05-05 22:2
+</code></pre></div></div>
 
         
       </section>
@@ -365,15 +413,11 @@ Now that you know it, take it well and let’s master the rust language !!</p>
     
       
       
-      <a href="/tags/#c-c" class="page__taxonomy-item" rel="tag">C / C++</a><span class="sep">, </span>
+      <a href="/tags/#github-pages" class="page__taxonomy-item" rel="tag">Github Pages</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#ffi" class="page__taxonomy-item" rel="tag">FFI</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#option" class="page__taxonomy-item" rel="tag">Option</a>
+      <a href="/tags/#minimal-mistakes-theme" class="page__taxonomy-item" rel="tag">minimal-mistakes theme</a>
     
     </span>
   </p>
@@ -394,14 +438,14 @@ Now that you know it, take it well and let’s master the rust language !!</p>
     
       
       
-      <a href="/categories/#rust" class="page__taxonomy-item" rel="tag">RUST</a>
+      <a href="/categories/#github-pages" class="page__taxonomy-item" rel="tag">Github Pages</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-04-22T00:00:00+00:00">April 22, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-05T00:00:00+00:00">May 5, 2021</time></p>
         
       </footer>
 
@@ -410,23 +454,22 @@ Now that you know it, take it well and let’s master the rust language !!</p>
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=RUST+%3A+How+to+check+null+value+in+rust%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Github+Pages%3A+Testing+for+local+server%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2FTesting-for-local-server" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2FTesting-for-local-server" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2FHow-to-null-check-in-rust" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2FTesting-for-local-server" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/rust/15.Smart-Pointers" class="pagination--pager" title="RUST : 15. Smart Pointers
+      <a href="/Algorithm/algorithm-Sort" class="pagination--pager" title="Algorithm - SORT
 ">Previous</a>
     
     
-      <a href="/rust/16.Fearless-Concurrency" class="pagination--pager" title="RUST : 16. Fearless Concurrency
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -440,35 +483,6 @@ Now that you know it, take it well and let’s master the rust language !!</p>
     <div class="page__related">
       <h4 class="page__related-title">You may also enjoy</h4>
       <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
         
           
 
@@ -519,7 +533,7 @@ Now that you know it, take it well and let’s master the rust language !!</p>
 
 
 
-  less than 1 minute read
+  1 minute read
 
 </p>
     
@@ -557,6 +571,35 @@ Now that you know it, take it well and let’s master the rust language !!</p>
   Also known as linked list
   The linked list is a data space in which data can be added and deleted whenever necessary, without a space of a fixed size.
   ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/How-to-check-overflow-and-underflow-in-integer-types" rel="permalink">RUST : How to check overflow and underflow in integer types
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What is overflow and underflow?
+Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be repr...</p>
   </article>
 </div>
 
