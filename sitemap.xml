@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://jjungs-lee.github.io//kernel/2019-09-01-My%20Opensource%20Contribution%20Lists/</loc>
-<lastmod>2019-09-01T00:00:00+00:00</lastmod>
-</url>
-<url>
 <loc>https://jjungs-lee.github.io//kernel/2020-05-03-finding%20offset%20of%20a%20struct%20elemnet%20in%20c/</loc>
 <lastmod>2020-05-03T00:00:00+00:00</lastmod>
 </url>
@@ -15,6 +11,10 @@
 <url>
 <loc>https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/</loc>
 <lastmod>2021-03-11T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://jjungs-lee.github.io//open%20source/My-Opensource-Contribution-Lists/</loc>
+<lastmod>2019-09-01T00:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>https://jjungs-lee.github.io//rust/0.Overview</loc>
