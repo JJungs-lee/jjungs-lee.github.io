@@ -15,7 +15,7 @@ var store = [{
         "url": "https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/",
         "teaser":null},{
         "title": "My Opensource Contribution Lists",
-        "excerpt":"Linux Kernel          dm verity: add “panic_on_corruption” error handling mode  patch link            dm verity: fix DM_VERITY_OPTS_MAX value  patch link            dm verity: allow only one error handling mode  patch link       Android          libavb: Add new dm-verity error handling mode  patch link            system/core: Add new dm-verity error handling mode  patch link            libavb: add –check_at_most_once option for dm-verity  patch link            system/core: fs_mgr: support ‘check_at_most_once’ for dm-verity  patch link      ","categories": ["Open Source"],
+        "excerpt":"Linux Kernel          dm verity: add “panic_on_corruption” error handling mode  patch link            dm verity: fix DM_VERITY_OPTS_MAX value  patch link            dm verity: allow only one error handling mode  patch link       Android          libavb: Add new dm-verity error handling mode  patch link            system/core: Add new dm-verity error handling mode  patch link            libavb: add –check_at_most_once option for dm-verity  patch link            system/core: fs_mgr: support ‘check_at_most_once’ for dm-verity  patch link            system/core: fs_mgr: fix space instead of tab in code  patch link      ","categories": ["Open Source"],
         "tags": ["Contribution","Linux","Kernel","Device mapper","DM-Verity","Android"],
         "url": "https://jjungs-lee.github.io//open%20source/My-Opensource-Contribution-Lists/",
         "teaser":null},{
