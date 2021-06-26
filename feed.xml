@@ -1,4 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2021-06-26T13:15:10+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">Github Pages: Testing for local server</title><link href="https://jjungs-lee.github.io//github/Testing-for-local-server" rel="alternate" type="text/html" title="Github Pages: Testing for local server" /><published>2021-05-05T00:00:00+00:00</published><updated>2021-05-05T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//github/Testing%20for%20local%20server</id><content type="html" xml:base="https://jjungs-lee.github.io//github/Testing-for-local-server">&lt;p&gt;Before committing to github pages, you can upload your homepage locally through &lt;strong&gt;ruby&lt;/strong&gt; and &lt;strong&gt;jekyll serve&lt;/strong&gt;!&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2021-06-26T14:58:21+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">Github Actions: Setting for CI server</title><link href="https://jjungs-lee.github.io//github%20pages/Github-actions/" rel="alternate" type="text/html" title="Github Actions: Setting for CI server" /><published>2021-06-18T00:00:00+00:00</published><updated>2021-06-18T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//github%20pages/Github%20actions</id><content type="html" xml:base="https://jjungs-lee.github.io//github%20pages/Github-actions/">&lt;p&gt;In the past, When distributing the homepage was using CI called &lt;strong&gt;travis&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;A few days ago, I modified the page and pushed it. 
+But automatic distribution did not work, so i went to the travis homepage. 
+There was a notice like the one below.
+All the projects were read-only, nothing could be done.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Since June 15th, 2021, the building on travis-ci.org is ceased. 
+Please use travis-ci.com from now on.
+Travis CI - Test and Deploy Your Code with Confidence is in read-only mode. 
+The historical data can be downloaded to external file storage.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;As an announcement, I am trying to move the project to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;travis.com&lt;/code&gt;.
+However, while setting it up, it didn’t work properly. 
+So I decided to look for something else.&lt;/p&gt;
+
+&lt;h2 id=&quot;github-action&quot;&gt;Github Action&lt;/h2&gt;
+&lt;h3 id=&quot;what-is-github-action&quot;&gt;What is Github Action?&lt;/h3&gt;
+&lt;p&gt;Github Action is a tool that can automate software development &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;workflow&lt;/code&gt; based on Github repository. 
+Simply put, it is a &lt;strong&gt;CI/CD tool&lt;/strong&gt; directly provided by Github.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Workflow&lt;/code&gt; can directly create a desired workflow based on various events such as build, test, package, 
+release, and deploy that occur in the Github repository.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Workflow&lt;/code&gt; runs in Linux, macOS, and Windows environments hosted on Github called Runners. 
+And you can run these Runners directly in the environment hosted by the user (self-hosted runner).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Workflows&lt;/code&gt; shared by multiple people can be found in the Github marketplace, and you can create your own and share them.&lt;/p&gt;
+
+&lt;p&gt;⏳ &lt;strong&gt;How long can it be used?&lt;/strong&gt;&lt;br /&gt;
+Up to 20 workflows can be registered per repository. 
+And it can be executed for up to 6 hours for each stage called Job that exists in the workflow, and is automatically stopped when it exceeds.&lt;/p&gt;
+
+&lt;p&gt;And according to the Github account plan, the number of jobs that can be executed simultaneously throughout the entire Git repository is determined.
+If you call Github API within a job, you can do it up to 1,000 times per hour.&lt;/p&gt;
+
+&lt;p&gt;💵 &lt;strong&gt;How much is the usage fee?&lt;/strong&gt;&lt;br /&gt;
+Public storage is free, and private storage is billed after the free usage granted to the account.
+Based on the full private storage of the Github free account, 500MB of storage and running time of up to 2,000 minutes are provided per month.&lt;/p&gt;
+
+&lt;p&gt;If you want more information, please visit below links.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/features/actions&quot;&gt;https://github.com/features/actions&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/actions&quot;&gt;https://docs.github.com/en/actions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The official guide provides several basic templates. When using travis CI to build and push deployment, using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rakefile&lt;/code&gt;.
+And then jekyll theme, so I took the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby&lt;/code&gt; template and tried to change it little by little.&lt;/p&gt;
+
+&lt;p&gt;At first, I just looked at it as it is in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt;, but the github page repo push didn’t work perfectly.
+I think token seems to be the problem.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nothing to commit, working tree clean
+remote: Permission to 
+jjungs-lee/jjungs-lee.github.io.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/jjungs-lee/jjungs-lee.github.io.git/'
+: The requested URL returned error: 403
+rake aborted!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;I tried creating a new token, and setting the environment.
+However, the permission denial continued, and it took about 2 days to trouble shooting.&lt;/p&gt;
+
+&lt;p&gt;After searching, I finally found the answer from the link below.
+&lt;a href=&quot;https://github.community/t/automating-push-to-public-repo/17742&quot;&gt;Automating push to public repo&lt;/a&gt;&lt;br /&gt;
+There were various things such as setting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http&lt;/code&gt; or something else. 
+but i set the token and various in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actions/checkout@v2&lt;/code&gt; and followed the example.
+&lt;a href=&quot;https://github.com/actions/checkout#checkout-multiple-repos-nested&quot;&gt;Checkout multiple repos (nested)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After that, I checked that it was working properly and updated the CI server with it.&lt;/p&gt;
+
+&lt;p&gt;It was a long and hard task, but i’m glad i was able to learn something new. haha 😊&lt;/p&gt;</content><author><name>JJungs-lee</name></author><category term="Github Pages" /><category term="CI" /><category term="Github Actions" /><category term="Automation" /><category term="Travis" /><summary type="html">In the past, When distributing the homepage was using CI called travis.</summary></entry><entry><title type="html">Github Pages: Testing for local server</title><link href="https://jjungs-lee.github.io//github/Testing-for-local-server" rel="alternate" type="text/html" title="Github Pages: Testing for local server" /><published>2021-05-05T00:00:00+00:00</published><updated>2021-05-05T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//github/Testing%20for%20local%20server</id><content type="html" xml:base="https://jjungs-lee.github.io//github/Testing-for-local-server">&lt;p&gt;Before committing to github pages, you can upload your homepage locally through &lt;strong&gt;ruby&lt;/strong&gt; and &lt;strong&gt;jekyll serve&lt;/strong&gt;!&lt;/p&gt;
 
 &lt;h2 id=&quot;installing-ruby--devkit--jekyll&quot;&gt;Installing Ruby + Devkit &amp;amp; Jekyll&lt;/h2&gt;
 &lt;p&gt;After downloading &lt;a href=&quot;https://rubyinstaller.org/downloads/&quot;&gt;Ruby&lt;/a&gt;, open the ruby prompt and enter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gem install jekyll bundler&lt;/code&gt; to proceed with the installation.&lt;br /&gt;
@@ -4772,41 +4841,4 @@ Once you get your code to compile, you can rest assured that it will happily run
 Concurrent programming is no longer a concept to be afraid of: go forth and make your programs concurrent, fearlessly!&lt;/p&gt;
 
 &lt;p&gt;Next, we’ll talk about idiomatic ways to model problems and structure solutions as your Rust programs get bigger. 
-In addition, we’ll discuss how Rust’s idioms relate to those you might be familiar with from object-oriented programming.&lt;/p&gt;</content><author><name>JJungs-lee</name></author><category term="RUST Language" /><category term="Fearless Concurrency" /><category term="thread" /><category term="race condition" /><category term="deadlock" /><category term="mutex" /><category term="lock" /><category term="unlock" /><summary type="html">Fearless Concurrency Handling concurrent programming safely and efficiently is another of Rust’s major goals. Concurrent programming, where different parts of a program execute independently, and parallel programming, where different parts of a program execute at the same time, are becoming increasingly important as more computers take advantage of their multiple processors. Historically, programming in these contexts has been difficult and error prone: Rust hopes to change that.</summary></entry><entry><title type="html">RUST : How to check null value in rust</title><link href="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust" rel="alternate" type="text/html" title="RUST : How to check null value in rust" /><published>2020-04-22T00:00:00+00:00</published><updated>2020-04-22T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/How%20to%20null%20check%20in%20rust</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/How-to-null-check-in-rust">&lt;h2 id=&quot;how-to-check-null-value-in-rust&quot;&gt;How to check null value in rust&lt;/h2&gt;
-&lt;p&gt;A question arose When i linking C language with rust language. 
-That’s &lt;strong&gt;how to check null value in rust&lt;/strong&gt;? Rust has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt;.
-because problem with null values is that if you try to use a null value as a not-null value. 
-So Rust made new type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Option&amp;lt;T&amp;gt;&lt;/code&gt; to prevent error. If you get a more infomation click &lt;a href=&quot;6.Enums-and-Pattern-Matching#the-option-enum-and-its-advantages-over-null-values&quot;&gt;here!!&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Anyway I will try to new type. almost pointer has &lt;em&gt;null&lt;/em&gt; value. I will replace the sample code written in C with rust.&lt;/p&gt;
-&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// C language&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;How to change to rust? Let’s look at the code first and analyze it.&lt;/p&gt;
-&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// rust language&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Option&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;i32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;What has changed?&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Options&amp;lt;T&amp;gt;&lt;/code&gt; type.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;NULL&lt;/em&gt; value to &lt;em&gt;None&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if let&lt;/code&gt; statment&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In brief, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Options&amp;lt;T&amp;gt;&lt;/code&gt; type is enum. That has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Some(T)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt;. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Some(T)&lt;/code&gt; means value is present, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; means has nothing. If you want to know more, find it yourself.&lt;/p&gt;
-
-&lt;p&gt;I thought I was scared of ‘new type’ or ‘not exist about null’. It was really difficult at first because there was no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt;. But it was changed so easily. 
-Now that you know it, take it well and let’s master the rust language !!&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;reference)&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://users.rust-lang.org/t/nullable-pointers-in-ffi/10255&quot;&gt;Nullable Pointers in FFI&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://patshaughnessy.net/2018/1/18/learning-rust-if-let-vs--match&quot;&gt;learning-rust-if-let-vs–match&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>JJungs-lee</name></author><category term="RUST" /><category term="FFI" /><category term="C / C++" /><category term="Option" /><summary type="html">How to check null value in rust A question arose When i linking C language with rust language. That’s how to check null value in rust? Rust has Option&amp;lt;T&amp;gt; instead of null. because problem with null values is that if you try to use a null value as a not-null value. So Rust made new type Option&amp;lt;T&amp;gt; to prevent error. If you get a more infomation click here!!</summary></entry></feed>
+In addition, we’ll discuss how Rust’s idioms relate to those you might be familiar with from object-oriented programming.&lt;/p&gt;</content><author><name>JJungs-lee</name></author><category term="RUST Language" /><category term="Fearless Concurrency" /><category term="thread" /><category term="race condition" /><category term="deadlock" /><category term="mutex" /><category term="lock" /><category term="unlock" /><summary type="html">Fearless Concurrency Handling concurrent programming safely and efficiently is another of Rust’s major goals. Concurrent programming, where different parts of a program execute independently, and parallel programming, where different parts of a program execute at the same time, are becoming increasingly important as more computers take advantage of their multiple processors. Historically, programming in these contexts has been difficult and error prone: Rust hopes to change that.</summary></entry></feed>

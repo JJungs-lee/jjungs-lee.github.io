@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
+<meta name="description" content="In the past, When distributing the homepage was using CI called travis.">
 
 
   <meta name="author" content="JJungs-lee">
@@ -21,30 +21,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Yes! I Take IT">
-<meta property="og:title" content="Microsoft: We’re creating a new Rust-like programming language for secure coding">
-<meta property="og:url" content="https://jjungs-lee.github.io//article/ms-creating-a-new-Rust-like-programming-language/">
+<meta property="og:title" content="Github Actions: Setting for CI server">
+<meta property="og:url" content="https://jjungs-lee.github.io//github%20pages/Github-actions/">
 
 
-  <meta property="og:description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2020-03-08T00:00:00+00:00">
+  <meta property="og:description" content="In the past, When distributing the homepage was using CI called travis.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2021-06-18T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://jjungs-lee.github.io//article/ms-creating-a-new-Rust-like-programming-language/">
+
+<link rel="canonical" href="https://jjungs-lee.github.io//github%20pages/Github-actions/">
 
 
 
@@ -282,15 +282,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Microsoft: We’re creating a new Rust-like programming language for secure coding">
-    <meta itemprop="description" content="This link will be help :)  KimPopeTV  Article - Zdnet By Liam Tung">
-    <meta itemprop="datePublished" content="2020-03-08T00:00:00+00:00">
+    <meta itemprop="headline" content="Github Actions: Setting for CI server">
+    <meta itemprop="description" content="In the past, When distributing the homepage was using CI called travis.">
+    <meta itemprop="datePublished" content="2021-06-18T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Microsoft: We’re creating a new Rust-like programming language for secure coding
+          <h1 id="page-title" class="page__title" itemprop="headline">Github Actions: Setting for CI server
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -298,7 +298,7 @@
 
 
 
-  1 minute read
+  2 minute read
 
 </p>
           
@@ -307,29 +307,76 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>This link will be help :)</p>
+        <p>In the past, When distributing the homepage was using CI called <strong>travis</strong>.</p>
+
+<p>A few days ago, I modified the page and pushed it. 
+But automatic distribution did not work, so i went to the travis homepage. 
+There was a notice like the one below.
+All the projects were read-only, nothing could be done.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Since June 15th, 2021, the building on travis-ci.org is ceased. 
+Please use travis-ci.com from now on.
+Travis CI - Test and Deploy Your Code with Confidence is in read-only mode. 
+The historical data can be downloaded to external file storage.
+</code></pre></div></div>
+<p>As an announcement, I am trying to move the project to <code class="language-plaintext highlighter-rouge">travis.com</code>.
+However, while setting it up, it didn’t work properly. 
+So I decided to look for something else.</p>
+
+<h2 id="github-action">Github Action</h2>
+<h3 id="what-is-github-action">What is Github Action?</h3>
+<p>Github Action is a tool that can automate software development <code class="language-plaintext highlighter-rouge">workflow</code> based on Github repository. 
+Simply put, it is a <strong>CI/CD tool</strong> directly provided by Github.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Workflow</code> can directly create a desired workflow based on various events such as build, test, package, 
+release, and deploy that occur in the Github repository.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Workflow</code> runs in Linux, macOS, and Windows environments hosted on Github called Runners. 
+And you can run these Runners directly in the environment hosted by the user (self-hosted runner).</p>
+
+<p><code class="language-plaintext highlighter-rouge">Workflows</code> shared by multiple people can be found in the Github marketplace, and you can create your own and share them.</p>
+
+<p>⏳ <strong>How long can it be used?</strong><br />
+Up to 20 workflows can be registered per repository. 
+And it can be executed for up to 6 hours for each stage called Job that exists in the workflow, and is automatically stopped when it exceeds.</p>
+
+<p>And according to the Github account plan, the number of jobs that can be executed simultaneously throughout the entire Git repository is determined.
+If you call Github API within a job, you can do it up to 1,000 times per hour.</p>
+
+<p>💵 <strong>How much is the usage fee?</strong><br />
+Public storage is free, and private storage is billed after the free usage granted to the account.
+Based on the full private storage of the Github free account, 500MB of storage and running time of up to 2,000 minutes are provided per month.</p>
+
+<p>If you want more information, please visit below links.</p>
 <ul>
-  <li><a href="https://www.youtube.com/watch?v=VZ89rJPCEC4">KimPopeTV</a></li>
-  <li><a href="https://zd.net/2vtuLXV">Article - Zdnet By Liam Tung</a></li>
+  <li><a href="https://github.com/features/actions">https://github.com/features/actions</a></li>
+  <li><a href="https://docs.github.com/en/actions">https://docs.github.com/en/actions</a></li>
 </ul>
 
-<hr />
+<p>The official guide provides several basic templates. When using travis CI to build and push deployment, using <code class="language-plaintext highlighter-rouge">Rakefile</code>.
+And then jekyll theme, so I took the <code class="language-plaintext highlighter-rouge">Ruby</code> template and tried to change it little by little.</p>
 
-<p>Microsoft can’t just throw away older Windows code(C or C++), but the company’s Project <em>Verona</em> aims to make older low-level components in Windows 10 more secure by integrating Mozilla-developed Rust.</p>
+<p>At first, I just looked at it as it is in <code class="language-plaintext highlighter-rouge">.travis.yml</code>, but the github page repo push didn’t work perfectly.
+I think token seems to be the problem.</p>
 
-<p>Microsofte recently revealed that its trials with Rust over C and C++ to remove insecure code from Windows had hit its targets.
-The company has partially explained its security-related motives for experimenting with Rust, but hasn’t gone into much detail about the broader reasons for its move.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nothing to commit, working tree clean
+remote: Permission to 
+jjungs-lee/jjungs-lee.github.io.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/jjungs-lee/jjungs-lee.github.io.git/'
+: The requested URL returned error: 403
+rake aborted!
+</code></pre></div></div>
+<p>I tried creating a new token, and setting the environment.
+However, the permission denial continued, and it took about 2 days to trouble shooting.</p>
 
-<p>Microsoft recently revealed that the vast majority of bugs being discovered these days are memory safety flaws, which is also why Microsoft is looking at Rust to improve the situation. Rust was designed to allow developers to code without having to worry about this class of bug. (<strong>this mean Rust is good for prenventing memory safety flaws</strong>)</p>
+<p>After searching, I finally found the answer from the link below.
+<a href="https://github.community/t/automating-push-to-public-repo/17742">Automating push to public repo</a><br />
+There were various things such as setting <code class="language-plaintext highlighter-rouge">http</code> or something else. 
+but i set the token and various in <code class="language-plaintext highlighter-rouge">actions/checkout@v2</code> and followed the example.
+<a href="https://github.com/actions/checkout#checkout-multiple-repos-nested">Checkout multiple repos (nested)</a></p>
 
-<p><em>Memory safety</em> is the term for coding frameworks that help protect memory space from being abused by malware. Project Verona at Microsoft is meant to progress the company’s work here to close off this attack vector. 
-The other class of bugs Microsoft is working on to address relates to uninitialized memory in a way that also doesn’t kill performance.</p>
+<p>After that, I checked that it was working properly and updated the CI server with it.</p>
 
-<p>MS project <em>Verona</em> will have a lot of influence on the development of windows, and it will be helpful to the development of rust.
-I wonder why Microsoft doesn’t participate in rust open source. If Microsoft and other companies are involved in opensource development, it could be a better language than c or C ++. 
-But Microsofte will be made open souce “soon”(<code class="language-plaintext highlighter-rouge">Verona</code>), It is a new language for what Microsoft is calling “safe infrastructure programming”. (I think <strong>Rust+MS skill combined</strong>)</p>
-
-<p>So the possibilities of developing <strong>rust</strong> or <strong>verona</strong> are endless, and I think it will be a better language to solve problems that existed in C and C ++.</p>
+<p>It was a long and hard task, but i’m glad i was able to learn something new. haha 😊</p>
 
         
       </section>
@@ -350,15 +397,19 @@ But Microsofte will be made open souce “soon”(<code class="language-plaintex
     
       
       
-      <a href="/tags/#microsoft" class="page__taxonomy-item" rel="tag">Microsoft</a><span class="sep">, </span>
+      <a href="/tags/#automation" class="page__taxonomy-item" rel="tag">Automation</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">RUST</a><span class="sep">, </span>
+      <a href="/tags/#ci" class="page__taxonomy-item" rel="tag">CI</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#verona" class="page__taxonomy-item" rel="tag">Verona</a>
+      <a href="/tags/#github-actions" class="page__taxonomy-item" rel="tag">Github Actions</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#travis" class="page__taxonomy-item" rel="tag">Travis</a>
     
     </span>
   </p>
@@ -379,14 +430,14 @@ But Microsofte will be made open souce “soon”(<code class="language-plaintex
     
       
       
-      <a href="/categories/#article" class="page__taxonomy-item" rel="tag">Article</a>
+      <a href="/categories/#github-pages" class="page__taxonomy-item" rel="tag">Github Pages</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-03-08T00:00:00+00:00">March 8, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-18T00:00:00+00:00">June 18, 2021</time></p>
         
       </footer>
 
@@ -395,23 +446,22 @@ But Microsofte will be made open souce “soon”(<code class="language-plaintex
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Microsoft%3A+We%27re+creating+a+new+Rust-like+programming+language+for+secure+coding%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Github+Actions%3A+Setting+for+CI+server%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2520pages%2FGithub-actions%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2520pages%2FGithub-actions%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Farticle%2Fms-creating-a-new-Rust-like-programming-language%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Fgithub%2520pages%2FGithub-actions%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/rust/10.Generic-Types,-Traits,-and-Lifetimes" class="pagination--pager" title="RUST : 10. Generic Types, Traits, and Lifetimes
+      <a href="/github/Testing-for-local-server" class="pagination--pager" title="Github Pages: Testing for local server
 ">Previous</a>
     
     
-      <a href="/rust/11.Writing-Automated-Tests" class="pagination--pager" title="RUST : 11. Writing Automated Tests
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -425,35 +475,6 @@ But Microsofte will be made open souce “soon”(<code class="language-plaintex
     <div class="page__related">
       <h4 class="page__related-title">You may also enjoy</h4>
       <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github%20pages/Github-actions/" rel="permalink">Github Actions: Setting for CI server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -533,13 +554,44 @@ But Microsofte will be made open souce “soon”(<code class="language-plaintex
 
 
 
-  less than 1 minute read
+  1 minute read
 
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">```cpp
 #include 
 </p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Algorithm/Data-structure-List" rel="permalink">Data Structure - LIST
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+  Also known as linked list
+  The linked list is a data space in which data can be added and deleted whenever necessary, without a space of a fixed size.
+  ...</p>
   </article>
 </div>
 
