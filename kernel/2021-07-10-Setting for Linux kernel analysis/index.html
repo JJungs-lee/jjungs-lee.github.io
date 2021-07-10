@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
+<meta name="description" content="ctagssudo apt-get install ctags -ycscopesudo apt-get install cscope -yCreate cscope db shell file```bash#!/bin/shrm -rf cscope.files cscope.files">
 
 
   <meta name="author" content="JJungs-lee">
@@ -21,30 +21,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Yes! I Take IT">
-<meta property="og:title" content="How to contribution linux kernel">
-<meta property="og:url" content="https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/">
+<meta property="og:title" content="Setting for Linux kernel analysis">
+<meta property="og:url" content="https://jjungs-lee.github.io//kernel/2021-07-10-Setting%20for%20Linux%20kernel%20analysis/">
 
 
-  <meta property="og:description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-03-11T00:00:00+00:00">
+  <meta property="og:description" content="ctagssudo apt-get install ctags -ycscopesudo apt-get install cscope -yCreate cscope db shell file```bash#!/bin/shrm -rf cscope.files cscope.files">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2021-07-10T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/">
+
+<link rel="canonical" href="https://jjungs-lee.github.io//kernel/2021-07-10-Setting%20for%20Linux%20kernel%20analysis/">
 
 
 
@@ -282,15 +282,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to contribution linux kernel">
-    <meta itemprop="description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
-    <meta itemprop="datePublished" content="2021-03-11T00:00:00+00:00">
+    <meta itemprop="headline" content="Setting for Linux kernel analysis">
+    <meta itemprop="description" content="ctagssudo apt-get install ctags -ycscopesudo apt-get install cscope -yCreate cscope db shell file```bash#!/bin/shrm -rf cscope.files cscope.files">
+    <meta itemprop="datePublished" content="2021-07-10T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to contribution linux kernel
+          <h1 id="page-title" class="page__title" itemprop="headline">Setting for Linux kernel analysis
 </h1>
           
         </header>
@@ -298,65 +298,124 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>I’m interested in Linux Kenrel and wanted to contribute.<br />
-So i will keep it in documentation and try to contribution whenever find a bug or extra.</p>
+        <h2 id="ctags">ctags</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install ctags -y
+</code></pre></div></div>
+<h2 id="cscope">cscope</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install cscope -y
+</code></pre></div></div>
+<p>Create cscope db shell file</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> cscope.files cscope.files
 
-<ol>
-  <li>Pull Linux mainline kernel source code
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/torvalds/linux.git ./mainline_code
-</code></pre></div>    </div>
-  </li>
-  <li>Configure git environment
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span> <span class="s">"JJungs Lee"</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">"loveljhs2@gmail.com"</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">editor</span> <span class="n">vi</span>
-<span class="c1">// --snip--</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Modify the code (Bugs or New features)
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// test.c</span>
-<span class="o">-</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="o">+</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Git add modify files and commit use <code class="language-plaintext highlighter-rouge">-s or --signoff</code> option<br />
-(add Signed-off-by in commit)
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">add</span> <span class="n">test</span><span class="p">.</span><span class="n">c</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">m</span> <span class="s">"test for commit"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Make <strong>patch file</strong> and Check linux coding style<br />
-If the coding style is mismatch, the checkpatch tool will be prints errors.
-All errors, warnings, spaces, etc. need to be fixed.
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git format-patch -1
-./scripts/checkpatch.pl ./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Check maintainers, submitter and mailing list
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scripts/get_maintainer.pl ./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Install the <code class="language-plaintext highlighter-rouge">git-email</code> for sending patchs
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install git-email
-</code></pre></div>    </div>
-  </li>
-  <li>Send patch files to maintainers using <code class="language-plaintext highlighter-rouge">git send-email</code><br />
-how to use) <a href="https://git-scm.com/docs/git-send-email">git send-email refer doc</a> or <code class="language-plaintext highlighter-rouge">git help send-email</code> cmd
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git send-email \
---to maintainer1@address.com \
---to maintainer2@address.com \
---cc cc_addr@mailinglist.org \
-./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Check the site below to see if it was sent properly.<br />
-All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></li>
-</ol>
+find <span class="nb">.</span> <span class="se">\(</span> <span class="nt">-name</span> <span class="s1">'*.c'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.cpp'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.cc'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.h'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.s'</span> <span class="nt">-o</span> <span class="nt">-name</span> <span class="s1">'*.S'</span> <span class="se">\)</span> <span class="nt">-print</span> <span class="o">&gt;</span> cscope.files
 
-<p>refer)</p>
-<ul>
-  <li><a href="https://www.kernel.org/doc/html/latest/process/email-clients.html">Email clients info for Linux</a></li>
-</ul>
+cscope <span class="nt">-i</span> cscope.files
+</code></pre></div></div>
+<p>Added <code class="language-plaintext highlighter-rouge">.vimrc</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set csprg=/usr/bin/cscope
+set csto=0
+set cst
+set nocsverb
+
+if filereadable("./cscope.out")
+    cs add cscope.out
+else
+    cs add /usr/src/linux/cscope.out
+endif
+set csverb
+</code></pre></div></div>
+
+<h2 id="linux-mainline-support-ctags-cscope-db">linux mainline support ctags, cscope DB</h2>
+<p>Recent Linux kernel makefiles automatically create <strong>ctags</strong> and <strong>cscope</strong> database files.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// put the architecture you want to analyze.</span>
+<span class="n">make</span> <span class="n">ARCH</span><span class="o">=</span><span class="n">arm64</span> <span class="n">tags</span> <span class="n">cscope</span>
+</code></pre></div></div>
+
+<h2 id="vimrc">.vimrc</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>" Syntax Highlighting
+if has("syntax")
+    syntax on
+endif
+
+"set ruler          " set ru
+"set laststatus=0 	" show status bar (set ls)
+"set statusline=%F\ %y%m%r\ %=Line:\ %l/%L\ [%p%%]\ Col:%c\ Buf:%n
+"hi statusline ctermfg=White ctermbg=4 cterm=none
+set number          " line number set nu
+
+" indent
+set autoindent      " auto indent set ai
+set smartindent     " set si
+set showmatch       " show match bracket
+" tab
+set smarttab
+set tabstop=4       " tab change space set ts=4
+set shiftwidth=4    " shift size set sw=4
+set softtabstop=4   " sts=4
+set expandtab       " space instead of tab
+set hlsearch        " search highlite
+set ignorecase
+set incsearch
+set bs=indent,eol,start
+set pastetoggle=&lt;Insert&gt;
+set nocompatible
+set fileencodings=utf-8,euc-kr
+set history=1000
+set nobackup
+set wildmenu        " set wmnu
+
+" Vundle - https://github.com/VundleVim/Vundle.vim
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
+Plugin 'frazrepo/vim-rainbow'
+call vundle#end()            " required
+
+" vim theme - https://github.com/flazz/vim-colorschemes
+set t_Co=256
+colorscheme jellybeans
+
+" vim-airline - https://github.com/vim-airline/vim-airline
+" refer(https://github.com/vim-airline/vim-airline/blob/master/doc/airline.txt)
+"let g:airline_statusline_ontop=1
+let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_tab_type=0
+"let g:airline#extensions#whitespace#enabled = 0
+"let g:airline_section_error='syntastic-err'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = ' ☰'
+let g:airline_symbols.maxlinenr = ':'
+let g:airline_symbols.colnr = ''
+
+" vim-airline-themes - https://github.com/vim-airline/vim-airline-themes
+"let g:airline_theme='jellybeans'
+
+" vim-rainbow - https://github.com/frazrepo/vim-rainbow
+let g:rainbow_active = 1
+
+" cscope
+set csprg=/usr/bin/cscope
+set csto=0
+set cst
+set nocsverb
+if filereadable("./cscope.out")
+    cs add cscope.out
+else
+    cs add /usr/src/linux/cscope.out
+endif
+</code></pre></div></div>
 
         
       </section>
@@ -377,7 +436,11 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
     
       
       
-      <a href="/tags/#contribution" class="page__taxonomy-item" rel="tag">contribution</a><span class="sep">, </span>
+      <a href="/tags/#cscope" class="page__taxonomy-item" rel="tag">cscope</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctag" class="page__taxonomy-item" rel="tag">ctag</a><span class="sep">, </span>
     
       
       
@@ -389,7 +452,11 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
     
       
       
-      <a href="/tags/#wanna-maintainer" class="page__taxonomy-item" rel="tag">Wanna maintainer</a>
+      <a href="/tags/#vim" class="page__taxonomy-item" rel="tag">vim</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#vundle" class="page__taxonomy-item" rel="tag">Vundle</a>
     
     </span>
   </p>
@@ -417,7 +484,7 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-03-11T00:00:00+00:00">March 11, 2021</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-07-10T00:00:00+00:00">July 10, 2021</time></p>
         
       </footer>
 
@@ -426,12 +493,11 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
       
   <nav class="pagination">
     
-      <a href="/kernel/2020-07-09-How%20to%20make%20kernel%20debugging%20easy/" class="pagination--pager" title="How to make kernel debugging easy?
+      <a href="/kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/" class="pagination--pager" title="How to contribution linux kernel
 ">Previous</a>
     
     
-      <a href="/kernel/2021-07-10-Setting%20for%20Linux%20kernel%20analysis/" class="pagination--pager" title="Setting for Linux kernel analysis
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
