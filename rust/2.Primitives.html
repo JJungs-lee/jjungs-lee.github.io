@@ -1,0 +1,867 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Rust provides access to a wide variety of primitives. A sample includes:">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="Rust by Example : 2. Primitives">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/2.Primitives">
+
+
+  <meta property="og:description" content="Rust provides access to a wide variety of primitives. A sample includes:">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-03T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/2.Primitives">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Rust by Example : 2. Primitives">
+    <meta itemprop="description" content="Rust provides access to a wide variety of primitives. A sample includes:">
+    <meta itemprop="datePublished" content="2022-03-03T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Rust by Example : 2. Primitives
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Rust provides access to a wide variety of <code class="language-plaintext highlighter-rouge">primitives</code>. A sample includes:</p>
+
+<h3 id="scalar-types">Scalar Types</h3>
+<ul>
+  <li>signed integers: <code class="language-plaintext highlighter-rouge">i8</code>, <code class="language-plaintext highlighter-rouge">i16</code>, <code class="language-plaintext highlighter-rouge">i32</code>, <code class="language-plaintext highlighter-rouge">i64</code>, <code class="language-plaintext highlighter-rouge">i128</code> and <code class="language-plaintext highlighter-rouge">isize</code> (pointer size)</li>
+  <li>unsigned integers: <code class="language-plaintext highlighter-rouge">u8</code>, <code class="language-plaintext highlighter-rouge">u16</code>, <code class="language-plaintext highlighter-rouge">u32</code>, <code class="language-plaintext highlighter-rouge">u64</code>, <code class="language-plaintext highlighter-rouge">u128</code> and <code class="language-plaintext highlighter-rouge">usize</code> (pointer size)</li>
+  <li>floating point: <code class="language-plaintext highlighter-rouge">f32</code>, <code class="language-plaintext highlighter-rouge">f64</code></li>
+  <li><code class="language-plaintext highlighter-rouge">char</code> Unicode scalar values like <code class="language-plaintext highlighter-rouge">'a'</code>, <code class="language-plaintext highlighter-rouge">'α'</code> and <code class="language-plaintext highlighter-rouge">'∞'</code> (4 bytes each)</li>
+  <li><code class="language-plaintext highlighter-rouge">bool</code> either <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li>and the unit type <code class="language-plaintext highlighter-rouge">()</code>, whose only possible value is an empty tuple: <code class="language-plaintext highlighter-rouge">()</code></li>
+</ul>
+
+<p>Despite the value of a unit type being a tuple, it is not considered a compound type because it does not contain multiple values.</p>
+
+<h3 id="compound-types">Compound Types</h3>
+<ul>
+  <li>arrays like <code class="language-plaintext highlighter-rouge">[1, 2, 3]</code></li>
+  <li>tuples like <code class="language-plaintext highlighter-rouge">(1, true)</code>
+Variables can always be type <em>annotated</em>. Numbers may additionally be annotated via a <em>suffix</em> or by <em>default</em>. Integers default to <code class="language-plaintext highlighter-rouge">i32</code> and floats to <code class="language-plaintext highlighter-rouge">f64</code>. Note that Rust can also infer types from context.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Variables can be type annotated.</span>
+  <span class="k">let</span> <span class="n">logical</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+  <span class="k">let</span> <span class="n">a_float</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>  <span class="c1">// Regular annotation</span>
+  <span class="k">let</span> <span class="n">an_integer</span>   <span class="o">=</span> <span class="mi">5i32</span><span class="p">;</span> <span class="c1">// Suffix annotation</span>
+
+  <span class="c1">// Or a default will be used.</span>
+  <span class="k">let</span> <span class="n">default_float</span>   <span class="o">=</span> <span class="mf">3.0</span><span class="p">;</span> <span class="c1">// `f64`</span>
+  <span class="k">let</span> <span class="n">default_integer</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>   <span class="c1">// `i32`</span>
+  
+  <span class="c1">// A type can also be inferred from context </span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">inferred_type</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span> <span class="c1">// Type i64 is inferred from another line</span>
+  <span class="n">inferred_type</span> <span class="o">=</span> <span class="mi">4294967296i64</span><span class="p">;</span>
+  
+  <span class="c1">// A mutable variable's value can be changed.</span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">mutable</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span> <span class="c1">// Mutable `i32`</span>
+  <span class="n">mutable</span> <span class="o">=</span> <span class="mi">21</span><span class="p">;</span>
+  
+  <span class="c1">// Error! The type of a variable can't be changed.</span>
+  <span class="n">mutable</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+  
+  <span class="c1">// Variables can be overwritten with shadowing.</span>
+  <span class="k">let</span> <span class="n">mutable</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="21-literals-and-operators">2.1 Literals and operators</h2>
+<p>Integers <code class="language-plaintext highlighter-rouge">1</code>, floats <code class="language-plaintext highlighter-rouge">1.2</code>, characters <code class="language-plaintext highlighter-rouge">'a'</code>, strings <code class="language-plaintext highlighter-rouge">"abc"</code>, booleans <code class="language-plaintext highlighter-rouge">true</code> and the unit type <code class="language-plaintext highlighter-rouge">()</code> can be expressed using literals.</p>
+
+<p>Integers can, alternatively, be expressed using hexadecimal, octal or binary notation using these prefixes respectively: <code class="language-plaintext highlighter-rouge">0x</code>, <code class="language-plaintext highlighter-rouge">0o</code> or <code class="language-plaintext highlighter-rouge">0b</code>.</p>
+
+<p>Underscores can be inserted in numeric literals to improve readability, e.g. <code class="language-plaintext highlighter-rouge">1_000</code> is the same as <code class="language-plaintext highlighter-rouge">1000</code>, and <code class="language-plaintext highlighter-rouge">0.000_001</code> is the same as <code class="language-plaintext highlighter-rouge">0.000001</code>.</p>
+
+<p>We need to tell the compiler the type of the literals we use. For now, we’ll use the <code class="language-plaintext highlighter-rouge">u32</code> suffix to indicate that the literal is an unsigned 32-bit integer, and the <code class="language-plaintext highlighter-rouge">i32</code> suffix to indicate that it’s a signed 32-bit integer.</p>
+
+<p>The operators available and their precedence in Rust are similar to other C-like languages.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Integer addition</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"1 + 2 = {}"</span><span class="p">,</span> <span class="mi">1u32</span> <span class="o">+</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="c1">// Integer subtraction</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"1 - 2 = {}"</span><span class="p">,</span> <span class="mi">1i32</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="c1">// TODO ^ Try changing `1i32` to `1u32` to see why the type is important</span>
+
+  <span class="c1">// Short-circuiting boolean logic</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"true AND false is {}"</span><span class="p">,</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"true OR false is {}"</span><span class="p">,</span> <span class="kc">true</span> <span class="p">||</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"NOT true is {}"</span><span class="p">,</span> <span class="o">!</span><span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">// Bitwise operations</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"0011 AND 0101 is {:04b}"</span><span class="p">,</span> <span class="mi">0b0011u32</span> <span class="o">&amp;</span> <span class="mi">0b0101</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"0011 OR 0101 is {:04b}"</span><span class="p">,</span> <span class="mi">0b0011u32</span> <span class="p">|</span> <span class="mi">0b0101</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"0011 XOR 0101 is {:04b}"</span><span class="p">,</span> <span class="mi">0b0011u32</span> <span class="o">^</span> <span class="mi">0b0101</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"1 &lt;&lt; 5 is {}"</span><span class="p">,</span> <span class="mi">1u32</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"0x80 &gt;&gt; 2 is 0x{:x}"</span><span class="p">,</span> <span class="mi">0x80u32</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="c1">// Use underscores to improve readability!</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"One million is written as {}"</span><span class="p">,</span> <span class="mi">1_000_000u32</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="22-tuples">2.2 Tuples</h2>
+<p>A tuple is a collection of values of different types. 
+Tuples are constructed using parentheses <code class="language-plaintext highlighter-rouge">()</code>, 
+and each tuple itself is a value with type signature <code class="language-plaintext highlighter-rouge">(T1, T2, ...)</code>, 
+where <code class="language-plaintext highlighter-rouge">T1</code>, <code class="language-plaintext highlighter-rouge">T2</code> are the types of its members. 
+Functions can use tuples to return multiple values, as tuples can hold any number of values.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Tuples can be used as function arguments and as return values</span>
+<span class="k">fn</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">pair</span><span class="p">:</span> <span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// `let` can be used to bind the members of a tuple to variables</span>
+    <span class="k">let</span> <span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">boolean</span><span class="p">)</span> <span class="o">=</span> <span class="n">pair</span><span class="p">;</span>
+
+    <span class="p">(</span><span class="n">boolean</span><span class="p">,</span> <span class="n">integer</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// The following struct is for the activity.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">Matrix</span><span class="p">(</span><span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">);</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// A tuple with a bunch of different types</span>
+  <span class="k">let</span> <span class="n">long_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1u8</span><span class="p">,</span> <span class="mi">2u16</span><span class="p">,</span> <span class="mi">3u32</span><span class="p">,</span> <span class="mi">4u64</span><span class="p">,</span>
+                    <span class="o">-</span><span class="mi">1i8</span><span class="p">,</span> <span class="o">-</span><span class="mi">2i16</span><span class="p">,</span> <span class="o">-</span><span class="mi">3i32</span><span class="p">,</span> <span class="o">-</span><span class="mi">4i64</span><span class="p">,</span>
+                    <span class="mf">0.1f32</span><span class="p">,</span> <span class="mf">0.2f64</span><span class="p">,</span>
+                    <span class="sc">'a'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+  <span class="c1">// Values can be extracted from the tuple using tuple indexing</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"long tuple first value: {}"</span><span class="p">,</span> <span class="n">long_tuple</span><span class="na">.0</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"long tuple second value: {}"</span><span class="p">,</span> <span class="n">long_tuple</span><span class="na">.1</span><span class="p">);</span>
+
+  <span class="c1">// Tuples can be tuple members</span>
+  <span class="k">let</span> <span class="n">tuple_of_tuples</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1u8</span><span class="p">,</span> <span class="mi">2u16</span><span class="p">,</span> <span class="mi">2u32</span><span class="p">),</span> <span class="p">(</span><span class="mi">4u64</span><span class="p">,</span> <span class="o">-</span><span class="mi">1i8</span><span class="p">),</span> <span class="o">-</span><span class="mi">2i16</span><span class="p">);</span>
+
+  <span class="c1">// Tuples are printable</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"tuple of tuples: {:?}"</span><span class="p">,</span> <span class="n">tuple_of_tuples</span><span class="p">);</span>
+  
+  <span class="c1">// But long Tuples cannot be printed</span>
+  <span class="c1">// let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);</span>
+  <span class="c1">// println!("too long tuple: {:?}", too_long_tuple);</span>
+  <span class="c1">// TODO ^ Uncomment the above 2 lines to see the compiler error</span>
+
+  <span class="k">let</span> <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"pair is {:?}"</span><span class="p">,</span> <span class="n">pair</span><span class="p">);</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"the reversed pair is {:?}"</span><span class="p">,</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">pair</span><span class="p">));</span>
+
+  <span class="c1">// To create one element tuples, the comma is required to tell them apart</span>
+  <span class="c1">// from a literal surrounded by parentheses</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"one element tuple: {:?}"</span><span class="p">,</span> <span class="p">(</span><span class="mi">5u32</span><span class="p">,));</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"just an integer: {:?}"</span><span class="p">,</span> <span class="p">(</span><span class="mi">5u32</span><span class="p">));</span>
+
+  <span class="c1">//tuples can be destructured to create bindings</span>
+  <span class="k">let</span> <span class="n">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+  <span class="k">let</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">=</span> <span class="n">tuple</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}, {:?}, {:?}, {:?}"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+
+  <span class="k">let</span> <span class="n">matrix</span> <span class="o">=</span> <span class="nf">Matrix</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">matrix</span><span class="p">);</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="activity">Activity</h3>
+<ol>
+  <li>Recap: Add the <code class="language-plaintext highlighter-rouge">fmt::Display</code> trait to the <code class="language-plaintext highlighter-rouge">Matrix</code> struct in the above example, so that if you switch from printing the debug format <code class="language-plaintext highlighter-rouge">{:?}</code> to the display format <code class="language-plaintext highlighter-rouge">{}</code>, you see the following output:</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>( 1.1 1.2 )
+( 2.1 2.2 )
+</code></pre></div></div>
+<p>You may want to refer back to the example for print display.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span> <span class="c1">// Import `fmt`</span>
+
+<span class="c1">// The following struct is for the activity.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">Matrix</span><span class="p">(</span><span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">);</span>
+
+<span class="c1">// add to Display trait</span>
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Matrix</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+    <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"( {} {} )</span><span class="se">\n</span><span class="s">( {} {} )"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="p">,</span> <span class="k">self</span><span class="na">.1</span><span class="p">,</span> <span class="k">self</span><span class="na">.2</span><span class="p">,</span> <span class="k">self</span><span class="na">.3</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">matrix</span> <span class="o">=</span> <span class="nf">Matrix</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">matrix</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Add a <code class="language-plaintext highlighter-rouge">transpose</code> function using the reverse function as a template, which accepts a matrix as an argument, and returns a matrix in which two elements have been swapped. For example:</li>
+</ol>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">println!</span><span class="p">(</span><span class="s">"Matrix:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">matrix</span><span class="p">);</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"Transpose:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">matrix</span><span class="p">));</span>
+</code></pre></div></div>
+<p>results in the output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Matrix:
+( 1.1 1.2 )
+( 2.1 2.2 )
+Transpose:
+( 1.1 2.1 )
+( 1.2 2.2 )
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span> <span class="c1">// Import `fmt`</span>
+
+<span class="c1">// The following struct is for the activity.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">Matrix</span><span class="p">(</span><span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">);</span>
+
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Matrix</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+    <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"( {} {} )</span><span class="se">\n</span><span class="s">( {} {} )"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="p">,</span> <span class="k">self</span><span class="na">.1</span><span class="p">,</span> <span class="k">self</span><span class="na">.2</span><span class="p">,</span> <span class="k">self</span><span class="na">.3</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="n">Matrix</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Matrix</span> <span class="p">{</span>
+    <span class="nf">Matrix</span><span class="p">(</span><span class="n">m</span><span class="na">.0</span><span class="p">,</span> <span class="n">m</span><span class="na">.2</span><span class="p">,</span> <span class="n">m</span><span class="na">.1</span><span class="p">,</span> <span class="n">m</span><span class="na">.3</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">matrix</span> <span class="o">=</span> <span class="nf">Matrix</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Matrix:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">matrix</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Transpose:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">matrix</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="23-arrays-and-slices">2.3 Arrays and Slices</h2>
+
+<p>An <strong>array</strong> is a collection of objects of the same type <code class="language-plaintext highlighter-rouge">T</code>, stored in contiguous memory. 
+Arrays are created using brackets <code class="language-plaintext highlighter-rouge">[]</code>, and their length, which is known at compile time,
+ is part of their type signature <code class="language-plaintext highlighter-rouge">[T; length]</code>.</p>
+
+<p><strong>Slices</strong> are similar to arrays, but their length is not known at compile time. 
+Instead, a slice is a two-word object, 
+the first word is a pointer to the data, and the second word is the length of the slice. 
+The word size is the same as usize, determined by the processor architecture eg 64 bits on an x86-64. 
+Slices can be used to borrow a section of an array, and have the type signature <code class="language-plaintext highlighter-rouge">&amp;[T]</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">mem</span><span class="p">;</span>
+
+<span class="c1">// This function borrows a slice</span>
+<span class="k">fn</span> <span class="nf">analyze_slice</span><span class="p">(</span><span class="n">slice</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"first element of the slice: {}"</span><span class="p">,</span> <span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"the slice has {} elements"</span><span class="p">,</span> <span class="n">slice</span><span class="nf">.len</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Fixed-size array (type signature is superfluous)</span>
+  <span class="k">let</span> <span class="n">xs</span><span class="p">:</span> <span class="p">[</span><span class="nb">i32</span><span class="p">;</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+
+  <span class="c1">// All elements can be initialized to the same value</span>
+  <span class="k">let</span> <span class="n">ys</span><span class="p">:</span> <span class="p">[</span><span class="nb">i32</span><span class="p">;</span> <span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="mi">500</span><span class="p">];</span>
+
+  <span class="c1">// Indexing starts at 0</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"first element of the array: {}"</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"second element of the array: {}"</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+  <span class="c1">// `len` returns the count of elements in the array</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"number of elements in array: {}"</span><span class="p">,</span> <span class="n">xs</span><span class="nf">.len</span><span class="p">());</span>
+
+  <span class="c1">// Arrays are stack allocated</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"array occupies {} bytes"</span><span class="p">,</span> <span class="nn">mem</span><span class="p">::</span><span class="nf">size_of_val</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">));</span>
+
+  <span class="c1">// Arrays can be automatically borrowed as slices</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"borrow the whole array as a slice"</span><span class="p">);</span>
+  <span class="nf">analyze_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">);</span>
+
+  <span class="c1">// Slices can point to a section of an array</span>
+  <span class="c1">// They are of the form [starting_index..ending_index]</span>
+  <span class="c1">// starting_index is the first position in the slice</span>
+  <span class="c1">// ending_index is one more than the last position in the slice</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"borrow a section of the array as a slice"</span><span class="p">);</span>
+  <span class="nf">analyze_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ys</span><span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">4</span><span class="p">]);</span>
+
+  <span class="c1">// Out of bound indexing causes compile error</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#example" class="page__taxonomy-item" rel="tag">Example</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">Rust</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust-by-example" class="page__taxonomy-item" rel="tag">RUST by Example</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-03T00:00:00+00:00">March 3, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Rust+by+Example+%3A+2.+Primitives%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F2.Primitives" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F2.Primitives" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F2.Primitives" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/1.Hello-World" class="pagination--pager" title="Rust by Example : 1. Hello World
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I have a trouble cuz the development settings at home and at work are different.
+It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/github%20pages/Github-actions/" rel="permalink">Github Actions: Setting for CI server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
