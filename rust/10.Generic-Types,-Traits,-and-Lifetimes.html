@@ -339,7 +339,7 @@ Then we’ll apply this technique to extract a generic function! In the same way
 
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">number_list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="n">number</span> <span class="n">in</span> <span class="n">number_list</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">number_list</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">number</span><span class="p">;</span>
         <span class="p">}</span>
@@ -360,7 +360,7 @@ After considering all the numbers in the list, <code class="language-plaintext h
 
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">number_list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="n">number</span> <span class="n">in</span> <span class="n">number_list</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">number_list</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">number</span><span class="p">;</span>
         <span class="p">}</span>
@@ -372,7 +372,7 @@ After considering all the numbers in the list, <code class="language-plaintext h
 
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">number_list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="n">number</span> <span class="n">in</span> <span class="n">number_list</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">number_list</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">number</span><span class="p">;</span>
         <span class="p">}</span>
@@ -392,7 +392,7 @@ Unlike the code in Listing 10-1, which can find the largest number in only one p
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">largest</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
         <span class="p">}</span>
@@ -443,7 +443,7 @@ Doing so makes our code more flexible and provides more functionality to callers
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">largest_i32</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
         <span class="p">}</span>
@@ -455,7 +455,7 @@ Doing so makes our code more flexible and provides more functionality to callers
 <span class="k">fn</span> <span class="nf">largest_char</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">char</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">char</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
         <span class="p">}</span>
@@ -501,7 +501,7 @@ Note that this code won’t compile yet, but we’ll fix it later in this chapte
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
         <span class="p">}</span>
@@ -532,7 +532,7 @@ Note that this code won’t compile yet, but we’ll fix it later in this chapte
 <span class="mi">5</span> <span class="p">|</span>         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
   <span class="p">|</span>            <span class="o">^^^^^^^^^^^^^^</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">PartialOrd</span><span class="err">`</span> 
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="nb">PartialOrd</span><span class="err">`</span> 
           <span class="n">might</span> <span class="n">be</span> <span class="n">missing</span> <span class="k">for</span> <span class="err">`</span><span class="n">T</span><span class="err">`</span>
 </code></pre></div></div>
 <p>The note mentions <code class="language-plaintext highlighter-rouge">std::cmp::PartialOrd</code>, which is a <em>trait</em>. 
@@ -612,7 +612,7 @@ By using the <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;<
 
 <p>Enums can use multiple generic types as well. 
 The definition of the <code class="language-plaintext highlighter-rouge">Result</code> enum that we used in Chapter 9 is one example:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Ok</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
     <span class="nf">Err</span><span class="p">(</span><span class="n">E</span><span class="p">),</span>
 <span class="p">}</span>
@@ -823,7 +823,7 @@ Instead of adding a semicolon after each signature, we use curly brackets and fi
 Let’s say this <em>lib.rs</em> is for a crate we’ve called <code class="language-plaintext highlighter-rouge">aggregator</code> and someone else wants to use our crate’s functionality to implement the <code class="language-plaintext highlighter-rouge">Summary</code> trait on a struct defined within their library’s scope. 
 They would need to bring the trait into their scope first. 
 They would do so by <code class="language-plaintext highlighter-rouge">specifying use aggregator::Summary;</code>, which then would enable them to implement <code class="language-plaintext highlighter-rouge">Summary</code> for their type.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="n">crate</span> <span class="n">aggregator</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="k">crate</span> <span class="n">aggregator</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nn">aggregator</span><span class="p">::</span><span class="n">Summary</span><span class="p">;</span>
 
@@ -971,12 +971,12 @@ We can do so using the <code class="language-plaintext highlighter-rouge">+</cod
 Each generic has its own trait bounds, so functions with multiple generic type parameters can contain lots of trait bound information between the function’s name and its parameter list, making the function signature hard to read. 
 For this reason, Rust has alternate syntax for specifying trait bounds inside a where clause after the function signature. 
 So instead of writing this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">some_function</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="n">Clone</span><span class="p">,</span> <span class="n">U</span><span class="p">:</span> <span class="n">Clone</span> <span class="o">+</span> <span class="n">Debug</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">U</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">some_function</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="nb">Clone</span><span class="p">,</span> <span class="n">U</span><span class="p">:</span> <span class="nb">Clone</span> <span class="o">+</span> <span class="n">Debug</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">U</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
 </code></pre></div></div>
 <p>we can use a where clause, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">some_function</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">U</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span>
-    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="n">Clone</span><span class="p">,</span>
-          <span class="n">U</span><span class="p">:</span> <span class="n">Clone</span> <span class="o">+</span> <span class="n">Debug</span>
+    <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="nb">Clone</span><span class="p">,</span>
+          <span class="n">U</span><span class="p">:</span> <span class="nb">Clone</span> <span class="o">+</span> <span class="n">Debug</span>
 <span class="p">{</span>
 </code></pre></div></div>
 <p>This function’s signature is less cluttered: the function name, parameter list, and return type are close together, similar to a function without lots of trait bounds.</p>
@@ -1033,16 +1033,16 @@ Last time we tried to run that code, we received this error:</p>
 <span class="mi">5</span> <span class="p">|</span>         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
   <span class="p">|</span>            <span class="o">^^^^^^^^^^^^^^</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">PartialOrd</span><span class="err">`</span> <span class="n">might</span> <span class="n">be</span> <span class="n">missing</span> <span class="k">for</span> <span class="err">`</span><span class="n">T</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">an</span> <span class="n">implementation</span> <span class="n">of</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="nb">PartialOrd</span><span class="err">`</span> <span class="n">might</span> <span class="n">be</span> <span class="n">missing</span> <span class="k">for</span> <span class="err">`</span><span class="n">T</span><span class="err">`</span>
 </code></pre></div></div>
 <p>In the body of <code class="language-plaintext highlighter-rouge">largest</code> we wanted to compare two values of type <code class="language-plaintext highlighter-rouge">T</code> using the greater than (<code class="language-plaintext highlighter-rouge">&gt;</code>) operator. 
 Because that operator is defined as a default method on the standard <code class="language-plaintext highlighter-rouge">library trait std::cmp::PartialOrd</code>, we need to specify <code class="language-plaintext highlighter-rouge">PartialOrd</code> in the trait bounds for <code class="language-plaintext highlighter-rouge">T</code> so the <code class="language-plaintext highlighter-rouge">largest</code> function can work on slices of any type that we can compare. 
 We don’t need to bring <code class="language-plaintext highlighter-rouge">PartialOrd</code> into scope because it’s in the prelude. 
 Change the signature of largest to look like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">PartialOrd</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="nb">PartialOrd</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
 </code></pre></div></div>
 <p>This time when we compile the code, we get a different set of errors:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0508</span><span class="p">]:</span> <span class="n">cannot</span> <span class="k">move</span> <span class="n">out</span> <span class="n">of</span> <span class="k">type</span> <span class="err">`</span><span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="err">`</span><span class="p">,</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="k">copy</span> <span class="n">slice</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0508</span><span class="p">]:</span> <span class="n">cannot</span> <span class="k">move</span> <span class="n">out</span> <span class="n">of</span> <span class="k">type</span> <span class="err">`</span><span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="err">`</span><span class="p">,</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="n">copy</span> <span class="n">slice</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">23</span>
   <span class="p">|</span>
 <span class="mi">2</span> <span class="p">|</span>     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -1054,7 +1054,7 @@ Change the signature of largest to look like this:</p>
 <span class="n">error</span><span class="p">[</span><span class="n">E0507</span><span class="p">]:</span> <span class="n">cannot</span> <span class="k">move</span> <span class="n">out</span> <span class="n">of</span> <span class="n">borrowed</span> <span class="n">content</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">9</span>
   <span class="p">|</span>
-<span class="mi">4</span> <span class="p">|</span>     <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
   <span class="p">|</span>         <span class="o">^----</span>
   <span class="p">|</span>         <span class="p">||</span>
   <span class="p">|</span>         <span class="p">|</span><span class="n">hint</span><span class="p">:</span> <span class="n">to</span> <span class="n">prevent</span> <span class="k">move</span><span class="p">,</span> <span class="k">use</span> <span class="err">`</span><span class="k">ref</span> <span class="n">item</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="k">ref</span> <span class="k">mut</span> <span class="n">item</span><span class="err">`</span>
@@ -1068,10 +1068,10 @@ Consequently, we wouldn’t be able to move the value out of <code class="langua
 
 <p>To call this code with only those types that implement the <code class="language-plaintext highlighter-rouge">Copy</code> trait, we can add <code class="language-plaintext highlighter-rouge">Copy</code> to the trait bounds of <code class="language-plaintext highlighter-rouge">T</code>! 
 Listing 10-15 shows the complete code of a generic largest function that will compile as long as the types of the values in the slice that we pass into the function implement the <code class="language-plaintext highlighter-rouge">PartialOrd</code> and <code class="language-plaintext highlighter-rouge">Copy</code> traits, like <code class="language-plaintext highlighter-rouge">i32</code> and <code class="language-plaintext highlighter-rouge">char</code> do.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">PartialOrd</span> <span class="o">+</span> <span class="nb">Copy</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">largest</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="nb">PartialOrd</span> <span class="o">+</span> <span class="nb">Copy</span><span class="o">&gt;</span><span class="p">(</span><span class="n">list</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">item</span> <span class="k">in</span> <span class="n">list</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
             <span class="n">largest</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
         <span class="p">}</span>
@@ -1117,15 +1117,15 @@ But <code class="language-plaintext highlighter-rouge">Pair&lt;T&gt;</code> only
   <span class="p">}</span>
 
   <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
-      <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span> <span class="p">{</span>
-          <span class="n">Self</span> <span class="p">{</span>
+      <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+          <span class="k">Self</span> <span class="p">{</span>
               <span class="n">x</span><span class="p">,</span>
               <span class="n">y</span><span class="p">,</span>
           <span class="p">}</span>
       <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="n">PartialOrd</span><span class="o">&gt;</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span> <span class="o">+</span> <span class="nb">PartialOrd</span><span class="o">&gt;</span> <span class="n">Pair</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
       <span class="k">fn</span> <span class="nf">cmp_display</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
           <span class="k">if</span> <span class="k">self</span><span class="py">.x</span> <span class="o">&gt;=</span> <span class="k">self</span><span class="py">.y</span> <span class="p">{</span>
               <span class="nd">println!</span><span class="p">(</span><span class="s">"The largest member is x = {}"</span><span class="p">,</span> <span class="k">self</span><span class="py">.x</span><span class="p">);</span>
@@ -1142,7 +1142,7 @@ Implementations of a trait on any type that satisfies the trait bounds are calle
 For example, the standard library implements the <code class="language-plaintext highlighter-rouge">ToString</code> trait on any type that implements the <code class="language-plaintext highlighter-rouge">Display</code> trait. 
 The <code class="language-plaintext highlighter-rouge">impl</code> block in the standard library looks similar to this code:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Display</span><span class="o">&gt;</span> <span class="n">ToString</span> <span class="k">for</span> <span class="n">T</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>Because the standard library has this blanket implementation, we can call the <code class="language-plaintext highlighter-rouge">to_string</code> method defined by the <code class="language-plaintext highlighter-rouge">ToString</code> trait on any type that implements the <code class="language-plaintext highlighter-rouge">Display</code> trait. 
@@ -1216,15 +1216,15 @@ So how does Rust determine that this code is invalid? It uses a borrow checker.<
 <p>The Rust compiler has a <em>borrow checker</em> that compares scopes to determine whether all borrows are valid. 
 Listing 10-18 shows the same code as Listing 10-17 but with annotations showing the lifetimes of the variables.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-    <span class="k">let</span> <span class="n">r</span><span class="p">;</span>                <span class="c">// ---------+-- 'a</span>
-                          <span class="c">//          |</span>
-    <span class="p">{</span>                     <span class="c">//          |</span>
-        <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>        <span class="c">// -+-- 'b  |</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>           <span class="c">//  |       |</span>
-    <span class="p">}</span>                     <span class="c">// -+       |</span>
-                          <span class="c">//          |</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"r: {}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span> <span class="c">//          |</span>
-<span class="p">}</span>                         <span class="c">// ---------+</span>
+    <span class="k">let</span> <span class="n">r</span><span class="p">;</span>                <span class="c1">// ---------+-- 'a</span>
+                          <span class="c1">//          |</span>
+    <span class="p">{</span>                     <span class="c1">//          |</span>
+        <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>        <span class="c1">// -+-- 'b  |</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>           <span class="c1">//  |       |</span>
+    <span class="p">}</span>                     <span class="c1">// -+       |</span>
+                          <span class="c1">//          |</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"r: {}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span> <span class="c1">//          |</span>
+<span class="p">}</span>                         <span class="c1">// ---------+</span>
 </code></pre></div></div>
 <h4 id="listing-10-18-annotations-of-the-lifetimes-of-r-and-x-named-a-and-b-respectively">Listing 10-18: Annotations of the lifetimes of r and x, named ‘a and ‘b, respectively</h4>
 
@@ -1235,13 +1235,13 @@ The program is rejected because ‘b is shorter than ‘a: the subject of the re
 
 <p>Listing 10-19 fixes the code so it doesn’t have a dangling reference and compiles without any errors.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>            <span class="c">// ----------+-- 'b</span>
-                          <span class="c">//           |</span>
-    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>           <span class="c">// --+-- 'a  |</span>
-                          <span class="c">//   |       |</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"r: {}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span> <span class="c">//   |       |</span>
-                          <span class="c">// --+       |</span>
-<span class="p">}</span>                         <span class="c">// ----------+</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>            <span class="c1">// ----------+-- 'b</span>
+                          <span class="c1">//           |</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>           <span class="c1">// --+-- 'a  |</span>
+                          <span class="c1">//   |       |</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"r: {}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span> <span class="c1">//   |       |</span>
+                          <span class="c1">// --+       |</span>
+<span class="p">}</span>                         <span class="c1">// ----------+</span>
 </code></pre></div></div>
 <h4 id="listing-10-19-a-valid-reference-because-the-data-has-a-longer-lifetime-than-the-reference">Listing 10-19: A valid reference because the data has a longer lifetime than the reference</h4>
 
@@ -1311,9 +1311,9 @@ Most people use the name <code class="language-plaintext highlighter-rouge">'a</
 We place lifetime parameter annotations after the <code class="language-plaintext highlighter-rouge">&amp;</code> of a reference, using a space to separate the annotation from the reference’s type.</p>
 
 <p>Here are some examples: a reference to an <code class="language-plaintext highlighter-rouge">i32</code> without a lifetime parameter, a reference to an <code class="language-plaintext highlighter-rouge">i32</code> that has a lifetime parameter named <code class="language-plaintext highlighter-rouge">'a</code>, and a mutable reference to an <code class="language-plaintext highlighter-rouge">i32</code> that also has the lifetime <code class="language-plaintext highlighter-rouge">'a</code>.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="nb">i32</span>        <span class="c">// a reference</span>
-<span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span>     <span class="c">// a reference with an explicit lifetime</span>
-<span class="o">&amp;</span><span class="nv">'a</span> <span class="k">mut</span> <span class="nb">i32</span> <span class="c">// a mutable reference with an explicit lifetime</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="nb">i32</span>        <span class="c1">// a reference</span>
+<span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">i32</span>     <span class="c1">// a reference with an explicit lifetime</span>
+<span class="o">&amp;</span><span class="nv">'a</span> <span class="k">mut</span> <span class="nb">i32</span> <span class="c1">// a mutable reference with an explicit lifetime</span>
 </code></pre></div></div>
 <p>One lifetime annotation by itself doesn’t have much meaning, because the annotations are meant to tell Rust how generic lifetime parameters of multiple references relate to each other. 
 For example, let’s say we have a function with the parameter <code class="language-plaintext highlighter-rouge">first</code> that is a reference to an <code class="language-plaintext highlighter-rouge">i32</code> with lifetime <code class="language-plaintext highlighter-rouge">'a</code>. 
@@ -1450,7 +1450,7 @@ Here is the error message we get:</p>
 <span class="mi">2</span> <span class="p">|</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"really long string"</span><span class="p">);</span>
 <span class="mi">3</span> <span class="p">|</span> <span class="p">|</span>     <span class="n">result</span><span class="nf">.as_str</span><span class="p">()</span>
 <span class="mi">4</span> <span class="p">|</span> <span class="p">|</span> <span class="p">}</span>
-  <span class="p">|</span> <span class="p">|</span><span class="mi">_</span><span class="o">^</span>
+  <span class="p">|</span> <span class="p">|</span><span class="n">_</span><span class="o">^</span>
 </code></pre></div></div>
 <p>The problem is that <code class="language-plaintext highlighter-rouge">result</code> goes out of scope and gets cleaned up at the end of the <code class="language-plaintext highlighter-rouge">longest</code> function. 
 We’re also trying to return a reference to <code class="language-plaintext highlighter-rouge">result</code> from the function. 
@@ -1492,8 +1492,8 @@ However, in Chapter 4 we had a function in Listing 4-9, which is shown again in 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="k">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="sc">b' '</span> <span class="p">{</span>
             <span class="k">return</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">i</span><span class="p">];</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -1602,7 +1602,7 @@ Then, because one of the parameters is <code class="language-plaintext highlight
 <h3 id="the-static-lifetime">The Static Lifetime</h3>
 <p>One special lifetime we need to discuss is <code class="language-plaintext highlighter-rouge">'static</code>, which means that this reference can live for the entire duration of the program. 
 All string literals have the <code class="language-plaintext highlighter-rouge">'static</code> lifetime, which we can annotate as follows:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span> <span class="o">=</span> <span class="s">"I have a static lifetime."</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span> <span class="o">=</span> <span class="s">"I have a static lifetime."</span><span class="p">;</span>
 </code></pre></div></div>
 <p>The text of this string is stored directly in the program’s binary, which is always available. 
 Therefore, the lifetime of all string literals is <code class="language-plaintext highlighter-rouge">'static</code>.</p>
@@ -1749,6 +1749,64 @@ And all of this analysis happens at compile time, which doesn’t affect runtime
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1793,65 +1851,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1915,7 +1914,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

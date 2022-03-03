@@ -369,12 +369,12 @@ Also, the conditions in a series of <code class="language-plaintext highlighter-
 <p>The code in Listing 18-1 shows a series of checks for several conditions that decide what the background color should be. 
 For this example, we’ve created variables with hardcoded values that a real program might receive from user input.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">favorite_color</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="nb">str</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nb">None</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">is_tuesday</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-    <span class="k">let</span> <span class="n">age</span><span class="p">:</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">u8</span><span class="p">,</span> <span class="mi">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="s">"34"</span><span class="nf">.parse</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">age</span><span class="p">:</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">u8</span><span class="p">,</span> <span class="n">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="s">"34"</span><span class="nf">.parse</span><span class="p">();</span>
 
     <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">=</span> <span class="n">favorite_color</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"Using your favorite color, {}, as the background"</span><span class="p">,</span> <span class="n">color</span><span class="p">);</span>
@@ -436,7 +436,7 @@ In a <code class="language-plaintext highlighter-rouge">for</code> loop, the pat
 <p>Listing 18-3 demonstrates how to use a pattern in a <code class="language-plaintext highlighter-rouge">for</code> loop to destructure, or break apart, a tuple as part of the <code class="language-plaintext highlighter-rouge">for</code> loop.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="sc">'a'</span><span class="p">,</span> <span class="sc">'b'</span><span class="p">,</span> <span class="sc">'c'</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="n">in</span> <span class="n">v</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">v</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"{} is at index {}"</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
    <span class="p">}</span>
 </code></pre></div></div>
@@ -444,8 +444,8 @@ In a <code class="language-plaintext highlighter-rouge">for</code> loop, the pat
 
 <p>The code in Listing 18-3 will print the following:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/patterns)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.52</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/patterns)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.52</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">patterns</span><span class="err">`</span>
 <span class="n">a</span> <span class="n">is</span> <span class="n">at</span> <span class="n">index</span> <span class="mi">0</span>
 <span class="n">b</span> <span class="n">is</span> <span class="n">at</span> <span class="n">index</span> <span class="mi">1</span>
@@ -485,7 +485,7 @@ For example, Listing 18-5 shows an attempt to destructure a tuple with three ele
 
 <p>Attempting to compile this code results in this type error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/patterns)</span>
+   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/patterns)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0308</span><span class="p">]:</span> <span class="n">mismatched</span> <span class="n">types</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">9</span>
   <span class="p">|</span>
@@ -493,11 +493,11 @@ For example, Listing 18-5 shows an attempt to destructure a tuple with three ele
   <span class="p">|</span>         <span class="o">^^^^^^</span> <span class="n">expected</span> <span class="n">a</span> <span class="n">tuple</span> <span class="n">with</span> <span class="mi">3</span> <span class="n">elements</span><span class="p">,</span> <span class="n">found</span> <span class="n">one</span> <span class="n">with</span> <span class="mi">2</span> <span class="n">elements</span>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="n">tuple</span> <span class="err">`</span><span class="p">({</span><span class="n">integer</span><span class="p">},</span> <span class="p">{</span><span class="n">integer</span><span class="p">},</span> <span class="p">{</span><span class="n">integer</span><span class="p">})</span><span class="err">`</span>
-             <span class="n">found</span> <span class="n">tuple</span> <span class="err">`</span><span class="p">(</span><span class="mi">_</span><span class="p">,</span> <span class="mi">_</span><span class="p">)</span><span class="err">`</span>
+             <span class="n">found</span> <span class="n">tuple</span> <span class="err">`</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0308</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0308</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">patterns</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -510,13 +510,13 @@ If the problem is that we have too many variables in the pattern, the solution i
 The code in Listing 18-6, which declares a function named <code class="language-plaintext highlighter-rouge">foo</code> that takes one parameter named <code class="language-plaintext highlighter-rouge">x</code> of type <code class="language-plaintext highlighter-rouge">i32</code>, should by now look familiar.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c">// code goes here</span>
+    <span class="c1">// code goes here</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-18-6-a-function-signature-uses-patterns-in-the-parameters">Listing 18-6: A function signature uses patterns in the parameters</h4>
 
 <p>The <code class="language-plaintext highlighter-rouge">x</code> part is a pattern! As we did with <code class="language-plaintext highlighter-rouge">let</code>, we could match a tuple in a function’s arguments to the pattern. Listing 18-7 splits the values in a tuple as we pass it to a function.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">print_coordinates</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="o">&amp;</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">i32</span><span class="p">))</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Current location: ({}, {})"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
@@ -561,15 +561,15 @@ However, the <code class="language-plaintext highlighter-rouge">let</code> state
 At compile time, Rust will complain that we’ve tried to use a refutable pattern where an irrefutable pattern is required:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/patterns)</span>
-<span class="n">error</span><span class="p">[</span><span class="n">E0005</span><span class="p">]:</span> <span class="n">refutable</span> <span class="n">pattern</span> <span class="n">in</span> <span class="n">local</span> <span class="n">binding</span><span class="p">:</span> <span class="err">`</span><span class="nb">None</span><span class="err">`</span> <span class="n">not</span> <span class="n">covered</span>
+   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/patterns)</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0005</span><span class="p">]:</span> <span class="n">refutable</span> <span class="n">pattern</span> <span class="k">in</span> <span class="n">local</span> <span class="n">binding</span><span class="p">:</span> <span class="err">`</span><span class="nb">None</span><span class="err">`</span> <span class="n">not</span> <span class="n">covered</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">9</span>
   <span class="p">|</span>
 <span class="mi">3</span> <span class="p">|</span>     <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">some_option_value</span><span class="p">;</span>
   <span class="p">|</span>         <span class="o">^^^^^^^</span> <span class="n">pattern</span> <span class="err">`</span><span class="nb">None</span><span class="err">`</span> <span class="n">not</span> <span class="n">covered</span>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="err">`</span><span class="k">let</span><span class="err">`</span> <span class="n">bindings</span> <span class="n">require</span> <span class="n">an</span> <span class="s">"irrefutable pattern"</span><span class="p">,</span> <span class="n">like</span> <span class="n">a</span> <span class="err">`</span><span class="k">struct</span><span class="err">`</span> <span class="n">or</span> <span class="n">an</span> <span class="err">`</span><span class="k">enum</span><span class="err">`</span> <span class="n">with</span> <span class="n">only</span> <span class="n">one</span> <span class="n">variant</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="p">,</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="c">//doc.rust-lang.org/book/ch18-02-refutability.html</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="p">,</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="c1">//doc.rust-lang.org/book/ch18-02-refutability.html</span>
 <span class="n">help</span><span class="p">:</span> <span class="n">you</span> <span class="n">might</span> <span class="n">want</span> <span class="n">to</span> <span class="k">use</span> <span class="err">`</span><span class="k">if</span> <span class="k">let</span><span class="err">`</span> <span class="n">to</span> <span class="n">ignore</span> <span class="n">the</span> <span class="n">variant</span> <span class="n">that</span> <span class="n">isn</span><span class="nv">'t</span> <span class="n">matched</span>
   <span class="p">|</span>
 <span class="mi">3</span> <span class="p">|</span>     <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">some_option_value</span> <span class="p">{</span> <span class="cm">/* */</span> <span class="p">}</span>
@@ -577,7 +577,7 @@ At compile time, Rust will complain that we’ve tried to use a refutable patter
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0005</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0005</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">patterns</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -603,18 +603,18 @@ If we give <code class="language-plaintext highlighter-rouge">if let</code> a pa
 <p>Rust complains that it doesn’t make sense to use <code class="language-plaintext highlighter-rouge">if let</code> with an irrefutable pattern:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/patterns)</span>
+   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/patterns)</span>
 <span class="n">warning</span><span class="p">:</span> <span class="n">irrefutable</span> <span class="k">if</span><span class="o">-</span><span class="k">let</span> <span class="n">pattern</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
 <span class="mi">2</span> <span class="p">|</span> <span class="o">/</span>     <span class="k">if</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">{</span>
 <span class="mi">3</span> <span class="p">|</span> <span class="p">|</span>         <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
 <span class="mi">4</span> <span class="p">|</span> <span class="p">|</span>     <span class="p">};</span>
-  <span class="p">|</span> <span class="p">|</span><span class="mi">_____</span><span class="o">^</span>
+  <span class="p">|</span> <span class="p">|</span><span class="n">_____</span><span class="o">^</span>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="err">`</span><span class="nd">#[warn(irrefutable_let_patterns)]</span><span class="err">`</span> <span class="n">on</span> <span class="n">by</span> <span class="n">default</span>
 
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.39</span><span class="n">s</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.39</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">patterns</span><span class="err">`</span>
 </code></pre></div></div>
 <p>For this reason, match arms must use refutable patterns, except for the last arm, which should match any remaining values with an irrefutable pattern. 
@@ -634,7 +634,7 @@ The following code gives some examples:</p>
         <span class="mi">1</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"one"</span><span class="p">),</span>
         <span class="mi">2</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"two"</span><span class="p">),</span>
         <span class="mi">3</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"three"</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"anything"</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"anything"</span><span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <p>This code prints <code class="language-plaintext highlighter-rouge">one</code> because the value in <code class="language-plaintext highlighter-rouge">x</code> is <code class="language-plaintext highlighter-rouge">1</code>. 
@@ -648,7 +648,7 @@ In Listing 18-11, we declare a variable named <code class="language-plaintext hi
 We then create a <code class="language-plaintext highlighter-rouge">match</code> expression on the value <code class="language-plaintext highlighter-rouge">x</code>. 
 Look at the patterns in the match arms and <code class="language-plaintext highlighter-rouge">println!</code> at the end, and try to figure out what the code will print before running this code or reading further.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
@@ -656,7 +656,7 @@ Look at the patterns in the match arms and <code class="language-plaintext highl
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="nf">Some</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Got 50"</span><span class="p">),</span>
         <span class="nf">Some</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Matched, y = {:?}"</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Default case, x = {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Default case, x = {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
     <span class="p">}</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"at the end: x = {:?}, y = {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
@@ -690,7 +690,7 @@ For example, the following code matches the value of <code class="language-plain
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="mi">1</span> <span class="p">|</span> <span class="mi">2</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"one or two"</span><span class="p">),</span>
         <span class="mi">3</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"three"</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"anything"</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"anything"</span><span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <p>This code prints <code class="language-plaintext highlighter-rouge">one or two</code>.</p>
@@ -703,7 +703,7 @@ In the following code, when a pattern matches any of the values within the range
 
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="mi">1</span><span class="o">..=</span><span class="mi">5</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"one through five"</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"something else"</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"something else"</span><span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <p>If <code class="language-plaintext highlighter-rouge">x</code> is 1, 2, 3, 4, or 5, the first arm will match. 
@@ -718,7 +718,7 @@ The only types for which Rust can tell if a range is empty or not are <code clas
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="sc">'a'</span><span class="o">..=</span><span class="sc">'j'</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"early ASCII letter"</span><span class="p">),</span>
         <span class="sc">'k'</span><span class="o">..=</span><span class="sc">'z'</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"late ASCII letter"</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"something else"</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"something else"</span><span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <p>Rust can tell that <code class="language-plaintext highlighter-rouge">c</code> is within the first pattern’s range and prints <code class="language-plaintext highlighter-rouge">early ASCII letter</code>.</p>
@@ -729,7 +729,7 @@ The only types for which Rust can tell if a range is empty or not are <code clas
 <h3 id="destructuring-structs">Destructuring Structs</h3>
 <p>Listing 18-12 shows a <code class="language-plaintext highlighter-rouge">Point</code> struct with two fields, <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>, that we can break apart using a pattern with a <code class="language-plaintext highlighter-rouge">let</code> statement.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
@@ -753,7 +753,7 @@ But it’s common to want the variable names to match the field names to make it
 <p>Because having variable names match the fields is common and because writing <code class="language-plaintext highlighter-rouge">let Point { x: x, y: y } = p;</code> contains a lot of duplication, there is a shorthand for patterns that match struct fields: you only need to list the name of the struct field, and the variables created from the pattern will have the same names. 
 Listing 18-13 shows code that behaves in the same way as the code in Listing 18-12, but the variables created in the <code class="language-plaintext highlighter-rouge">let</code> pattern are <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> instead of <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
@@ -778,7 +778,7 @@ Doing so allows us to test some of the fields for particular values while creati
 
 <p>Listing 18-14 shows a <code class="language-plaintext highlighter-rouge">match</code> expression that separates <code class="language-plaintext highlighter-rouge">Point</code> values into three cases: points that lie directly on the <code class="language-plaintext highlighter-rouge">x</code> axis (which is true when <code class="language-plaintext highlighter-rouge">y = 0</code>), on the <code class="language-plaintext highlighter-rouge">y</code> axis (<code class="language-plaintext highlighter-rouge">x = 0</code>), or neither.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">7</span> <span class="p">};</span>
@@ -805,7 +805,7 @@ The third arm doesn’t specify any literals, so it matches any other <code clas
 One detail we haven’t mentioned explicitly is that the pattern to destructure an enum should correspond to the way the data stored within the enum is defined. 
 As an example, in Listing 18-15 we use the <code class="language-plaintext highlighter-rouge">Message</code> enum from Listing 6-2 and write a <code class="language-plaintext highlighter-rouge">match</code> with patterns that will destructure each inner value.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">enum</span> <span class="n">Message</span> <span class="p">{</span>
     <span class="n">Quit</span><span class="p">,</span>
@@ -876,7 +876,7 @@ Matching can work on nested items too!</p>
             <span class="s">"Change the color to hue {}, saturation {}, and value {}"</span><span class="p">,</span>
             <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span>
         <span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="p">(),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="p">(),</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -903,9 +903,9 @@ There are a few ways to ignore entire values or parts of values in a pattern: us
 <h3 id="ignoring-an-entire-value-with-_">Ignoring an Entire Value with _</h3>
 <p>We’ve used the underscore (<code class="language-plaintext highlighter-rouge">_</code>) as a wildcard pattern that will match any value but not bind to the value. 
 Although the underscore <code class="language-plaintext highlighter-rouge">_</code> pattern is especially useful as the last arm in a <code class="language-plaintext highlighter-rouge">match</code> expression, we can use it in any pattern, including function parameters, as shown in Listing 18-17.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
-<span class="k">fn</span> <span class="nf">foo</span><span class="p">(</span><span class="mi">_</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">foo</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"This code only uses the y parameter: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -930,10 +930,10 @@ The business requirements are that the user should not be allowed to overwrite a
     <span class="k">let</span> <span class="n">new_setting_value</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 
     <span class="k">match</span> <span class="p">(</span><span class="n">setting_value</span><span class="p">,</span> <span class="n">new_setting_value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="p">(</span><span class="nf">Some</span><span class="p">(</span><span class="mi">_</span><span class="p">),</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">_</span><span class="p">))</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="p">(</span><span class="nf">Some</span><span class="p">(</span><span class="n">_</span><span class="p">),</span> <span class="nf">Some</span><span class="p">(</span><span class="n">_</span><span class="p">))</span> <span class="k">=&gt;</span> <span class="p">{</span>
             <span class="nd">println!</span><span class="p">(</span><span class="s">"Can't overwrite an existing customized value"</span><span class="p">);</span>
         <span class="p">}</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="p">{</span>
             <span class="n">setting_value</span> <span class="o">=</span> <span class="n">new_setting_value</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -954,7 +954,7 @@ Listing 18-19 shows an example of ignoring the second and fourth values in a tup
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
 
     <span class="k">match</span> <span class="n">numbers</span> <span class="p">{</span>
-        <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="mi">_</span><span class="p">,</span> <span class="n">third</span><span class="p">,</span> <span class="mi">_</span><span class="p">,</span> <span class="n">fifth</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">third</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">fifth</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
             <span class="nd">println!</span><span class="p">(</span><span class="s">"Some numbers: {}, {}, {}"</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">third</span><span class="p">,</span> <span class="n">fifth</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -968,10 +968,10 @@ Listing 18-19 shows an example of ignoring the second and fourth values in a tup
 But sometimes it’s useful to create a variable you won’t use yet, such as when you’re prototyping or just starting a project. 
 In this situation, you can tell Rust not to warn you about the unused variable by starting the name of the variable with an underscore. 
 In Listing 18-20, we create two unused variables, but when we run this code, we should only get a warning about one of them.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="mi">_</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">_x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -985,7 +985,7 @@ To show a case where this distinction matters, Listing 18-21 will provide us wit
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">));</span>
 
-    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">_</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">s</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">_s</span><span class="p">)</span> <span class="o">=</span> <span class="n">s</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"found a string"</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -999,7 +999,7 @@ Listing 18-22 will compile without any errors because <code class="language-plai
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Hello!"</span><span class="p">));</span>
 
-    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">s</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">s</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"found a string"</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -1035,7 +1035,7 @@ This is quicker than having to list <code class="language-plaintext highlighter-
 <p>The syntax <code class="language-plaintext highlighter-rouge">..</code> will expand to as many values as it needs to be. 
 Listing 18-24 shows how to use <code class="language-plaintext highlighter-rouge">..</code> with a tuple.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
@@ -1055,7 +1055,7 @@ The <code class="language-plaintext highlighter-rouge">..</code> will match and 
 <p>However, using <code class="language-plaintext highlighter-rouge">..</code> must be unambiguous. 
 If it is unclear which values are intended for matching and which should be ignored, Rust will give us an error. 
 Listing 18-25 shows an example of using .. ambiguously, so it will not compile.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
@@ -1072,7 +1072,7 @@ Listing 18-25 shows an example of using .. ambiguously, so it will not compile.<
 <p>When we compile this example, we get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/patterns)</span>
+   <span class="n">Compiling</span> <span class="n">patterns</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/patterns)</span>
 <span class="n">error</span><span class="p">:</span> <span class="err">`</span><span class="o">..</span><span class="err">`</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="n">once</span> <span class="n">per</span> <span class="n">tuple</span> <span class="n">pattern</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">22</span>
   <span class="p">|</span>
@@ -1120,7 +1120,7 @@ Rust would then go to the second arm, which would match because the second arm d
 Recall that a new variable was created inside the pattern in the <code class="language-plaintext highlighter-rouge">match</code> expression instead of using the variable outside the <code class="language-plaintext highlighter-rouge">match</code>. 
 That new variable meant we couldn’t test against the value of the outer variable. Listing 18-27 shows how we can use a match guard to fix this problem.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
@@ -1129,7 +1129,7 @@ That new variable meant we couldn’t test against the value of the outer variab
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="nf">Some</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Got 50"</span><span class="p">),</span>
         <span class="nf">Some</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="n">y</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Matched, n = {}"</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Default case, x = {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Default case, x = {:?}"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
     <span class="p">}</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"at the end: x = {:?}, y = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
@@ -1154,7 +1154,7 @@ The important part of this example is that the <code class="language-plaintext h
 
     <span class="k">match</span> <span class="n">x</span> <span class="p">{</span>
         <span class="mi">4</span> <span class="p">|</span> <span class="mi">5</span> <span class="p">|</span> <span class="mi">6</span> <span class="k">if</span> <span class="n">y</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"yes"</span><span class="p">),</span>
-        <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"no"</span><span class="p">),</span>
+        <span class="n">_</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"no"</span><span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-18-28-combining-multiple-patterns-with-a-match-guard">Listing 18-28: Combining multiple patterns with a match guard</h4>
@@ -1332,6 +1332,64 @@ We can create simple or complex patterns to suit our needs.</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1376,65 +1434,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1498,7 +1497,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

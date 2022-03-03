@@ -343,8 +343,8 @@ For example, if you want to abort on panic in release mode, add this:</p>
 </code></pre></div></div>
 <p>When you run the program, you’ll see something like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/panic)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.25</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/panic)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.25</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
 <span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'crash</span> <span class="n">and</span> <span class="n">burn</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span>
 <span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="err">.</span>
@@ -385,8 +385,8 @@ This is called a <code class="language-plaintext highlighter-rouge">buffer overr
 <p>To protect your program from this sort of vulnerability, if you try to read an element at an index that doesn’t exist, Rust will stop execution and refuse to continue. 
 Let’s try it and see:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/panic)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.27</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">panic</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/panic)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.27</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
 <span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'index</span> <span class="n">out</span> <span class="n">of</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">the</span> <span class="n">len</span> <span class="n">is</span> <span class="mi">3</span> <span class="n">but</span> <span class="n">the</span> <span class="n">index</span> <span class="n">is</span> <span class="mi">99</span><span class="err">'</span><span class="p">,</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2448</span><span class="p">:</span><span class="mi">10</span>
 <span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="err">.</span>
@@ -404,7 +404,7 @@ These lines might include core Rust code, standard library code, or crates that 
 Let’s try getting a backtrace by setting the RUST_BACKTRACE environment variable to any value except 0. 
 Listing 9-2 shows output similar to what you’ll see.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span> <span class="n">cargo</span> <span class="n">run</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.00</span><span class="n">s</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.00</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">panic</span><span class="err">`</span>
 <span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'index</span> <span class="n">out</span> <span class="n">of</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">the</span> <span class="n">len</span> <span class="n">is</span> <span class="mi">3</span> <span class="n">but</span> <span class="n">the</span> <span class="n">index</span> <span class="n">is</span> <span class="mi">99</span><span class="err">'</span><span class="p">,</span> <span class="n">libcore</span><span class="o">/</span><span class="n">slice</span><span class="o">/</span><span class="k">mod</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2448</span><span class="p">:</span><span class="mi">10</span>
 <span class="n">stack</span> <span class="n">backtrace</span><span class="p">:</span>
@@ -421,7 +421,7 @@ Listing 9-2 shows output similar to what you’ll see.</p>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">476</span>
    <span class="mi">5</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="n">continue_panic_fmt</span>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">390</span>
-   <span class="mi">6</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">try</span><span class="p">::</span><span class="n">do_call</span>
+   <span class="mi">6</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="k">try</span><span class="p">::</span><span class="n">do_call</span>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">325</span>
    <span class="mi">7</span><span class="p">:</span> <span class="nn">core</span><span class="p">::</span><span class="nn">ptr</span><span class="p">::</span><span class="n">drop_in_place</span>
              <span class="n">at</span> <span class="n">libcore</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">77</span>
@@ -437,7 +437,7 @@ Listing 9-2 shows output similar to what you’ll see.</p>
              <span class="n">at</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span>
   <span class="mi">13</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rt</span><span class="p">::</span><span class="nn">lang_start</span><span class="p">::</span>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">74</span>
-  <span class="mi">14</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="nn">try</span><span class="p">::</span><span class="n">do_call</span>
+  <span class="mi">14</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">panicking</span><span class="p">::</span><span class="k">try</span><span class="p">::</span><span class="n">do_call</span>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">rt</span><span class="py">.rs</span><span class="p">:</span><span class="mi">59</span>
              <span class="n">at</span> <span class="n">libstd</span><span class="o">/</span><span class="n">panicking</span><span class="py">.rs</span><span class="p">:</span><span class="mi">310</span>
   <span class="mi">15</span><span class="p">:</span> <span class="n">macho_symbol_search</span>
@@ -469,7 +469,7 @@ Sometimes, when a function fails, it’s for a reason that you can easily interp
 For example, if you try to open a file and that operation fails because the file doesn’t exist, you might want to create the file instead of terminating the process.</p>
 
 <p>Recall from “Handling Potential Failure with the Result Type” in Chapter 2 that the <code class="language-plaintext highlighter-rouge">Result</code> enum is defined as having two variants, <code class="language-plaintext highlighter-rouge">Ok</code> and <code class="language-plaintext highlighter-rouge">Err</code>, as follows</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nf">Ok</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
     <span class="nf">Err</span><span class="p">(</span><span class="n">E</span><span class="p">),</span>
 <span class="p">}</span>
@@ -498,10 +498,10 @@ Let’s try it! We know that the return type of <code class="language-plaintext 
   <span class="p">|</span>
 <span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
   <span class="p">|</span>                  <span class="o">^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">expected</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">found</span> <span class="k">enum</span>
-<span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="err">`</span>
+<span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="nb">Result</span><span class="err">`</span>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="k">type</span> <span class="err">`</span><span class="nb">u32</span><span class="err">`</span>
-             <span class="n">found</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">,</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="err">`</span>
+             <span class="n">found</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">,</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="err">`</span>
 </code></pre></div></div>
 <p>This tells us the return type of the <code class="language-plaintext highlighter-rouge">File::open</code> function is a <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code>. 
 The generic parameter <code class="language-plaintext highlighter-rouge">T</code> has been filled in here with the type of the success value, <code class="language-plaintext highlighter-rouge">std::fs::File</code>, which is a file handle. 
@@ -652,7 +652,7 @@ If the file doesn’t exist or can’t be read, this function will return those 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">);</span>
 
     <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="k">match</span> <span class="n">f</span> <span class="p">{</span>
@@ -663,7 +663,7 @@ If the file doesn’t exist or can’t be read, this function will return those 
     <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
     <span class="k">match</span> <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">Ok</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
         <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -698,7 +698,7 @@ We don’t have enough information on what the calling code is actually trying t
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
     <span class="n">f</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
@@ -726,7 +726,7 @@ We could even shorten this code further by chaining method calls immediately aft
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Read</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
     <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="nf">.read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
@@ -745,7 +745,7 @@ The functionality is again the same as in Listing 9-6 and Listing 9-7; this is j
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">read_username_from_file</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -765,12 +765,12 @@ The functionality is again the same as in Listing 9-6 and Listing 9-7; this is j
 </code></pre></div></div>
 <p>When we compile this code, we get the following error message:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="n">in</span> <span class="n">a</span> <span class="n">function</span> <span class="n">that</span> <span class="n">returns</span>
-<span class="err">`</span><span class="n">Result</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="nb">Option</span><span class="err">`</span> <span class="p">(</span><span class="n">or</span> <span class="n">another</span> <span class="k">type</span> <span class="n">that</span> <span class="n">implements</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Try</span><span class="err">`</span><span class="p">)</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="k">in</span> <span class="n">a</span> <span class="n">function</span> <span class="n">that</span> <span class="n">returns</span>
+<span class="err">`</span><span class="nb">Result</span><span class="err">`</span> <span class="n">or</span> <span class="err">`</span><span class="nb">Option</span><span class="err">`</span> <span class="p">(</span><span class="n">or</span> <span class="n">another</span> <span class="k">type</span> <span class="n">that</span> <span class="n">implements</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Try</span><span class="err">`</span><span class="p">)</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">13</span>
   <span class="p">|</span>
 <span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-  <span class="p">|</span>             <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">cannot</span> <span class="k">use</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="n">in</span> <span class="n">a</span>
+  <span class="p">|</span>             <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">cannot</span> <span class="k">use</span> <span class="n">the</span> <span class="err">`</span><span class="o">?</span><span class="err">`</span> <span class="n">operator</span> <span class="k">in</span> <span class="n">a</span>
   <span class="n">function</span> <span class="n">that</span> <span class="n">returns</span> <span class="err">`</span><span class="p">()</span><span class="err">`</span>
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Try</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">()</span><span class="err">`</span>
@@ -785,7 +785,7 @@ The other technique is to use a match or one of the <code class="language-plaint
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="s">"hello.txt"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 
     <span class="nf">Ok</span><span class="p">(())</span>
@@ -873,11 +873,11 @@ But it would be a useful enhancement to guide the user toward valid guesses and 
 
 <p>One way to do this would be to parse the guess as an <code class="language-plaintext highlighter-rouge">i32</code> instead of only a <code class="language-plaintext highlighter-rouge">u32</code> to allow potentially negative numbers, and then add a check for the number being in range, like so:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">loop</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 
     <span class="k">let</span> <span class="n">guess</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="k">match</span> <span class="n">guess</span><span class="nf">.trim</span><span class="p">()</span><span class="nf">.parse</span><span class="p">()</span> <span class="p">{</span>
         <span class="nf">Ok</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">num</span><span class="p">,</span>
-        <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">continue</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">continue</span><span class="p">,</span>
     <span class="p">};</span>
 
     <span class="k">if</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">||</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="p">{</span>
@@ -886,7 +886,7 @@ But it would be a useful enhancement to guide the user toward valid guesses and 
     <span class="p">}</span>
 
     <span class="k">match</span> <span class="n">guess</span><span class="nf">.cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">secret_number</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>The <code class="language-plaintext highlighter-rouge">if</code> expression checks whether our value is out of range, tells the user about the problem, and calls <code class="language-plaintext highlighter-rouge">continue</code> to start the next iteration of the loop and ask for another guess. After the <code class="language-plaintext highlighter-rouge">if</code> expression, we can proceed with the comparisons between <code class="language-plaintext highlighter-rouge">guess</code> and the secret number knowing that <code class="language-plaintext highlighter-rouge">guess</code> is between 1 and 100.</p>
@@ -1045,6 +1045,64 @@ Using panic! and Result in the appropriate situations will make your code more r
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1089,65 +1147,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1211,7 +1210,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

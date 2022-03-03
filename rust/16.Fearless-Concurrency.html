@@ -382,19 +382,19 @@ Because Rust is such a low-level language, there are crates that implement M:N t
 <p>To create a new thread, we call the <code class="language-plaintext highlighter-rouge">thread::spawn</code> function and pass it a closure (we talked about closures in Chapter 13) containing the code we want to run in the new thread. 
 The example in Listing 16-1 prints some text from a main thread and other text from a new thread:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(||</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
             <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the spawned thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
     <span class="p">});</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the main thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
         <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
     <span class="p">}</span>
@@ -431,20 +431,20 @@ The return type of <code class="language-plaintext highlighter-rouge">thread::sp
 A <code class="language-plaintext highlighter-rouge">JoinHandle</code> is an owned value that, when we call the <code class="language-plaintext highlighter-rouge">join</code> method on it, will wait for its thread to finish. 
 Listing 16-2 shows how to use the <code class="language-plaintext highlighter-rouge">JoinHandle</code> of the thread we created in Listing 16-1 and call <code class="language-plaintext highlighter-rouge">join</code> to make sure the spawned thread finishes before <code class="language-plaintext highlighter-rouge">main</code> exits:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(||</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
             <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the spawned thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
     <span class="p">});</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the main thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
         <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
     <span class="p">}</span>
@@ -475,14 +475,14 @@ hi number 9 from the spawned thread!
 <p>The two threads continue alternating, but the main thread waits because of the call to <code class="language-plaintext highlighter-rouge">handle.join()</code> and does not end until the spawned thread is finished.</p>
 
 <p>But let’s see what happens when we instead move <code class="language-plaintext highlighter-rouge">handle.join()</code> before the <code class="language-plaintext highlighter-rouge">for</code> loop in <code class="language-plaintext highlighter-rouge">main</code>, like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(||</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
             <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the spawned thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
@@ -490,7 +490,7 @@ hi number 9 from the spawned thread!
 
     <span class="n">handle</span><span class="nf">.join</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"hi number {} from the main thread!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
         <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_millis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
     <span class="p">}</span>
@@ -525,7 +525,7 @@ To use data from the main thread in the spawned thread, the spawned thread’s c
 Listing 16-3 shows an attempt to create a vector in the main thread and use it in the spawned thread. 
 However, this won’t yet work, as you’ll see in a moment.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 
@@ -546,7 +546,7 @@ Because <code class="language-plaintext highlighter-rouge">thread::spawn</code> 
 But when we compile this example, we get the following error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
+   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/threads)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0373</span><span class="p">]:</span> <span class="n">closure</span> <span class="n">may</span> <span class="n">outlive</span> <span class="n">the</span> <span class="n">current</span> <span class="n">function</span><span class="p">,</span> <span class="n">but</span> <span class="n">it</span> <span class="n">borrows</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">is</span> <span class="n">owned</span> <span class="n">by</span> <span class="n">the</span> <span class="n">current</span> <span class="n">function</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">32</span>
   <span class="p">|</span>
@@ -555,14 +555,14 @@ But when we compile this example, we get the following error:</p>
 <span class="mi">7</span> <span class="p">|</span>         <span class="nd">println!</span><span class="p">(</span><span class="s">"Here's a vector: {:?}"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
   <span class="p">|</span>                                           <span class="o">-</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span> <span class="n">is</span> <span class="n">borrowed</span> <span class="n">here</span>
   <span class="p">|</span>
-<span class="n">note</span><span class="p">:</span> <span class="n">function</span> <span class="n">requires</span> <span class="n">argument</span> <span class="k">type</span> <span class="n">to</span> <span class="n">outlive</span> <span class="err">`</span><span class="nv">'static</span><span class="err">`</span>
+<span class="n">note</span><span class="p">:</span> <span class="n">function</span> <span class="n">requires</span> <span class="n">argument</span> <span class="k">type</span> <span class="n">to</span> <span class="n">outlive</span> <span class="err">`</span><span class="k">'static</span><span class="err">`</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">18</span>
   <span class="p">|</span>
 <span class="mi">6</span> <span class="p">|</span>       <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(||</span> <span class="p">{</span>
-  <span class="p">|</span>  <span class="mi">__________________</span><span class="o">^</span>
+  <span class="p">|</span>  <span class="n">__________________</span><span class="o">^</span>
 <span class="mi">7</span> <span class="p">|</span> <span class="p">|</span>         <span class="nd">println!</span><span class="p">(</span><span class="s">"Here's a vector: {:?}"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
 <span class="mi">8</span> <span class="p">|</span> <span class="p">|</span>     <span class="p">});</span>
-  <span class="p">|</span> <span class="p">|</span><span class="mi">______</span><span class="o">^</span>
+  <span class="p">|</span> <span class="p">|</span><span class="n">______</span><span class="o">^</span>
 <span class="n">help</span><span class="p">:</span> <span class="n">to</span> <span class="n">force</span> <span class="n">the</span> <span class="n">closure</span> <span class="n">to</span> <span class="n">take</span> <span class="n">ownership</span> <span class="n">of</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span> <span class="p">(</span><span class="n">and</span> <span class="n">any</span> <span class="n">other</span> <span class="n">referenced</span> <span class="n">variables</span><span class="p">),</span> <span class="k">use</span> <span class="n">the</span> <span class="err">`</span><span class="k">move</span><span class="err">`</span> <span class="n">keyword</span>
   <span class="p">|</span>
 <span class="mi">6</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
@@ -570,7 +570,7 @@ But when we compile this example, we get the following error:</p>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0373</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0373</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">threads</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -581,7 +581,7 @@ However, there’s a problem: Rust can’t tell how long the spawned thread will
 
 <p>Listing 16-4 provides a scenario that’s more likely to have a reference to <code class="language-plaintext highlighter-rouge">v</code> that won’t be valid:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -591,7 +591,7 @@ However, there’s a problem: Rust can’t tell how long the spawned thread will
         <span class="nd">println!</span><span class="p">(</span><span class="s">"Here's a vector: {:?}"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
     <span class="p">});</span>
 
-    <span class="k">drop</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="c">// oh no!</span>
+    <span class="nf">drop</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="c1">// oh no!</span>
 
     <span class="n">handle</span><span class="nf">.join</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
 <span class="p">}</span>
@@ -632,7 +632,7 @@ we would get a different error because what Listing 16-4 is trying to do isn’t
 If we added <code class="language-plaintext highlighter-rouge">move</code> to the closure, we would move <code class="language-plaintext highlighter-rouge">v</code> into the closure’s environment, and we could no longer call <code class="language-plaintext highlighter-rouge">drop</code> on it in the main thread. We would get this compiler error instead:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/threads)</span>
+   <span class="n">Compiling</span> <span class="n">threads</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/threads)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">v</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">10</span>
    <span class="p">|</span>
@@ -642,14 +642,14 @@ If we added <code class="language-plaintext highlighter-rouge">move</code> to th
 <span class="mi">6</span>  <span class="p">|</span>     <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
    <span class="p">|</span>                                <span class="o">-------</span> <span class="n">value</span> <span class="n">moved</span> <span class="n">into</span> <span class="n">closure</span> <span class="n">here</span>
 <span class="mi">7</span>  <span class="p">|</span>         <span class="nd">println!</span><span class="p">(</span><span class="s">"Here's a vector: {:?}"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
-   <span class="p">|</span>                                           <span class="o">-</span> <span class="n">variable</span> <span class="n">moved</span> <span class="n">due</span> <span class="n">to</span> <span class="k">use</span> <span class="n">in</span> <span class="n">closure</span>
+   <span class="p">|</span>                                           <span class="o">-</span> <span class="n">variable</span> <span class="n">moved</span> <span class="n">due</span> <span class="n">to</span> <span class="k">use</span> <span class="k">in</span> <span class="n">closure</span>
 <span class="o">...</span>
-<span class="mi">10</span> <span class="p">|</span>     <span class="k">drop</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="c">// oh no!</span>
+<span class="mi">10</span> <span class="p">|</span>     <span class="nf">drop</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="c1">// oh no!</span>
    <span class="p">|</span>          <span class="o">^</span> <span class="n">value</span> <span class="n">used</span> <span class="n">here</span> <span class="n">after</span> <span class="k">move</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">threads</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -681,7 +681,7 @@ Once you’re familiar with the technique, you could use channels to implement a
 <p>First, in Listing 16-6, we’ll create a channel but not do anything with it. 
 Note that this won’t compile yet because Rust can’t tell what type of values we want to send over the channel.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">mpsc</span><span class="p">;</span>
 
@@ -704,7 +704,7 @@ Using a <code class="language-plaintext highlighter-rouge">let</code> statement 
 <p>Let’s move the transmitting end into a spawned thread and have it send one string so the spawned thread is communicating with the main thread, as shown in Listing 16-7. 
 This is like putting a rubber duck in the river upstream or sending a chat message from one thread to another.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">mpsc</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
@@ -731,7 +731,7 @@ But in a real application, we would handle it properly: return to Chapter 9 to r
 <p>In Listing 16-8, we’ll get the value from the receiving end of the channel in the main thread. 
 This is like retrieving the rubber duck from the water at the end of the river or like getting a chat message.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">mpsc</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
@@ -770,7 +770,7 @@ Using <code class="language-plaintext highlighter-rouge">try_recv</code> is usef
 Preventing errors in concurrent programming is the advantage of thinking about ownership throughout your Rust programs. 
 Let’s do an experiment to show how channels and ownership work together to prevent problems: we’ll try to use a <code class="language-plaintext highlighter-rouge">val</code> value in the spawned thread <em>after</em> we’ve sent it down the channel. 
 Try compiling the code in Listing 16-9 to see why this code isn’t allowed:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="n">This</span> <span class="n">code</span> <span class="n">does</span> <span class="n">not</span> <span class="nd">compile!</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">mpsc</span><span class="p">;</span>
@@ -795,7 +795,7 @@ Allowing this would be a bad idea: once the value has been sent to another threa
 Potentially, the other thread’s modifications could cause errors or unexpected results due to inconsistent or nonexistent data. 
 However, Rust gives us an error if we try to compile the code in Listing 16-9:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">message</span><span class="o">-</span><span class="n">passing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/message-passing)</span>
+   <span class="n">Compiling</span> <span class="n">message</span><span class="o">-</span><span class="n">passing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/message-passing)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="n">borrow</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">val</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">31</span>
    <span class="p">|</span>
@@ -808,7 +808,7 @@ However, Rust gives us an error if we try to compile the code in Listing 16-9:</
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">message</span><span class="o">-</span><span class="n">passing</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -821,7 +821,7 @@ This stops us from accidentally using the value again after sending it; the owne
 <p>The code in Listing 16-8 compiled and ran, but it didn’t clearly show us that two separate threads were talking to each other over the channel. 
 In Listing 16-10 we’ve made some modifications that will prove the code in Listing 16-8 is running concurrently: the spawned thread will now send multiple messages and pause for a second between each message.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">mpsc</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
@@ -837,13 +837,13 @@ In Listing 16-10 we’ve made some modifications that will prove the code in Lis
             <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"thread"</span><span class="p">),</span>
         <span class="p">];</span>
 
-        <span class="k">for</span> <span class="n">val</span> <span class="n">in</span> <span class="n">vals</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="k">in</span> <span class="n">vals</span> <span class="p">{</span>
             <span class="n">tx</span><span class="nf">.send</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
     <span class="p">});</span>
 
-    <span class="k">for</span> <span class="n">received</span> <span class="n">in</span> <span class="n">rx</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">received</span> <span class="k">in</span> <span class="n">rx</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"Got: {}"</span><span class="p">,</span> <span class="n">received</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -869,9 +869,9 @@ For each value received, we’re printing it. When the channel is closed, iterat
 Let’s put <code class="language-plaintext highlighter-rouge">mpsc</code> to use and expand the code in Listing 16-10 to create multiple threads that all send values to the same receiver. 
 We can do so by cloning the transmitting half of the channel, as shown in Listing 16-11:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
-   <span class="c">// --snip--</span>
+   <span class="c1">// --snip--</span>
 
     <span class="k">let</span> <span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">rx</span><span class="p">)</span> <span class="o">=</span> <span class="nn">mpsc</span><span class="p">::</span><span class="nf">channel</span><span class="p">();</span>
 
@@ -884,7 +884,7 @@ We can do so by cloning the transmitting half of the channel, as shown in Listin
             <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"thread"</span><span class="p">),</span>
         <span class="p">];</span>
 
-        <span class="k">for</span> <span class="n">val</span> <span class="n">in</span> <span class="n">vals</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="k">in</span> <span class="n">vals</span> <span class="p">{</span>
             <span class="n">tx1</span><span class="nf">.send</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
@@ -898,17 +898,17 @@ We can do so by cloning the transmitting half of the channel, as shown in Listin
             <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"you"</span><span class="p">),</span>
         <span class="p">];</span>
 
-        <span class="k">for</span> <span class="n">val</span> <span class="n">in</span> <span class="n">vals</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="k">in</span> <span class="n">vals</span> <span class="p">{</span>
             <span class="n">tx</span><span class="nf">.send</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
             <span class="nn">thread</span><span class="p">::</span><span class="nf">sleep</span><span class="p">(</span><span class="nn">Duration</span><span class="p">::</span><span class="nf">from_secs</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
     <span class="p">});</span>
 
-    <span class="k">for</span> <span class="n">received</span> <span class="n">in</span> <span class="n">rx</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">received</span> <span class="k">in</span> <span class="n">rx</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"Got: {}"</span><span class="p">,</span> <span class="n">received</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-16-11-sending-multiple-messages-from-multiple-producers">Listing 16-11: Sending multiple messages from multiple producers</h4>
 
@@ -970,7 +970,7 @@ However, thanks to Rust’s type system and ownership rules, you can’t get loc
 <h3 id="the-api-of-mutex">The API of Mutex<T></T></h3>
 <p>As an example of how to use a mutex, let’s start by using a mutex in a single-threaded context, as shown in Listing 16-12:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -1009,7 +1009,7 @@ As a result, we don’t risk forgetting to release the lock and blocking the mut
 We’ll spin up 10 threads and have them each increment a counter value by 1, so the counter goes from 0 to 10. 
 The next example in Listing 16-13 will have a compiler error, and we’ll use that error to learn more about using <code class="language-plaintext highlighter-rouge">Mutex&lt;T&gt;</code> and how Rust helps us use it correctly.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 
@@ -1017,7 +1017,7 @@ The next example in Listing 16-13 will have a compiler error, and we’ll use th
     <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Mutex</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">handles</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[];</span>
 
-    <span class="k">for</span> <span class="mi">_</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
             <span class="k">let</span> <span class="k">mut</span> <span class="n">num</span> <span class="o">=</span> <span class="n">counter</span><span class="nf">.lock</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
 
@@ -1026,7 +1026,7 @@ The next example in Listing 16-13 will have a compiler error, and we’ll use th
         <span class="n">handles</span><span class="nf">.push</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">for</span> <span class="n">handle</span> <span class="n">in</span> <span class="n">handles</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">handle</span> <span class="k">in</span> <span class="n">handles</span> <span class="p">{</span>
         <span class="n">handle</span><span class="nf">.join</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -1047,7 +1047,7 @@ At that point, the main thread will acquire the lock and print the result of thi
 <p>We hinted that this example wouldn’t compile. Now let’s find out why!</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
+   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/shared-state)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">counter</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">36</span>
    <span class="p">|</span>
@@ -1055,13 +1055,13 @@ At that point, the main thread will acquire the lock and print the result of thi
    <span class="p">|</span>         <span class="o">-------</span> <span class="k">move</span> <span class="n">occurs</span> <span class="n">because</span> <span class="err">`</span><span class="n">counter</span><span class="err">`</span> <span class="n">has</span> <span class="k">type</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">does</span> <span class="n">not</span> <span class="n">implement</span> <span class="n">the</span> <span class="err">`</span><span class="nb">Copy</span><span class="err">`</span> <span class="k">trait</span>
 <span class="o">...</span>
 <span class="mi">9</span>  <span class="p">|</span>         <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
-   <span class="p">|</span>                                    <span class="o">^^^^^^^</span> <span class="n">value</span> <span class="n">moved</span> <span class="n">into</span> <span class="n">closure</span> <span class="n">here</span><span class="p">,</span> <span class="n">in</span> <span class="n">previous</span> <span class="n">iteration</span> <span class="n">of</span> <span class="k">loop</span>
+   <span class="p">|</span>                                    <span class="o">^^^^^^^</span> <span class="n">value</span> <span class="n">moved</span> <span class="n">into</span> <span class="n">closure</span> <span class="n">here</span><span class="p">,</span> <span class="k">in</span> <span class="n">previous</span> <span class="n">iteration</span> <span class="n">of</span> <span class="k">loop</span>
 <span class="mi">10</span> <span class="p">|</span>             <span class="k">let</span> <span class="k">mut</span> <span class="n">num</span> <span class="o">=</span> <span class="n">counter</span><span class="nf">.lock</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
-   <span class="p">|</span>                           <span class="o">-------</span> <span class="k">use</span> <span class="n">occurs</span> <span class="n">due</span> <span class="n">to</span> <span class="k">use</span> <span class="n">in</span> <span class="n">closure</span>
+   <span class="p">|</span>                           <span class="o">-------</span> <span class="k">use</span> <span class="n">occurs</span> <span class="n">due</span> <span class="n">to</span> <span class="k">use</span> <span class="k">in</span> <span class="n">closure</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">shared</span><span class="o">-</span><span class="n">state</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1077,7 +1077,7 @@ Let’s do the same here and see what happens.
 We’ll wrap the <code class="language-plaintext highlighter-rouge">Mutex&lt;T&gt;</code> in <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code> in Listing 16-14 and clone the <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code> before moving ownership to the thread. 
 Now that we’ve seen the errors, we’ll also switch back to using the for loop, and we’ll keep the move keyword with the closure.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="p">;</span>
@@ -1087,7 +1087,7 @@ Now that we’ve seen the errors, we’ll also switch back to using the for loop
     <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">Mutex</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">handles</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[];</span>
 
-    <span class="k">for</span> <span class="mi">_</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="n">counter</span><span class="p">);</span>
         <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
             <span class="k">let</span> <span class="k">mut</span> <span class="n">num</span> <span class="o">=</span> <span class="n">counter</span><span class="nf">.lock</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
@@ -1097,7 +1097,7 @@ Now that we’ve seen the errors, we’ll also switch back to using the for loop
         <span class="n">handles</span><span class="nf">.push</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">for</span> <span class="n">handle</span> <span class="n">in</span> <span class="n">handles</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">handle</span> <span class="k">in</span> <span class="n">handles</span> <span class="p">{</span>
         <span class="n">handle</span><span class="nf">.join</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -1109,7 +1109,7 @@ Now that we’ve seen the errors, we’ll also switch back to using the for loop
 <p>Once again, we compile and get… different errors! The compiler is teaching us a lot.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/shared-state)</span>
+   <span class="n">Compiling</span> <span class="n">shared</span><span class="o">-</span><span class="n">state</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/shared-state)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="o">&lt;</span><span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::</span><span class="n">Mutex</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">sent</span> <span class="n">between</span> <span class="n">threads</span> <span class="n">safely</span>
    <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">22</span>
     <span class="p">|</span>
@@ -1121,7 +1121,7 @@ Now that we’ve seen the errors, we’ll also switch back to using the for loop
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">shared</span><span class="o">-</span><span class="n">state</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1149,7 +1149,7 @@ If you’re just performing operations on values within a single thread, your co
 <p>Let’s return to our example: <code class="language-plaintext highlighter-rouge">Arc&lt;T&gt;</code> and <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code> have the same API, so we fix our program by changing the <code class="language-plaintext highlighter-rouge">use</code> line, the call to <code class="language-plaintext highlighter-rouge">new</code>, and the call to clone. 
 The code in Listing 16-15 will finally compile and run:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">sync</span><span class="p">::{</span><span class="nb">Arc</span><span class="p">,</span> <span class="n">Mutex</span><span class="p">};</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 
@@ -1157,7 +1157,7 @@ The code in Listing 16-15 will finally compile and run:</p>
     <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Arc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">Mutex</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">handles</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[];</span>
 
-    <span class="k">for</span> <span class="mi">_</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..</span><span class="mi">10</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="nn">Arc</span><span class="p">::</span><span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="n">counter</span><span class="p">);</span>
         <span class="k">let</span> <span class="n">handle</span> <span class="o">=</span> <span class="nn">thread</span><span class="p">::</span><span class="nf">spawn</span><span class="p">(</span><span class="k">move</span> <span class="p">||</span> <span class="p">{</span>
             <span class="k">let</span> <span class="k">mut</span> <span class="n">num</span> <span class="o">=</span> <span class="n">counter</span><span class="nf">.lock</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
@@ -1167,7 +1167,7 @@ The code in Listing 16-15 will finally compile and run:</p>
         <span class="n">handles</span><span class="nf">.push</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">for</span> <span class="n">handle</span> <span class="n">in</span> <span class="n">handles</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">handle</span> <span class="k">in</span> <span class="n">handles</span> <span class="p">{</span>
         <span class="n">handle</span><span class="nf">.join</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -1178,7 +1178,7 @@ The code in Listing 16-15 will finally compile and run:</p>
 
 <p>This code will print the following:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Result</span><span class="p">:</span> <span class="mi">10</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Result</span><span class="p">:</span> <span class="mi">10</span>
 </code></pre></div></div>
 <p>We did it! We counted from 0 to 10, which may not seem very impressive, but it did teach us a lot about <code class="language-plaintext highlighter-rouge">Mutex&lt;T&gt;</code> and thread safety. 
 You could also use this program’s structure to do more complicated operations than just incrementing a counter. 
@@ -1369,6 +1369,64 @@ In addition, we’ll discuss how Rust’s idioms relate to those you might be fa
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1413,65 +1471,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1535,7 +1534,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

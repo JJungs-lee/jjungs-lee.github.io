@@ -331,10 +331,10 @@
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>
 </code></pre></div></div>
 <p>scope is the range within a program for which an item is valid.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>                    <span class="c">// s is not valid here, it’s not yet declared</span>
-  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>   <span class="c">// s is valid from this point forward</span>
-  <span class="c">// do stuff with s</span>
-<span class="p">}</span>                    <span class="c">// this scope is now over, and s is no longer valid</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>                    <span class="c1">// s is not valid here, it’s not yet declared</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>   <span class="c1">// s is valid from this point forward</span>
+  <span class="c1">// do stuff with s</span>
+<span class="p">}</span>                    <span class="c1">// this scope is now over, and s is no longer valid</span>
 </code></pre></div></div>
 <h4 id="listing-4-1-a-variable-and-the-scope-in-which-it-is-valid">Listing 4-1: A variable and the scope in which it is valid</h4>
 <p>There are two important points in time here:</p>
@@ -361,10 +361,10 @@ Why can String be mutated but literals cannot? <code class="language-plaintext h
 <p>That first part is done by us: when we call <code class="language-plaintext highlighter-rouge">String::from</code>, its implementation requests the memory it needs. <br />
 However, the second part is different. In languages with a garbage collector (GC), the GC keeps track and cleans up memory that isn’t being used anymore, and we don’t need to think about it. Without a GC, it’s our responsibility to identify when memory is no longer being used and call code to explicitly return it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. <strong>We need to pair exactly one allocate with exactly one free.</strong></p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// s is valid from this point forward</span>
-    <span class="c">// do stuff with s</span>
-<span class="p">}</span>                                  <span class="c">// this scope is now over, and s is no</span>
-                                   <span class="c">// longer valid</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c1">// s is valid from this point forward</span>
+    <span class="c1">// do stuff with s</span>
+<span class="p">}</span>                                  <span class="c1">// this scope is now over, and s is no</span>
+                                   <span class="c1">// longer valid</span>
 </code></pre></div></div>
 <p>There is a natural point at which we can return the memory our String needs to the operating system: when <code class="language-plaintext highlighter-rouge">s</code> goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called <code class="language-plaintext highlighter-rouge">drop</code>, and it’s where the author of String can put the code to return the memory. Rust calls <code class="language-plaintext highlighter-rouge">drop</code> automatically at the closing curly bracket.</p>
 
@@ -439,61 +439,61 @@ So what types are Copy?</p>
 <h3 id="ownership-and-functions">Ownership and Functions</h3>
 <p>The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will <strong>move</strong> or <strong>copy</strong>, just as assignment does. If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. These static checks protect us from mistakes.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>  <span class="c">// s comes into scope</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>  <span class="c1">// s comes into scope</span>
 
-    <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>             <span class="c">// s's value moves into the function...</span>
-                                    <span class="c">// ... and so is no longer valid here</span>
+    <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>             <span class="c1">// s's value moves into the function...</span>
+                                    <span class="c1">// ... and so is no longer valid here</span>
 
-    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                      <span class="c">// x comes into scope</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>                      <span class="c1">// x comes into scope</span>
 
-    <span class="nf">makes_copy</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>                  <span class="c">// x would move into the function,</span>
-                                    <span class="c">// but i32 is Copy, so it’s okay to still</span>
-                                    <span class="c">// use x afterward</span>
+    <span class="nf">makes_copy</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>                  <span class="c1">// x would move into the function,</span>
+                                    <span class="c1">// but i32 is Copy, so it’s okay to still</span>
+                                    <span class="c1">// use x afterward</span>
 
-<span class="p">}</span> <span class="c">// Here, x goes out of scope, then s. But because s's value was moved, nothing</span>
-  <span class="c">// special happens.</span>
+<span class="p">}</span> <span class="c1">// Here, x goes out of scope, then s. But because s's value was moved, nothing</span>
+  <span class="c1">// special happens.</span>
 
-<span class="k">fn</span> <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span> <span class="c">// some_string comes into scope</span>
+<span class="k">fn</span> <span class="nf">takes_ownership</span><span class="p">(</span><span class="n">some_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// some_string comes into scope</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">some_string</span><span class="p">);</span>
-<span class="p">}</span> <span class="c">// Here, some_string goes out of scope and `drop` is called. The backing</span>
-  <span class="c">// memory is freed.</span>
+<span class="p">}</span> <span class="c1">// Here, some_string goes out of scope and `drop` is called. The backing</span>
+  <span class="c1">// memory is freed.</span>
 
-<span class="k">fn</span> <span class="nf">makes_copy</span><span class="p">(</span><span class="n">some_integer</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span> <span class="c">// some_integer comes into scope</span>
+<span class="k">fn</span> <span class="nf">makes_copy</span><span class="p">(</span><span class="n">some_integer</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// some_integer comes into scope</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">some_integer</span><span class="p">);</span>
-<span class="p">}</span> <span class="c">// Here, some_integer goes out of scope. Nothing special happens.</span>
+<span class="p">}</span> <span class="c1">// Here, some_integer goes out of scope. Nothing special happens.</span>
 </code></pre></div></div>
 <h4 id="listing-4-3-functions-with-ownership-and-scope-annotated">Listing 4-3: Functions with ownership and scope annotated</h4>
 
 <h3 id="return-values-and-scope">Return Values and Scope</h3>
 <p>Returning values can also transfer ownership. Listing 4-4 is an example with similar annotations to those in Listing 4-3.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nf">gives_ownership</span><span class="p">();</span>         <span class="c">// gives_ownership moves its return</span>
-                                        <span class="c">// value into s1</span>
+    <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="nf">gives_ownership</span><span class="p">();</span>         <span class="c1">// gives_ownership moves its return</span>
+                                        <span class="c1">// value into s1</span>
 
-    <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>     <span class="c">// s2 comes into scope</span>
+    <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>     <span class="c1">// s2 comes into scope</span>
 
-    <span class="k">let</span> <span class="n">s3</span> <span class="o">=</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>  <span class="c">// s2 is moved into</span>
-                                        <span class="c">// takes_and_gives_back, which also</span>
-                                        <span class="c">// moves its return value into s3</span>
-<span class="p">}</span> <span class="c">// Here, s3 goes out of scope and is dropped. s2 goes out of scope but was</span>
-  <span class="c">// moved, so nothing happens. s1 goes out of scope and is dropped.</span>
+    <span class="k">let</span> <span class="n">s3</span> <span class="o">=</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>  <span class="c1">// s2 is moved into</span>
+                                        <span class="c1">// takes_and_gives_back, which also</span>
+                                        <span class="c1">// moves its return value into s3</span>
+<span class="p">}</span> <span class="c1">// Here, s3 goes out of scope and is dropped. s2 goes out of scope but was</span>
+  <span class="c1">// moved, so nothing happens. s1 goes out of scope and is dropped.</span>
 
-<span class="k">fn</span> <span class="nf">gives_ownership</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>             <span class="c">// gives_ownership will move its</span>
-                                             <span class="c">// return value into the function</span>
-                                             <span class="c">// that calls it</span>
+<span class="k">fn</span> <span class="nf">gives_ownership</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>             <span class="c1">// gives_ownership will move its</span>
+                                             <span class="c1">// return value into the function</span>
+                                             <span class="c1">// that calls it</span>
 
-    <span class="k">let</span> <span class="n">some_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// some_string comes into scope</span>
+    <span class="k">let</span> <span class="n">some_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c1">// some_string comes into scope</span>
 
-    <span class="n">some_string</span>                              <span class="c">// some_string is returned and</span>
-                                             <span class="c">// moves out to the calling</span>
-                                             <span class="c">// function</span>
+    <span class="n">some_string</span>                              <span class="c1">// some_string is returned and</span>
+                                             <span class="c1">// moves out to the calling</span>
+                                             <span class="c1">// function</span>
 <span class="p">}</span>
 
-<span class="c">// takes_and_gives_back will take a String and return one</span>
-<span class="k">fn</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">a_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span> <span class="c">// a_string comes into</span>
-                                                      <span class="c">// scope</span>
+<span class="c1">// takes_and_gives_back will take a String and return one</span>
+<span class="k">fn</span> <span class="nf">takes_and_gives_back</span><span class="p">(</span><span class="n">a_string</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span> <span class="c1">// a_string comes into</span>
+                                                      <span class="c1">// scope</span>
 
-    <span class="n">a_string</span>  <span class="c">// a_string is returned and moves out to the calling function</span>
+    <span class="n">a_string</span>  <span class="c1">// a_string is returned and moves out to the calling function</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-4-4-transferring-ownership-of-return-values">Listing 4-4: Transferring ownership of return values</h4>
@@ -512,7 +512,7 @@ So what types are Copy?</p>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="nb">String</span><span class="p">,</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.len</span><span class="p">();</span> <span class="c">// len() returns the length of a String.</span>
+    <span class="k">let</span> <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.len</span><span class="p">();</span> <span class="c1">// len() returns the length of a String.</span>
 
     <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
 <span class="p">}</span>
@@ -547,10 +547,10 @@ These ampersands are references, and they allow you to refer to some value witho
 <p>The <code class="language-plaintext highlighter-rouge">&amp;s1</code> syntax lets us create a reference that refers to the value of <code class="language-plaintext highlighter-rouge">s1</code> but does not own it. Because it does not own it, the value it points to will not be dropped when the reference goes out of scope.</p>
 
 <p>Likewise, the signature of the function uses <code class="language-plaintext highlighter-rouge">&amp;</code> to indicate that the type of the parameter <code class="language-plaintext highlighter-rouge">s</code> is a reference. Let’s add some explanatory annotations:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span> <span class="c">// s is a reference to a String</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">calculate_length</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span> <span class="c1">// s is a reference to a String</span>
     <span class="n">s</span><span class="nf">.len</span><span class="p">()</span>
-<span class="p">}</span> <span class="c">// Here, s goes out of scope. But because it does not have ownership of what</span>
-  <span class="c">// it refers to, nothing happens.```</span>
+<span class="p">}</span> <span class="c1">// Here, s goes out of scope. But because it does not have ownership of what</span>
+  <span class="c1">// it refers to, nothing happens.```</span>
 </code></pre></div></div>
 <p>The scope in which the variable s is valid is the same as any function parameter’s scope, but we don’t drop what the reference points to when it goes out of scope because we don’t have ownership. When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership. <br />
 We call having <strong>references as function parameters <em>borrowing</em></strong>. As in real life, if a person owns something, you can borrow it from them. When you’re done, you have to give it back.</p>
@@ -625,7 +625,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 
 <span class="p">{</span>
     <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
-<span class="p">}</span> <span class="c">// r1 goes out of scope here, so we can make a new reference with no problems.</span>
+<span class="p">}</span> <span class="c1">// r1 goes out of scope here, so we can make a new reference with no problems.</span>
 
 <span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span>
 </code></pre></div></div>
@@ -633,19 +633,19 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <p>A similar rule exists for combining mutable and immutable references. This code results in an error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
 
-<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
-<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
-<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// BIG PROBLEM</span>
+<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
+<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// BIG PROBLEM</span>
 
 <span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}, and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
 
 <span class="n">error</span><span class="p">[</span><span class="n">E0502</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">s</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span> <span class="n">because</span> <span class="n">it</span> <span class="n">is</span> <span class="n">also</span> <span class="n">borrowed</span> <span class="k">as</span> <span class="n">immutable</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">14</span>
   <span class="p">|</span>
-<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="mi">4</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
   <span class="p">|</span>              <span class="o">--</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
-<span class="mi">5</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
-<span class="mi">6</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// BIG PROBLEM</span>
+<span class="mi">5</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
+<span class="mi">6</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// BIG PROBLEM</span>
   <span class="p">|</span>              <span class="o">^^^^^^</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
 <span class="mi">7</span> <span class="p">|</span>
 <span class="mi">8</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"{}, {}, and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
@@ -656,12 +656,12 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <p>Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of the immutable references occurs before the mutable reference is introduced:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
 
-<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
-<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="k">let</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
+<span class="k">let</span> <span class="n">r2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
 <span class="nd">println!</span><span class="p">(</span><span class="s">"{} and {}"</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">);</span>
-<span class="c">// r1 and r2 are no longer used after this point</span>
+<span class="c1">// r1 and r2 are no longer used after this point</span>
 
-<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c">// no problem</span>
+<span class="k">let</span> <span class="n">r3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// no problem</span>
 <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r3</span><span class="p">);</span>
 </code></pre></div></div>
 <p>The scopes of the immutable references r1 and r2 end after the println! where they are last used, which is before the mutable reference r3 is created. These scopes don’t overlap, so this code is allowed.</p>
@@ -689,7 +689,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
   <span class="p">|</span>
   <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">this</span> <span class="n">function</span><span class="nv">'s</span> <span class="k">return</span> <span class="k">type</span> <span class="n">contains</span> <span class="n">a</span> <span class="n">borrowed</span> <span class="n">value</span><span class="p">,</span> <span class="n">but</span> <span class="n">there</span> <span class="n">is</span> <span class="n">no</span>
     <span class="n">value</span> <span class="k">for</span> <span class="n">it</span> <span class="n">to</span> <span class="n">be</span> <span class="n">borrowed</span> <span class="n">from</span>
-  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">consider</span> <span class="n">giving</span> <span class="n">it</span> <span class="n">a</span> <span class="nv">'static</span> <span class="n">lifetime</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">consider</span> <span class="n">giving</span> <span class="n">it</span> <span class="n">a</span> <span class="k">'static</span> <span class="n">lifetime</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 </code></pre></div></div>
@@ -699,13 +699,13 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 </blockquote>
 
 <p>Let’s take a closer look at exactly what’s happening at each stage of our dangle code:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">String</span> <span class="p">{</span> <span class="c">// dangle returns a reference to a String</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">dangle</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">String</span> <span class="p">{</span> <span class="c1">// dangle returns a reference to a String</span>
 
-    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c">// s is a new String</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c1">// s is a new String</span>
 
-    <span class="o">&amp;</span><span class="n">s</span> <span class="c">// we return a reference to the String, s</span>
-<span class="p">}</span> <span class="c">// Here, s goes out of scope, and is dropped. Its memory goes away.</span>
-  <span class="c">// Danger!</span>
+    <span class="o">&amp;</span><span class="n">s</span> <span class="c1">// we return a reference to the String, s</span>
+<span class="p">}</span> <span class="c1">// Here, s goes out of scope, and is dropped. Its memory goes away.</span>
+  <span class="c1">// Danger!</span>
 </code></pre></div></div>
 <p>Because s is created inside dangle, when the code of dangle is finished, s will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid String. That’s no good! Rust won’t let us do this.</p>
 
@@ -739,8 +739,8 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
     <span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="k">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="sc">b' '</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
             <span class="p">}</span>
         <span class="p">}</span>
@@ -755,14 +755,14 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
 </code></pre></div></div>
 <p>Next, we create an iterator over the array of bytes using the iter method:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="k">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
 </code></pre></div></div>
 <p>We’ll discuss iterators in more detail in Chapter 13. For now, know that <code class="language-plaintext highlighter-rouge">iter</code> is a method that returns each element in a collection and that <code class="language-plaintext highlighter-rouge">enumerate</code> wraps the result of <code class="language-plaintext highlighter-rouge">iter</code> and returns each element as part of a tuple instead. The first element of the tuple returned from enumerate is the index, and the second element is a reference to the element. This is a bit more convenient than calculating the index ourselves.</p>
 
 <p>Because the <code class="language-plaintext highlighter-rouge">enumerate</code> method returns a tuple, we can use patterns to destructure that tuple, just like everywhere else in Rust. So in the <code class="language-plaintext highlighter-rouge">for</code> loop, we specify a pattern that has <code class="language-plaintext highlighter-rouge">i</code> for the index in the tuple and <code class="language-plaintext highlighter-rouge">&amp;item</code> for the single byte in the tuple. Because we get a reference to the element from <code class="language-plaintext highlighter-rouge">.iter().enumerate()</code>, we use <code class="language-plaintext highlighter-rouge">&amp;</code> in the pattern.</p>
 
 <p>Inside the for loop, we search for the byte that represents the space by using the byte literal syntax. If we find a space, we return the position. Otherwise, we return the length of the string by using <code class="language-plaintext highlighter-rouge">s.len()</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="sc">b' '</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -772,12 +772,12 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
 
-    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span> <span class="c">// word will get the value 5</span>
+    <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span> <span class="c1">// word will get the value 5</span>
 
-    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// this empties the String, making it equal to ""</span>
+    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c1">// this empties the String, making it equal to ""</span>
 
-    <span class="c">// word still has the value 5 here, but there's no more string that</span>
-    <span class="c">// we could meaningfully use the value 5 with. word is now totally invalid!</span>
+    <span class="c1">// word still has the value 5 here, but there's no more string that</span>
+    <span class="c1">// we could meaningfully use the value 5 with. word is now totally invalid!</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-4-8-storing-the-result-from-calling-the-first_word-function-and-then-changing-the-string-contents">Listing 4-8: Storing the result from calling the first_word function and then changing the String contents</h4>
@@ -828,8 +828,8 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">s</span><span class="nf">.as_bytes</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="n">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">b</span><span class="sc">' '</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">item</span><span class="p">)</span> <span class="k">in</span> <span class="n">bytes</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="sc">b' '</span> <span class="p">{</span>
             <span class="k">return</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="n">i</span><span class="p">];</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -850,7 +850,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 
     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
 
-    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// Error!</span>
+    <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c1">// Error!</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"the first word is: {}"</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
 <span class="p">}</span>
@@ -861,7 +861,7 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <span class="mi">16</span> <span class="p">|</span>     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
    <span class="p">|</span>                           <span class="o">--</span> <span class="n">immutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
 <span class="mi">17</span> <span class="p">|</span>
-<span class="mi">18</span> <span class="p">|</span>     <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c">// error!</span>
+<span class="mi">18</span> <span class="p">|</span>     <span class="n">s</span><span class="nf">.clear</span><span class="p">();</span> <span class="c1">// error!</span>
    <span class="p">|</span>     <span class="o">^^^^^^^^^</span> <span class="n">mutable</span> <span class="n">borrow</span> <span class="n">occurs</span> <span class="n">here</span>
 <span class="mi">19</span> <span class="p">|</span>
 <span class="mi">20</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"the first word is: {}"</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
@@ -889,16 +889,16 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">my_string</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
 
-    <span class="c">// first_word works on slices of `String`s</span>
+    <span class="c1">// first_word works on slices of `String`s</span>
     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_string</span><span class="p">[</span><span class="o">..</span><span class="p">]);</span>
 
     <span class="k">let</span> <span class="n">my_string_literal</span> <span class="o">=</span> <span class="s">"hello world"</span><span class="p">;</span>
 
-    <span class="c">// first_word works on slices of string literals</span>
+    <span class="c1">// first_word works on slices of string literals</span>
     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_string_literal</span><span class="p">[</span><span class="o">..</span><span class="p">]);</span>
 
-    <span class="c">// Because string literals *are* string slices already,</span>
-    <span class="c">// this works too, without the slice syntax!</span>
+    <span class="c1">// Because string literals *are* string slices already,</span>
+    <span class="c1">// this works too, without the slice syntax!</span>
     <span class="k">let</span> <span class="n">word</span> <span class="o">=</span> <span class="nf">first_word</span><span class="p">(</span><span class="n">my_string_literal</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -1025,6 +1025,64 @@ As always, we can use curly brackets to create a new scope, allowing for multipl
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1069,65 +1127,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1191,7 +1190,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

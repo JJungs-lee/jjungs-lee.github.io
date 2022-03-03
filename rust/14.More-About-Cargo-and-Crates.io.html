@@ -334,9 +334,9 @@ The <code class="language-plaintext highlighter-rouge">dev</code> profile is def
 <p>These profile names might be familiar from the output of your builds:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
 <span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span> <span class="o">--</span><span class="n">release</span>
-    <span class="n">Finished</span> <span class="n">release</span> <span class="p">[</span><span class="n">optimized</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">release</span> <span class="p">[</span><span class="n">optimized</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
 </code></pre></div></div>
 
 <p>The <code class="language-plaintext highlighter-rouge">dev</code> and <code class="language-plaintext highlighter-rouge">release</code> shown in this build output indicate that the compiler is using different profiles.</p>
@@ -345,7 +345,7 @@ The <code class="language-plaintext highlighter-rouge">dev</code> profile is def
 By adding <code class="language-plaintext highlighter-rouge">[profile.*]</code> sections for any profile you want to customize, you can override any subset of the default settings. 
 For example, here are the default values for the <code class="language-plaintext highlighter-rouge">opt-level</code> setting for the <code class="language-plaintext highlighter-rouge">dev</code> and <code class="language-plaintext highlighter-rouge">release</code> profiles:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">profile</span><span class="py">.dev</span><span class="p">]</span>
 <span class="n">opt</span><span class="o">-</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
@@ -364,7 +364,7 @@ That is why the default <code class="language-plaintext highlighter-rouge">opt-l
 <p>You can override any default setting by adding a different value for it in <em>Cargo.toml</em>. 
 For example, if we want to use optimization level 1 in the development profile, we can add these two lines to our project’s <em>Cargo.toml</em> file:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">profile</span><span class="py">.dev</span><span class="p">]</span>
 <span class="n">opt</span><span class="o">-</span><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
@@ -393,18 +393,18 @@ The HTML displays the contents of documentation comments for public API items in
 Place documentation comments just before the item they’re documenting. 
 Listing 14-1 shows documentation comments for an <code class="language-plaintext highlighter-rouge">add_one</code> function in a crate named <code class="language-plaintext highlighter-rouge">my_crate</code>:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: src/lib.rs</span>
 
-<span class="c">/// Adds one to the number given.</span>
-<span class="c">///</span>
-<span class="c">/// # Examples</span>
-<span class="c">///</span>
-<span class="c">/// ```</span>
-<span class="c">/// let arg = 5;</span>
-<span class="c">/// let answer = my_crate::add_one(arg);</span>
-<span class="c">///</span>
-<span class="c">/// assert_eq!(6, answer);</span>
-<span class="c">/// ```</span>
+<span class="cd">/// Adds one to the number given.</span>
+<span class="cd">///</span>
+<span class="cd">/// # Examples</span>
+<span class="cd">///</span>
+<span class="cd">/// ```</span>
+<span class="cd">/// let arg = 5;</span>
+<span class="cd">/// let answer = my_crate::add_one(arg);</span>
+<span class="cd">///</span>
+<span class="cd">/// assert_eq!(6, answer);</span>
+<span class="cd">/// ```</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="p">}</span>
@@ -452,15 +452,15 @@ We typically use these doc comments inside the crate root file (<em>src/lib.rs</
 
 <p>For example, if we want to add documentation that describes the purpose of the <code class="language-plaintext highlighter-rouge">my_crate</code> crate that contains the <code class="language-plaintext highlighter-rouge">add_one</code> function, we can add documentation comments that start with <code class="language-plaintext highlighter-rouge">//!</code> to the beginning of the <em>src/lib.rs</em> file, as shown in Listing 14-2:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="c">//! # My Crate</span>
-<span class="c">//!</span>
-<span class="c">//! `my_crate` is a collection of utilities to make performing certain</span>
-<span class="c">//! calculations more convenient.</span>
+<span class="cd">//! # My Crate</span>
+<span class="cd">//!</span>
+<span class="cd">//! `my_crate` is a collection of utilities to make performing certain</span>
+<span class="cd">//! calculations more convenient.</span>
 
-<span class="c">/// Adds one to the number given.</span>
-<span class="c">// --snip--</span>
+<span class="cd">/// Adds one to the number given.</span>
+<span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-14-2-documentation-for-the-my_crate-crate-as-a-whole">Listing 14-2: Documentation for the my_crate crate as a whole</h4>
 
@@ -488,21 +488,21 @@ Re-exporting takes a public item in one location and makes it public in another 
 
 <p>For example, say we made a library named <code class="language-plaintext highlighter-rouge">art</code> for modeling artistic concepts. 
 Within this library are two modules: a <code class="language-plaintext highlighter-rouge">kinds</code> module containing two enums named <code class="language-plaintext highlighter-rouge">PrimaryColor</code> and <code class="language-plaintext highlighter-rouge">SecondaryColor</code> and a <code class="language-plaintext highlighter-rouge">utils</code> module containing a function named <code class="language-plaintext highlighter-rouge">mix</code>, as shown in Listing 14-3:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="c">//! # Art</span>
-<span class="c">//!</span>
-<span class="c">//! A library for modeling artistic concepts.</span>
+<span class="cd">//! # Art</span>
+<span class="cd">//!</span>
+<span class="cd">//! A library for modeling artistic concepts.</span>
 
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">kinds</span> <span class="p">{</span>
-    <span class="c">/// The primary colors according to the RYB color model.</span>
+    <span class="cd">/// The primary colors according to the RYB color model.</span>
     <span class="k">pub</span> <span class="k">enum</span> <span class="n">PrimaryColor</span> <span class="p">{</span>
         <span class="n">Red</span><span class="p">,</span>
         <span class="n">Yellow</span><span class="p">,</span>
         <span class="n">Blue</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="c">/// The secondary colors according to the RYB color model.</span>
+    <span class="cd">/// The secondary colors according to the RYB color model.</span>
     <span class="k">pub</span> <span class="k">enum</span> <span class="n">SecondaryColor</span> <span class="p">{</span>
         <span class="n">Orange</span><span class="p">,</span>
         <span class="n">Green</span><span class="p">,</span>
@@ -511,12 +511,12 @@ Within this library are two modules: a <code class="language-plaintext highlight
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">utils</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">kinds</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">kinds</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
-    <span class="c">/// Combines two primary colors in equal amounts to create</span>
-    <span class="c">/// a secondary color.</span>
+    <span class="cd">/// Combines two primary colors in equal amounts to create</span>
+    <span class="cd">/// a secondary color.</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">mix</span><span class="p">(</span><span class="n">c1</span><span class="p">:</span> <span class="n">PrimaryColor</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="n">PrimaryColor</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">SecondaryColor</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
         <span class="nn">SecondaryColor</span><span class="p">::</span><span class="n">Orange</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -533,7 +533,7 @@ Within this library are two modules: a <code class="language-plaintext highlight
 
 <p>Another crate that depends on this library would need <code class="language-plaintext highlighter-rouge">use</code> statements that bring the items from <code class="language-plaintext highlighter-rouge">art</code> into scope, specifying the module structure that’s currently defined. 
 Listing 14-4 shows an example of a crate that uses the <code class="language-plaintext highlighter-rouge">PrimaryColor</code> and <code class="language-plaintext highlighter-rouge">mix</code> items from the <code class="language-plaintext highlighter-rouge">art</code> crate:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">art</span><span class="p">::</span><span class="nn">kinds</span><span class="p">::</span><span class="n">PrimaryColor</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">art</span><span class="p">::</span><span class="nn">utils</span><span class="p">::</span><span class="n">mix</span><span class="p">;</span>
@@ -553,22 +553,22 @@ Instead, the <code class="language-plaintext highlighter-rouge">art</code> crate
 
 <p>To remove the internal organization from the public API, we can modify the <code class="language-plaintext highlighter-rouge">art</code> crate code in Listing 14-3 to add <code class="language-plaintext highlighter-rouge">pub use</code> statements to re-export the items at the top level, as shown in Listing 14-5:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="c">//! # Art</span>
-<span class="c">//!</span>
-<span class="c">//! A library for modeling artistic concepts.</span>
+<span class="cd">//! # Art</span>
+<span class="cd">//!</span>
+<span class="cd">//! A library for modeling artistic concepts.</span>
 
 <span class="k">pub</span> <span class="k">use</span> <span class="k">self</span><span class="p">::</span><span class="nn">kinds</span><span class="p">::</span><span class="n">PrimaryColor</span><span class="p">;</span>
 <span class="k">pub</span> <span class="k">use</span> <span class="k">self</span><span class="p">::</span><span class="nn">kinds</span><span class="p">::</span><span class="n">SecondaryColor</span><span class="p">;</span>
 <span class="k">pub</span> <span class="k">use</span> <span class="k">self</span><span class="p">::</span><span class="nn">utils</span><span class="p">::</span><span class="n">mix</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">kinds</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">utils</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-14-5-adding-pub-use-statements-to-re-export-items">Listing 14-5: Adding pub use statements to re-export items</h4>
@@ -579,13 +579,13 @@ Instead, the <code class="language-plaintext highlighter-rouge">art</code> crate
 <h4 id="figure-14-4-the-front-page-of-the-documentation-for-art-that-lists-the-re-exports">Figure 14-4: The front page of the documentation for art that lists the re-exports</h4>
 
 <p>The <code class="language-plaintext highlighter-rouge">art</code> crate users can still see and use the internal structure from Listing 14-3 as demonstrated in Listing 14-4, or they can use the more convenient structure in Listing 14-5, as shown in Listing 14-6:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">art</span><span class="p">::</span><span class="n">PrimaryColor</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">art</span><span class="p">::</span><span class="n">mix</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-14-6-a-program-using-the-re-exported-items-from-the-art-crate">Listing 14-6: A program using the re-exported items from the art crate</h4>
@@ -617,7 +617,7 @@ However, crate names on <a href="https://crates.io/">crates.io</a> are allocated
 Once a crate name is taken, no one else can publish a crate with that name. 
 Before attempting to publish a crate, search for the name you want to use on the site. 
 If the name has been used by another crate, you will need to find another name and edit the name field in the <em>Cargo.toml</em> file under the <code class="language-plaintext highlighter-rouge">[package]</code> section to use the new name for publishing, like so:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">package</span><span class="p">]</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">"guessing_game"</span>
@@ -625,7 +625,7 @@ If the name has been used by another crate, you will need to find another name a
 <p>Even if you’ve chosen a unique name, when you run <code class="language-plaintext highlighter-rouge">cargo publish</code> to publish the crate at this point, you’ll get a warning and then an error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">publish</span>
-    <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c">//github.com/rust-lang/crates.io-index`</span>
+    <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c1">//github.com/rust-lang/crates.io-index`</span>
 <span class="n">warning</span><span class="p">:</span> <span class="n">manifest</span> <span class="n">has</span> <span class="n">no</span> <span class="n">description</span><span class="p">,</span> <span class="n">license</span><span class="p">,</span> <span class="n">license</span><span class="o">-</span><span class="n">file</span><span class="p">,</span> <span class="n">documentation</span><span class="p">,</span>
 <span class="n">homepage</span> <span class="n">or</span> <span class="n">repository</span><span class="err">.</span>
 <span class="o">--</span><span class="n">snip</span><span class="o">--</span>
@@ -636,7 +636,7 @@ If the name has been used by another crate, you will need to find another name a
 <p>Add a description that is just a sentence or two, because it will appear with your crate in search results. 
 For the <code class="language-plaintext highlighter-rouge">license</code> field, you need to give a <em>license identifier value</em>. 
 The <a href="https://spdx.org/licenses/">Linux Foundation’s Software Package Data Exchange (SPDX)</a> lists the identifiers you can use for this value. For example, to specify that you’ve licensed your crate using the MIT License, add the <code class="language-plaintext highlighter-rouge">MIT</code> identifier:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">package</span><span class="p">]</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">"guessing_game"</span>
@@ -648,7 +648,7 @@ The <a href="https://spdx.org/licenses/">Linux Foundation’s Software Package D
 
 <p>With a unique name, the version, the author details that <code class="language-plaintext highlighter-rouge">cargo new</code> added when you created the crate, your description, and a license added, the <em>Cargo.toml</em> file for a project that is ready to publish might look like this:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">package</span><span class="p">]</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">"guessing_game"</span>
@@ -674,13 +674,13 @@ However, there is no limit to the number of crate versions you can publish.</p>
 <p>Run the <code class="language-plaintext highlighter-rouge">cargo publish</code> command again. It should succeed now:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">publish</span>
- <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c">//github.com/rust-lang/crates.io-index`</span>
-<span class="n">Packaging</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
-<span class="n">Verifying</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
+ <span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c1">//github.com/rust-lang/crates.io-index`</span>
+<span class="n">Packaging</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/guessing_game)</span>
+<span class="n">Verifying</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/guessing_game)</span>
 <span class="n">Compiling</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span>
-<span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game/target/package/guessing_game-0.1.0)</span>
- <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.19</span> <span class="n">secs</span>
-<span class="n">Uploading</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/guessing_game)</span>
+<span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/guessing_game/target/package/guessing_game-0.1.0)</span>
+ <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.19</span> <span class="n">secs</span>
+<span class="n">Uploading</span> <span class="n">guessing_game</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/guessing_game)</span>
 </code></pre></div></div>
 <p>Congratulations! You’ve now shared your code with the Rust community, and anyone can easily add your crate as a dependency of their project.</p>
 
@@ -728,7 +728,7 @@ We’ll start by creating a new directory for the workspace:</p>
 <p>Next, in the <code class="language-plaintext highlighter-rouge">add</code> directory, we create the <em>Cargo.toml</em> file that will configure the entire workspace. 
 This file won’t have a <code class="language-plaintext highlighter-rouge">[package]</code> section or the metadata we’ve seen in other <em>Cargo.toml</em> files. 
 Instead, it will start with a <code class="language-plaintext highlighter-rouge">[workspace]</code> section that will allow us to add members to the workspace by specifying the path to our binary crate; in this case, that path is <code class="language-plaintext highlighter-rouge">adder</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 <span class="p">[</span><span class="n">workspace</span><span class="p">]</span>
 
 <span class="n">members</span> <span class="o">=</span> <span class="p">[</span>
@@ -761,7 +761,7 @@ By sharing one <em>target</em> directory, the crates can avoid unnecessary rebui
 <p>Next, let’s create another member crate in the workspace and call it <code class="language-plaintext highlighter-rouge">add-one</code>. 
 Change the top-level <em>Cargo.toml</em> to specify the add-one path in the <code class="language-plaintext highlighter-rouge">members</code> list:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: Cargo.toml</span>
 
 <span class="p">[</span><span class="n">workspace</span><span class="p">]</span>
 
@@ -791,7 +791,7 @@ Change the top-level <em>Cargo.toml</em> to specify the add-one path in the <cod
 </code></pre></div></div>
 <p>In the <em>add-one/src/lib.rs</em> file, let’s add an <code class="language-plaintext highlighter-rouge">add_one</code> function:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: add-one/src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: add-one/src/lib.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
@@ -801,7 +801,7 @@ Change the top-level <em>Cargo.toml</em> to specify the add-one path in the <cod
 <p>Now that we have a library crate in the workspace, we can have the binary crate <code class="language-plaintext highlighter-rouge">adder</code> depend on the library crate <code class="language-plaintext highlighter-rouge">add-one</code>. 
 First, we’ll need to add a path dependency on <code class="language-plaintext highlighter-rouge">add-one</code> to <em>adder/Cargo.toml</em>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: adder/Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: adder/Cargo.toml</span>
 
 <span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
 
@@ -814,9 +814,9 @@ First, we’ll need to add a path dependency on <code class="language-plaintext 
 Open the <em>adder/src/main.rs</em> file and add a use line at the top to bring the new <code class="language-plaintext highlighter-rouge">add-one</code> library crate into scope. 
 Then change the <code class="language-plaintext highlighter-rouge">main</code> function to call the <code class="language-plaintext highlighter-rouge">add_one</code> function, as in Listing 14-7.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: adder/src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: adder/src/main.rs</span>
 
-<span class="k">extern</span> <span class="n">crate</span> <span class="n">add_one</span><span class="p">;</span>
+<span class="k">extern</span> <span class="k">crate</span> <span class="n">add_one</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
@@ -828,14 +828,14 @@ Then change the <code class="language-plaintext highlighter-rouge">main</code> f
 <p>Let’s build the workspace by running <code class="language-plaintext highlighter-rouge">cargo build</code> in the top-level add directory!</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.68</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.68</span> <span class="n">secs</span>
 </code></pre></div></div>
 <p>To run the binary crate from the <em>add</em> directory, we need to specify which package in the workspace we want to use by using the <code class="language-plaintext highlighter-rouge">-p</code> argument and the package name with <code class="language-plaintext highlighter-rouge">cargo run</code>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="o">-</span><span class="n">p</span> <span class="n">adder</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">adder</span><span class="err">`</span>
 <span class="n">Hello</span><span class="p">,</span> <span class="nd">world!</span> <span class="mi">10</span> <span class="n">plus</span> <span class="n">one</span> <span class="n">is</span> <span class="mi">11</span><span class="o">!</span>
 </code></pre></div></div>
@@ -848,7 +848,7 @@ If we add the <code class="language-plaintext highlighter-rouge">rand</code> cra
 Making all crates in the workspace use the same dependencies means the crates in the workspace will always be compatible with each other. 
 Let’s add the <code class="language-plaintext highlighter-rouge">rand</code> crate to the <code class="language-plaintext highlighter-rouge">[dependencies]</code> section in the <em>add-one/Cargo.toml</em> file to be able to use the rand crate in the add-one crate:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: add-one/Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: add-one/Cargo.toml</span>
 
 <span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
 <span class="n">rand</span> <span class="o">=</span> <span class="s">"0.5.5"</span>
@@ -861,16 +861,16 @@ Let’s add the <code class="language-plaintext highlighter-rouge">rand</code> c
   <span class="n">Downloaded</span> <span class="n">rand</span> <span class="n">v0</span><span class="na">.5.5</span>
    <span class="o">--</span><span class="n">snip</span><span class="o">--</span>
    <span class="n">Compiling</span> <span class="n">rand</span> <span class="n">v0</span><span class="na">.5.5</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">10.18</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">10.18</span> <span class="n">secs</span>
 </code></pre></div></div>
 <p>The top-level <em>Cargo.lock</em> now contains information about the dependency of <code class="language-plaintext highlighter-rouge">add-one</code> on <code class="language-plaintext highlighter-rouge">rand</code>. 
 However, even though <code class="language-plaintext highlighter-rouge">rand</code> is used somewhere in the workspace, we can’t use it in other crates in the workspace unless we add <code class="language-plaintext highlighter-rouge">rand</code> to their <em>Cargo.toml</em> files as well. 
 For example, if we add <code class="language-plaintext highlighter-rouge">use rand;</code> to the <em>adder/src/main.rs</em> file for the <code class="language-plaintext highlighter-rouge">adder</code> crate, we’ll get an error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/adder)</span>
 <span class="n">error</span><span class="p">:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">unstable</span> <span class="n">library</span> <span class="n">feature</span> <span class="nv">'rand</span><span class="err">'</span><span class="p">:</span> <span class="k">use</span> <span class="err">`</span><span class="n">rand</span><span class="err">`</span> <span class="n">from</span> <span class="n">crates</span><span class="nf">.io</span> <span class="p">(</span><span class="n">see</span>
 <span class="n">issue</span> <span class="err">#</span><span class="mi">27703</span><span class="p">)</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">adder</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
@@ -886,7 +886,7 @@ Using the same version of <code class="language-plaintext highlighter-rouge">ran
 <h3 id="adding-a-test-to-a-workspace">Adding a Test to a Workspace</h3>
 <p>For another enhancement, let’s add a test of the <code class="language-plaintext highlighter-rouge">add_one::add_one</code> function within the <code class="language-plaintext highlighter-rouge">add_one</code> crate:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: add-one/src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: add-one/src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
@@ -894,7 +894,7 @@ Using the same version of <code class="language-plaintext highlighter-rouge">ran
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">it_works</span><span class="p">()</span> <span class="p">{</span>
@@ -905,9 +905,9 @@ Using the same version of <code class="language-plaintext highlighter-rouge">ran
 <p>Now run <code class="language-plaintext highlighter-rouge">cargo test</code> in the top-level add directory:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/add-one)</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/add/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.27</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/add-one)</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/add/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.27</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">add_one</span><span class="o">-</span><span class="n">f0253159197f7841</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -933,7 +933,7 @@ The next section shows that zero tests were found in the <code class="language-p
 <p>We can also run tests for one particular crate in a workspace from the top-level directory by using the <code class="language-plaintext highlighter-rouge">-p</code> flag and specifying the name of the crate we want to test:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span> <span class="o">-</span><span class="n">p</span> <span class="n">add</span><span class="o">-</span><span class="n">one</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">add_one</span><span class="o">-</span><span class="n">b3235fea9a156f74</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -971,11 +971,11 @@ Ensure that directory is in your <code class="language-plaintext highlighter-rou
 If we want to install <code class="language-plaintext highlighter-rouge">ripgrep</code>, we can run the following:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">install</span> <span class="n">ripgrep</span>
-<span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c">//github.com/rust-lang/crates.io-index`</span>
+<span class="n">Updating</span> <span class="n">registry</span> <span class="err">`</span><span class="n">https</span><span class="p">:</span><span class="c1">//github.com/rust-lang/crates.io-index`</span>
  <span class="n">Downloading</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="na">.3.2</span>
  <span class="o">--</span><span class="n">snip</span><span class="o">--</span>
    <span class="n">Compiling</span> <span class="n">ripgrep</span> <span class="n">v0</span><span class="na">.3.2</span>
-    <span class="n">Finished</span> <span class="n">release</span> <span class="p">[</span><span class="n">optimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">97.91</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">release</span> <span class="p">[</span><span class="n">optimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">97.91</span> <span class="n">secs</span>
   <span class="n">Installing</span> <span class="o">~/</span><span class="py">.cargo</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rg</span>
 </code></pre></div></div>
 <p>The last line of the output shows the location and the name of the installed binary, which in the case of <code class="language-plaintext highlighter-rouge">ripgrep</code> is <code class="language-plaintext highlighter-rouge">rg</code>. As long as the installation directory is in your <code class="language-plaintext highlighter-rouge">$PATH</code>, as mentioned previously, you can then run <code class="language-plaintext highlighter-rouge">rg --help</code> and start using a faster, rustier tool for searching files!</p>
@@ -1095,6 +1095,64 @@ Being able to use <code class="language-plaintext highlighter-rouge">cargo insta
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1139,65 +1197,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1261,7 +1260,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

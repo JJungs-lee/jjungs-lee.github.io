@@ -377,7 +377,7 @@ So what you learn here you’ll apply again in Chapter 17!</p>
 
 <p>Listing 15-1 shows how to use a box to store an <code class="language-plaintext highlighter-rouge">i32</code> value on the heap:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"b = {}"</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
@@ -423,7 +423,7 @@ Other, more complex recursive data types <em>are</em> useful in various situatio
 <p>Listing 15-2 contains an enum definition for a cons list. 
 Note that this code won’t compile yet because the <code class="language-plaintext highlighter-rouge">List</code> type doesn’t have a known size, which we’ll demonstrate.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="n">List</span><span class="p">),</span>
     <span class="nb">Nil</span><span class="p">,</span>
@@ -435,8 +435,8 @@ Note that this code won’t compile yet because the <code class="language-plaint
 
 <p>Using the <code class="language-plaintext highlighter-rouge">List</code> type to store the list <code class="language-plaintext highlighter-rouge">1, 2, 3</code> would look like the code in Listing 15-3:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">list</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">)));</span>
@@ -451,7 +451,7 @@ This <code class="language-plaintext highlighter-rouge">List</code> value is one
 <p>If we try to compile the code in Listing 15-3, we get the error shown in Listing 15-4:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/cons-list)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0072</span><span class="p">]:</span> <span class="n">recursive</span> <span class="k">type</span> <span class="err">`</span><span class="n">List</span><span class="err">`</span> <span class="n">has</span> <span class="n">infinite</span> <span class="n">size</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
   <span class="p">|</span>
@@ -478,7 +478,7 @@ This <code class="language-plaintext highlighter-rouge">List</code> value is one
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="mi">2</span> <span class="n">previous</span> <span class="n">errors</span>
 
 <span class="nb">Some</span> <span class="n">errors</span> <span class="n">have</span> <span class="n">detailed</span> <span class="n">explanations</span><span class="p">:</span> <span class="n">E0072</span><span class="p">,</span> <span class="n">E0391</span><span class="py">.
-For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">an</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0072</span><span class="err">`</span><span class="py">.
+For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">an</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0072</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -527,13 +527,13 @@ Conceptually, we still have a list, created with lists “holding” other lists
 
 <p>We can change the definition of the <code class="language-plaintext highlighter-rouge">List</code> enum in Listing 15-2 and the usage of the <code class="language-plaintext highlighter-rouge">List</code> in Listing 15-3 to the code in Listing 15-5, which will compile:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
     <span class="nb">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">list</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nb">Nil</span><span class="p">))))));</span>
@@ -574,7 +574,7 @@ Then we’ll look at Rust’s <em>deref coercion</em> feature and how it lets us
 <h3 id="following-the-pointer-to-the-value-with-the-dereference-operator">Following the Pointer to the Value with the Dereference Operator</h3>
 <p>A regular reference is a type of pointer, and one way to think of a pointer is as an arrow to a value stored somewhere else. 
 In Listing 15-6, we create a reference to an <code class="language-plaintext highlighter-rouge">i32</code> value and then use the dereference operator to follow the reference to the data:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
@@ -593,20 +593,20 @@ Once we dereference <code class="language-plaintext highlighter-rouge">y</code>,
 
 <p>If we tried to write <code class="language-plaintext highlighter-rouge">assert_eq!(5, y);</code> instead, we would get this compilation error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
+   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/deref-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">can</span><span class="nv">'t</span> <span class="n">compare</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span> <span class="n">with</span> <span class="err">`</span><span class="o">&amp;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
 <span class="mi">6</span> <span class="p">|</span>     <span class="nd">assert_eq!</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
   <span class="p">|</span>     <span class="o">^^^^^^^^^^^^^^^^^</span> <span class="n">no</span> <span class="n">implementation</span> <span class="k">for</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span> <span class="o">==</span> <span class="o">&amp;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">PartialEq</span><span class="o">&lt;&amp;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="o">&gt;</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">this</span> <span class="n">error</span> <span class="n">originates</span> <span class="n">in</span> <span class="n">a</span> <span class="n">macro</span> <span class="n">outside</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="nf">crate</span> 
-  <span class="p">(</span><span class="n">in</span> <span class="n">Nightly</span> <span class="n">builds</span><span class="p">,</span> <span class="n">run</span> <span class="n">with</span> <span class="o">-</span><span class="n">Z</span> <span class="n">external</span><span class="o">-</span><span class="n">macro</span><span class="o">-</span><span class="n">backtrace</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="p">)</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="nb">PartialEq</span><span class="o">&lt;&amp;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="o">&gt;</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">this</span> <span class="n">error</span> <span class="n">originates</span> <span class="k">in</span> <span class="n">a</span> <span class="k">macro</span> <span class="n">outside</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="k">crate</span> 
+  <span class="p">(</span><span class="k">in</span> <span class="n">Nightly</span> <span class="n">builds</span><span class="p">,</span> <span class="n">run</span> <span class="n">with</span> <span class="o">-</span><span class="n">Z</span> <span class="n">external</span><span class="o">-</span><span class="k">macro</span><span class="o">-</span><span class="n">backtrace</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="p">)</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">deref</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -616,7 +616,7 @@ We must use the dereference operator to follow the reference to the value it’s
 
 <h3 id="using-box-like-a-reference">Using Box<T> Like a Reference</T></h3>
 <p>We can rewrite the code in Listing 15-6 to use a <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> instead of a reference; the dereference operator will work as shown in Listing 15-7:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -637,7 +637,7 @@ Then we’ll look at how to add the ability to use the dereference operator.</p>
 
 <p>The <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> type is ultimately defined as a tuple struct with one element, so Listing 15-8 defines a <code class="language-plaintext highlighter-rouge">MyBox&lt;T&gt;</code> type in the same way. We’ll also define a <code class="language-plaintext highlighter-rouge">new</code> function to match the <code class="language-plaintext highlighter-rouge">new</code> function defined on <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">struct</span> <span class="n">MyBox</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
 
 <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">MyBox</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
@@ -651,7 +651,7 @@ Then we’ll look at how to add the ability to use the dereference operator.</p>
 <p>We define a struct named <code class="language-plaintext highlighter-rouge">MyBox</code> and declare a generic parameter <code class="language-plaintext highlighter-rouge">T</code>, because we want our type to hold values of any type. The <code class="language-plaintext highlighter-rouge">MyBox</code> type is a tuple struct with one element of type <code class="language-plaintext highlighter-rouge">T</code>. The <code class="language-plaintext highlighter-rouge">MyBox::new</code> function takes one parameter of type <code class="language-plaintext highlighter-rouge">T</code> and returns a MyBox instance that holds the value passed in.</p>
 
 <p>Let’s try adding the <code class="language-plaintext highlighter-rouge">main</code> function in Listing 15-7 to Listing 15-8 and changing it to use the <code class="language-plaintext highlighter-rouge">MyBox&lt;T&gt;</code> type we’ve defined instead of <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code>. The code in Listing 15-9 won’t compile because Rust doesn’t know how to dereference <code class="language-plaintext highlighter-rouge">MyBox</code>.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">MyBox</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
@@ -664,7 +664,7 @@ Then we’ll look at how to add the ability to use the dereference operator.</p>
 
 <p>Here’s the resulting compilation error:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/deref-example)</span>
+   <span class="n">Compiling</span> <span class="n">deref</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/deref-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0614</span><span class="p">]:</span> <span class="k">type</span> <span class="err">`</span><span class="n">MyBox</span><span class="o">&lt;</span><span class="p">{</span><span class="n">integer</span><span class="p">}</span><span class="o">&gt;</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">dereferenced</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">19</span>
    <span class="p">|</span>
@@ -673,7 +673,7 @@ Then we’ll look at how to add the ability to use the dereference operator.</p>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0614</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0614</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">deref</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -686,7 +686,7 @@ To enable dereferencing with the <code class="language-plaintext highlighter-rou
 <p>As discussed in Chapter 10, to implement a trait, we need to provide implementations for the trait’s required methods. 
 The <code class="language-plaintext highlighter-rouge">Deref</code> trait, provided by the standard library, requires us to implement one method named <code class="language-plaintext highlighter-rouge">deref</code> that borrows <code class="language-plaintext highlighter-rouge">self</code> and returns a reference to the inner data. 
 Listing 15-10 contains an implementation of <code class="language-plaintext highlighter-rouge">Deref</code> to add to the definition of <code class="language-plaintext highlighter-rouge">MyBox</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Deref</span><span class="p">;</span>
 
 <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Deref</span> <span class="k">for</span> <span class="n">MyBox</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
@@ -734,7 +734,7 @@ The deref coercion feature also lets us write more code that can work for either
 
 <p>To see deref coercion in action, let’s use the <code class="language-plaintext highlighter-rouge">MyBox&lt;T&gt;</code> type we defined in Listing 15-8 as well as the implementation of <code class="language-plaintext highlighter-rouge">Deref</code> that we added in Listing 15-10. 
 Listing 15-11 shows the definition of a function that has a string slice parameter:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, {}!"</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
 <span class="p">}</span>
@@ -743,7 +743,7 @@ Listing 15-11 shows the definition of a function that has a string slice paramet
 
 <p>We can call the <code class="language-plaintext highlighter-rouge">hello</code> function with a string slice as an argument, such as <code class="language-plaintext highlighter-rouge">hello("Rust");</code> for example. 
 Deref coercion makes it possible to call <code class="language-plaintext highlighter-rouge">hello</code> with a reference to a value of type <code class="language-plaintext highlighter-rouge">MyBox&lt;String&gt;</code>, as shown in Listing 15-12:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">MyBox</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Rust"</span><span class="p">));</span>
     <span class="nf">hello</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
@@ -758,7 +758,7 @@ Rust calls <code class="language-plaintext highlighter-rouge">deref</code> again
 
 <p>If Rust didn’t implement deref coercion, we would have to write the code in Listing 15-13 instead of the code in Listing 15-12 to call hello with a value of type <code class="language-plaintext highlighter-rouge">&amp;MyBox&lt;String&gt;</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">MyBox</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Rust"</span><span class="p">));</span>
     <span class="nf">hello</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">)[</span><span class="o">..</span><span class="p">]);</span>
@@ -814,13 +814,13 @@ To see when Rust calls <code class="language-plaintext highlighter-rouge">drop</
 <p>Listing 15-14 shows a <code class="language-plaintext highlighter-rouge">CustomSmartPointer</code> struct whose only custom functionality is that it will print <code class="language-plaintext highlighter-rouge">Dropping CustomSmartPointer!</code> when the instance goes out of scope. 
 This example demonstrates when Rust runs the <code class="language-plaintext highlighter-rouge">drop</code> function.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">struct</span> <span class="n">CustomSmartPointer</span> <span class="p">{</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">impl</span> <span class="n">Drop</span> <span class="k">for</span> <span class="n">CustomSmartPointer</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="k">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">impl</span> <span class="nb">Drop</span> <span class="k">for</span> <span class="n">CustomSmartPointer</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"Dropping CustomSmartPointer with data `{}`!"</span><span class="p">,</span> <span class="k">self</span><span class="py">.data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -847,9 +847,9 @@ Note that we didn’t need to call the drop method explicitly.</p>
 <p>When we run this program, we’ll see the following output:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.60</span><span class="n">s</span>
-     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="k">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
+   <span class="n">Compiling</span> <span class="nb">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/drop-example)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.60</span><span class="n">s</span>
+     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="nb">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">CustomSmartPointers</span> <span class="n">created</span><span class="py">.
 Dropping</span> <span class="n">CustomSmartPointer</span> <span class="n">with</span> <span class="n">data</span> <span class="err">`</span><span class="n">other</span> <span class="n">stuff</span><span class="err">`</span><span class="o">!</span>
 <span class="n">Dropping</span> <span class="n">CustomSmartPointer</span> <span class="n">with</span> <span class="n">data</span> <span class="err">`</span><span class="n">my</span> <span class="n">stuff</span><span class="err">`</span><span class="o">!</span>
@@ -880,7 +880,7 @@ Rust doesn’t let you call the <code class="language-plaintext highlighter-roug
 <p>When we try to compile this code, we’ll get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
+   <span class="n">Compiling</span> <span class="nb">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/drop-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0040</span><span class="p">]:</span> <span class="n">explicit</span> <span class="k">use</span> <span class="n">of</span> <span class="n">destructor</span> <span class="n">method</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">7</span>
    <span class="p">|</span>
@@ -889,8 +889,8 @@ Rust doesn’t let you call the <code class="language-plaintext highlighter-roug
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0040</span><span class="err">`</span><span class="py">.
-error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="k">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0040</span><span class="err">`</span><span class="py">.
+error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="nb">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
 </code></pre></div></div>
@@ -908,13 +908,13 @@ So, if we need to force a value to be cleaned up early, we can use the <code cla
 <p>The <code class="language-plaintext highlighter-rouge">std::mem::drop</code> function is different from the <code class="language-plaintext highlighter-rouge">drop</code> method in the <code class="language-plaintext highlighter-rouge">Drop</code> trait. 
 We call it by passing the value we want to force to be dropped early as an argument. 
 The function is in the prelude, so we can modify <code class="language-plaintext highlighter-rouge">main</code> in Listing 15-15 to call the drop function, as shown in Listing 15-16:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CustomSmartPointer</span> <span class="p">{</span>
         <span class="n">data</span><span class="p">:</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"some data"</span><span class="p">),</span>
     <span class="p">};</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"CustomSmartPointer created."</span><span class="p">);</span>
-    <span class="k">drop</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="nf">drop</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"CustomSmartPointer dropped before the end of main."</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -923,9 +923,9 @@ The function is in the prelude, so we can modify <code class="language-plaintext
 <p>Running this code will print the following:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/drop-example)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.73</span><span class="n">s</span>
-     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="k">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
+   <span class="n">Compiling</span> <span class="nb">drop</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/drop-example)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.73</span><span class="n">s</span>
+     <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="nb">drop</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">CustomSmartPointer</span> <span class="n">created</span><span class="py">.
 Dropping</span> <span class="n">CustomSmartPointer</span> <span class="n">with</span> <span class="n">data</span> <span class="err">`</span><span class="n">some</span> <span class="n">data</span><span class="err">`</span><span class="o">!</span>
 <span class="n">CustomSmartPointer</span> <span class="n">dropped</span> <span class="n">before</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">main</span><span class="err">.</span>
@@ -967,13 +967,13 @@ In other words, both lists will share the first list containing 5 and 10.</p>
 
 <p>Trying to implement this scenario using our definition of <code class="language-plaintext highlighter-rouge">List</code> with <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> won’t work, as shown in Listing 15-17:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
     <span class="nb">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nb">Nil</span><span class="p">))));</span>
@@ -986,7 +986,7 @@ In other words, both lists will share the first list containing 5 and 10.</p>
 <p>When we compile this code, we get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/cons-list)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0382</span><span class="p">]:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="p">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">30</span>
    <span class="p">|</span>
@@ -999,7 +999,7 @@ In other words, both lists will share the first list containing 5 and 10.</p>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0382</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1015,13 +1015,13 @@ Each <code class="language-plaintext highlighter-rouge">Cons</code> variant will
 When we create <code class="language-plaintext highlighter-rouge">b</code>, instead of taking ownership of <code class="language-plaintext highlighter-rouge">a</code>, we’ll clone the <code class="language-plaintext highlighter-rouge">Rc&lt;List&gt;</code> that <code class="language-plaintext highlighter-rouge">a</code> is holding, thereby increasing the number of references from one to two and letting <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code> share ownership of the data in that <code class="language-plaintext highlighter-rouge">Rc&lt;List&gt;</code>. We’ll also clone a when creating <code class="language-plaintext highlighter-rouge">c</code>, increasing the number of references from two to three. 
 Every time we call <code class="language-plaintext highlighter-rouge">Rc::clone</code>, the reference count to the data within the <code class="language-plaintext highlighter-rouge">Rc&lt;List&gt;</code> will increase, and the data won’t be cleaned up unless there are zero references to it.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">Rc</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
     <span class="nb">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -1043,7 +1043,7 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 
 <p>In Listing 15-19, we’ll change <code class="language-plaintext highlighter-rouge">main</code> so it has an inner scope around list <code class="language-plaintext highlighter-rouge">c</code>; then we can see how the reference count changes when <code class="language-plaintext highlighter-rouge">c</code> goes out of scope.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nb">Nil</span><span class="p">)))));</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"count after creating a = {}"</span><span class="p">,</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">strong_count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">));</span>
@@ -1062,8 +1062,8 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 
 <p>This code prints the following:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.45</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/cons-list)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.45</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">count</span> <span class="n">after</span> <span class="n">creating</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">count</span> <span class="n">after</span> <span class="n">creating</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
@@ -1119,7 +1119,7 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 <p>If you tried to compile this code, you’d get the following error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">borrowing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/borrowing)</span>
+   <span class="n">Compiling</span> <span class="n">borrowing</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/borrowing)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0596</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="n">x</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span><span class="p">,</span> <span class="k">as</span> <span class="n">it</span> <span class="n">is</span> <span class="n">not</span> <span class="n">declared</span> <span class="k">as</span> <span class="n">mutable</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">13</span>
   <span class="p">|</span>
@@ -1130,7 +1130,7 @@ The call to <code class="language-plaintext highlighter-rouge">Rc::clone</code> 
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0596</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0596</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">borrowing</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1148,7 +1148,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 
 <p>Our library will only provide the functionality of tracking how close to the maximum a value is and what the messages should be at what times. Applications that use our library will be expected to provide the mechanism for sending the messages: the application could put a message in the application, send an email, send a text message, or something else. The library doesn’t need to know that detail. All it needs is something that implements a trait we’ll provide called <code class="language-plaintext highlighter-rouge">Messenger</code>. Listing 15-20 shows the library code:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">trait</span> <span class="n">Messenger</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">send</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1194,10 +1194,10 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 
 <p>We need a mock object that, instead of sending an email or text message when we call <code class="language-plaintext highlighter-rouge">send</code>, will only keep track of the messages it’s told to send. We can create a new instance of the mock object, create a <code class="language-plaintext highlighter-rouge">LimitTracker</code> that uses the mock object, call the <code class="language-plaintext highlighter-rouge">set_value</code> method on <code class="language-plaintext highlighter-rouge">LimitTracker</code>, and then check that the mock object has the messages we expect. Listing 15-21 shows an attempt to implement a mock object to do just that, but the borrow checker won’t allow it:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="k">struct</span> <span class="n">MockMessenger</span> <span class="p">{</span>
         <span class="n">sent_messages</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
@@ -1237,7 +1237,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>However, there’s one problem with this test, as shown here:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
+   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/limit-tracker)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0596</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="k">self</span><span class="py">.sent_messages</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span><span class="p">,</span> <span class="k">as</span> <span class="n">it</span> <span class="n">is</span> <span class="n">behind</span> <span class="n">a</span> <span class="err">`</span><span class="o">&amp;</span><span class="err">`</span> <span class="n">reference</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">13</span>
    <span class="p">|</span>
@@ -1248,7 +1248,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0596</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0596</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">limit</span><span class="o">-</span><span class="n">tracker</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1257,11 +1257,11 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>We can’t modify the <code class="language-plaintext highlighter-rouge">MockMessenger</code> to keep track of the messages, because the <code class="language-plaintext highlighter-rouge">send</code> method takes an immutable reference to <code class="language-plaintext highlighter-rouge">self</code>. We also can’t take the suggestion from the error text to use <code class="language-plaintext highlighter-rouge">&amp;mut self</code> instead, because then the signature of <code class="language-plaintext highlighter-rouge">send</code> wouldn’t match the signature in the <code class="language-plaintext highlighter-rouge">Messenger</code> trait definition (feel free to try and see what error message you get).</p>
 
 <p>This is a situation in which interior mutability can help! We’ll store the <code class="language-plaintext highlighter-rouge">sent_messages</code> within a <code class="language-plaintext highlighter-rouge">RefCell&lt;T&gt;</code>, and then the <code class="language-plaintext highlighter-rouge">send</code> message will be able to modify <code class="language-plaintext highlighter-rouge">sent_messages</code> to store the messages we’ve seen. Listing 15-22 shows what that looks like:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
     <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cell</span><span class="p">::</span><span class="n">RefCell</span><span class="p">;</span>
 
     <span class="k">struct</span> <span class="n">MockMessenger</span> <span class="p">{</span>
@@ -1284,7 +1284,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">it_sends_an_over_75_percent_warning_message</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
 
         <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">mock_messenger</span><span class="py">.sent_messages</span><span class="nf">.borrow</span><span class="p">()</span><span class="nf">.len</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
     <span class="p">}</span>
@@ -1307,7 +1307,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 
 <p>If we try to violate these rules, rather than getting a compiler error as we would with references, the implementation of <code class="language-plaintext highlighter-rouge">RefCell&lt;T&gt;</code> will panic at runtime. Listing 15-23 shows a modification of the implementation of <code class="language-plaintext highlighter-rouge">send</code> in Listing 15-22. We’re deliberately trying to create two mutable borrows active for the same scope to illustrate that <code class="language-plaintext highlighter-rouge">RefCell&lt;T&gt;</code> prevents us from doing this at runtime.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
     <span class="k">impl</span> <span class="n">Messenger</span> <span class="k">for</span> <span class="n">MockMessenger</span> <span class="p">{</span>
         <span class="k">fn</span> <span class="nf">send</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">let</span> <span class="k">mut</span> <span class="n">one_borrow</span> <span class="o">=</span> <span class="k">self</span><span class="py">.sent_messages</span><span class="nf">.borrow_mut</span><span class="p">();</span>
@@ -1323,8 +1323,8 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>We create a variable <code class="language-plaintext highlighter-rouge">one_borrow</code> for the <code class="language-plaintext highlighter-rouge">RefMut&lt;T&gt;</code> smart pointer returned from <code class="language-plaintext highlighter-rouge">borrow_mut</code>. Then we create another mutable borrow in the same way in the variable <code class="language-plaintext highlighter-rouge">two_borrow</code>. This makes two mutable references in the same scope, which isn’t allowed. When we run the tests for our library, the code in Listing 15-23 will compile without any errors, but the test will fail:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/limit-tracker)</span>
-    <span class="n">Finished</span> <span class="n">test</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.91</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">limit</span><span class="o">-</span><span class="n">tracker</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/limit-tracker)</span>
+    <span class="n">Finished</span> <span class="n">test</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.91</span><span class="n">s</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">limit_tracker</span><span class="o">-</span><span class="n">d1b2637139dca6ca</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1353,14 +1353,14 @@ failures</span><span class="p">:</span>
 
 <p>For example, recall the cons list example in Listing 15-18 where we used <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code> to allow multiple lists to share ownership of another list. Because <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code> holds only immutable values, we can’t change any of the values in the list once we’ve created them. Let’s add in <code class="language-plaintext highlighter-rouge">RefCell&lt;T&gt;</code> to gain the ability to change the values in the lists. Listing 15-24 shows that by using a <code class="language-plaintext highlighter-rouge">RefCell&lt;T&gt;</code> in the Cons definition, we can modify the value stored in all the lists:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="nd">#[derive(Debug)]</span>
 <span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
     <span class="nf">Cons</span><span class="p">(</span><span class="nb">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="nb">Rc</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
     <span class="nb">Nil</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cell</span><span class="p">::</span><span class="n">RefCell</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="p">;</span>
 
@@ -1390,8 +1390,8 @@ failures</span><span class="p">:</span>
 <p>When we print <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">b</code>, and <code class="language-plaintext highlighter-rouge">c</code>, we can see that they all have the modified value of 15 rather than 5:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.63</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/cons-list)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.63</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">a</span> <span class="n">after</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="n">RefCell</span> <span class="p">{</span> <span class="n">value</span><span class="p">:</span> <span class="mi">15</span> <span class="p">},</span> <span class="nb">Nil</span><span class="p">)</span>
 <span class="n">b</span> <span class="n">after</span> <span class="o">=</span> <span class="nf">Cons</span><span class="p">(</span><span class="n">RefCell</span> <span class="p">{</span> <span class="n">value</span><span class="p">:</span> <span class="mi">6</span> <span class="p">},</span> <span class="nf">Cons</span><span class="p">(</span><span class="n">RefCell</span> <span class="p">{</span> <span class="n">value</span><span class="p">:</span> <span class="mi">15</span> <span class="p">},</span> <span class="nb">Nil</span><span class="p">))</span>
@@ -1410,8 +1410,8 @@ This creates memory leaks because the reference count of each item in the cycle 
 <h3 id="creating-a-reference-cycle">Creating a Reference Cycle</h3>
 <p>Let’s look at how a reference cycle might happen and how to prevent it, starting with the definition of the <code class="language-plaintext highlighter-rouge">List</code> enum and a <code class="language-plaintext highlighter-rouge">tail</code> method in Listing 15-25:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::{</span><span class="nb">Cons</span><span class="p">,</span> <span class="nb">Nil</span><span class="p">};</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cell</span><span class="p">::</span><span class="n">RefCell</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="p">;</span>
 
@@ -1424,7 +1424,7 @@ This creates memory leaks because the reference count of each item in the cycle 
 <span class="k">impl</span> <span class="n">List</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">tail</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="nb">Rc</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;&gt;&gt;</span> <span class="p">{</span>
         <span class="k">match</span> <span class="k">self</span> <span class="p">{</span>
-            <span class="nf">Cons</span><span class="p">(</span><span class="mi">_</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">(</span><span class="n">item</span><span class="p">),</span>
+            <span class="nf">Cons</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">(</span><span class="n">item</span><span class="p">),</span>
             <span class="nb">Nil</span> <span class="k">=&gt;</span> <span class="nb">None</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -1443,7 +1443,7 @@ This code creates a list in <code class="language-plaintext highlighter-rouge">a
 Then it modifies the list in <code class="language-plaintext highlighter-rouge">a</code> to point to <code class="language-plaintext highlighter-rouge">b</code>, creating a reference cycle. 
 There are <code class="language-plaintext highlighter-rouge">println!</code> statements along the way to show what the reference counts are at various points in this process.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nf">Cons</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nn">RefCell</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nb">Nil</span><span class="p">))));</span>
 
@@ -1463,9 +1463,9 @@ There are <code class="language-plaintext highlighter-rouge">println!</code> sta
     <span class="nd">println!</span><span class="p">(</span><span class="s">"b rc count after changing a = {}"</span><span class="p">,</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">strong_count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">));</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"a rc count after changing a = {}"</span><span class="p">,</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">strong_count</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">));</span>
 
-    <span class="c">// Uncomment the next line to see that we have a cycle;</span>
-    <span class="c">// it will overflow the stack</span>
-    <span class="c">// println!("a next item = {:?}", a.tail());</span>
+    <span class="c1">// Uncomment the next line to see that we have a cycle;</span>
+    <span class="c1">// it will overflow the stack</span>
+    <span class="c1">// println!("a next item = {:?}", a.tail());</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-15-26-creating-a-reference-cycle-of-two-list-values-pointing-to-each-other">Listing 15-26: Creating a reference cycle of two List values pointing to each other</h4>
@@ -1479,8 +1479,8 @@ Then we use the <code class="language-plaintext highlighter-rouge">borrow_mut</c
 <p>When we run this code, keeping the last <code class="language-plaintext highlighter-rouge">println!</code> commented out for the moment, we’ll get this output:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/cons-list)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.53</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">cons</span><span class="o">-</span><span class="n">list</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/cons-list)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.53</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">cons</span><span class="o">-</span><span class="n">list</span><span class="err">`</span>
 <span class="n">a</span> <span class="n">initial</span> <span class="n">rc</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">a</span> <span class="n">next</span> <span class="n">item</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="n">RefCell</span> <span class="p">{</span> <span class="n">value</span><span class="p">:</span> <span class="nb">Nil</span> <span class="p">})</span>
@@ -1529,7 +1529,7 @@ Because <code class="language-plaintext highlighter-rouge">upgrade</code> return
 
 <h3 id="creating-a-tree-data-structure-a-node-with-child-nodes">Creating a Tree Data Structure: a Node with Child Nodes</h3>
 <p>To start, we’ll build a tree with nodes that know about their child nodes. We’ll create a struct named <code class="language-plaintext highlighter-rouge">Node</code> that holds its own <code class="language-plaintext highlighter-rouge">i32</code> value as well as references to its children <code class="language-plaintext highlighter-rouge">Node</code> values:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cell</span><span class="p">::</span><span class="n">RefCell</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::</span><span class="nb">Rc</span><span class="p">;</span>
 
@@ -1545,7 +1545,7 @@ We also want to modify which nodes are children of another node, so we have a <c
 
 <p>Next, we’ll use our struct definition and create one <code class="language-plaintext highlighter-rouge">Node</code> instance named <code class="language-plaintext highlighter-rouge">leaf</code> with the value 3 and no children, and another instance named <code class="language-plaintext highlighter-rouge">branch</code> with the value 5 and <code class="language-plaintext highlighter-rouge">leaf</code> as one of its children, as shown in Listing 15-27:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">leaf</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">Node</span> <span class="p">{</span>
         <span class="n">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -1574,7 +1574,7 @@ We know it can’t contain an <code class="language-plaintext highlighter-rouge"
 
 <p>So instead of <code class="language-plaintext highlighter-rouge">Rc&lt;T&gt;</code>, we’ll make the type of <code class="language-plaintext highlighter-rouge">parent</code> use <code class="language-plaintext highlighter-rouge">Weak&lt;T&gt;</code>, specifically a <code class="language-plaintext highlighter-rouge">RefCell&lt;Weak&lt;Node&gt;&gt;</code>. 
 Now our Node struct definition looks like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cell</span><span class="p">::</span><span class="n">RefCell</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">rc</span><span class="p">::{</span><span class="nb">Rc</span><span class="p">,</span> <span class="n">Weak</span><span class="p">};</span>
 
@@ -1587,7 +1587,7 @@ Now our Node struct definition looks like this:</p>
 </code></pre></div></div>
 <p>A node will be able to refer to its parent node but doesn’t own its parent. In Listing 15-28, we update <code class="language-plaintext highlighter-rouge">main</code> to use this new definition so the <code class="language-plaintext highlighter-rouge">leaf</code> node will have a way to refer to its parent, <code class="language-plaintext highlighter-rouge">branch</code>:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">leaf</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">Node</span> <span class="p">{</span>
         <span class="n">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -1634,7 +1634,7 @@ We use the <code class="language-plaintext highlighter-rouge">borrow_mut</code> 
 <p>Let’s look at how the <code class="language-plaintext highlighter-rouge">strong_count</code> and <code class="language-plaintext highlighter-rouge">weak_count</code> values of the <code class="language-plaintext highlighter-rouge">Rc&lt;Node&gt;</code> instances change by creating a new inner scope and moving the creation of <code class="language-plaintext highlighter-rouge">branch</code> into that scope. 
 By doing so, we can see what happens when <code class="language-plaintext highlighter-rouge">branch</code> is created and then dropped when it goes out of scope. The modifications are shown in Listing 15-29:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">leaf</span> <span class="o">=</span> <span class="nn">Rc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">Node</span> <span class="p">{</span>
         <span class="n">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -1802,6 +1802,64 @@ The <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> type 
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1846,65 +1904,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1968,7 +1967,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

@@ -349,7 +349,7 @@ We create an instance by stating the name of the struct and then add curly brack
 <h4 id="listing-5-3-changing-the-value-in-the-email-field-of-a-user-instance">Listing 5-3: Changing the value in the email field of a User instance</h4>
 
 <p>Listing 5-4 shows a build_user function that returns a User instance with the given email and username. The active field gets the value of true, and the sign_in_count gets a value of 1.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// JHS) maybe this function similar constructor in C++</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// JHS) maybe this function similar constructor in C++</span>
 <span class="k">fn</span> <span class="nf">build_user</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">User</span> <span class="p">{</span>
     <span class="n">User</span> <span class="p">{</span>
         <span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
@@ -414,7 +414,7 @@ First, Listing 5-6 shows how we create a new User instance in user2 without the 
 It’s possible for structs to store references to data owned by something else, but to do so requires the use of <code class="language-plaintext highlighter-rouge">lifetimes</code>, a Rust feature that we’ll discuss in Chapter 10. Lifetimes ensure that the data referenced by a struct is valid for as long as the struct is. 
 Let’s say you try to store a reference in a struct without specifying lifetimes, like this, which won’t work:<br /><br />
 In Chapter 10, we’ll discuss how to fix these errors so you can store references in structs, but for now, we’ll fix errors like these using owned types like String instead of references like &amp;str.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// This code does not compile!</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This code does not compile!</span>
 <span class="k">struct</span> <span class="n">User</span> <span class="p">{</span>
     <span class="n">username</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span>
     <span class="n">email</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span>
@@ -431,7 +431,7 @@ In Chapter 10, we’ll discuss how to fix these errors so you can store referenc
     <span class="p">};</span>
 <span class="p">}</span>
 
-<span class="c">// The compiler will complain that it needs lifetime specifiers:</span>
+<span class="c1">// The compiler will complain that it needs lifetime specifiers:</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0106</span><span class="p">]:</span> <span class="n">missing</span> <span class="n">lifetime</span> <span class="n">specifier</span>
 <span class="o">-</span><span class="k">-&gt;</span>
   <span class="p">|</span>
@@ -527,15 +527,15 @@ It doesn’t matter if we mix up width and height for the area calculation, but 
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"rect1 is {}"</span><span class="p">,</span> <span class="n">rect1</span><span class="p">);</span>
 
-    <span class="c">// When we compile this code, we get an error with this core message:</span>
-    <span class="c">// error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`</span>
+    <span class="c1">// When we compile this code, we get an error with this core message:</span>
+    <span class="c1">// error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-5-11-attempting-to-print-a-rectangle-instance">Listing 5-11: Attempting to print a Rectangle instance</h4>
 
 <p>The <code class="language-plaintext highlighter-rouge">println!</code> macro can do many kinds of formatting, and by default, the <code class="language-plaintext highlighter-rouge">curly brackets</code> tell <code class="language-plaintext highlighter-rouge">println!</code> to use formatting known as <code class="language-plaintext highlighter-rouge">Display</code>: output intended for direct end user consumption. The primitive types we’ve seen so far implement Display by default, because there’s only one way you’d want to show a 1 or any other primitive type to a user. <strong>But with structs, the way println! should format the output is less clear because there are more display possibilities</strong>: Do you want commas or not? Do you want to print the curly brackets? Should all the fields be shown? Due to this ambiguity, Rust doesn’t try to guess what we want, and structs don’t have a provided implementation of Display.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="n">Rectangle</span><span class="err">`</span>
-<span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">in</span> <span class="n">format</span> <span class="n">strings</span> <span class="n">you</span> <span class="n">may</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="k">use</span> <span class="err">`</span><span class="p">{:</span><span class="o">?</span><span class="p">}</span><span class="err">`</span> 
+<span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">in</span> <span class="n">format</span> <span class="n">strings</span> <span class="n">you</span> <span class="n">may</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="k">use</span> <span class="err">`</span><span class="p">{:</span><span class="o">?</span><span class="p">}</span><span class="err">`</span> 
         <span class="p">(</span><span class="n">or</span> <span class="p">{:</span><span class="err">#</span><span class="o">?</span><span class="p">}</span> <span class="k">for</span> <span class="n">pretty</span><span class="o">-</span><span class="n">print</span><span class="p">)</span> <span class="n">instead</span>
 </code></pre></div></div>
 <p>Let’s try it! The <code class="language-plaintext highlighter-rouge">println!</code> macro call will now look like <code class="language-plaintext highlighter-rouge">println!("rect1 is {:?}", rect1);</code>. Putting the specifier <code class="language-plaintext highlighter-rouge">:?</code> inside the curly brackets tells println! we want to use an output format called <code class="language-plaintext highlighter-rouge">Debug</code>. The <strong>Debug trait</strong> enables us to print our struct in a way that is useful for developers so we can see its value while we’re debugging our code. <br />
@@ -780,6 +780,64 @@ The first one looks much cleaner. This automatic referencing behavior works beca
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -824,65 +882,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -946,7 +945,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

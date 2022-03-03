@@ -346,7 +346,7 @@
 <p>In the restaurant industry, some parts of a restaurant are referred to as <code class="language-plaintext highlighter-rouge">front of house</code> and others as <code class="language-plaintext highlighter-rouge">back of house</code>. Front of house is where customers are; this is where hosts seat customers, servers take orders and payment, and bartenders make drinks. Back of house is where the chefs and cooks work in the kitchen, dishwashers clean up, and managers do administrative work.</p>
 
 <p>To structure our crate in the same way that a real restaurant works, we can organize the functions into nested modules. Create a new library named <code class="language-plaintext highlighter-rouge">restaurant</code> by running <code class="language-plaintext highlighter-rouge">cargo new --lib restaurant</code>; then put the code in Listing 7-1 into <em>src/lib.rs</em> to define some modules and function signatures.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">mod</span> <span class="n">front_of_house</span> <span class="p">{</span>
     <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
         <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
@@ -369,7 +369,7 @@
 <p>Earlier, we mentioned that <em>src/main.rs</em> and <em>src/lib.rs</em> are called <strong>crate roots</strong>. The reason for their name is that the contents of either of these two files form a module named crate at the root of the crate’s module structure, known as the module tree.</p>
 
 <p>Listing 7-2 shows the module tree for the structure in Listing 7-1.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crate</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">crate</span>
  <span class="err">└──</span> <span class="n">front_of_house</span>
      <span class="err">├──</span> <span class="n">hosting</span>
      <span class="err">│</span>   <span class="err">├──</span> <span class="n">add_to_waitlist</span>
@@ -404,10 +404,10 @@
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// Absolute path</span>
-    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="c1">// Absolute path</span>
+    <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 
-    <span class="c">// Relative path</span>
+    <span class="c1">// Relative path</span>
     <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -425,11 +425,11 @@ For example, if we move the <code class="language-plaintext highlighter-rouge">f
 
 <p>Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The error we get is shown in Listing 7-4.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/restaurant)</span>
+   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/restaurant)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">module</span> <span class="err">`</span><span class="n">hosting</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">28</span>
   <span class="p">|</span>
-<span class="mi">9</span> <span class="p">|</span>     <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="mi">9</span> <span class="p">|</span>     <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
   <span class="p">|</span>                            <span class="o">^^^^^^^</span>
 
 <span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">module</span> <span class="err">`</span><span class="n">hosting</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
@@ -459,21 +459,21 @@ We want the <code class="language-plaintext highlighter-rouge">eat_at_restaurant
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// Absolute path</span>
-    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="c1">// Absolute path</span>
+    <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 
-    <span class="c">// Relative path</span>
+    <span class="c1">// Relative path</span>
     <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-7-5-declaring-the-hosting-module-as-pub-to-use-it-from-eat_at_restaurant">Listing 7-5: Declaring the hosting module as pub to use it from eat_at_restaurant</h4>
 <p>Unfortunately, the code in Listing 7-5 still results in an error, as shown in Listing 7-6.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/restaurant)</span>
+   <span class="n">Compiling</span> <span class="n">restaurant</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/restaurant)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">function</span> <span class="err">`</span><span class="n">add_to_waitlist</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">37</span>
   <span class="p">|</span>
-<span class="mi">9</span> <span class="p">|</span>     <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+<span class="mi">9</span> <span class="p">|</span>     <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
   <span class="p">|</span>                                     <span class="o">^^^^^^^^^^^^^^^</span>
 
 <span class="n">error</span><span class="p">[</span><span class="n">E0603</span><span class="p">]:</span> <span class="n">function</span> <span class="err">`</span><span class="n">add_to_waitlist</span><span class="err">`</span> <span class="n">is</span> <span class="n">private</span>
@@ -496,10 +496,10 @@ making the module public doesn’t make its contents public. The <code class="la
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// Absolute path</span>
-    <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
+    <span class="c1">// Absolute path</span>
+    <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 
-    <span class="c">// Relative path</span>
+    <span class="c1">// Relative path</span>
     <span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -522,7 +522,7 @@ The function fix_incorrect_order calls the function serve_order by specifying th
 <span class="k">mod</span> <span class="n">back_of_house</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">fix_incorrect_order</span><span class="p">()</span> <span class="p">{</span>
         <span class="nf">cook_order</span><span class="p">();</span>
-        <span class="nn">super</span><span class="p">::</span><span class="nf">serve_order</span><span class="p">();</span>
+        <span class="k">super</span><span class="p">::</span><span class="nf">serve_order</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="k">fn</span> <span class="nf">cook_order</span><span class="p">()</span> <span class="p">{}</span>
@@ -555,15 +555,15 @@ This models the case in a restaurant where the customer can pick the type of bre
 <span class="p">}</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// Order a breakfast in the summer with Rye toast</span>
+    <span class="c1">// Order a breakfast in the summer with Rye toast</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">meal</span> <span class="o">=</span> <span class="nn">back_of_house</span><span class="p">::</span><span class="nn">Breakfast</span><span class="p">::</span><span class="nf">summer</span><span class="p">(</span><span class="s">"Rye"</span><span class="p">);</span>
-    <span class="c">// Change our mind about what bread we'd like</span>
+    <span class="c1">// Change our mind about what bread we'd like</span>
     <span class="n">meal</span><span class="py">.toast</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Wheat"</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"I'd like {} toast please"</span><span class="p">,</span> <span class="n">meal</span><span class="py">.toast</span><span class="p">);</span>
 
-    <span class="c">// The next line won't compile if we uncomment it; we're not allowed</span>
-    <span class="c">// to see or modify the seasonal fruit that comes with the meal</span>
-    <span class="c">// meal.seasonal_fruit = String::from("blueberries");</span>
+    <span class="c1">// The next line won't compile if we uncomment it; we're not allowed</span>
+    <span class="c1">// to see or modify the seasonal fruit that comes with the meal</span>
+    <span class="c1">// meal.seasonal_fruit = String::from("blueberries");</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-7-9-a-struct-with-some-public-fields-and-some-private-fields">Listing 7-9: A struct with some public fields and some private fields</h4>
@@ -607,7 +607,7 @@ Fortunately, <strong>there’s a way to simplify this process</strong>. We can b
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
     <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
@@ -644,7 +644,7 @@ Fortunately, <strong>there’s a way to simplify this process</strong>. We can b
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="n">add_to_waitlist</span><span class="p">;</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="nn">hosting</span><span class="p">::</span><span class="n">add_to_waitlist</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
     <span class="nf">add_to_waitlist</span><span class="p">();</span>
@@ -674,12 +674,12 @@ Listing 7-15 shows how to bring two Result types into scope that have the same n
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
 
-<span class="k">fn</span> <span class="nf">function1</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Result</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+<span class="k">fn</span> <span class="nf">function1</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 
-<span class="k">fn</span> <span class="nf">function2</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+<span class="k">fn</span> <span class="nf">function2</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nn">io</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-7-15-bringing-two-types-with-the-same-name-into-the-same-scope-requires-using-their-parent-modules">Listing 7-15: Bringing two types with the same name into the same scope requires using their parent modules.</h4>
@@ -697,7 +697,7 @@ To enable the code that calls our code to refer to that name as if it had been d
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">pub</span> <span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+<span class="k">pub</span> <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
     <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
@@ -715,7 +715,7 @@ With <code class="language-plaintext highlighter-rouge">pub use</code>, we can w
 
 <h3 id="using-external-packages">Using External Packages</h3>
 <p>In Chapter 2, we programmed a guessing game project that used an external package called rand to get random numbers. To use rand in our project, we added this line to Cargo.toml:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: Cargo.toml</span>
 <span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
 <span class="n">rand</span> <span class="o">=</span> <span class="s">"0.5.5"</span>
 </code></pre></div></div>
@@ -740,12 +740,12 @@ But we do need to refer to it with use to bring items from there into our packag
 <p>If we’re using multiple items defined in the same package or same module, listing each item on its own line can take up <strong>a lot of vertical space</strong> in our files. For example, these two use statements we had in the Guessing Game in Listing 2-4 bring items from std into scope:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">io</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">cmp</span><span class="p">::</span><span class="n">Ordering</span><span class="p">;</span>
-<span class="c">// ---snip---</span>
+<span class="c1">// ---snip---</span>
 </code></pre></div></div>
 <p>Instead, <strong>we can use nested paths to bring the same items into scope in one line</strong>. 
 We do this by specifying the common part of the path, followed by two colons, and then curly brackets around a list of the parts of the paths that differ, as shown in Listing 7-18.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::{</span><span class="nn">cmp</span><span class="p">::</span><span class="n">Ordering</span><span class="p">,</span> <span class="n">io</span><span class="p">};</span>
-<span class="c">// ---snip---</span>
+<span class="c1">// ---snip---</span>
 </code></pre></div></div>
 <h4 id="listing-7-18-specifying-a-nested-path-to-bring-multiple-items-with-the-same-prefix-into-scope">Listing 7-18: Specifying a nested path to bring multiple items with the same prefix into scope</h4>
 
@@ -777,10 +777,10 @@ To merge these two paths into one use statement, we can use self in the nested p
 
 <p>For example, let’s start from the code in Listing 7-17 and move the <code class="language-plaintext highlighter-rouge">front_of_house</code> module to its own file <em>src/front_of_house.rs</em> by changing the crate root file so it contains the code shown in Listing 7-21. In this case, the crate root file is src/lib.rs, but this procedure also works with binary crates whose crate root file is src/main.rs.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">mod</span> <span class="n">front_of_house</span><span class="p">;</span>
 
-<span class="k">pub</span> <span class="k">use</span> <span class="nn">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
+<span class="k">pub</span> <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">front_of_house</span><span class="p">::</span><span class="n">hosting</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">eat_at_restaurant</span><span class="p">()</span> <span class="p">{</span>
     <span class="nn">hosting</span><span class="p">::</span><span class="nf">add_to_waitlist</span><span class="p">();</span>
@@ -791,18 +791,18 @@ To merge these two paths into one use statement, we can use self in the nested p
 <h4 id="listing-7-21-declaring-the-front_of_house-module-whose-body-will-be-in-srcfront_of_housers">Listing 7-21: Declaring the front_of_house module whose body will be in src/front_of_house.rs</h4>
 
 <p>And <em>src/front_of_house.rs</em> gets the definitions from the body of the <code class="language-plaintext highlighter-rouge">front_of_house</code> module, as shown in Listing 7-22.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/front_of_house.rs</span>
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-7-22-definitions-inside-the-front_of_house-module-in-srcfront_of_housers">Listing 7-22: Definitions inside the front_of_house module in src/front_of_house.rs</h4>
 <p>Using a semicolon after <code class="language-plaintext highlighter-rouge">mod front_of_house</code> rather than using a block tells Rust to load the contents of the module from another file with the same name as the module. To continue with our example and extract the hosting module to its own file as well, we change src/front_of_house.rs to contain only the declaration of the hosting module:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/front_of_house.rs</span>
 <span class="k">pub</span> <span class="k">mod</span> <span class="n">hosting</span><span class="p">;</span>
 </code></pre></div></div>
 <p>Then we create a src/front_of_house directory and a file src/front_of_house/hosting.rs to contain the definitions made in the <code class="language-plaintext highlighter-rouge">hosting</code> module:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/front_of_house/hosting.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/front_of_house/hosting.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_to_waitlist</span><span class="p">()</span> <span class="p">{}</span>
 </code></pre></div></div>
 <p>The module tree remains the same, and the function calls in eat_at_restaurant will work without any modification, even though the definitions live in different files. This technique lets you move modules to new files as they grow in size.</p>
@@ -932,6 +932,64 @@ To merge these two paths into one use statement, we can use self in the nested p
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -976,65 +1034,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1098,7 +1097,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

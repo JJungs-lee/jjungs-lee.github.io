@@ -344,7 +344,7 @@ This enables the programmer to change and refactor an object’s internals witho
 For example, we can define a struct <code class="language-plaintext highlighter-rouge">AveragedCollection</code> that has a field containing a vector of <code class="language-plaintext highlighter-rouge">i32</code> values. 
 The struct can also have a field that contains the average of the values in the vector, meaning the average doesn’t have to be computed on demand whenever anyone needs it. 
 In other words, <code class="language-plaintext highlighter-rouge">AveragedCollection</code> will cache the calculated average for us. Listing 17-1 has the definition of the <code class="language-plaintext highlighter-rouge">AveragedCollection</code> struct:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">AveragedCollection</span> <span class="p">{</span>
     <span class="n">list</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">average</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
@@ -356,7 +356,7 @@ In other words, <code class="language-plaintext highlighter-rouge">AveragedColle
 This is important in this case because we want to ensure that whenever a value is added or removed from the list, the average is also updated. 
 We do this by implementing <code class="language-plaintext highlighter-rouge">add</code>, <code class="language-plaintext highlighter-rouge">remove</code>, and <code class="language-plaintext highlighter-rouge">average</code> methods on the struct, as shown in Listing 17-2:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">impl</span> <span class="n">AveragedCollection</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">self</span><span class="py">.list</span><span class="nf">.push</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
@@ -469,7 +469,7 @@ But trait objects <strong>differ</strong> from traditional objects in that we ca
 Trait objects aren’t as generally useful as objects in other languages: their specific purpose is to allow abstraction across common behavior.</p>
 
 <p>Listing 17-3 shows how to define a trait named <code class="language-plaintext highlighter-rouge">Draw</code> with one method named <code class="language-plaintext highlighter-rouge">draw</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">trait</span> <span class="n">Draw</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">);</span>
@@ -480,20 +480,20 @@ Trait objects aren’t as generally useful as objects in other languages: their 
 <p>This syntax should look familiar from our discussions on how to define traits in Chapter 10. 
 Next comes some new syntax: Listing 17-4 defines a struct named <code class="language-plaintext highlighter-rouge">Screen</code> that holds a vector named <code class="language-plaintext highlighter-rouge">components</code>. 
 This vector is of type <code class="language-plaintext highlighter-rouge">Box&lt;dyn Draw&gt;</code>, which is a trait object; it’s a stand-in for any type inside a <code class="language-plaintext highlighter-rouge">Box</code> that implements the <code class="language-plaintext highlighter-rouge">Draw</code> trait.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Screen</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Draw</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+    <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Draw</span><span class="o">&gt;&gt;</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-17-4-definition-of-the-screen-struct-with-a-components-field-holding-a-vector-of-trait-objects-that-implement-the-draw-trait">Listing 17-4: Definition of the Screen struct with a components field holding a vector of trait objects that implement the Draw trait</h4>
 
 <p>On the <code class="language-plaintext highlighter-rouge">Screen</code> struct, we’ll define a method named <code class="language-plaintext highlighter-rouge">run</code> that will call the draw method on each of its <code class="language-plaintext highlighter-rouge">components</code>, as shown in Listing 17-5:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Screen</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">component</span> <span class="n">in</span> <span class="k">self</span><span class="py">.components</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="k">in</span> <span class="k">self</span><span class="py">.components</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
             <span class="n">component</span><span class="nf">.draw</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -505,7 +505,7 @@ This vector is of type <code class="language-plaintext highlighter-rouge">Box&lt
 A generic type parameter can only be substituted with <strong>one</strong> concrete type at a time, whereas trait objects allow for <strong>multiple</strong> concrete types to fill in for the trait object at runtime. 
 For example, we could have defined the <code class="language-plaintext highlighter-rouge">Screen</code> struct using a generic type and a trait bound as in Listing 17-6:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Screen</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Draw</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
@@ -516,7 +516,7 @@ For example, we could have defined the <code class="language-plaintext highlight
     <span class="n">T</span><span class="p">:</span> <span class="n">Draw</span><span class="p">,</span>
 <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">component</span> <span class="n">in</span> <span class="k">self</span><span class="py">.components</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="k">in</span> <span class="k">self</span><span class="py">.components</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
             <span class="n">component</span><span class="nf">.draw</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -535,7 +535,7 @@ Let’s look at how this works, and then we’ll talk about the runtime performa
 We’ll provide the <code class="language-plaintext highlighter-rouge">Button</code> type. 
 Again, actually implementing a GUI library is beyond the scope of this book, so the <code class="language-plaintext highlighter-rouge">draw</code> method won’t have any useful implementation in its body. 
 To imagine what the implementation might look like, a <code class="language-plaintext highlighter-rouge">Button</code> struct might have fields for <code class="language-plaintext highlighter-rouge">width</code>, <code class="language-plaintext highlighter-rouge">height</code>, and <code class="language-plaintext highlighter-rouge">label</code>, as shown in Listing 17-7:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Button</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="n">width</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span>
@@ -545,7 +545,7 @@ To imagine what the implementation might look like, a <code class="language-plai
 
 <span class="k">impl</span> <span class="n">Draw</span> <span class="k">for</span> <span class="n">Button</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c">// code to actually draw a button</span>
+        <span class="c1">// code to actually draw a button</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -558,7 +558,7 @@ These kinds of methods won’t apply to types like <code class="language-plainte
 
 <p>If someone using our library decides to implement a <code class="language-plaintext highlighter-rouge">SelectBox</code> struct that has <code class="language-plaintext highlighter-rouge">width</code>, <code class="language-plaintext highlighter-rouge">height</code>, and <code class="language-plaintext highlighter-rouge">options</code> fields, they implement the <code class="language-plaintext highlighter-rouge">Draw</code> trait on the <code class="language-plaintext highlighter-rouge">SelectBox</code> type as well, as shown in Listing 17-8:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">gui</span><span class="p">::</span><span class="n">Draw</span><span class="p">;</span>
 
@@ -570,7 +570,7 @@ These kinds of methods won’t apply to types like <code class="language-plainte
 
 <span class="k">impl</span> <span class="n">Draw</span> <span class="k">for</span> <span class="n">SelectBox</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c">// code to actually draw a select box</span>
+        <span class="c1">// code to actually draw a select box</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -580,7 +580,7 @@ These kinds of methods won’t apply to types like <code class="language-plainte
 To the <code class="language-plaintext highlighter-rouge">Screen</code> instance, they can add a <code class="language-plaintext highlighter-rouge">SelectBox</code> and a <code class="language-plaintext highlighter-rouge">Button</code> by putting each in a <code class="language-plaintext highlighter-rouge">Box&lt;T&gt;</code> to become a trait object. 
 They can then call the <code class="language-plaintext highlighter-rouge">run</code> method on the <code class="language-plaintext highlighter-rouge">Screen</code> instance, which will call <code class="language-plaintext highlighter-rouge">draw</code> on each of the components. Listing 17-9 shows this implementation:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">gui</span><span class="p">::{</span><span class="n">Button</span><span class="p">,</span> <span class="n">Screen</span><span class="p">};</span>
 
@@ -619,7 +619,7 @@ By specifying <code class="language-plaintext highlighter-rouge">Box&lt;dyn Draw
 Rust won’t compile our code if the values don’t implement the traits that the trait objects need.</p>
 
 <p>For example, Listing 17-10 shows what happens if we try to create a <code class="language-plaintext highlighter-rouge">Screen</code> with a <code class="language-plaintext highlighter-rouge">String</code> as a component:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">gui</span><span class="p">::</span><span class="n">Screen</span><span class="p">;</span>
 
@@ -634,18 +634,18 @@ Rust won’t compile our code if the values don’t implement the traits that th
 <h4 id="listing-17-10-attempting-to-use-a-type-that-doesnt-implement-the-trait-objects-trait">Listing 17-10: Attempting to use a type that doesn’t implement the trait object’s trait</h4>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">gui</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/gui)</span>
+   <span class="n">Compiling</span> <span class="n">gui</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/gui)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="k">trait</span> <span class="n">bound</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">string</span><span class="p">::</span><span class="nb">String</span><span class="p">:</span> <span class="nn">gui</span><span class="p">::</span><span class="n">Draw</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">satisfied</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">26</span>
   <span class="p">|</span>
 <span class="mi">5</span> <span class="p">|</span>         <span class="n">components</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[</span><span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Hi"</span><span class="p">))],</span>
   <span class="p">|</span>                          <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">gui</span><span class="p">::</span><span class="n">Draw</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">string</span><span class="p">::</span><span class="nb">String</span><span class="err">`</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">required</span> <span class="k">for</span> <span class="n">the</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">the</span> <span class="n">object</span> <span class="k">type</span> <span class="err">`</span><span class="n">dyn</span> <span class="nn">gui</span><span class="p">::</span><span class="n">Draw</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">required</span> <span class="k">for</span> <span class="n">the</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">the</span> <span class="n">object</span> <span class="k">type</span> <span class="err">`</span><span class="k">dyn</span> <span class="nn">gui</span><span class="p">::</span><span class="n">Draw</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">gui</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -683,8 +683,8 @@ When the type is forgotten through the use of a trait object, there is no way to
 
 <p>An example of a trait whose methods are not object safe is the standard library’s <code class="language-plaintext highlighter-rouge">Clone</code> trait. 
 The signature for the <code class="language-plaintext highlighter-rouge">clone</code> method in the <code class="language-plaintext highlighter-rouge">Clone</code> trait looks like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Clone</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Self</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="nb">Clone</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>The <code class="language-plaintext highlighter-rouge">String</code> type implements the <code class="language-plaintext highlighter-rouge">Clone</code> trait, and when we call the <code class="language-plaintext highlighter-rouge">clone</code> method on an instance of <code class="language-plaintext highlighter-rouge">String</code> we get back an instance of <code class="language-plaintext highlighter-rouge">String</code>. 
@@ -694,24 +694,24 @@ The signature of <code class="language-plaintext highlighter-rouge">clone</code>
 <p>The compiler will indicate when you’re trying to do something that violates the rules of object safety in regard to trait objects. 
 For example, let’s say we tried to implement the <code class="language-plaintext highlighter-rouge">Screen</code> struct in Listing 17-4 to hold types that implement the <code class="language-plaintext highlighter-rouge">Clone</code> trait instead of the Draw trait, like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">Screen</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Clone</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+    <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nb">Clone</span><span class="o">&gt;&gt;</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>We would get this error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">gui</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/gui)</span>
-<span class="n">error</span><span class="p">[</span><span class="n">E0038</span><span class="p">]:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">clone</span><span class="p">::</span><span class="n">Clone</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">made</span> <span class="n">into</span> <span class="n">an</span> <span class="n">object</span>
+   <span class="n">Compiling</span> <span class="n">gui</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/gui)</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0038</span><span class="p">]:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">clone</span><span class="p">::</span><span class="nb">Clone</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">made</span> <span class="n">into</span> <span class="n">an</span> <span class="n">object</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
-<span class="mi">2</span> <span class="p">|</span>     <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Clone</span><span class="o">&gt;&gt;</span><span class="p">,</span>
-  <span class="p">|</span>     <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">clone</span><span class="p">::</span><span class="n">Clone</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">made</span> <span class="n">into</span> <span class="n">an</span> <span class="n">object</span>
+<span class="mi">2</span> <span class="p">|</span>     <span class="k">pub</span> <span class="n">components</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nb">Clone</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+  <span class="p">|</span>     <span class="o">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">clone</span><span class="p">::</span><span class="nb">Clone</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">made</span> <span class="n">into</span> <span class="n">an</span> <span class="n">object</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="n">cannot</span> <span class="n">require</span> <span class="n">that</span> <span class="err">`</span><span class="n">Self</span> <span class="p">:</span> <span class="n">Sized</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="n">cannot</span> <span class="n">require</span> <span class="n">that</span> <span class="err">`</span><span class="k">Self</span> <span class="p">:</span> <span class="nb">Sized</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0038</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0038</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">gui</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -745,7 +745,7 @@ For example, if we try to approve a draft blog post before we’ve requested a r
 
 <p>Listing 17-11 shows this workflow in code form: this is an example usage of the API we’ll implement in a library crate named <code class="language-plaintext highlighter-rouge">blog</code>. 
 This won’t compile yet because we haven’t implemented the <code class="language-plaintext highlighter-rouge">blog</code> crate yet.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">blog</span><span class="p">::</span><span class="n">Post</span><span class="p">;</span>
 
@@ -786,10 +786,10 @@ We’ll also make a private <code class="language-plaintext highlighter-rouge">S
 Then Post will hold a trait object of <code class="language-plaintext highlighter-rouge">Box&lt;dyn State&gt;</code> inside an <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> in a private field named state. 
 You’ll see why the <code class="language-plaintext highlighter-rouge">Option&lt;T&gt;</code> is necessary in a bit.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="n">state</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+    <span class="n">state</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;&gt;</span><span class="p">,</span>
     <span class="n">content</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
 <span class="p">}</span>
 
@@ -824,10 +824,10 @@ We implement this as a method rather than exposing the <code class="language-pla
 This means we can implement a method later that will control how the <code class="language-plaintext highlighter-rouge">content</code> field’s data is read. 
 The <code class="language-plaintext highlighter-rouge">add_text</code> method is pretty straightforward, so let’s add the implementation in Listing 17-13 to the <code class="language-plaintext highlighter-rouge">impl Post</code> block:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add_text</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">self</span><span class="py">.content</span><span class="nf">.push_str</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
     <span class="p">}</span>
@@ -846,10 +846,10 @@ For now, let’s implement the <code class="language-plaintext highlighter-rouge
 We’ll change this later once we implement the ability to change a post’s state so it can be published. 
 So far, posts can only be in the draft state, so the post content should always be empty. 
 Listing 17-14 shows this placeholder implementation:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">content</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
         <span class="s">""</span>
     <span class="p">}</span>
@@ -863,10 +863,10 @@ Listing 17-14 shows this placeholder implementation:</p>
 <p>Next, we need to add functionality to request a review of a post, which should change its state from <code class="language-plaintext highlighter-rouge">Draft</code> to <code class="language-plaintext highlighter-rouge">PendingReview</code>. 
 Listing 17-15 shows this code:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="py">.state</span><span class="nf">.take</span><span class="p">()</span> <span class="p">{</span>
             <span class="k">self</span><span class="py">.state</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="n">s</span><span class="nf">.request_review</span><span class="p">())</span>
@@ -875,13 +875,13 @@ Listing 17-15 shows this code:</p>
 <span class="p">}</span>
 
 <span class="k">trait</span> <span class="n">State</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">struct</span> <span class="n">Draft</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">Draft</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">PendingReview</span> <span class="p">{})</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -889,7 +889,7 @@ Listing 17-15 shows this code:</p>
 <span class="k">struct</span> <span class="n">PendingReview</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">PendingReview</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">self</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -925,10 +925,10 @@ Listing 17-11 now works up to line 10!</p>
 
 <h3 id="adding-the-approve-method-that-changes-the-behavior-of-content">Adding the approve Method that Changes the Behavior of content</h3>
 <p>The <code class="language-plaintext highlighter-rouge">approve</code> method will be similar to the <code class="language-plaintext highlighter-rouge">request_review</code> method: it will set <code class="language-plaintext highlighter-rouge">state</code> to the value that the current state says it should have when that state is approved, as shown in Listing 17-16:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="py">.state</span><span class="nf">.take</span><span class="p">()</span> <span class="p">{</span>
             <span class="k">self</span><span class="py">.state</span> <span class="o">=</span> <span class="nf">Some</span><span class="p">(</span><span class="n">s</span><span class="nf">.approve</span><span class="p">())</span>
@@ -937,15 +937,15 @@ Listing 17-11 now works up to line 10!</p>
 <span class="p">}</span>
 
 <span class="k">trait</span> <span class="n">State</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">struct</span> <span class="n">Draft</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">Draft</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
-    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
+    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">self</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -953,8 +953,8 @@ Listing 17-11 now works up to line 10!</p>
 <span class="k">struct</span> <span class="n">PendingReview</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">PendingReview</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
-    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
+    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">Published</span> <span class="p">{})</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -962,11 +962,11 @@ Listing 17-11 now works up to line 10!</p>
 <span class="k">struct</span> <span class="n">Published</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">Published</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">self</span>
     <span class="p">}</span>
 
-    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">approve</span><span class="p">(</span><span class="k">self</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">State</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">self</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -981,14 +981,14 @@ The <code class="language-plaintext highlighter-rouge">Published</code> struct i
 
 <p>Now we need to update the <code class="language-plaintext highlighter-rouge">content</code> method on <code class="language-plaintext highlighter-rouge">Post</code>: if the state is <code class="language-plaintext highlighter-rouge">Published</code>, we want to return the value in the post’s <code class="language-plaintext highlighter-rouge">content</code> field; otherwise, we want to return an empty string slice, as shown in Listing 17-17:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Post</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">content</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="p">{</span>
         <span class="k">self</span><span class="py">.state</span><span class="nf">.as_ref</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">()</span><span class="nf">.content</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-17-17-updating-the-content-method-on-post-to-delegate-to-a-content-method-on-state">Listing 17-17: Updating the content method on Post to delegate to a content method on State</h4>
@@ -1005,20 +1005,20 @@ This is one of the cases we talked about in the “Cases In Which You Have More 
 
 <p>At this point, when we call <code class="language-plaintext highlighter-rouge">content</code> on the <code class="language-plaintext highlighter-rouge">&amp;Box&lt;dyn State&gt;</code>, deref coercion will take effect on the <code class="language-plaintext highlighter-rouge">&amp;</code> and the <code class="language-plaintext highlighter-rouge">Box</code> so the <code class="language-plaintext highlighter-rouge">content</code> method will ultimately be called on the type that implements the <code class="language-plaintext highlighter-rouge">State</code> trait. 
 That means we need to add <code class="language-plaintext highlighter-rouge">content</code> to the <code class="language-plaintext highlighter-rouge">State</code> trait definition, and that is where we’ll put the logic for what content to return depending on which state we have, as shown in Listing 17-18:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">trait</span> <span class="n">State</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">fn</span> <span class="n">content</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">post</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="n">Post</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span> <span class="p">{</span>
         <span class="s">""</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 <span class="k">struct</span> <span class="n">Published</span> <span class="p">{}</span>
 
 <span class="k">impl</span> <span class="n">State</span> <span class="k">for</span> <span class="n">Published</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">fn</span> <span class="n">content</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">post</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="n">Post</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span> <span class="p">{</span>
         <span class="o">&amp;</span><span class="n">post</span><span class="py">.content</span>
     <span class="p">}</span>
@@ -1074,7 +1074,7 @@ Rather than encapsulating the states and transitions completely so outside code 
 Consequently, Rust’s type checking system will prevent attempts to use draft posts where only published posts are allowed by issuing a compiler error.</p>
 
 <p>Let’s consider the first part of <code class="language-plaintext highlighter-rouge">main</code> in Listing 17-11:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">post</span> <span class="o">=</span> <span class="nn">Post</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
@@ -1089,7 +1089,7 @@ That way, if we try to get a draft post’s content, we’ll get a compiler erro
 As a result, it will be impossible for us to accidentally display draft post content in production, because that code won’t even compile. 
 Listing 17-19 shows the definition of a <code class="language-plaintext highlighter-rouge">Post</code> struct and a <code class="language-plaintext highlighter-rouge">DraftPost</code> struct, as well as methods on each:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Post</span> <span class="p">{</span>
     <span class="n">content</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -1133,10 +1133,10 @@ Because <code class="language-plaintext highlighter-rouge">content</code> is pri
 A post in the pending review state should still not display any content. 
 Let’s implement these constraints by adding another struct, <code class="language-plaintext highlighter-rouge">PendingReviewPost</code>, defining the <code class="language-plaintext highlighter-rouge">request_review</code> method on <code class="language-plaintext highlighter-rouge">DraftPost</code> to return a <code class="language-plaintext highlighter-rouge">PendingReviewPost</code>, and defining an <code class="language-plaintext highlighter-rouge">approve</code> method on <code class="language-plaintext highlighter-rouge">PendingReviewPost</code> to return a <code class="language-plaintext highlighter-rouge">Post</code>, as shown in Listing 17-20:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">DraftPost</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">request_review</span><span class="p">(</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">PendingReviewPost</span> <span class="p">{</span>
         <span class="n">PendingReviewPost</span> <span class="p">{</span>
             <span class="n">content</span><span class="p">:</span> <span class="k">self</span><span class="py">.content</span><span class="p">,</span>
@@ -1168,7 +1168,7 @@ The <code class="language-plaintext highlighter-rouge">request_review</code> and
 We also can’t have the assertions about the draft and pending review post’s contents be empty strings, nor do we need them: we can’t compile code that tries to use the content of posts in those states any longer. 
 The updated code in <code class="language-plaintext highlighter-rouge">main</code> is shown in Listing 17-21:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">blog</span><span class="p">::</span><span class="n">Post</span><span class="p">;</span>
 
@@ -1319,6 +1319,64 @@ We’ve looked at them briefly throughout the book but haven’t seen their full
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1363,65 +1421,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1485,7 +1484,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

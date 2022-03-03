@@ -1,0 +1,1161 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="This is the source code of the traditional Hello World program.">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="Rust by Example : 1. Hello World">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/1.Hello-World">
+
+
+  <meta property="og:description" content="This is the source code of the traditional Hello World program.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-02T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/1.Hello-World">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Rust by Example : 1. Hello World">
+    <meta itemprop="description" content="This is the source code of the traditional Hello World program.">
+    <meta itemprop="datePublished" content="2022-03-02T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Rust by Example : 1. Hello World
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This is the source code of the traditional Hello World program.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This is the main function</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Statements here are executed when the compiled binary is called</span>
+
+  <span class="c1">// Print text to the console</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">println!</code> is a <a href="https://doc.rust-lang.org/rust-by-example/macros.html">macro</a> that prints text to the console.</p>
+
+<p>A binary can be generated using the Rust compiler: <code class="language-plaintext highlighter-rouge">rustc</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rustc hello.rs
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">rustc</code> will produce a <code class="language-plaintext highlighter-rouge">hello</code> binary that can be executed.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./hello
+Hello World!
+</code></pre></div></div>
+<h3 id="activity">Activity</h3>
+<p>Click ‘Run’ above to see the expected output. Next, add a new line with a second <code class="language-plaintext highlighter-rouge">println!</code> macro so that the output shows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World!  
+I'm a Rustacean!
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// answer code</span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"I'm a Rustacean!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="11-comments">1.1 Comments</h2>
+
+<p>Any program requires comments, and Rust supports a few different varieties:</p>
+
+<ul>
+  <li>Regular comments which are ignored by the compiler:
+    <ul>
+      <li>// Line comments which go to the end of the line.</li>
+      <li>/* Block comments which go to the closing delimiter. */</li>
+    </ul>
+  </li>
+  <li>Doc comments which are parsed into HTML library documentation:
+    <ul>
+      <li>/// Generate library docs for the following item.</li>
+      <li>//! Generate library docs for the enclosing item.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// This is an example of a line comment</span>
+  <span class="c1">// There are two slashes at the beginning of the line</span>
+  <span class="c1">// And nothing written inside these will be read by the compiler</span>
+
+  <span class="c1">// println!("Hello, world!");</span>
+
+  <span class="c1">// Run it. See? Now try deleting the two slashes, and run it again.</span>
+
+  <span class="cm">/* 
+    * This is another type of comment, a block comment. In general,
+    * line comments are the recommended comment style. But
+    * block comments are extremely useful for temporarily disabling
+    * chunks of code. /* Block comments can be /* nested, */ */
+    * so it takes only a few keystrokes to comment out everything
+    * in this main() function. /*/*/* Try it yourself! */*/*/
+    */</span>
+
+  <span class="cm">/*
+  Note: The previous column of `*` was entirely for style. There's
+  no actual need for it.
+  */</span>
+
+  <span class="c1">// You can manipulate expressions more easily with block comments</span>
+  <span class="c1">// than with line comments. Try deleting the comment delimiters</span>
+  <span class="c1">// to change the result:</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="cm">/* 90 + */</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Is `x` 10 or 100? x = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>See also: <br />
+<a href="https://doc.rust-lang.org/rust-by-example/meta/doc.html">Library documentation</a></p>
+
+<h2 id="12-formatted-print">1.2 Formatted print</h2>
+<p>Printing is handled by a series of <code class="language-plaintext highlighter-rouge">macros</code> defined in <code class="language-plaintext highlighter-rouge">std::fmt</code> some of which include:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">format!</code>: write formatted text to <code class="language-plaintext highlighter-rouge">String</code></li>
+  <li><code class="language-plaintext highlighter-rouge">print!</code>: same as <code class="language-plaintext highlighter-rouge">format!</code> but the text is printed to the console (io::stdout).</li>
+  <li><code class="language-plaintext highlighter-rouge">println!</code>: same as <code class="language-plaintext highlighter-rouge">print!</code> but a newline is appended.</li>
+  <li><code class="language-plaintext highlighter-rouge">eprint!</code>: same as <code class="language-plaintext highlighter-rouge">format!</code> but the text is printed to the standard error (io::stderr).</li>
+  <li><code class="language-plaintext highlighter-rouge">eprintln!</code>: same as <code class="language-plaintext highlighter-rouge">eprint!</code> but a newline is appended.</li>
+</ul>
+
+<p>All parse text in the same fashion. As a plus, Rust checks formatting correctness at compile time.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// In general, the `{}` will be automatically replaced with any</span>
+  <span class="c1">// arguments. These will be stringified.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{} days"</span><span class="p">,</span> <span class="mi">31</span><span class="p">);</span>
+
+  <span class="c1">// Without a suffix, 31 becomes an i32. You can change what type 31 is</span>
+  <span class="c1">// by providing a suffix. The number 31i64 for example has the type i64.</span>
+
+  <span class="c1">// There are various optional patterns this works with. Positional</span>
+  <span class="c1">// arguments can be used.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{0}, this is {1}. {1}, this is {0}"</span><span class="p">,</span> <span class="s">"Alice"</span><span class="p">,</span> <span class="s">"Bob"</span><span class="p">);</span>
+
+  <span class="c1">// As can named arguments.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{subject} {verb} {object}"</span><span class="p">,</span>
+            <span class="n">object</span><span class="o">=</span><span class="s">"the lazy dog"</span><span class="p">,</span>
+            <span class="n">subject</span><span class="o">=</span><span class="s">"the quick brown fox"</span><span class="p">,</span>
+            <span class="n">verb</span><span class="o">=</span><span class="s">"jumps over"</span><span class="p">);</span>
+
+  <span class="c1">// Special formatting can be specified after a `:`.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{} of {:b} people know binary, the other half doesn't"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="c1">// You can right-align text with a specified width. This will output</span>
+  <span class="c1">// "     1". 5 white spaces and a "1".</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{number:&gt;width$}"</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">);</span>
+
+  <span class="c1">// You can pad numbers with extra zeroes. This will output "000001".</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{number:0&gt;width$}"</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">);</span>
+
+  <span class="c1">// Rust even checks to make sure the correct number of arguments are</span>
+  <span class="c1">// used.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"My name is {0}, {1} {0}"</span><span class="p">,</span> <span class="s">"Bond"</span><span class="p">);</span>
+  <span class="c1">// FIXME ^ Add the missing argument: "James"</span>
+
+  <span class="c1">// Create a structure named `Structure` which contains an `i32`.</span>
+  <span class="nd">#[allow(dead_code)]</span>
+  <span class="k">struct</span> <span class="nf">Structure</span><span class="p">(</span><span class="nb">i32</span><span class="p">);</span>
+
+  <span class="c1">// However, custom types such as this structure require more complicated</span>
+  <span class="c1">// handling. This will not work.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"This struct `{}` won't print..."</span><span class="p">,</span> <span class="nf">Structure</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+  <span class="c1">// FIXME ^ Comment out this line.</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">std::fmt</code> contains many <code class="language-plaintext highlighter-rouge">traits</code> which govern the display of text. 
+The base form of two important ones are listed below:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fmt::Debug</code>: Uses the <code class="language-plaintext highlighter-rouge">{:?}</code> marker. Format text for debugging purposes.</li>
+  <li><code class="language-plaintext highlighter-rouge">fmt::Display</code>: Uses the <code class="language-plaintext highlighter-rouge">{}</code> marker. Format text in a more elegant, user friendly fashion.
+Here, we used <code class="language-plaintext highlighter-rouge">fmt::Display</code> because the std library provides implementations for these types. To print text for custom types, more steps are required.</li>
+</ul>
+
+<p>Implementing the fmt::Display trait automatically implements the <code class="language-plaintext highlighter-rouge">ToString</code> trait which allows us to <code class="language-plaintext highlighter-rouge">convert</code> the type to <code class="language-plaintext highlighter-rouge">String</code>.</p>
+
+<h3 id="activities">Activities</h3>
+<ul>
+  <li>Fix the two issues in the above code (see FIXME) so that it runs without error.</li>
+  <li>Add a <code class="language-plaintext highlighter-rouge">println!</code> macro call that prints: <code class="language-plaintext highlighter-rouge">Pi is roughly 3.142</code> by controlling the number of decimal places shown. For the purposes of this exercise, use <code class="language-plaintext highlighter-rouge">let pi = 3.141592</code> as an estimate for pi. (Hint: you may need to check the <code class="language-plaintext highlighter-rouge">std::fmt</code> documentation for setting the number of decimals to display)</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// #1 FIXME -&gt; println!("My name is {0}, {1} {0}", "Bond");</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"My name is {0}, {1} {0}"</span><span class="p">,</span> <span class="s">"Bond"</span><span class="p">,</span> <span class="s">"James"</span><span class="p">);</span>
+
+  <span class="c1">// #2 FIXME -&gt; comment out </span>
+  <span class="c1">// println!("This struct `{}` won't print...", Structure(3));</span>
+
+  <span class="c1">// #3 Add a println! macro call that prints</span>
+  <span class="k">let</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.141592</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Pi is roughly {0:.3}"</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span>
+</code></pre></div></div>
+<p>See also: <br />
+<a href="https://doc.rust-lang.org/std/fmt/">std::fmt</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/macros.html">macros</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/custom_types/structs.html">struct</a>, and 
+<a href="https://doc.rust-lang.org/std/fmt/#formatting-traits">traits</a></p>
+
+<h3 id="121-debug">1.2.1 Debug</h3>
+<p>All types which want to use <code class="language-plaintext highlighter-rouge">std::fmt</code> formatting <code class="language-plaintext highlighter-rouge">traits</code> require an implementation to be printable. 
+Automatic implementations are only provided for types such as in the <code class="language-plaintext highlighter-rouge">std</code> library. 
+All others <em>must</em> be manually implemented somehow.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">fmt::Debug</code> <code class="language-plaintext highlighter-rouge">trait</code> makes this very straightforward. <em>All</em> types can <code class="language-plaintext highlighter-rouge">derive</code> (automatically create) the <code class="language-plaintext highlighter-rouge">fmt::Debug</code> implementation. 
+This is not true for <code class="language-plaintext highlighter-rouge">fmt::Display</code> which must be manually implemented.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This structure cannot be printed either with `fmt::Display` or</span>
+<span class="c1">// with `fmt::Debug`.</span>
+<span class="k">struct</span> <span class="nf">UnPrintable</span><span class="p">(</span><span class="nb">i32</span><span class="p">);</span>
+
+<span class="c1">// The `derive` attribute automatically creates the implementation</span>
+<span class="c1">// required to make this `struct` printable with `fmt::Debug`.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">DebugPrintable</span><span class="p">(</span><span class="nb">i32</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>All <code class="language-plaintext highlighter-rouge">std</code> library types are automatically printable with <code class="language-plaintext highlighter-rouge">{:?}</code> too:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Derive the `fmt::Debug` implementation for `Structure`. `Structure`</span>
+<span class="c1">// is a structure which contains a single `i32`.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">Structure</span><span class="p">(</span><span class="nb">i32</span><span class="p">);</span>
+
+<span class="c1">// Put a `Structure` inside of the structure `Deep`. Make it printable</span>
+<span class="c1">// also.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">Deep</span><span class="p">(</span><span class="n">Structure</span><span class="p">);</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Printing with `{:?}` is similar to with `{}`.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?} months in a year."</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{1:?} {0:?} is the {actor:?} name."</span><span class="p">,</span>
+            <span class="s">"Slater"</span><span class="p">,</span>
+            <span class="s">"Christian"</span><span class="p">,</span>
+            <span class="n">actor</span><span class="o">=</span><span class="s">"actor's"</span><span class="p">);</span>
+
+  <span class="c1">// `Structure` is printable!</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Now {:?} will print!"</span><span class="p">,</span> <span class="nf">Structure</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+  
+  <span class="c1">// The problem with `derive` is there is no control over how</span>
+  <span class="c1">// the results look. What if I want this to just show a `7`?</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Now {:?} will print!"</span><span class="p">,</span> <span class="nf">Deep</span><span class="p">(</span><span class="nf">Structure</span><span class="p">(</span><span class="mi">7</span><span class="p">)));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So <code class="language-plaintext highlighter-rouge">fmt::Debug</code> definitely makes this printable but sacrifices some elegance. Rust also provides “pretty printing” with <code class="language-plaintext highlighter-rouge">{:#?}</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Person</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">,</span>
+  <span class="n">age</span><span class="p">:</span> <span class="nb">u8</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"Peter"</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">27</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Person</span> <span class="p">{</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="p">};</span>
+
+  <span class="c1">// Pretty print</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:#?}"</span><span class="p">,</span> <span class="n">peter</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>One can manually implement <code class="language-plaintext highlighter-rouge">fmt::Display</code> to control the display.</p>
+
+<p>See also: <br />
+<a href="https://doc.rust-lang.org/reference/attributes.html">attributes</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/trait/derive.html">derive</a>, 
+<a href="https://doc.rust-lang.org/std/fmt/">std::fmt</a>, and 
+<a href="https://doc.rust-lang.org/rust-by-example/custom_types/structs.html">struct</a></p>
+
+<h3 id="122-display">1.2.2 Display</h3>
+<p><code class="language-plaintext highlighter-rouge">fmt::Debug</code> hardly looks compact and clean, so it is often advantageous to customize the output appearance. This is done by manually implementing <code class="language-plaintext highlighter-rouge">fmt::Display</code>, which uses the <code class="language-plaintext highlighter-rouge">{}</code> print marker. Implementing it looks like this:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Import (via `use`) the `fmt` module to make it available.</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
+
+<span class="c1">// Define a structure for which `fmt::Display` will be implemented. This is</span>
+<span class="c1">// a tuple struct named `Structure` that contains an `i32`.</span>
+<span class="k">struct</span> <span class="nf">Structure</span><span class="p">(</span><span class="nb">i32</span><span class="p">);</span>
+
+<span class="c1">// To use the `{}` marker, the trait `fmt::Display` must be implemented</span>
+<span class="c1">// manually for the type.</span>
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Structure</span> <span class="p">{</span>
+    <span class="c1">// This trait requires `fmt` with this exact signature.</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+        <span class="c1">// Write strictly the first element into the supplied output</span>
+        <span class="c1">// stream: `f`. Returns `fmt::Result` which indicates whether the</span>
+        <span class="c1">// operation succeeded or failed. Note that `write!` uses syntax which</span>
+        <span class="c1">// is very similar to `println!`.</span>
+        <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{}"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">fmt::Display</code> may be cleaner than <code class="language-plaintext highlighter-rouge">fmt::Debug</code> but this presents a problem for the <code class="language-plaintext highlighter-rouge">std</code> library. 
+How should ambiguous types be displayed? For example, if the <code class="language-plaintext highlighter-rouge">std</code> library implemented a single style for all <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code>, what style should it be? Would it be either of these two?</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Vec&lt;path&gt;</code> : <code class="language-plaintext highlighter-rouge">/:/etc:/home/username:/bin</code> (split on <code class="language-plaintext highlighter-rouge">:</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">Vec&lt;number&gt;</code> : <code class="language-plaintext highlighter-rouge">1,2,3</code> (split on <code class="language-plaintext highlighter-rouge">,</code>)</li>
+</ul>
+
+<p>No, because there is no ideal style for all types and the <code class="language-plaintext highlighter-rouge">std</code> library doesn’t presume to dictate one. 
+<code class="language-plaintext highlighter-rouge">fmt::Display</code> is not implemented for <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> or for any other generic containers.
+ <code class="language-plaintext highlighter-rouge">fmt::Debug</code> must then be used for these generic cases.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span> <span class="c1">// Import `fmt`</span>
+
+<span class="c1">// A structure holding two numbers. `Debug` will be derived so the results can</span>
+<span class="c1">// be contrasted with `Display`.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="nf">MinMax</span><span class="p">(</span><span class="nb">i64</span><span class="p">,</span> <span class="nb">i64</span><span class="p">);</span>
+
+<span class="c1">// Implement `Display` for `MinMax`.</span>
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">MinMax</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="c1">// Use `self.number` to refer to each positional data point.</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"({}, {})"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="p">,</span> <span class="k">self</span><span class="na">.1</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Define a structure where the fields are nameable for comparison.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Point2D</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Similarly, implement `Display` for `Point2D`</span>
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Point2D</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="c1">// Customize so only `x` and `y` are denoted.</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"x: {}, y: {}"</span><span class="p">,</span> <span class="k">self</span><span class="py">.x</span><span class="p">,</span> <span class="k">self</span><span class="py">.y</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">minmax</span> <span class="o">=</span> <span class="nf">MinMax</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Compare structures:"</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Display: {}"</span><span class="p">,</span> <span class="n">minmax</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Debug: {:?}"</span><span class="p">,</span> <span class="n">minmax</span><span class="p">);</span>
+
+  <span class="k">let</span> <span class="n">big_range</span> <span class="o">=</span>   <span class="nf">MinMax</span><span class="p">(</span><span class="o">-</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">small_range</span> <span class="o">=</span> <span class="nf">MinMax</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"The big range is {big} and the small is {small}"</span><span class="p">,</span>
+            <span class="n">small</span> <span class="o">=</span> <span class="n">small_range</span><span class="p">,</span>
+            <span class="n">big</span> <span class="o">=</span> <span class="n">big_range</span><span class="p">);</span>
+
+  <span class="k">let</span> <span class="n">point</span> <span class="o">=</span> <span class="n">Point2D</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">3.3</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">7.2</span> <span class="p">};</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Compare points:"</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Display: {}"</span><span class="p">,</span> <span class="n">point</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Debug: {:?}"</span><span class="p">,</span> <span class="n">point</span><span class="p">);</span>
+
+  <span class="c1">// Error. Both `Debug` and `Display` were implemented, but `{:b}`</span>
+  <span class="c1">// requires `fmt::Binary` to be implemented. This will not work.</span>
+  <span class="c1">// println!("What does Point2D look like in binary: {:b}?", point);</span>
+  
+<span class="p">}</span>
+</code></pre></div></div>
+<p>So, <code class="language-plaintext highlighter-rouge">fmt::Display</code> has been implemented but <code class="language-plaintext highlighter-rouge">fmt::Binary</code> has not, and therefore cannot be used. 
+<code class="language-plaintext highlighter-rouge">std::fmt</code> has many such traits and each requires its own implementation. This is detailed further in std::fmt.</p>
+
+<h3 id="activity-1">Activity</h3>
+<p>After checking the output of the above example, use the <code class="language-plaintext highlighter-rouge">Point2D</code> struct as a guide to add a <code class="language-plaintext highlighter-rouge">Complex</code> struct to the example. 
+When printed in the same way, the output should be:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Display: 3.3 + 7.2i
+Debug: Complex { real: 3.3, imag: 7.2 }
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add sturct and Implemnet Display trait</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Complex</span> <span class="p">{</span>
+  <span class="n">real</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
+  <span class="n">imag</span><span class="p">:</span> <span class="nb">f64</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Complex</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{} + {}i"</span><span class="p">,</span> <span class="k">self</span><span class="py">.real</span><span class="p">,</span> <span class="k">self</span><span class="py">.imag</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">complex</span> <span class="o">=</span> <span class="n">Complex</span> <span class="p">{</span> <span class="n">real</span><span class="p">:</span> <span class="mf">3.3</span><span class="p">,</span> <span class="n">imag</span><span class="p">:</span> <span class="mf">7.2</span> <span class="p">};</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Display: {}"</span><span class="p">,</span> <span class="n">complex</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Debug: {:?}"</span><span class="p">,</span> <span class="n">complex</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>See also:
+<a href="https://doc.rust-lang.org/rust-by-example/trait/derive.html">derive</a>, 
+<a href="https://doc.rust-lang.org/std/fmt/">std::fmt</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/macros.html">macros</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/custom_types/structs.html">struct</a>, 
+<a href="https://doc.rust-lang.org/std/fmt/#formatting-traits">trait</a>, and 
+<a href="https://doc.rust-lang.org/rust-by-example/mod/use.html">use</a></p>
+
+<h3 id="1221-testcase-list">1.2.2.1 Testcase: List</h3>
+
+<p>Implementing <code class="language-plaintext highlighter-rouge">fmt::Display</code> for a structure where the elements must each be handled sequentially is tricky. 
+The problem is that each <code class="language-plaintext highlighter-rouge">write!</code> generates a <code class="language-plaintext highlighter-rouge">fmt::Result</code>. Proper handling of this requires dealing with <em>all</em> the results. 
+Rust provides the <code class="language-plaintext highlighter-rouge">?</code> operator for exactly this purpose.</p>
+
+<p>Using <code class="language-plaintext highlighter-rouge">?</code> on <code class="language-plaintext highlighter-rouge">write!</code> looks like this:</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Try `write!` to see if it errors. If it errors, return</span>
+<span class="c1">// the error. Otherwise continue.</span>
+<span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{}"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>With <code class="language-plaintext highlighter-rouge">?</code> available, implementing <code class="language-plaintext highlighter-rouge">fmt::Display</code> for a Vec is straightforward:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span> <span class="c1">// Import the `fmt` module.</span>
+
+<span class="c1">// Define a structure named `List` containing a `Vec`.</span>
+<span class="k">struct</span> <span class="nf">List</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">);</span>
+
+<span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">List</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="c1">// Extract the value using tuple indexing,</span>
+      <span class="c1">// and create a reference to `vec`.</span>
+      <span class="k">let</span> <span class="n">vec</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">self</span><span class="na">.0</span><span class="p">;</span>
+
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"["</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+      <span class="c1">// Iterate over `v` in `vec` while enumerating the iteration</span>
+      <span class="c1">// count in `count`.</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">in</span> <span class="n">vec</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+          <span class="c1">// For every element except the first, add a comma.</span>
+          <span class="c1">// Use the ? operator to return on errors.</span>
+          <span class="k">if</span> <span class="n">count</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span> <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">", "</span><span class="p">)</span><span class="o">?</span><span class="p">;</span> <span class="p">}</span>
+          <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{}"</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// Close the opened bracket and return a fmt::Result value.</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"]"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="nf">List</span><span class="p">(</span><span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="activity-2">Activity</h3>
+<p>Try changing the program so that the index of each element in the vector is also printed. The new output should look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[0: 1, 1: 2, 2: 3]
+</code></pre></div></div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// --snip -- </span>
+  <span class="c1">// Iterate over `v` in `vec` while enumerating the iteration</span>
+  <span class="c1">// count in `count`.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">in</span> <span class="n">vec</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{}: {}"</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+      <span class="k">if</span> <span class="n">vec</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">!=</span> <span class="n">count</span> <span class="p">{</span> <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">", "</span><span class="p">)</span><span class="o">?</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// -- snip --</span>
+</code></pre></div></div>
+
+<p>See also:
+<a href="https://doc.rust-lang.org/rust-by-example/flow_control/for.html">for</a>,
+<a href="https://doc.rust-lang.org/rust-by-example/scope/borrow/ref.html">ref</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/std/result.html">Result</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/custom_types/structs.html">struct</a>, 
+<a href="https://doc.rust-lang.org/rust-by-example/std/result/question_mark.html">?</a>, and 
+<a href="https://doc.rust-lang.org/rust-by-example/std/vec.html">vec!</a></p>
+
+<h3 id="123-formatting">1.2.3. Formatting</h3>
+<p>We’ve seen that formatting is specified via a <em>format string</em>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">format!("{}", foo)</code> -&gt; <code class="language-plaintext highlighter-rouge">"3735928559"</code></li>
+  <li><code class="language-plaintext highlighter-rouge">format!("0x{:X}", foo)</code> -&gt; <code class="language-plaintext highlighter-rouge">"0xDEADBEEF"</code></li>
+  <li><code class="language-plaintext highlighter-rouge">format!("0o{:o}", foo)</code> -&gt; <code class="language-plaintext highlighter-rouge">"0o33653337357"</code>
+The same variable (<code class="language-plaintext highlighter-rouge">foo</code>) can be formatted differently depending on which argument type is used: <code class="language-plaintext highlighter-rouge">X</code> vs <code class="language-plaintext highlighter-rouge">o</code> vs unspecified.</li>
+</ul>
+
+<p>This formatting functionality is implemented via traits, and there is one trait for each argument type. 
+The most common formatting trait is <code class="language-plaintext highlighter-rouge">Display</code>, which handles cases where the argument type is left unspecified: <code class="language-plaintext highlighter-rouge">{}</code> for instance.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="n">Formatter</span><span class="p">,</span> <span class="n">Display</span><span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">City</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="p">,</span>
+  <span class="c1">// Latitude</span>
+  <span class="n">lat</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="c1">// Longitude</span>
+  <span class="n">lon</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Display</span> <span class="k">for</span> <span class="n">City</span> <span class="p">{</span>
+  <span class="c1">// `f` is a buffer, and this method must write the formatted string into it</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="k">let</span> <span class="n">lat_c</span> <span class="o">=</span> <span class="k">if</span> <span class="k">self</span><span class="py">.lat</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="p">{</span> <span class="sc">'N'</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="sc">'S'</span> <span class="p">};</span>
+      <span class="k">let</span> <span class="n">lon_c</span> <span class="o">=</span> <span class="k">if</span> <span class="k">self</span><span class="py">.lon</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="p">{</span> <span class="sc">'E'</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="sc">'W'</span> <span class="p">};</span>
+
+      <span class="c1">// `write!` is like `format!`, but it will write the formatted string</span>
+      <span class="c1">// into a buffer (the first argument)</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"{}: {:.3}°{} {:.3}°{}"</span><span class="p">,</span>
+              <span class="k">self</span><span class="py">.name</span><span class="p">,</span> <span class="k">self</span><span class="py">.lat</span><span class="nf">.abs</span><span class="p">(),</span> <span class="n">lat_c</span><span class="p">,</span> <span class="k">self</span><span class="py">.lon</span><span class="nf">.abs</span><span class="p">(),</span> <span class="n">lon_c</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Color</span> <span class="p">{</span>
+  <span class="n">red</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+  <span class="n">green</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+  <span class="n">blue</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="n">city</span> <span class="k">in</span> <span class="p">[</span>
+      <span class="n">City</span> <span class="p">{</span> <span class="n">name</span><span class="p">:</span> <span class="s">"Dublin"</span><span class="p">,</span> <span class="n">lat</span><span class="p">:</span> <span class="mf">53.347778</span><span class="p">,</span> <span class="n">lon</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.259722</span> <span class="p">},</span>
+      <span class="n">City</span> <span class="p">{</span> <span class="n">name</span><span class="p">:</span> <span class="s">"Oslo"</span><span class="p">,</span> <span class="n">lat</span><span class="p">:</span> <span class="mf">59.95</span><span class="p">,</span> <span class="n">lon</span><span class="p">:</span> <span class="mf">10.75</span> <span class="p">},</span>
+      <span class="n">City</span> <span class="p">{</span> <span class="n">name</span><span class="p">:</span> <span class="s">"Vancouver"</span><span class="p">,</span> <span class="n">lat</span><span class="p">:</span> <span class="mf">49.25</span><span class="p">,</span> <span class="n">lon</span><span class="p">:</span> <span class="o">-</span><span class="mf">123.1</span> <span class="p">},</span>
+  <span class="p">]</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="o">*</span><span class="n">city</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="n">color</span> <span class="k">in</span> <span class="p">[</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">90</span> <span class="p">},</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">254</span> <span class="p">},</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+  <span class="p">]</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Switch this to use {} once you've added an implementation</span>
+      <span class="c1">// for fmt::Display.</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="o">*</span><span class="n">color</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>You can view a full list of formatting traits and their argument types in the <code class="language-plaintext highlighter-rouge">std::fmt</code> documentation.</p>
+
+<h3 id="activity-3">Activity</h3>
+<p>Add an implementation of the <code class="language-plaintext highlighter-rouge">fmt::Display</code> trait for the <code class="language-plaintext highlighter-rouge">Color</code> struct above so that the output displays as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RGB (128, 255, 90) 0x80FF5A
+RGB (0, 3, 254) 0x0003FE
+RGB (0, 0, 0) 0x000000
+Two hints if you get stuck:
+</code></pre></div></div>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::{</span><span class="k">self</span><span class="p">,</span> <span class="n">Formatter</span><span class="p">,</span> <span class="n">Display</span><span class="p">};</span>
+
+<span class="k">impl</span> <span class="n">Display</span> <span class="k">for</span> <span class="n">Color</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
+      <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"RGB ({}, {}, {}) 0x{:0&gt;2X}{:0&gt;2X}{:0&gt;2X}"</span><span class="p">,</span>
+              <span class="k">self</span><span class="py">.red</span><span class="p">,</span> <span class="k">self</span><span class="py">.green</span><span class="p">,</span> <span class="k">self</span><span class="py">.blue</span><span class="p">,</span>
+              <span class="k">self</span><span class="py">.red</span><span class="p">,</span> <span class="k">self</span><span class="py">.green</span><span class="p">,</span> <span class="k">self</span><span class="py">.blue</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Color</span> <span class="p">{</span>
+  <span class="n">red</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+  <span class="n">green</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+  <span class="n">blue</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="n">color</span> <span class="k">in</span> <span class="p">[</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">90</span> <span class="p">},</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">254</span> <span class="p">},</span>
+      <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">green</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">blue</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+  <span class="p">]</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Switch this to use {} once you've added an implementation</span>
+      <span class="c1">// for fmt::Display.</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="o">*</span><span class="n">color</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>You <a href="https://doc.rust-lang.org/std/fmt/#named-parameters">may need to list each color more than once</a>,
+You can <a href="https://doc.rust-lang.org/std/fmt/#width">pad with zeros to a width of 2</a> with :0&gt;2.</p>
+
+<p>See also:
+<a href="https://doc.rust-lang.org/std/fmt/">std::fmt</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#example" class="page__taxonomy-item" rel="tag">Example</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">Rust</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust-by-example" class="page__taxonomy-item" rel="tag">RUST by Example</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-02T00:00:00+00:00">March 2, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Rust+by+Example+%3A+1.+Hello+World%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F1.Hello-World" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F1.Hello-World" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F1.Hello-World" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/0.Rust-By-Exaple" class="pagination--pager" title="Rust by Example : 0. Introduction
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I have a trouble cuz the development settings at home and at work are different.
+It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/github%20pages/Github-actions/" rel="permalink">Github Actions: Setting for CI server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

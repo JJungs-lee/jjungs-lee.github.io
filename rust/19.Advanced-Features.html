@@ -403,7 +403,7 @@ We can create raw pointers in safe code; we just can’t dereference raw pointer
 Listing 19-2 shows how to create a raw pointer to an arbitrary location in memory. 
 Trying to use arbitrary memory is undefined: there might be data at that address or there might not, the compiler might optimize the code so there is no memory access, or the program might error with a segmentation fault. 
 Usually, there is no good reason to write code like this, but it is possible.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">address</span> <span class="o">=</span> <span class="mi">0x012345u</span><span class="n">size</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">address</span> <span class="o">=</span> <span class="mi">0x012345usize</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">address</span> <span class="k">as</span> <span class="o">*</span><span class="k">const</span> <span class="nb">i32</span><span class="p">;</span>
 </code></pre></div></div>
 <h4 id="listing-19-2-creating-a-raw-pointer-to-an-arbitrary-memory-address">Listing 19-2: Creating a raw pointer to an arbitrary memory address</h4>
@@ -449,7 +449,7 @@ By calling an unsafe function within an <code class="language-plaintext highligh
 <p>We must call the <code class="language-plaintext highlighter-rouge">dangerous</code> function within a separate <code class="language-plaintext highlighter-rouge">unsafe</code> block. If we try to call <code class="language-plaintext highlighter-rouge">dangerous</code> without the <code class="language-plaintext highlighter-rouge">unsafe</code> block, we’ll get an error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">unsafe</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/unsafe-example)</span>
+   <span class="n">Compiling</span> <span class="k">unsafe</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/unsafe-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0133</span><span class="p">]:</span> <span class="n">call</span> <span class="n">to</span> <span class="k">unsafe</span> <span class="n">function</span> <span class="n">is</span> <span class="k">unsafe</span> <span class="n">and</span> <span class="n">requires</span> <span class="k">unsafe</span> <span class="n">function</span> <span class="n">or</span> <span class="n">block</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
@@ -460,7 +460,7 @@ By calling an unsafe function within an <code class="language-plaintext highligh
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0133</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0133</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="k">unsafe</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -492,7 +492,7 @@ For simplicity, we’ll implement <code class="language-plaintext highlighter-ro
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">split_at_mut</span><span class="p">(</span><span class="n">slice</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="p">[</span><span class="nb">i32</span><span class="p">],</span> <span class="n">mid</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="p">[</span><span class="nb">i32</span><span class="p">],</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="n">slice</span><span class="nf">.len</span><span class="p">();</span>
 
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;=</span> <span class="n">len</span><span class="p">);</span>
+    <span class="nd">assert!</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;=</span> <span class="n">len</span><span class="p">);</span>
 
     <span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">slice</span><span class="p">[</span><span class="o">..</span><span class="n">mid</span><span class="p">],</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">slice</span><span class="p">[</span><span class="n">mid</span><span class="o">..</span><span class="p">])</span>
 <span class="p">}</span>
@@ -507,7 +507,7 @@ The assertion means that if we pass an index that is greater than the length to 
 
 <p>When we try to compile the code in Listing 19-5, we’ll get an error.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="k">unsafe</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/unsafe-example)</span>
+   <span class="n">Compiling</span> <span class="k">unsafe</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/unsafe-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0499</span><span class="p">]:</span> <span class="n">cannot</span> <span class="n">borrow</span> <span class="err">`</span><span class="o">*</span><span class="n">slice</span><span class="err">`</span> <span class="k">as</span> <span class="n">mutable</span> <span class="n">more</span> <span class="n">than</span> <span class="n">once</span> <span class="n">at</span> <span class="n">a</span> <span class="n">time</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">30</span>
   <span class="p">|</span>
@@ -523,7 +523,7 @@ The assertion means that if we pass an index that is greater than the length to 
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0499</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0499</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="k">unsafe</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -539,7 +539,7 @@ When we know code is okay, but Rust doesn’t, it’s time to reach for unsafe c
     <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="n">slice</span><span class="nf">.len</span><span class="p">();</span>
     <span class="k">let</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">slice</span><span class="nf">.as_mut_ptr</span><span class="p">();</span>
 
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;=</span> <span class="n">len</span><span class="p">);</span>
+    <span class="nd">assert!</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;=</span> <span class="n">len</span><span class="p">);</span>
 
     <span class="k">unsafe</span> <span class="p">{</span>
         <span class="p">(</span>
@@ -572,7 +572,7 @@ We’ve created a safe abstraction to the unsafe code with an implementation of 
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">slice</span><span class="p">;</span>
 
-    <span class="k">let</span> <span class="n">address</span> <span class="o">=</span> <span class="mi">0x01234u</span><span class="n">size</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">address</span> <span class="o">=</span> <span class="mi">0x01234usize</span><span class="p">;</span>
     <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">address</span> <span class="k">as</span> <span class="o">*</span><span class="k">mut</span> <span class="nb">i32</span><span class="p">;</span>
 
     <span class="k">let</span> <span class="n">slice</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">]</span> <span class="o">=</span> <span class="k">unsafe</span> <span class="p">{</span> <span class="nn">slice</span><span class="p">::</span><span class="nf">from_raw_parts_mut</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span> <span class="p">};</span>
@@ -590,7 +590,7 @@ An FFI is a way for a programming language to define functions and enable a diff
 <p>Listing 19-8 demonstrates how to set up an integration with the <code class="language-plaintext highlighter-rouge">abs</code> function from the C standard library. 
 Functions declared within <code class="language-plaintext highlighter-rouge">extern</code> blocks are always unsafe to call from Rust code. 
 The reason is that other languages don’t enforce Rust’s rules and guarantees, and Rust can’t check them, so responsibility falls on the programmer to ensure safety.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">extern</span> <span class="s">"C"</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">abs</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span><span class="p">;</span>
@@ -629,7 +629,7 @@ In the following example, we make the <code class="language-plaintext highlighte
 
 <p>In Rust, global variables are called <code class="language-plaintext highlighter-rouge">static</code> variables. 
 Listing 19-9 shows an example declaration and use of a static variable with a string slice as a value.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">static</span> <span class="n">HELLO_WORLD</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="o">=</span> <span class="s">"Hello, world!"</span><span class="p">;</span>
 
@@ -650,7 +650,7 @@ Using the value will always access the same data. Constants, on the other hand, 
 Accessing and modifying mutable static variables is <em>unsafe</em>. 
 Listing 19-10 shows how to declare, access, and modify a mutable static variable named <code class="language-plaintext highlighter-rouge">COUNTER</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">static</span> <span class="k">mut</span> <span class="n">COUNTER</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
@@ -684,11 +684,11 @@ A trait is unsafe when at least one of its methods has some invariant that the c
 We can declare that a trait is <code class="language-plaintext highlighter-rouge">unsafe</code> by adding the <code class="language-plaintext highlighter-rouge">unsafe</code> keyword before <code class="language-plaintext highlighter-rouge">trait</code> and marking the implementation of the trait as <code class="language-plaintext highlighter-rouge">unsafe</code> too, as shown in Listing 19-11.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">unsafe</span> <span class="k">trait</span> <span class="n">Foo</span> <span class="p">{</span>
-    <span class="c">// methods go here</span>
+    <span class="c1">// methods go here</span>
 <span class="p">}</span>
 
 <span class="k">unsafe</span> <span class="k">impl</span> <span class="n">Foo</span> <span class="k">for</span> <span class="nb">i32</span> <span class="p">{</span>
-    <span class="c">// method implementations go here</span>
+    <span class="c1">// method implementations go here</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{}</span>
@@ -728,10 +728,10 @@ Associated types are somewhere in the middle: they’re used more rarely than fe
 The associated type is named <code class="language-plaintext highlighter-rouge">Item</code> and stands in for the type of the values the type implementing the <code class="language-plaintext highlighter-rouge">Iterator</code> trait is iterating over. 
 In “The <code class="language-plaintext highlighter-rouge">Iterator</code> Trait and the <code class="language-plaintext highlighter-rouge">next</code> Method” section of Chapter 13, we mentioned that the definition of the <code class="language-plaintext highlighter-rouge">Iterator</code> trait is as shown in Listing 19-12.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Iterator</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="nb">Iterator</span> <span class="p">{</span>
     <span class="k">type</span> <span class="n">Item</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-19-12-the-definition-of-the-iterator-trait-that-has-an-associated-type-item">Listing 19-12: The definition of the Iterator trait that has an associated type Item</h4>
@@ -744,17 +744,17 @@ So why use associated types?</p>
 
 <p>Let’s examine the difference between the two concepts with an example from Chapter 13 that implements the <code class="language-plaintext highlighter-rouge">Iterator</code> trait on the <code class="language-plaintext highlighter-rouge">Counter</code> struct. 
 In Listing 13-21, we specified that the <code class="language-plaintext highlighter-rouge">Item</code> type was <code class="language-plaintext highlighter-rouge">u32</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="k">impl</span> <span class="n">Iterator</span> <span class="k">for</span> <span class="n">Counter</span> <span class="p">{</span>
+<span class="k">impl</span> <span class="nb">Iterator</span> <span class="k">for</span> <span class="n">Counter</span> <span class="p">{</span>
     <span class="k">type</span> <span class="n">Item</span> <span class="o">=</span> <span class="nb">u32</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="c1">// --snip--</span>
 </code></pre></div></div>
 
 <p>This syntax seems comparable to that of generics. So why not just define the <code class="language-plaintext highlighter-rouge">Iterator</code> trait with generics, as shown in Listing 19-13?</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="nb">Iterator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -779,7 +779,7 @@ The syntax for specifying a default type for a generic type is <code class="lang
 But you can overload the operations and corresponding traits listed in <code class="language-plaintext highlighter-rouge">std::ops</code> by implementing the traits associated with the operator. 
 For example, in Listing 19-14 we overload the <code class="language-plaintext highlighter-rouge">+</code> operator to add two <code class="language-plaintext highlighter-rouge">Point</code> instances together. 
 We do this by implementing the <code class="language-plaintext highlighter-rouge">Add</code> trait on a <code class="language-plaintext highlighter-rouge">Point</code> struct:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nb">Add</span><span class="p">;</span>
 
@@ -813,10 +813,10 @@ We do this by implementing the <code class="language-plaintext highlighter-rouge
 The <code class="language-plaintext highlighter-rouge">Add</code> trait has an associated type named <code class="language-plaintext highlighter-rouge">Output</code> that determines the type returned from the <code class="language-plaintext highlighter-rouge">add</code> method.</p>
 
 <p>The default generic type in this code is within the <code class="language-plaintext highlighter-rouge">Add</code> trait. Here is its definition:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">trait</span> <span class="nb">Add</span><span class="o">&lt;</span><span class="n">Rhs</span><span class="o">=</span><span class="n">Self</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">trait</span> <span class="nb">Add</span><span class="o">&lt;</span><span class="n">Rhs</span><span class="o">=</span><span class="k">Self</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">type</span> <span class="n">Output</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Rhs</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">Self</span><span class="p">::</span><span class="n">Output</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Rhs</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span><span class="p">::</span><span class="n">Output</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>This code should look generally familiar: a trait with one method and an associated type. 
@@ -830,7 +830,7 @@ Let’s look at an example of implementing the <code class="language-plaintext h
 <p>We have two structs, <code class="language-plaintext highlighter-rouge">Millimeters</code> and <code class="language-plaintext highlighter-rouge">Meters</code>, holding values in different units. 
 We want to add values in millimeters to values in meters and have the implementation of <code class="language-plaintext highlighter-rouge">Add</code> do the conversion correctly. 
 We can implement <code class="language-plaintext highlighter-rouge">Add</code> for <code class="language-plaintext highlighter-rouge">Millimeters</code> with <code class="language-plaintext highlighter-rouge">Meters</code> as the <code class="language-plaintext highlighter-rouge">Rhs</code>, as shown in Listing 19-15.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nb">Add</span><span class="p">;</span>
 
@@ -869,7 +869,7 @@ Consider the code in Listing 19-16 where we’ve defined two traits, <code class
 We then implement both traits on a type <code class="language-plaintext highlighter-rouge">Human</code> that already has a method named <code class="language-plaintext highlighter-rouge">fly</code> implemented on it. 
 Each <code class="language-plaintext highlighter-rouge">fly</code> method does something different.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">trait</span> <span class="n">Pilot</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">fly</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">);</span>
@@ -902,7 +902,7 @@ Each <code class="language-plaintext highlighter-rouge">fly</code> method does s
 <h4 id="listing-19-16-two-traits-are-defined-to-have-a-fly-method-and-are-implemented-on-the-human-type-and-a-fly-method-is-implemented-on-human-directly">Listing 19-16: Two traits are defined to have a fly method and are implemented on the Human type, and a fly method is implemented on Human directly</h4>
 
 <p>When we call <code class="language-plaintext highlighter-rouge">fly</code> on an instance of <code class="language-plaintext highlighter-rouge">Human</code>, the compiler defaults to calling the method that is directly implemented on the type, as shown in Listing 19-17.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Human</span><span class="p">;</span>
@@ -914,7 +914,7 @@ Each <code class="language-plaintext highlighter-rouge">fly</code> method does s
 <p>Running this code will print <code class="language-plaintext highlighter-rouge">*waving arms furiously*</code>, showing that Rust called the <code class="language-plaintext highlighter-rouge">fly</code> method implemented on <code class="language-plaintext highlighter-rouge">Human</code> directly.</p>
 
 <p>To call the <code class="language-plaintext highlighter-rouge">fly</code> methods from either the <code class="language-plaintext highlighter-rouge">Pilot</code> trait or the <code class="language-plaintext highlighter-rouge">Wizard</code> trait, we need to use more explicit syntax to specify which <code class="language-plaintext highlighter-rouge">fly</code> method we mean. Listing 19-18 demonstrates this syntax.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Human</span><span class="p">;</span>
@@ -930,8 +930,8 @@ We could also write <code class="language-plaintext highlighter-rouge">Human::fl
 
 <p>Running this code prints the following:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/traits-example)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.46</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/traits-example)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.46</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">traits</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">This</span> <span class="n">is</span> <span class="n">your</span> <span class="n">captain</span> <span class="n">speaking</span><span class="py">.
 Up</span><span class="o">!</span>
@@ -943,7 +943,7 @@ Up</span><span class="o">!</span>
 When two types in the same scope implement that trait, Rust can’t figure out which type you mean unless you use <em>fully qualified syntax</em>. 
 For example, the <code class="language-plaintext highlighter-rouge">Animal</code> trait in Listing 19-19 has the associated function <code class="language-plaintext highlighter-rouge">baby_name</code>, 
 the implementation of <code class="language-plaintext highlighter-rouge">Animal</code> for the struct <code class="language-plaintext highlighter-rouge">Dog</code>, and the associated function <code class="language-plaintext highlighter-rouge">baby_name</code> defined on <code class="language-plaintext highlighter-rouge">Dog</code> directly.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">trait</span> <span class="n">Animal</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">baby_name</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">String</span><span class="p">;</span>
@@ -977,8 +977,8 @@ Baby dogs are called puppies, and that is expressed in the implementation of the
 This code prints the following:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/traits-example)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.54</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/traits-example)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.54</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">traits</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">A</span> <span class="n">baby</span> <span class="n">dog</span> <span class="n">is</span> <span class="n">called</span> <span class="n">a</span> <span class="n">Spot</span>
 </code></pre></div></div>
@@ -986,7 +986,7 @@ This code prints the following:</p>
 We want to call the <code class="language-plaintext highlighter-rouge">baby_name</code> function that is part of the <code class="language-plaintext highlighter-rouge">Animal</code> trait that we implemented on <code class="language-plaintext highlighter-rouge">Dog</code> so the code prints <code class="language-plaintext highlighter-rouge">A baby dog is called a puppy</code>. 
 The technique of specifying the trait name that we used in Listing 19-18 doesn’t help here; if we change <code class="language-plaintext highlighter-rouge">main</code> to the code in Listing 19-20, we’ll get a compilation error.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"A baby dog is called a {}"</span><span class="p">,</span> <span class="nn">Animal</span><span class="p">::</span><span class="nf">baby_name</span><span class="p">());</span>
@@ -998,7 +998,7 @@ The technique of specifying the trait name that we used in Listing 19-18 doesn�
 We’ll get this compiler error:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/traits-example)</span>
+   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/traits-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0283</span><span class="p">]:</span> <span class="k">type</span> <span class="n">annotations</span> <span class="n">needed</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">43</span>
    <span class="p">|</span>
@@ -1008,18 +1008,18 @@ We’ll get this compiler error:</p>
 <span class="mi">20</span> <span class="p">|</span>     <span class="nd">println!</span><span class="p">(</span><span class="s">"A baby dog is called a {}"</span><span class="p">,</span> <span class="nn">Animal</span><span class="p">::</span><span class="nf">baby_name</span><span class="p">());</span>
    <span class="p">|</span>                                           <span class="o">^^^^^^^^^^^^^^^^^</span> <span class="n">cannot</span> <span class="n">infer</span> <span class="k">type</span>
    <span class="p">|</span>
-   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">resolve</span> <span class="err">`</span><span class="mi">_</span><span class="p">:</span> <span class="n">Animal</span><span class="err">`</span>
+   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">resolve</span> <span class="err">`</span><span class="n">_</span><span class="p">:</span> <span class="n">Animal</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0283</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0283</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">traits</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
 </code></pre></div></div>
 <p>To disambiguate and tell Rust that we want to use the implementation of <code class="language-plaintext highlighter-rouge">Animal</code> for <code class="language-plaintext highlighter-rouge">Dog</code>, we need to use fully qualified syntax. Listing 19-21 demonstrates how to use fully qualified syntax.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"A baby dog is called a {}"</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Dog</span> <span class="k">as</span> <span class="n">Animal</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">baby_name</span><span class="p">());</span>
@@ -1031,8 +1031,8 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 This code will now print what we want:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/traits-example)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.48</span><span class="n">s</span>
+   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/traits-example)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.48</span><span class="n">s</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">traits</span><span class="o">-</span><span class="n">example</span><span class="err">`</span>
 <span class="n">A</span> <span class="n">baby</span> <span class="n">dog</span> <span class="n">is</span> <span class="n">called</span> <span class="n">a</span> <span class="n">puppy</span>
 </code></pre></div></div>
@@ -1064,7 +1064,7 @@ We can do that in the trait definition by specifying <code class="language-plain
 This technique is similar to adding a trait bound to the trait. 
 Listing 19-22 shows an implementation of the <code class="language-plaintext highlighter-rouge">OutlinePrint</code> trait.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
 
@@ -1085,7 +1085,7 @@ Listing 19-22 shows an implementation of the <code class="language-plaintext hig
 If we tried to use <code class="language-plaintext highlighter-rouge">to_string</code> without adding a colon and specifying the <code class="language-plaintext highlighter-rouge">Display</code> trait after the trait name, we’d get an error saying that no method named <code class="language-plaintext highlighter-rouge">to_string</code> was found for the type <code class="language-plaintext highlighter-rouge">&amp;Self</code> in the current scope.</p>
 
 <p>Let’s see what happens when we try to implement <code class="language-plaintext highlighter-rouge">OutlinePrint</code> on a type that doesn’t implement <code class="language-plaintext highlighter-rouge">Display</code>, such as the <code class="language-plaintext highlighter-rouge">Point</code> struct:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
     <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
@@ -1097,7 +1097,7 @@ If we tried to use <code class="language-plaintext highlighter-rouge">to_string<
 <p>We get an error saying that <code class="language-plaintext highlighter-rouge">Display</code> is required but not implemented:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/traits-example)</span>
+   <span class="n">Compiling</span> <span class="n">traits</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/traits-example)</span>
 <span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="err">`</span><span class="n">Point</span><span class="err">`</span> <span class="n">doesn</span><span class="nv">'t</span> <span class="n">implement</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span><span class="err">`</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">6</span>
    <span class="p">|</span>
@@ -1105,22 +1105,22 @@ If we tried to use <code class="language-plaintext highlighter-rouge">to_string<
    <span class="p">|</span>      <span class="o">^^^^^^^^^^^^</span> <span class="err">`</span><span class="n">Point</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">formatted</span> <span class="n">with</span> <span class="n">the</span> <span class="n">default</span> <span class="n">formatter</span>
    <span class="p">|</span>
    <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="n">Point</span><span class="err">`</span>
-   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">in</span> <span class="n">format</span> <span class="n">strings</span> <span class="n">you</span> <span class="n">may</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="k">use</span> <span class="err">`</span><span class="p">{:</span><span class="o">?</span><span class="p">}</span><span class="err">`</span> <span class="p">(</span><span class="n">or</span> <span class="p">{:</span><span class="err">#</span><span class="o">?</span><span class="p">}</span> <span class="k">for</span> <span class="n">pretty</span><span class="o">-</span><span class="n">print</span><span class="p">)</span> <span class="n">instead</span>
+   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="k">in</span> <span class="n">format</span> <span class="n">strings</span> <span class="n">you</span> <span class="n">may</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="k">use</span> <span class="err">`</span><span class="p">{:</span><span class="o">?</span><span class="p">}</span><span class="err">`</span> <span class="p">(</span><span class="n">or</span> <span class="p">{:</span><span class="err">#</span><span class="o">?</span><span class="p">}</span> <span class="k">for</span> <span class="n">pretty</span><span class="o">-</span><span class="n">print</span><span class="p">)</span> <span class="n">instead</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">traits</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
 </code></pre></div></div>
 <p>To fix this, we implement <code class="language-plaintext highlighter-rouge">Display</code> on <code class="language-plaintext highlighter-rouge">Point</code> and satisfy the constraint that <code class="language-plaintext highlighter-rouge">OutlinePrint</code> requires, like so:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
 
 <span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Point</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Result</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
         <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"({}, {})"</span><span class="p">,</span> <span class="k">self</span><span class="py">.x</span><span class="p">,</span> <span class="k">self</span><span class="py">.y</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -1139,14 +1139,14 @@ There is no runtime performance penalty for using this pattern, and the wrapper 
 
 <p>As an example, let’s say we want to implement <code class="language-plaintext highlighter-rouge">Display</code> on <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code>, which the orphan rule prevents us from doing directly because the <code class="language-plaintext highlighter-rouge">Display</code> trait and the <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> type are defined outside our crate. 
 We can make a <code class="language-plaintext highlighter-rouge">Wrapper</code> struct that holds an instance of <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code>; then we can implement <code class="language-plaintext highlighter-rouge">Display</code> on <code class="language-plaintext highlighter-rouge">Wrapper</code> and use the <code class="language-plaintext highlighter-rouge">Vec&lt;T&gt;</code> value, as shown in Listing 19-23.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fmt</span><span class="p">;</span>
 
 <span class="k">struct</span> <span class="nf">Wrapper</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">);</span>
 
 <span class="k">impl</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Display</span> <span class="k">for</span> <span class="n">Wrapper</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Result</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Formatter</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nn">fmt</span><span class="p">::</span><span class="nb">Result</span> <span class="p">{</span>
         <span class="nd">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"[{}]"</span><span class="p">,</span> <span class="k">self</span><span class="na">.0</span><span class="nf">.join</span><span class="p">(</span><span class="s">", "</span><span class="p">))</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -1210,35 +1210,35 @@ Values that have the type <code class="language-plaintext highlighter-rouge">Kil
 However, using this method, we don’t get the type checking benefits that we get from the newtype pattern discussed earlier.</p>
 
 <p>The main use case for type synonyms is to reduce repetition. For example, we might have a lengthy type like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="nv">'static</span><span class="o">&gt;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="k">'static</span><span class="o">&gt;</span>
 </code></pre></div></div>
 <p>Writing this lengthy type in function signatures and as type annotations all over the code can be tiresome and error prone. 
 Imagine having a project full of code like that in Listing 19-24.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="nv">'static</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(||</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"hi"</span><span class="p">));</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="k">'static</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(||</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"hi"</span><span class="p">));</span>
 
-    <span class="k">fn</span> <span class="nf">takes_long_type</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="nv">'static</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+    <span class="k">fn</span> <span class="nf">takes_long_type</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="k">'static</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 
-    <span class="k">fn</span> <span class="nf">returns_long_type</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="nv">'static</span><span class="o">&gt;</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+    <span class="k">fn</span> <span class="nf">returns_long_type</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="k">'static</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-19-24-using-a-long-type-in-many-places">Listing 19-24: Using a long type in many places</h4>
 
 <p>A type alias makes this code more manageable by reducing the repetition. In Listing 19-25, we’ve introduced an alias named <code class="language-plaintext highlighter-rouge">Thunk</code> for the verbose type and can replace all uses of the type with the shorter alias <code class="language-plaintext highlighter-rouge">Thunk</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">type</span> <span class="n">Thunk</span> <span class="o">=</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="nv">'static</span><span class="o">&gt;</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">type</span> <span class="n">Thunk</span> <span class="o">=</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Send</span> <span class="o">+</span> <span class="k">'static</span><span class="o">&gt;</span><span class="p">;</span>
 
     <span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="n">Thunk</span> <span class="o">=</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(||</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"hi"</span><span class="p">));</span>
 
     <span class="k">fn</span> <span class="nf">takes_long_type</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Thunk</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 
     <span class="k">fn</span> <span class="nf">returns_long_type</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Thunk</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-19-25-introducing-a-type-alias-thunk-to-reduce-repetition">Listing 19-25: Introducing a type alias Thunk to reduce repetition</h4>
@@ -1254,24 +1254,24 @@ Many of the functions in <code class="language-plaintext highlighter-rouge">std:
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
 
 <span class="k">pub</span> <span class="k">trait</span> <span class="n">Write</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">write</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">usize</span><span class="p">,</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">fn</span> <span class="nf">flush</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">usize</span><span class="p">,</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">flush</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">write_all</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">fn</span> <span class="nf">write_fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Arguments</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write_all</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write_fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Arguments</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>The <code class="language-plaintext highlighter-rouge">Result&lt;..., Error&gt;</code> is repeated a lot. As such, <code class="language-plaintext highlighter-rouge">std::io</code> has this type of alias declaration:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span>
 </code></pre></div></div>
 <p>Because this declaration is in the <code class="language-plaintext highlighter-rouge">std::io</code> module, we can use the fully qualified alias <code class="language-plaintext highlighter-rouge">std::io::Result&lt;T&gt;</code>—that is, a <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> with the E filled in as <code class="language-plaintext highlighter-rouge">std::io::Error</code>. 
 The Write trait function signatures end up looking like this:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Write</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">write</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">usize</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">fn</span> <span class="nf">flush</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">usize</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">flush</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">write_all</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">fn</span> <span class="nf">write_fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Arguments</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write_all</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">write_fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nn">fmt</span><span class="p">::</span><span class="n">Arguments</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>The type alias helps in two ways: it makes code easier to write <em>and</em> it gives us a consistent interface across all of <code class="language-plaintext highlighter-rouge">std::io</code>. 
@@ -1281,7 +1281,7 @@ Because it’s an alias, it’s just another <code class="language-plaintext hig
 <p>Rust has a special type named <code class="language-plaintext highlighter-rouge">!</code> that’s known in type theory lingo as the <strong>empty</strong> type because it has no values. 
 We prefer to call it the <em>never type</em> because it stands in the place of the return type when a function will never return. Here is an example:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">bar</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="o">!</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>This code is read as “the function <code class="language-plaintext highlighter-rouge">bar</code> returns never.” Functions that return never are called <em>diverging functions</em>. 
@@ -1290,7 +1290,7 @@ We can’t create values of the type <code class="language-plaintext highlighter
 <p>But what use is a type you can never create values for? Recall the code from Listing 2-5; we’ve reproduced part of it here in Listing 19-26.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="n">guess</span><span class="p">:</span> <span class="nb">u32</span> <span class="o">=</span> <span class="k">match</span> <span class="n">guess</span><span class="nf">.trim</span><span class="p">()</span><span class="nf">.parse</span><span class="p">()</span> <span class="p">{</span>
             <span class="nf">Ok</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">num</span><span class="p">,</span>
-            <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">continue</span><span class="p">,</span>
+            <span class="nf">Err</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="k">continue</span><span class="p">,</span>
         <span class="p">};</span>
 </code></pre></div></div>
 <h4 id="listing-19-26-a-match-with-an-arm-that-ends-in-continue">Listing 19-26: A match with an arm that ends in continue</h4>
@@ -1299,8 +1299,8 @@ We can’t create values of the type <code class="language-plaintext highlighter
 In Chapter 6 in “The <code class="language-plaintext highlighter-rouge">match</code> Control Flow Operator” section, we discussed that <code class="language-plaintext highlighter-rouge">match</code> arms must all return the same type. 
 So, for example, the following code doesn’t work:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">let</span> <span class="n">guess</span> <span class="o">=</span> <span class="k">match</span> <span class="n">guess</span><span class="nf">.trim</span><span class="p">()</span><span class="nf">.parse</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nf">Ok</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="nf">Err</span><span class="p">(</span><span class="mi">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="s">"hello"</span><span class="p">,</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="s">"hello"</span><span class="p">,</span>
     <span class="p">};</span>
 </code></pre></div></div>
 <p>The type of <code class="language-plaintext highlighter-rouge">guess</code> in this code would have to be an integer <em>and</em> a string, and Rust requires that <code class="language-plaintext highlighter-rouge">guess</code> have only one type. 
@@ -1377,20 +1377,20 @@ In addition, Rust implicitly adds a bound on <code class="language-plaintext hig
 That is, a generic function definition like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>is actually treated as though we had written this:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="n">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>By default, generic functions will work only on types that have a known size at compile time. 
 However, you can use the following special syntax to relax this restriction:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="o">?</span><span class="n">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span> <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>A trait bound on <code class="language-plaintext highlighter-rouge">?Sized</code> is the opposite of a trait bound on <code class="language-plaintext highlighter-rouge">Sized</code>: we would read this as “<code class="language-plaintext highlighter-rouge">T</code> may or may not be <code class="language-plaintext highlighter-rouge">Sized</code>.” This syntax is only available for <code class="language-plaintext highlighter-rouge">Sized</code>, not any other traits.</p>
@@ -1410,7 +1410,7 @@ Doing this with function pointers will allow you to use functions as arguments t
 Functions coerce to the type <code class="language-plaintext highlighter-rouge">fn</code> (with a lowercase f), not to be confused with the <code class="language-plaintext highlighter-rouge">Fn</code> closure trait. 
 The <code class="language-plaintext highlighter-rouge">fn</code> type is called a function pointer. The syntax for specifying that a parameter is a function pointer is similar to that of closures, as shown in Listing 19-27.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1477,39 +1477,39 @@ But you can’t do that with closures because they don’t have a concrete type 
 
 <p>The following code tries to return a closure directly, but it won’t compile:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="k">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="p">|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>The compiler error is as follows:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">build</span>
-   <span class="n">Compiling</span> <span class="n">functions</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/functions-example)</span>
-<span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="n">size</span> <span class="k">for</span> <span class="n">values</span> <span class="n">of</span> <span class="k">type</span> <span class="err">`</span><span class="p">(</span><span class="n">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="nv">'static</span><span class="p">)</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">known</span> <span class="n">at</span> <span class="n">compilation</span> <span class="n">time</span>
+   <span class="n">Compiling</span> <span class="n">functions</span><span class="o">-</span><span class="n">example</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/functions-example)</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0277</span><span class="p">]:</span> <span class="n">the</span> <span class="n">size</span> <span class="k">for</span> <span class="n">values</span> <span class="n">of</span> <span class="k">type</span> <span class="err">`</span><span class="p">(</span><span class="k">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="k">'static</span><span class="p">)</span><span class="err">`</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">known</span> <span class="n">at</span> <span class="n">compilation</span> <span class="n">time</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">25</span>
   <span class="p">|</span>
-<span class="mi">1</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+<span class="mi">1</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="k">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
   <span class="p">|</span>                         <span class="o">^^^^^^^^^^^^^^^^^^</span> <span class="n">doesn</span><span class="nv">'t</span> <span class="n">have</span> <span class="n">a</span> <span class="n">size</span> <span class="n">known</span> <span class="n">at</span> <span class="n">compile</span><span class="o">-</span><span class="n">time</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">marker</span><span class="p">::</span><span class="n">Sized</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">(</span><span class="n">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="nv">'static</span><span class="p">)</span><span class="err">`</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">to</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">visit</span> <span class="o">&lt;</span><span class="n">https</span><span class="p">:</span><span class="c">//doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait&gt;</span>
+  <span class="o">=</span> <span class="n">help</span><span class="p">:</span> <span class="n">the</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">marker</span><span class="p">::</span><span class="nb">Sized</span><span class="err">`</span> <span class="n">is</span> <span class="n">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="err">`</span><span class="p">(</span><span class="k">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="k">'static</span><span class="p">)</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">to</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">visit</span> <span class="o">&lt;</span><span class="n">https</span><span class="p">:</span><span class="c1">//doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait&gt;</span>
   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">the</span> <span class="k">return</span> <span class="k">type</span> <span class="n">of</span> <span class="n">a</span> <span class="n">function</span> <span class="n">must</span> <span class="n">have</span> <span class="n">a</span> <span class="n">statically</span> <span class="n">known</span> <span class="n">size</span>
 
 <span class="n">error</span><span class="p">[</span><span class="n">E0308</span><span class="p">]:</span> <span class="n">mismatched</span> <span class="n">types</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span>
   <span class="p">|</span>
-<span class="mi">1</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
-  <span class="p">|</span>                         <span class="o">------------------</span> <span class="n">expected</span> <span class="err">`</span><span class="p">(</span><span class="n">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="nv">'static</span><span class="p">)</span><span class="err">`</span> <span class="n">because</span> <span class="n">of</span> <span class="k">return</span> <span class="k">type</span>
+<span class="mi">1</span> <span class="p">|</span> <span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="k">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+  <span class="p">|</span>                         <span class="o">------------------</span> <span class="n">expected</span> <span class="err">`</span><span class="p">(</span><span class="k">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="k">'static</span><span class="p">)</span><span class="err">`</span> <span class="n">because</span> <span class="n">of</span> <span class="k">return</span> <span class="k">type</span>
 <span class="mi">2</span> <span class="p">|</span>     <span class="p">|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-  <span class="p">|</span>     <span class="o">^^^^^^^^^</span> <span class="n">expected</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="n">Fn</span><span class="err">`</span><span class="p">,</span> <span class="n">found</span> <span class="n">closure</span>
+  <span class="p">|</span>     <span class="o">^^^^^^^^^</span> <span class="n">expected</span> <span class="k">trait</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nb">Fn</span><span class="err">`</span><span class="p">,</span> <span class="n">found</span> <span class="n">closure</span>
   <span class="p">|</span>
-  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="k">trait</span> <span class="n">object</span> <span class="err">`</span><span class="p">(</span><span class="n">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="nv">'static</span><span class="p">)</span><span class="err">`</span>
+  <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">expected</span> <span class="k">trait</span> <span class="n">object</span> <span class="err">`</span><span class="p">(</span><span class="k">dyn</span> <span class="nn">std</span><span class="p">::</span><span class="nn">ops</span><span class="p">::</span><span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="o">+</span> <span class="k">'static</span><span class="p">)</span><span class="err">`</span>
                   <span class="n">found</span> <span class="n">closure</span> <span class="err">`</span><span class="p">[</span><span class="n">closure</span><span class="o">@</span><span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span> <span class="mi">2</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="mi">2</span> <span class="n">previous</span> <span class="n">errors</span>
 
 <span class="nb">Some</span> <span class="n">errors</span> <span class="n">have</span> <span class="n">detailed</span> <span class="n">explanations</span><span class="p">:</span> <span class="n">E0277</span><span class="p">,</span> <span class="n">E0308</span><span class="py">.
-For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">an</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
+For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">an</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0277</span><span class="err">`</span><span class="py">.
 error</span><span class="p">:</span> <span class="n">could</span> <span class="n">not</span> <span class="n">compile</span> <span class="err">`</span><span class="n">functions</span><span class="o">-</span><span class="n">example</span><span class="err">`</span><span class="py">.
 
 To</span> <span class="n">learn</span> <span class="n">more</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">again</span> <span class="n">with</span> <span class="o">--</span><span class="n">verbose</span><span class="err">.</span>
@@ -1517,7 +1517,7 @@ To</span> <span class="n">learn</span> <span class="n">more</span><span class="p
 <p>The error references the <code class="language-plaintext highlighter-rouge">Sized</code> trait again! Rust doesn’t know how much space it will need to store the closure. We saw a solution to this problem earlier. 
 We can use a trait object:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -1575,7 +1575,7 @@ We wouldn’t be able to use a function to do the same because we wouldn’t kno
 
 <p>Listing 19-28 shows a slightly simplified definition of the <code class="language-plaintext highlighter-rouge">vec!</code> macro.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[macro_export]</span>
 <span class="nd">macro_rules!</span> <span class="n">vec</span> <span class="p">{</span>
@@ -1647,7 +1647,7 @@ Procedural macros accept some code as an input, operate on that code, and produc
 This is for complex technical reasons that we hope to eliminate in the future. 
 Using procedural macros looks like the code in Listing 19-29, where <code class="language-plaintext highlighter-rouge">some_attribute</code> is a placeholder for using a specific macro.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">use</span> <span class="n">proc_macro</span><span class="p">;</span>
 
@@ -1670,7 +1670,7 @@ Rather than making our crate users implement the <code class="language-plaintext
 The default implementation will print <code class="language-plaintext highlighter-rouge">Hello, Macro! My name is TypeName!</code> where <code class="language-plaintext highlighter-rouge">TypeName</code> is the name of the type on which this trait has been defined. 
 In other words, we’ll write a crate that enables another programmer to write code like Listing 19-30 using our crate.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">hello_macro</span><span class="p">::</span><span class="n">HelloMacro</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">hello_macro_derive</span><span class="p">::</span><span class="n">HelloMacro</span><span class="p">;</span>
@@ -1689,7 +1689,7 @@ The first step is to make a new library crate, like this:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cargo new hello_macro --lib
 </code></pre></div></div>
 <p>Next, we’ll define the <code class="language-plaintext highlighter-rouge">HelloMacro</code> trait and its associated function:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">trait</span> <span class="n">HelloMacro</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">hello_macro</span><span class="p">();</span>
@@ -1730,10 +1730,10 @@ However, the way we’ve structured the project makes it possible for programmer
 
 <p>We need to declare the <code class="language-plaintext highlighter-rouge">hello_macro_derive</code> crate as a procedural macro crate. 
 We’ll also need functionality from the <code class="language-plaintext highlighter-rouge">syn</code> and <code class="language-plaintext highlighter-rouge">quote</code> crates, as you’ll see in a moment, so we need to add them as dependencies. Add the following to the <em>Cargo.toml</em> file for <code class="language-plaintext highlighter-rouge">hello_macro_derive</code>:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: hello_macro_derive/Cargo.toml</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: hello_macro_derive/Cargo.toml</span>
 
 <span class="p">[</span><span class="n">lib</span><span class="p">]</span>
-<span class="n">proc</span><span class="o">-</span><span class="n">macro</span> <span class="o">=</span> <span class="k">true</span>
+<span class="n">proc</span><span class="o">-</span><span class="k">macro</span> <span class="o">=</span> <span class="k">true</span>
 
 <span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
 <span class="n">syn</span> <span class="o">=</span> <span class="s">"1.0"</span>
@@ -1742,9 +1742,9 @@ We’ll also need functionality from the <code class="language-plaintext highlig
 <p>To start defining the procedural macro, place the code in Listing 19-31 into your <em>src/lib.rs</em> file for the <code class="language-plaintext highlighter-rouge">hello_macro_derive</code> crate. 
 Note that this code won’t compile until we add a definition for the <code class="language-plaintext highlighter-rouge">impl_hello_macro</code> function.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: hello_macro_derive/src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: hello_macro_derive/src/lib.rs</span>
 
-<span class="k">extern</span> <span class="n">crate</span> <span class="n">proc_macro</span><span class="p">;</span>
+<span class="k">extern</span> <span class="k">crate</span> <span class="n">proc_macro</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nn">proc_macro</span><span class="p">::</span><span class="n">TokenStream</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">quote</span><span class="p">::</span><span class="n">quote</span><span class="p">;</span>
@@ -1752,11 +1752,11 @@ Note that this code won’t compile until we add a definition for the <code clas
 
 <span class="nd">#[proc_macro_derive(HelloMacro)]</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">hello_macro_derive</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="n">TokenStream</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">TokenStream</span> <span class="p">{</span>
-    <span class="c">// Construct a representation of Rust code as a syntax tree</span>
-    <span class="c">// that we can manipulate</span>
+    <span class="c1">// Construct a representation of Rust code as a syntax tree</span>
+    <span class="c1">// that we can manipulate</span>
     <span class="k">let</span> <span class="n">ast</span> <span class="o">=</span> <span class="nn">syn</span><span class="p">::</span><span class="nf">parse</span><span class="p">(</span><span class="n">input</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
 
-    <span class="c">// Build the trait implementation</span>
+    <span class="c1">// Build the trait implementation</span>
     <span class="nf">impl_hello_macro</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ast</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -1781,7 +1781,7 @@ The <code class="language-plaintext highlighter-rouge">parse</code> function in 
 Listing 19-32 shows the relevant parts of the <code class="language-plaintext highlighter-rouge">DeriveInput</code> struct we get from parsing the <code class="language-plaintext highlighter-rouge">struct Pancakes;</code> string:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DeriveInput</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 
     <span class="n">ident</span><span class="p">:</span> <span class="n">Ident</span> <span class="p">{</span>
         <span class="n">ident</span><span class="p">:</span> <span class="s">"Pancakes"</span><span class="p">,</span>
@@ -1812,7 +1812,7 @@ It’s necessary for our procedural macro to panic on errors because <code class
 We’ve simplified this example by using <code class="language-plaintext highlighter-rouge">unwrap</code>; in production code, you should provide more specific error messages about what went wrong by using <code class="language-plaintext highlighter-rouge">panic!</code> or <code class="language-plaintext highlighter-rouge">expect</code>.</p>
 
 <p>Now that we have the code to turn the annotated Rust code from a <code class="language-plaintext highlighter-rouge">TokenStream</code> into a <code class="language-plaintext highlighter-rouge">DeriveInput</code> instance, let’s generate the code that implements the <code class="language-plaintext highlighter-rouge">HelloMacro</code> trait on the annotated type, as shown in Listing 19-33.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: hello_macro_derive/src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: hello_macro_derive/src/lib.rs</span>
 
 <span class="k">fn</span> <span class="nf">impl_hello_macro</span><span class="p">(</span><span class="n">ast</span><span class="p">:</span> <span class="o">&amp;</span><span class="nn">syn</span><span class="p">::</span><span class="n">DeriveInput</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">TokenStream</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ast</span><span class="py">.ident</span><span class="p">;</span>
@@ -2020,6 +2020,64 @@ Use this chapter as a reference to guide you to solutions.</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -2064,65 +2122,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -2186,7 +2185,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

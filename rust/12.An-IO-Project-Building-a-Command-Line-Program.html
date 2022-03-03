@@ -360,7 +360,7 @@ We’ll cover iterators fully in <em>Chapter 13</em>.
 For now, you only need to know two details about iterators: iterators produce a series of values, and we can call the <code class="language-plaintext highlighter-rouge">collect</code> method on an iterator to turn it into a collection, such as a vector, containing all the elements the iterator produces.</p>
 
 <p>Use the code in Listing 12-1 to allow your <code class="language-plaintext highlighter-rouge">minigrep</code> program to read any command line arguments passed to it and then collect the values into a vector.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -407,7 +407,7 @@ But for the purposes of this chapter, we’ll ignore it and save only the two ar
 <p>Printing the value of the vector of arguments illustrated that the program is able to access the values specified as command line arguments. 
 Now we need to save the values of the two arguments in variables so we can use the values throughout the rest of the program. We do that in Listing 12-2.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -430,8 +430,8 @@ The second argument will be the filename, so we put a reference to the second ar
 Let’s run this program again with the arguments <code class="language-plaintext highlighter-rouge">test</code> and <code class="language-plaintext highlighter-rouge">sample.txt</code>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">test</span> <span class="n">sample</span><span class="py">.txt</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">test</span> <span class="n">sample</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">Searching</span> <span class="k">for</span> <span class="n">test</span>
 <span class="n">In</span> <span class="n">file</span> <span class="n">sample</span><span class="py">.txt</span>
@@ -445,7 +445,7 @@ First, we need a sample file to test it with: the best kind of file to use to ma
 Listing 12-3 has an Emily Dickinson poem that will work well! 
 Create a file called <em>poem.txt</em> at the root level of your project, and enter the poem “I’m Nobody! Who are you?”</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: poem.txt</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: poem.txt</span>
 <span class="n">I</span><span class="nv">'m</span> <span class="nd">nobody!</span> <span class="n">Who</span> <span class="n">are</span> <span class="n">you</span><span class="o">?</span>
 <span class="n">Are</span> <span class="n">you</span> <span class="n">nobody</span><span class="p">,</span> <span class="n">too</span><span class="o">?</span>
 <span class="n">Then</span> <span class="n">there</span><span class="nv">'s</span> <span class="n">a</span> <span class="n">pair</span> <span class="n">of</span> <span class="n">us</span> <span class="o">-</span> <span class="n">don</span><span class="nv">'t</span> <span class="nd">tell!</span>
@@ -465,7 +465,7 @@ How</span> <span class="n">dreary</span> <span class="n">to</span> <span class="
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"In file {}"</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
 
     <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -485,8 +485,8 @@ How</span> <span class="n">dreary</span> <span class="n">to</span> <span class="
 <p>Let’s run this code with any string as the first command line argument (because we haven’t implemented the searching part yet) and the <em>poem.txt</em> file as the second argument:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">the</span> <span class="n">poem</span><span class="py">.txt</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">the</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">Searching</span> <span class="k">for</span> <span class="n">the</span>
 <span class="n">In</span> <span class="n">file</span> <span class="n">poem</span><span class="py">.txt</span>
@@ -559,13 +559,13 @@ Let’s rework our program by following this process.</p>
 <p>We’ll extract the functionality for parsing arguments into a function that <code class="language-plaintext highlighter-rouge">main</code> will call to prepare for moving the command line parsing logic to <em>src/lib.rs</em>. 
 Listing 12-5 shows the new start of <code class="language-plaintext highlighter-rouge">main</code> that calls a new function <code class="language-plaintext highlighter-rouge">parse_config</code>, which we’ll define in <em>src/main.rs</em> for the moment.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">args</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.collect</span><span class="p">();</span>
 
     <span class="k">let</span> <span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">=</span> <span class="nf">parse_config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">);</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 
 <span class="k">fn</span> <span class="nf">parse_config</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="p">(</span><span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="p">{</span>
@@ -606,7 +606,7 @@ We’re not currently conveying this meaning in the structure of the data other 
     <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="n">config</span><span class="py">.filename</span><span class="p">)</span>
         <span class="nf">.expect</span><span class="p">(</span><span class="s">"Something went wrong reading the file"</span><span class="p">);</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 
 <span class="k">struct</span> <span class="n">Config</span> <span class="p">{</span>
@@ -660,10 +660,10 @@ Similarly, by changing <code class="language-plaintext highlighter-rouge">parse_
 
     <span class="k">let</span> <span class="n">config</span> <span class="o">=</span> <span class="nn">Config</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">);</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Config</span> <span class="p">{</span>
@@ -684,8 +684,8 @@ Recall that attempting to access the values in the <code class="language-plainte
 Try running the program without any arguments; it will look like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span><span class="err">`</span>
 <span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'index</span> <span class="n">out</span> <span class="n">of</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">the</span> <span class="n">len</span> <span class="n">is</span> <span class="mi">1</span>
 <span class="n">but</span> <span class="n">the</span> <span class="n">index</span> <span class="n">is</span> <span class="mi">1</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">21</span>
@@ -697,14 +697,14 @@ Try running the program without any arguments; it will look like this:</p>
 <p>In Listing 12-8, we add a check in the <code class="language-plaintext highlighter-rouge">new</code> function that will verify that the slice is long enough before accessing index 1 and 2. 
 If the slice isn’t long enough, the program panics and displays a better error message than the <code class="language-plaintext highlighter-rouge">index out of bounds</code> message.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Config</span> <span class="p">{</span>
     <span class="k">if</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
         <span class="nd">panic!</span><span class="p">(</span><span class="s">"not enough arguments"</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-12-8-adding-a-check-for-the-number-of-arguments">Listing 12-8: Adding a check for the number of arguments</h4>
 
@@ -715,8 +715,8 @@ If <code class="language-plaintext highlighter-rouge">args</code> has fewer than
 <p>With these extra few lines of code in <code class="language-plaintext highlighter-rouge">new</code>, let’s run the program without any arguments again to see what the error looks like now:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span><span class="err">`</span>
 <span class="n">thread</span> <span class="nv">'main</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'not</span> <span class="n">enough</span> <span class="n">arguments</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mi">13</span>
 <span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="err">.</span>
@@ -734,10 +734,10 @@ Then we can change <code class="language-plaintext highlighter-rouge">main</code
 
 <p>Listing 12-9 shows the changes we need to make to the return value of <code class="language-plaintext highlighter-rouge">Config::new</code> and the body of the function needed to return a <code class="language-plaintext highlighter-rouge">Result</code>. 
 Note that this won’t compile until we update <code class="language-plaintext highlighter-rouge">main</code> as well, which we’ll do in the next listing.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"not enough arguments"</span><span class="p">);</span>
         <span class="p">}</span>
@@ -762,7 +762,7 @@ These changes make the function conform to its new type signature.</p>
 <h3 id="calling-confignew-and-handling-errors">Calling Config::new and Handling Errors</h3>
 <p>To handle the error case and print a user-friendly message, we need to update <code class="language-plaintext highlighter-rouge">main</code> to handle the <code class="language-plaintext highlighter-rouge">Result</code> being returned by <code class="language-plaintext highlighter-rouge">Config::new</code>, as shown in Listing 12-10. 
 We’ll also take the responsibility of exiting the command line tool with a nonzero error code from <code class="language-plaintext highlighter-rouge">panic!</code> and implement it by hand. A nonzero exit status is a convention to signal to the process that called our program that the program exited with an error state.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">process</span><span class="p">;</span>
 
@@ -774,7 +774,7 @@ We’ll also take the responsibility of exiting the command line tool with a non
         <span class="nn">process</span><span class="p">::</span><span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
     <span class="p">});</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-12-10-exiting-with-an-error-code-if-creating-a-new-config-fails">Listing 12-10: Exiting with an error code if creating a new Config fails</h4>
 
@@ -792,8 +792,8 @@ The <code class="language-plaintext highlighter-rouge">process::exit</code> func
 This is similar to the <code class="language-plaintext highlighter-rouge">panic!</code>-based handling we used in Listing 12-8, but we no longer get all the extra output. Let’s try it:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.48</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.48</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span><span class="err">`</span>
 <span class="n">Problem</span> <span class="n">parsing</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">not</span> <span class="n">enough</span> <span class="n">arguments</span>
 </code></pre></div></div>
@@ -806,10 +806,10 @@ When we’re done, <code class="language-plaintext highlighter-rouge">main</code
 
 <p>Listing 12-11 shows the extracted <code class="language-plaintext highlighter-rouge">run</code> function. For now, we’re just making the small, incremental improvement of extracting the function. We’re still defining the function in src/main.rs.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Searching for {}"</span><span class="p">,</span> <span class="n">config</span><span class="py">.query</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"In file {}"</span><span class="p">,</span> <span class="n">config</span><span class="py">.filename</span><span class="p">);</span>
@@ -824,7 +824,7 @@ When we’re done, <code class="language-plaintext highlighter-rouge">main</code
     <span class="nd">println!</span><span class="p">(</span><span class="s">"With text:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">contents</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-12-11-extracting-a-run-function-containing-the-rest-of-the-program-logic">Listing 12-11: Extracting a run function containing the rest of the program logic</h4>
 
@@ -836,12 +836,12 @@ The <code class="language-plaintext highlighter-rouge">run</code> function takes
 Instead of allowing the program to panic by calling <code class="language-plaintext highlighter-rouge">expect</code>, the <code class="language-plaintext highlighter-rouge">run</code> function will return a <code class="language-plaintext highlighter-rouge">Result&lt;T, E&gt;</code> when something goes wrong. 
 This will let us further consolidate into <code class="language-plaintext highlighter-rouge">main</code> the logic around handling errors in a user-friendly way. Listing 12-12 shows the changes we need to make to the signature and body of <code class="language-plaintext highlighter-rouge">run</code>.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 
-<span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+<span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="n">config</span><span class="py">.filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"With text:</span><span class="se">\n</span><span class="s">{}"</span><span class="p">,</span> <span class="n">contents</span><span class="p">);</span>
@@ -869,14 +869,14 @@ This <code class="language-plaintext highlighter-rouge">Ok(())</code> syntax mig
 
 <p>When you run this code, it will compile but will display a warning:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">warning</span><span class="p">:</span> <span class="n">unused</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="n">Result</span><span class="err">`</span> <span class="n">that</span> <span class="n">must</span> <span class="n">be</span> <span class="n">used</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">warning</span><span class="p">:</span> <span class="n">unused</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">result</span><span class="p">::</span><span class="nb">Result</span><span class="err">`</span> <span class="n">that</span> <span class="n">must</span> <span class="n">be</span> <span class="n">used</span>
   <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">5</span>
    <span class="p">|</span>
 <span class="mi">17</span> <span class="p">|</span>     <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
    <span class="p">|</span>     <span class="o">^^^^^^^^^^^^</span>
    <span class="p">|</span>
    <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="nd">#[warn(unused_must_use)]</span> <span class="n">on</span> <span class="n">by</span> <span class="n">default</span>
-   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">this</span> <span class="err">`</span><span class="n">Result</span><span class="err">`</span> <span class="n">may</span> <span class="n">be</span> <span class="n">an</span> <span class="err">`</span><span class="nb">Err</span><span class="err">`</span> <span class="n">variant</span><span class="p">,</span> <span class="n">which</span> <span class="n">should</span> <span class="n">be</span> <span class="n">handled</span>
+   <span class="o">=</span> <span class="n">note</span><span class="p">:</span> <span class="n">this</span> <span class="err">`</span><span class="nb">Result</span><span class="err">`</span> <span class="n">may</span> <span class="n">be</span> <span class="n">an</span> <span class="err">`</span><span class="nb">Err</span><span class="err">`</span> <span class="n">variant</span><span class="p">,</span> <span class="n">which</span> <span class="n">should</span> <span class="n">be</span> <span class="n">handled</span>
 </code></pre></div></div>
 <p>Rust tells us that our code ignored the <code class="language-plaintext highlighter-rouge">Result</code> value and the Result value might indicate that an error occurred. 
 But we’re not checking to see whether or not there was an error, and the compiler reminds us that we probably meant to have some error-handling code here! Let’s rectify that problem now.</p>
@@ -884,10 +884,10 @@ But we’re not checking to see whether or not there was an error, and the compi
 <h3 id="handling-errors-returned-from-run-in-main">Handling Errors Returned from run in main</h3>
 <p>We’ll check for errors and handle them using a technique similar to one we used with <code class="language-plaintext highlighter-rouge">Config::new</code> in Listing 12-10, but with a slight difference:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Searching for {}"</span><span class="p">,</span> <span class="n">config</span><span class="py">.query</span><span class="p">);</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"In file {}"</span><span class="p">,</span> <span class="n">config</span><span class="py">.filename</span><span class="p">);</span>
@@ -919,7 +919,7 @@ Because <code class="language-plaintext highlighter-rouge">run</code> returns <c
 </ul>
 
 <p>The contents of <em>src/lib.rs</em> should have the signatures shown in Listing 12-13 (we’ve omitted the bodies of the functions for brevity). Note that this won’t compile until we modify <em>src/main.rs</em> in Listing 12-14.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">error</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">fs</span><span class="p">;</span>
@@ -930,13 +930,13 @@ Because <code class="language-plaintext highlighter-rouge">run</code> returns <c
 <span class="p">}</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-12-13-moving-config-and-run-into-srclibrs">Listing 12-13: Moving Config and run into src/lib.rs</h4>
@@ -946,16 +946,16 @@ We now have a library crate that has a public API that we can test!</p>
 
 <p>Now we need to bring the code we moved to <em>src/lib.rs</em> into the scope of the binary crate in <em>src/main.rs</em>, as shown in Listing 12-14.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">process</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nn">minigrep</span><span class="p">::</span><span class="n">Config</span><span class="p">;</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
     <span class="k">if</span> <span class="k">let</span> <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="nn">minigrep</span><span class="p">::</span><span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -997,11 +997,11 @@ We’ll add this functionality in a function called <code class="language-plaint
 Then, in <em>src/lib.rs</em>, we’ll add a tests module with a test function, as we did in Chapter 11. 
 The test function specifies the behavior we want the <code class="language-plaintext highlighter-rouge">search</code> function to have: it will take a query and the text to search for the query in, and it will return only the lines from the text that contain the query. Listing 12-15 shows this test, which won’t compile yet.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">one_result</span><span class="p">()</span> <span class="p">{</span>
@@ -1027,7 +1027,7 @@ We assert that the value returned from the <code class="language-plaintext highl
 So now we’ll add just enough code to get the test to compile and run by adding a definition of the <code class="language-plaintext highlighter-rouge">search</code> function that always returns an empty vector, as shown in Listing 12-16. 
 Then the test should compile and fail because an empty vector doesn’t match a vector containing the line <code class="language-plaintext highlighter-rouge">"safe, fast, productive.</code>”</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="nd">vec!</span><span class="p">[]</span>
 <span class="p">}</span>
@@ -1064,9 +1064,9 @@ You might want to compare this example with the “Validating References with Li
 <p>Now let’s run the test:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
 <span class="o">--</span><span class="n">warnings</span><span class="o">--</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.43</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.43</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">minigrep</span><span class="o">-</span><span class="n">abcabcabc</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1108,11 +1108,11 @@ To fix that and implement search, our program needs to follow these steps:</p>
 <h3 id="iterating-through-lines-with-the-lines-method">Iterating Through Lines with the lines Method</h3>
 <p>Rust has a helpful method to handle line-by-line iteration of strings, conveniently named lines, that works as shown in Listing 12-17. Note this won’t compile yet.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// do something with line</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// do something with line</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -1127,11 +1127,11 @@ Fortunately, strings have a helpful method named <code class="language-plaintext
 Add a call to the <code class="language-plaintext highlighter-rouge">contains</code> method in the search function, as shown in Listing 12-18. 
 Note this still won’t compile yet.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">line</span><span class="nf">.contains</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c">// do something with line</span>
+            <span class="c1">// do something with line</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -1143,11 +1143,11 @@ Note this still won’t compile yet.</p>
 For that, we can make a mutable vector before the <code class="language-plaintext highlighter-rouge">for</code> loop and call the <code class="language-plaintext highlighter-rouge">push</code> method to store a line in the vector. 
 After the for loop, we return the vector, as shown in Listing 12-19.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">results</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">line</span><span class="nf">.contains</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">results</span><span class="nf">.push</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
         <span class="p">}</span>
@@ -1177,11 +1177,11 @@ We’ll return to this example in Chapter 13, where we’ll explore iterators in
 <p>Now that the <code class="language-plaintext highlighter-rouge">search</code> function is working and tested, we need to call <code class="language-plaintext highlighter-rouge">search</code> from our <code class="language-plaintext highlighter-rouge">run</code> function. 
 We need to pass the <code class="language-plaintext highlighter-rouge">config.query</code> value and the <code class="language-plaintext highlighter-rouge">contents</code> that <code class="language-plaintext highlighter-rouge">run</code> reads from the file to the <code class="language-plaintext highlighter-rouge">search</code> function. Then run will print each line returned from search:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
-<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="n">config</span><span class="py">.filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="nf">search</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="py">.query</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">contents</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="nf">search</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="py">.query</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">contents</span><span class="p">)</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">line</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -1193,8 +1193,8 @@ We need to pass the <code class="language-plaintext highlighter-rouge">config.qu
 <p>Now the entire program should work! Let’s try it out, first with a word that should return exactly one line from the Emily Dickinson poem, “frog”:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">frog</span> <span class="n">poem</span><span class="py">.txt</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.38</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.38</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">frog</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">How</span> <span class="n">public</span><span class="p">,</span> <span class="n">like</span> <span class="n">a</span> <span class="n">frog</span>
 </code></pre></div></div>
@@ -1202,7 +1202,7 @@ We need to pass the <code class="language-plaintext highlighter-rouge">config.qu
 <p>Cool! Now let’s try a word that will match multiple lines, like “body”:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">body</span> <span class="n">poem</span><span class="py">.txt</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">body</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">I</span><span class="err">’</span><span class="n">m</span> <span class="nd">nobody!</span> <span class="n">Who</span> <span class="n">are</span> <span class="n">you</span><span class="o">?</span>
 <span class="n">Are</span> <span class="n">you</span> <span class="n">nobody</span><span class="p">,</span> <span class="n">too</span><span class="o">?</span>
@@ -1212,7 +1212,7 @@ We need to pass the <code class="language-plaintext highlighter-rouge">config.qu
 <p>And finally, let’s make sure that we don’t get any lines when we search for a word that isn’t anywhere in the poem, such as “monomorphization”:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">monomorphization</span> <span class="n">poem</span><span class="py">.txt</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">monomorphization</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 </code></pre></div></div>
 <p>Excellent! We’ve built our own mini version of a classic tool and learned a lot about how to structure applications. 
@@ -1231,10 +1231,10 @@ Doing so allows our users to set the environment variable once and have all thei
 We’ll continue to follow the TDD process, so the first step is again to write a failing test. 
 We’ll add a new test for the new <code class="language-plaintext highlighter-rouge">search_case_insensitive</code> function and rename our old test from <code class="language-plaintext highlighter-rouge">one_result</code> to <code class="language-plaintext highlighter-rouge">case_sensitive</code> to clarify the differences between the two tests, as shown in Listing 12-20.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">case_sensitive</span><span class="p">()</span> <span class="p">{</span>
@@ -1285,12 +1285,12 @@ Feel free to add a skeleton implementation that always returns an empty vector, 
 <p>The <code class="language-plaintext highlighter-rouge">search_case_insensitive</code> function, shown in Listing 12-21, will be almost the same as the <code class="language-plaintext highlighter-rouge">search</code> function. 
 The only difference is that we’ll lowercase the <code class="language-plaintext highlighter-rouge">query</code> and each <code class="language-plaintext highlighter-rouge">line</code> so whatever the case of the input arguments, they’ll be the same case when we check whether the line contains the query.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search_case_insensitive</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="nf">.to_lowercase</span><span class="p">();</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">results</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">line</span><span class="nf">.to_lowercase</span><span class="p">()</span><span class="nf">.contains</span><span class="p">(</span><span class="o">&amp;</span><span class="n">query</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">results</span><span class="nf">.push</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
         <span class="p">}</span>
@@ -1323,7 +1323,7 @@ Now that we’ve converted <code class="language-plaintext highlighter-rouge">li
 <p>Great! They passed. Now, let’s call the new <code class="language-plaintext highlighter-rouge">search_case_insensitive</code> function from the <code class="language-plaintext highlighter-rouge">run</code> function. 
 First, we’ll add a configuration option to the <code class="language-plaintext highlighter-rouge">Config</code> struct to switch between case-sensitive and case-insensitive search. Adding this field will cause compiler errors because we aren’t initializing this field anywhere yet:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="k">pub</span> <span class="k">struct</span> <span class="n">Config</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="n">query</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="k">pub</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -1333,9 +1333,9 @@ First, we’ll add a configuration option to the <code class="language-plaintext
 <p>Note that we added the <code class="language-plaintext highlighter-rouge">case_sensitive</code> field that holds a Boolean. 
 Next, we need the <code class="language-plaintext highlighter-rouge">run</code> function to check the <code class="language-plaintext highlighter-rouge">case_sensitive</code> field’s value and use that to decide whether to call the <code class="language-plaintext highlighter-rouge">search</code> function or the <code class="language-plaintext highlighter-rouge">search_case_insensitive</code> function, as shown in Listing 12-22. Note this still won’t compile yet.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span> <span class="n">Error</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="nn">fs</span><span class="p">::</span><span class="nf">read_to_string</span><span class="p">(</span><span class="n">config</span><span class="py">.filename</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 
     <span class="k">let</span> <span class="n">results</span> <span class="o">=</span> <span class="k">if</span> <span class="n">config</span><span class="py">.case_sensitive</span> <span class="p">{</span>
@@ -1344,7 +1344,7 @@ Next, we need the <code class="language-plaintext highlighter-rouge">run</code> 
         <span class="nf">search_case_insensitive</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="py">.query</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">contents</span><span class="p">)</span>
     <span class="p">};</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">results</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">results</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">line</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -1358,14 +1358,14 @@ Next, we need the <code class="language-plaintext highlighter-rouge">run</code> 
 The functions for working with environment variables are in the <code class="language-plaintext highlighter-rouge">env</code> module in the standard library, so we want to bring that module into scope with a <code class="language-plaintext highlighter-rouge">use std::env;</code> line at the top of <em>src/lib.rs</em>. 
 Then we’ll use the <code class="language-plaintext highlighter-rouge">var</code> function from the <code class="language-plaintext highlighter-rouge">env</code> module to check for an environment variable named <code class="language-plaintext highlighter-rouge">CASE_INSENSITIVE</code>, as shown in Listing 12-23.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
 
-<span class="c">// --snip--</span>
+<span class="c1">// --snip--</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"not enough arguments"</span><span class="p">);</span>
         <span class="p">}</span>
@@ -1396,8 +1396,8 @@ We don’t care about the <em>value</em> of the environment variable, just wheth
 <p>Let’s give it a try! First, we’ll run our program without the environment variable set and with the query <code class="language-plaintext highlighter-rouge">to</code>, which should match any line that contains the word “to” in all lowercase:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">to</span> <span class="n">poem</span><span class="py">.txt</span>
-   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/minigrep)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">minigrep</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/minigrep)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">to</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">Are</span> <span class="n">you</span> <span class="n">nobody</span><span class="p">,</span> <span class="n">too</span><span class="o">?</span>
 <span class="n">How</span> <span class="n">dreary</span> <span class="n">to</span> <span class="n">be</span> <span class="nd">somebody!</span>
@@ -1413,7 +1413,7 @@ We don’t care about the <em>value</em> of the environment variable, just wheth
 <p>We should get lines that contain “to” that might have uppercase letters:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">CASE_INSENSITIVE</span><span class="o">=</span><span class="mi">1</span> <span class="n">cargo</span> <span class="n">run</span> <span class="n">to</span> <span class="n">poem</span><span class="py">.txt</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="err">`</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">minigrep</span> <span class="n">to</span> <span class="n">poem</span><span class="py">.txt</span><span class="err">`</span>
 <span class="n">Are</span> <span class="n">you</span> <span class="n">nobody</span><span class="p">,</span> <span class="n">too</span><span class="o">?</span>
 <span class="n">How</span> <span class="n">dreary</span> <span class="n">to</span> <span class="n">be</span> <span class="nd">somebody!</span>
@@ -1463,7 +1463,7 @@ It’s much more useful for error messages like this to be printed to standard e
 Because of the refactoring we did earlier in this chapter, all the code that prints error messages is in one function, <code class="language-plaintext highlighter-rouge">main</code>. 
 The standard library provides the <code class="language-plaintext highlighter-rouge">eprintln!</code> macro that prints to the standard error stream, so let’s change the two places we were calling <code class="language-plaintext highlighter-rouge">println!</code> to print errors to use <code class="language-plaintext highlighter-rouge">eprintln!</code> instead.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">args</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.collect</span><span class="p">();</span>
@@ -1495,7 +1495,7 @@ The standard library provides the <code class="language-plaintext highlighter-ro
 </code></pre></div></div>
 <p>We won’t see any output to the terminal, and output.txt will contain our results:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: output.txt</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: output.txt</span>
 
 <span class="n">Are</span> <span class="n">you</span> <span class="n">nobody</span><span class="p">,</span> <span class="n">too</span><span class="o">?</span>
 <span class="n">How</span> <span class="n">dreary</span> <span class="n">to</span> <span class="n">be</span> <span class="nd">somebody!</span>
@@ -1612,6 +1612,64 @@ By using the concepts in previous chapters, your code will be well organized, st
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1656,65 +1714,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1778,7 +1777,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

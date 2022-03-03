@@ -12,7 +12,7 @@
 <!-- begin _includes/seo.html -->
 
 <!----><title>Yes! I Take IT :)</title>
-<meta name="description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
+<meta name="description" content="If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)">
 
 
   <meta name="author" content="JJungs-lee">
@@ -21,30 +21,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Yes! I Take IT">
-<meta property="og:title" content="How to contribution linux kernel">
-<meta property="og:url" content="https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/">
+<meta property="og:title" content="Rust by Example : 0. Introduction">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/0.Rust-By-Exaple">
 
 
-  <meta property="og:description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-03-11T00:00:00+00:00">
+  <meta property="og:description" content="If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2022-03-02T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://jjungs-lee.github.io//kernel/2021-03-11-How%20to%20contribution%20linux%20kernel/">
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/0.Rust-By-Exaple">
 
 
 
@@ -286,81 +286,70 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to contribution linux kernel">
-    <meta itemprop="description" content="I’m interested in Linux Kenrel and wanted to contribute.So i will keep it in documentation and try to contribution whenever find a bug or extra.">
-    <meta itemprop="datePublished" content="2021-03-11T00:00:00+00:00">
+    <meta itemprop="headline" content="Rust by Example : 0. Introduction">
+    <meta itemprop="description" content="If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)">
+    <meta itemprop="datePublished" content="2022-03-02T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to contribution linux kernel
+          <h1 id="page-title" class="page__title" itemprop="headline">Rust by Example : 0. Introduction
 </h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
           
         </header>
       
 
       <section class="page__content" itemprop="text">
         
-        <p>I’m interested in Linux Kenrel and wanted to contribute.<br />
-So i will keep it in documentation and try to contribution whenever find a bug or extra.</p>
+        <p>If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)</p>
 
-<ol>
-  <li>Pull Linux mainline kernel source code
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/torvalds/linux.git ./mainline_code
-</code></pre></div>    </div>
-  </li>
-  <li>Configure git environment
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span> <span class="s">"JJungs Lee"</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">"loveljhs2@gmail.com"</span>
-<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">editor</span> <span class="n">vi</span>
-<span class="c1">// --snip--</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Modify the code (Bugs or New features)
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// test.c</span>
-<span class="o">-</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="o">+</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Git add modify files and commit use <code class="language-plaintext highlighter-rouge">-s or --signoff</code> option<br />
-(add Signed-off-by in commit)
-    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">add</span> <span class="n">test</span><span class="p">.</span><span class="n">c</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">m</span> <span class="s">"test for commit"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Make <strong>patch file</strong> and Check linux coding style<br />
-If the coding style is mismatch, the checkpatch tool will be prints errors.
-All errors, warnings, spaces, etc. need to be fixed.
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git format-patch -1
-./scripts/checkpatch.pl ./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Check maintainers, submitter and mailing list
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scripts/get_maintainer.pl ./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Install the <code class="language-plaintext highlighter-rouge">git-email</code> for sending patchs
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install git-email
-</code></pre></div>    </div>
-  </li>
-  <li>Send patch files to maintainers using <code class="language-plaintext highlighter-rouge">git send-email</code><br />
-how to use) <a href="https://git-scm.com/docs/git-send-email">git send-email refer doc</a> or <code class="language-plaintext highlighter-rouge">git help send-email</code> cmd
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git send-email \
---to maintainer1@address.com \
---to maintainer2@address.com \
---cc cc_addr@mailinglist.org \
-./0001-test-for-commit.patch
-</code></pre></div>    </div>
-  </li>
-  <li>Check the site below to see if it was sent properly.<br />
-All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></li>
-</ol>
+<p>Rust is a modern systems programming language focusing on safety, speed, and concurrency. It accomplishes these goals by being memory safe without using garbage collection.</p>
 
-<p>refer)</p>
+<p>Rust by Example (RBE) is a collection of runnable examples that illustrate various Rust concepts and standard libraries. 
+To get even more out of these examples, don’t forget to <a href="https://www.rust-lang.org/tools/install">install Rust locally</a> and check out the <a href="https://doc.rust-lang.org/std/">official docs</a>. Additionally for the curious, you can also <a href="https://github.com/rust-lang/rust-by-example">check out the source code for this site</a>.
+Now let’s begin!</p>
+
+<h2 id="link">link</h2>
 <ul>
-  <li><a href="https://www.kernel.org/doc/html/latest/process/email-clients.html">Email clients info for Linux</a></li>
+  <li>[1. Hello World] - Start with a traditional Hello World program.</li>
+  <li>[2. Primitives] - Learn about signed integers, unsigned integers and other primitives.</li>
+  <li>[3. Custom Types] - struct and enum.</li>
+  <li>[4. Variable Bindings] - mutable bindings, scope, shadowing.</li>
+  <li>[5. Types] - Learn about changing and defining types.</li>
+  <li>[6. Conversion]</li>
+  <li>[7. Expressions]</li>
+  <li>[8. Flow of Control] - if/else, for, and others.</li>
+  <li>[9. Functions] - Learn about Methods, Closures and High Order Functions.</li>
+  <li>[10. Modules] - Organize code using modules</li>
+  <li>[11. Crates] - A crate is a compilation unit in Rust. Learn to create a library.</li>
+  <li>[12. Cargo] - Go through some basic features of the official Rust package management tool.</li>
+  <li>[13. Attributes] - An attribute is metadata applied to some module, crate or item.</li>
+  <li>[14. Generics]  - Learn about writing a function or data type which can work for multiple types of arguments.</li>
+  <li>[15. Scoping rules] - Scopes play an important part in ownership, borrowing, and lifetimes.</li>
+  <li>[16. Traits] - A trait is a collection of methods defined for an unknown type: Self</li>
+  <li>[17. Macros]</li>
+  <li>[18. Error handling] - Learn Rust way of handling failures.</li>
+  <li>[19. Std library types] - Learn about some custom types provided by std library.</li>
+  <li>[20. Std misc] - More custom types for file handling, threads.</li>
+  <li>[21. Testing] - All sorts of testing in Rust.</li>
+  <li>[22. Unsafe Operations]</li>
+  <li>[23. Compatibility]</li>
+  <li>[24. Meta] - Documentation, Benchmarking.</li>
 </ul>
+
+<hr />
+<p>[Reference] <br />
+eng ver : <a href="https://doc.rust-lang.org/rust-by-example/index.html">https://doc.rust-lang.org/rust-by-example/index.html</a></p>
 
         
       </section>
@@ -381,19 +370,11 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
     
       
       
-      <a href="/tags/#contribution" class="page__taxonomy-item" rel="tag">contribution</a><span class="sep">, </span>
+      <a href="/tags/#example" class="page__taxonomy-item" rel="tag">Example</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#kernel" class="page__taxonomy-item" rel="tag">kernel</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">linux</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#wanna-maintainer" class="page__taxonomy-item" rel="tag">Wanna maintainer</a>
+      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">Rust</a>
     
     </span>
   </p>
@@ -414,27 +395,38 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
     
       
       
-      <a href="/categories/#kernel" class="page__taxonomy-item" rel="tag">kernel</a>
+      <a href="/categories/#rust-by-example" class="page__taxonomy-item" rel="tag">RUST by Example</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-03-11T00:00:00+00:00">March 11, 2021</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-02T00:00:00+00:00">March 2, 2022</time></p>
         
       </footer>
 
-      
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Rust+by+Example+%3A+0.+Introduction%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F0.Rust-By-Exaple" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F0.Rust-By-Exaple" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F0.Rust-By-Exaple" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
 
       
   <nav class="pagination">
     
-      <a href="/kernel/2020-07-09-How%20to%20make%20kernel%20debugging%20easy/" class="pagination--pager" title="How to make kernel debugging easy?
+      <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" class="pagination--pager" title="Dev Setting - Settings Sync
 ">Previous</a>
     
     
-      <a href="/kernel/2021-07-10-Setting%20for%20Linux%20kernel%20analysis/" class="pagination--pager" title="Setting for Linux kernel analysis
+      <a href="/rust/1.Hello-World" class="pagination--pager" title="Rust by Example : 1. Hello World
 ">Next</a>
     
   </nav>
@@ -444,6 +436,130 @@ All of patch archive site - <a href="https://lkml.org/">https://lkml.org/</a></l
     
   </article>
 
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I have a trouble cuz the development settings at home and at work are different.
+It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/github%20pages/Github-actions/" rel="permalink">Github Actions: Setting for CI server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
   
   
 </div>

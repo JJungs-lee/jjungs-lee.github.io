@@ -324,7 +324,7 @@ This macro already defined, and see the man page to use it.</p>
        <span class="n">offsetof</span> <span class="o">-</span> <span class="n">offset</span> <span class="n">of</span> <span class="n">a</span> <span class="n">structure</span> <span class="n">member</span>
 
 <span class="n">SYNOPSIS</span>
-       <span class="cp">#include &lt;stddef.h&gt;
+       <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp">
 </span>
        <span class="kt">size_t</span> <span class="n">offsetof</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">member</span><span class="p">);</span>
 
@@ -357,9 +357,9 @@ This macro already defined, and see the man page to use it.</p>
           <span class="nf">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">s</span><span class="p">)</span><span class="o">=</span><span class="mi">16</span>
 
    <span class="n">Program</span> <span class="n">source</span>
-       <span class="cp">#include &lt;stddef.h&gt;
-</span>       <span class="cp">#include &lt;stdio.h&gt;
-</span>       <span class="cp">#include &lt;stdlib.h&gt;
+       <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp">
+</span>       <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>       <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span>
        <span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
        <span class="p">{</span>
@@ -391,8 +391,8 @@ This macro already defined, and see the man page to use it.</p>
 <p>In the kernel, it is declared in the following path(<code class="language-plaintext highlighter-rouge">include/linux/stddef.h</code>), and It is used a lot in the kernel.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* SPDX-License-Identifier: GPL-2.0 */</span>
-<span class="err">#</span><span class="n">ifndef</span> <span class="mi">_</span><span class="n">LINUX_STDDEF_H</span>
-<span class="err">#</span><span class="n">define</span> <span class="mi">_</span><span class="n">LINUX_STDDEF_H</span>
+<span class="err">#</span><span class="n">ifndef</span> <span class="n">_LINUX_STDDEF_H</span>
+<span class="err">#</span><span class="n">define</span> <span class="n">_LINUX_STDDEF_H</span>
 
 <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">uapi</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">stddef</span><span class="py">.h</span><span class="o">&gt;</span>
 
@@ -405,13 +405,13 @@ This macro already defined, and see the man page to use it.</p>
 <span class="p">};</span>
 
 <span class="err">#</span><span class="n">undef</span> <span class="n">offsetof</span>
-<span class="err">#</span><span class="n">ifdef</span> <span class="mi">__</span><span class="n">compiler_offsetof</span>
-<span class="err">#</span><span class="n">define</span> <span class="nf">offsetof</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span>	<span class="mi">__</span><span class="nf">compiler_offsetof</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span>
+<span class="err">#</span><span class="n">ifdef</span> <span class="n">__compiler_offsetof</span>
+<span class="err">#</span><span class="n">define</span> <span class="nf">offsetof</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span>	<span class="nf">__compiler_offsetof</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span>
 <span class="err">#</span><span class="k">else</span>
 <span class="err">#</span><span class="n">define</span> <span class="nf">offsetof</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span>	<span class="p">((</span><span class="nb">size_t</span><span class="p">)</span><span class="o">&amp;</span><span class="p">((</span><span class="n">TYPE</span> <span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span><span class="k">-&gt;</span><span class="n">MEMBER</span><span class="p">)</span>
 <span class="err">#</span><span class="n">endif</span>
 
-<span class="cm">/**
+<span class="cd">/**
  * sizeof_field(TYPE, MEMBER)
  *
  * @TYPE: The structure containing the field of interest
@@ -419,7 +419,7 @@ This macro already defined, and see the man page to use it.</p>
  */</span>
 <span class="err">#</span><span class="n">define</span> <span class="nf">sizeof_field</span><span class="p">(</span><span class="n">TYPE</span><span class="p">,</span> <span class="n">MEMBER</span><span class="p">)</span> <span class="nf">sizeof</span><span class="p">((((</span><span class="n">TYPE</span> <span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">)</span><span class="k">-&gt;</span><span class="n">MEMBER</span><span class="p">))</span>
 
-<span class="cm">/**
+<span class="cd">/**
  * offsetofend(TYPE, MEMBER)
  *
  * @TYPE: The type of the structure
@@ -566,7 +566,7 @@ This macro already defined, and see the man page to use it.</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

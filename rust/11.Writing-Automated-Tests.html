@@ -360,7 +360,7 @@ Then we’ll write some real-world tests that call some code that we’ve writte
 <span class="err">$</span> <span class="n">cd</span> <span class="n">adder</span>
 </code></pre></div></div>
 <p>The contents of the <code class="language-plaintext highlighter-rouge">src/lib.rs</code> file in your adder library should look like Listing 11-1.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
     <span class="nd">#[test]</span>
@@ -381,8 +381,8 @@ This assertion serves as an example of the format for a typical test. Let’s ru
 <p>The <code class="language-plaintext highlighter-rouge">cargo test</code> command runs all tests in our project, as shown in Listing 11-2.</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.22</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.22</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -458,7 +458,7 @@ Enter the new test, another, so your <code class="language-plaintext highlighter
 <span class="n">failures</span><span class="p">:</span>
 
 <span class="o">----</span> <span class="nn">tests</span><span class="p">::</span><span class="n">another</span> <span class="n">stdout</span> <span class="o">----</span>
-<span class="n">thread</span> <span class="nv">'tests</span><span class="p">::</span><span class="n">another</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'Make</span> <span class="n">this</span> <span class="n">test</span> <span class="k">fail</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">9</span>
+<span class="n">thread</span> <span class="nv">'tests</span><span class="p">::</span><span class="n">another</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'Make</span> <span class="n">this</span> <span class="n">test</span> <span class="n">fail</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">9</span>
 <span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="py">.
 
 failures</span><span class="p">:</span>
@@ -507,14 +507,14 @@ In Listing 11-6, we write a test that exercises the <code class="language-plaint
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">larger_can_hold_smaller</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">larger</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span> <span class="n">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mi">7</span> <span class="p">};</span>
         <span class="k">let</span> <span class="n">smaller</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span> <span class="n">width</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
 
-        <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="n">larger</span><span class="nf">.can_hold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">smaller</span><span class="p">));</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">larger</span><span class="nf">.can_hold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">smaller</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -539,11 +539,11 @@ This expression is supposed to return <code class="language-plaintext highlighte
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">larger_can_hold_smaller</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+        <span class="c1">// --snip--</span>
     <span class="p">}</span>
 
     <span class="nd">#[test]</span>
@@ -551,7 +551,7 @@ This expression is supposed to return <code class="language-plaintext highlighte
         <span class="k">let</span> <span class="n">larger</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span> <span class="n">width</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mi">7</span> <span class="p">};</span>
         <span class="k">let</span> <span class="n">smaller</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span> <span class="n">width</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
 
-        <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="o">!</span><span class="n">smaller</span><span class="nf">.can_hold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">larger</span><span class="p">));</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="o">!</span><span class="n">smaller</span><span class="nf">.can_hold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">larger</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -568,7 +568,7 @@ As a result, our test will pass if <code class="language-plaintext highlighter-r
 <p>Two tests that pass! Now let’s see what happens to our test results when we introduce a bug in our code. 
 Let’s change the implementation of the <code class="language-plaintext highlighter-rouge">can_hold</code> method by replacing the greater than sign<code class="language-plaintext highlighter-rouge">(&gt;)</code> with a less than sign<code class="language-plaintext highlighter-rouge">(&lt;)</code> when it compares the widths:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// --snip--</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// --snip--</span>
 
 <span class="k">impl</span> <span class="n">Rectangle</span> <span class="p">{</span>
     <span class="k">fn</span> <span class="nf">can_hold</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">Rectangle</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
@@ -615,7 +615,7 @@ Then we test this function using the <code class="language-plaintext highlighter
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">it_adds_two</span><span class="p">()</span> <span class="p">{</span>
@@ -692,12 +692,12 @@ Custom messages are useful to document what an assertion means; when a test fail
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">greeting_contains_name</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">greeting</span><span class="p">(</span><span class="s">"Carol"</span><span class="p">);</span>
-        <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="n">result</span><span class="nf">.contains</span><span class="p">(</span><span class="s">"Carol"</span><span class="p">));</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">result</span><span class="nf">.contains</span><span class="p">(</span><span class="s">"Carol"</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -731,7 +731,7 @@ Let’s change the test function, giving it a custom failure message made from a
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[test]</span>
 <span class="k">fn</span> <span class="nf">greeting_contains_name</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="nf">greeting</span><span class="p">(</span><span class="s">"Carol"</span><span class="p">);</span>
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span>
+    <span class="nd">assert!</span><span class="p">(</span>
         <span class="n">result</span><span class="nf">.contains</span><span class="p">(</span><span class="s">"Carol"</span><span class="p">),</span>
         <span class="s">"Greeting did not contain name, value was `{}`"</span><span class="p">,</span> <span class="n">result</span>
     <span class="p">);</span>
@@ -774,7 +774,7 @@ This attribute makes a test pass if the code inside the function panics; the tes
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="nd">#[should_panic]</span>
@@ -794,7 +794,7 @@ Let’s look at the result when this test passes:</p>
 <span class="n">test</span> <span class="n">result</span><span class="p">:</span> <span class="n">ok</span><span class="na">. 1</span> <span class="n">passed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">ignored</span><span class="p">;</span> <span class="mi">0</span> <span class="n">measured</span><span class="p">;</span> <span class="mi">0</span> <span class="n">filtered</span> <span class="n">out</span>
 </code></pre></div></div>
 <p>Looks good! Now let’s introduce a bug in our code by removing the condition that the <code class="language-plaintext highlighter-rouge">new</code> function will panic if the value is greater than 100:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// --snip--</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// --snip--</span>
 <span class="k">impl</span> <span class="n">Guess</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Guess</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">1</span>  <span class="p">{</span>
@@ -828,7 +828,7 @@ To make <code class="language-plaintext highlighter-rouge">should_panic</code> t
 The test harness will make sure that the failure message contains the provided text. 
 For example, consider the modified code for <code class="language-plaintext highlighter-rouge">Guess</code> in Listing 11-9 where the <code class="language-plaintext highlighter-rouge">new</code> function panics with different messages depending on whether the value is too small or too large.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// --snip--</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// --snip--</span>
 
 <span class="k">impl</span> <span class="n">Guess</span> <span class="p">{</span>
     <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Guess</span> <span class="p">{</span>
@@ -848,7 +848,7 @@ For example, consider the modified code for <code class="language-plaintext high
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="nd">#[should_panic(expected</span> <span class="nd">=</span> <span class="s">"Guess value must be less than or equal to 100"</span><span class="nd">)]</span>
@@ -881,7 +881,7 @@ In this case, a substring of the panic message is enough to ensure that the code
 
 <span class="o">----</span> <span class="nn">tests</span><span class="p">::</span><span class="n">greater_than_100</span> <span class="n">stdout</span> <span class="o">----</span>
 <span class="n">thread</span> <span class="nv">'tests</span><span class="p">::</span><span class="n">greater_than_100</span><span class="err">'</span> <span class="n">panicked</span> <span class="n">at</span> <span class="nv">'Guess</span> <span class="n">value</span> <span class="n">must</span> <span class="n">be</span>
-<span class="n">greater</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="mi">1</span><span class="p">,</span> <span class="n">got</span> <span class="mi">200</span><span class="err">.'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span>
+<span class="n">greater</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="mi">1</span><span class="p">,</span> <span class="n">got</span> <span class="mf">200.</span><span class="err">'</span><span class="p">,</span> <span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="py">.rs</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span>
 <span class="n">note</span><span class="p">:</span> <span class="n">Run</span> <span class="n">with</span> <span class="err">`</span><span class="n">RUST_BACKTRACE</span><span class="o">=</span><span class="mi">1</span><span class="err">`</span> <span class="k">for</span> <span class="n">a</span> <span class="n">backtrace</span><span class="py">.
 note</span><span class="p">:</span> <span class="n">Panic</span> <span class="n">did</span> <span class="n">not</span> <span class="n">include</span> <span class="n">expected</span> <span class="n">string</span> <span class="nv">'Guess</span> <span class="n">value</span> <span class="n">must</span> <span class="n">be</span> <span class="n">less</span> <span class="n">than</span> <span class="n">or</span>
 <span class="n">equal</span> <span class="n">to</span> <span class="mi">100</span><span class="err">'</span>
@@ -902,7 +902,7 @@ Here’s the test from Listing 11-1, rewritten to use <code class="language-plai
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
     <span class="nd">#[test]</span>
-    <span class="k">fn</span> <span class="nf">it_works</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">it_works</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span> <span class="nb">String</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">{</span>
             <span class="nf">Ok</span><span class="p">(())</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -964,7 +964,7 @@ If a test fails, we’ll see whatever was printed to standard output with the re
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">this_test_will_pass</span><span class="p">()</span> <span class="p">{</span>
@@ -1045,7 +1045,7 @@ You can choose which tests to run by passing <code class="language-plaintext hig
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">add_two_and_two</span><span class="p">()</span> <span class="p">{</span>
@@ -1078,7 +1078,7 @@ You can choose which tests to run by passing <code class="language-plaintext hig
 <p>We can pass the name of any test function to <code class="language-plaintext highlighter-rouge">cargo test</code> to run only that test:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span> <span class="n">one_hundred</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="mi">06</span><span class="n">a75b4a1f2515e9</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1097,7 +1097,7 @@ But there is a way to run multiple tests.</p>
 For example, because two of our tests’ names contain <code class="language-plaintext highlighter-rouge">add</code>, we can run those two by running <code class="language-plaintext highlighter-rouge">cargo test add</code>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span> <span class="n">add</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="mi">06</span><span class="n">a75b4a1f2515e9</span>
 
 <span class="n">running</span> <span class="mi">2</span> <span class="n">tests</span>
@@ -1123,7 +1123,7 @@ Rather than listing as arguments all tests you do want to run, you can instead a
   <span class="nd">#[test]</span>
   <span class="nd">#[ignore]</span>
   <span class="k">fn</span> <span class="nf">expensive_test</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c">// code that takes an hour to run</span>
+      <span class="c1">// code that takes an hour to run</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -1131,8 +1131,8 @@ Rather than listing as arguments all tests you do want to run, you can instead a
 Now when we run our tests, <code class="language-plaintext highlighter-rouge">it_works</code> runs, but <code class="language-plaintext highlighter-rouge">expensive_test</code> doesn’t:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.24</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.24</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
 <span class="n">running</span> <span class="mi">2</span> <span class="n">tests</span>
@@ -1145,7 +1145,7 @@ Now when we run our tests, <code class="language-plaintext highlighter-rouge">it
 If we want to run only the ignored tests, we can use <code class="language-plaintext highlighter-rouge">cargo test -- --ignored</code>:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span> <span class="o">--</span> <span class="o">--</span><span class="n">ignored</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">ce99bcc2479f4607</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1205,7 +1205,7 @@ Regardless of which testing ideology you adhere to, Rust’s privacy rules do al
 
 <span class="nd">#[cfg(test)]</span>
 <span class="k">mod</span> <span class="n">tests</span> <span class="p">{</span>
-    <span class="k">use</span> <span class="nn">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
     <span class="nd">#[test]</span>
     <span class="k">fn</span> <span class="nf">internal</span><span class="p">()</span> <span class="p">{</span>
@@ -1233,7 +1233,7 @@ We can then make as many test files as we want to in this directory, and Cargo w
 <p>Let’s create an integration test. 
 With the code in Listing 11-12 still in the <em>src/lib.rs</em> file, make a tests directory, create a new file named <em>tests/integration_test.rs</em>, and enter the code in Listing 11-13.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: tests/integration_test.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: tests/integration_test.rs</span>
 <span class="k">use</span> <span class="n">adder</span><span class="p">;</span>
 
 <span class="nd">#[test]</span>
@@ -1251,8 +1251,8 @@ Cargo treats the <code class="language-plaintext highlighter-rouge">tests</code>
 Run cargo test now:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span>
-   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="c">///projects/adder)</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.31</span> <span class="n">secs</span>
+   <span class="n">Compiling</span> <span class="n">adder</span> <span class="n">v0</span><span class="na">.1.0</span> <span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="cd">///projects/adder)</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.31</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">adder</span><span class="o">-</span><span class="n">abcabcabc</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1287,7 +1287,7 @@ Each integration test file has its own section, so if we add more files in the t
 To run all the tests in a particular integration test file, use the <code class="language-plaintext highlighter-rouge">--test</code> argument of <code class="language-plaintext highlighter-rouge">cargo test</code> followed by the name of the file:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">cargo</span> <span class="n">test</span> <span class="o">--</span><span class="n">test</span> <span class="n">integration_test</span>
-    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
+    <span class="n">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="nf">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mf">0.0</span> <span class="n">secs</span>
      <span class="n">Running</span> <span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">integration_test</span><span class="o">-</span><span class="mi">952</span><span class="n">a27e0126bb565</span>
 
 <span class="n">running</span> <span class="mi">1</span> <span class="n">test</span>
@@ -1307,9 +1307,9 @@ However, this means files in the <code class="language-plaintext highlighter-rou
 <p>The different behavior of files in the tests directory is most noticeable when you have a set of helper functions that would be useful in multiple integration test files and you try to follow the steps in the <a href="../7.Managing-Growing-Projects-with-Packages,-Crates,-and-Modules/#separating-modules-into-different-files">“Separating Modules into Different Files”</a> section of Chapter 7 to extract them into a common module. 
 For example, if we create <em>tests/common.rs</em> and place a function named <code class="language-plaintext highlighter-rouge">setup</code> in it, we can add some code to setup that we want to call from multiple test functions in multiple test files:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: tests/common.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: tests/common.rs</span>
 <span class="k">pub</span> <span class="k">fn</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c">// setup code specific to your library's tests would go here</span>
+    <span class="c1">// setup code specific to your library's tests would go here</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>When we run the tests again, we’ll see a new section in the test output for the <em>common.rs</em> file, even though this file doesn’t contain any test functions nor did we call the setup function from anywhere:</p>
@@ -1350,7 +1350,7 @@ Files in subdirectories of the tests directory don’t get compiled as separate 
 <p>After we’ve created <em>tests/common/mod.rs</em>, we can use it from any of the integration test files as a module. 
 Here’s an example of calling the <code class="language-plaintext highlighter-rouge">setup</code> function from the <code class="language-plaintext highlighter-rouge">it_adds_two</code> test in <em>tests/integration_test.rs</em>:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: tests/integration_test.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: tests/integration_test.rs</span>
 <span class="k">use</span> <span class="n">adder</span><span class="p">;</span>
 
 <span class="k">mod</span> <span class="n">common</span><span class="p">;</span>
@@ -1482,6 +1482,64 @@ Even though Rust’s type system and ownership rules help prevent some kinds of 
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1526,65 +1584,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1648,7 +1647,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

@@ -345,7 +345,7 @@ We want to call this algorithm only when we need to and only call it once so we 
 
 <p>We’ll simulate calling this hypothetical algorithm with the function <code class="language-plaintext highlighter-rouge">simulated_expensive_calculation</code> shown in Listing 13-1, which will print <code class="language-plaintext highlighter-rouge">calculating slowly...</code>, wait for two seconds, and then return whatever number we passed in.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="n">thread</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">time</span><span class="p">::</span><span class="n">Duration</span><span class="p">;</span>
@@ -367,7 +367,7 @@ We want to call this algorithm only when we need to and only call it once so we 
 The output will be the recommended workout plan. Listing 13-2 shows the <code class="language-plaintext highlighter-rouge">main</code> function we’ll use.</li>
 </ul>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">simulated_user_specified_value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
@@ -385,7 +385,7 @@ The output will be the recommended workout plan. Listing 13-2 shows the <code cl
 
 <p>Now that we have the context, let’s get to the algorithm. The function <code class="language-plaintext highlighter-rouge">generate_workout</code> in Listing 13-3 contains the business logic of the app that we’re most concerned with in this example. The rest of the code changes in this example will be made to this function.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="p">{</span>
@@ -427,7 +427,7 @@ We also want to cut the place where we’re currently unnecessarily calling the 
 <h3 id="refactoring-using-functions">Refactoring Using Functions</h3>
 <p>We could restructure the workout program in many ways. First, we’ll try extracting the duplicated call to the <code class="language-plaintext highlighter-rouge">simulated_expensive_calculation</code> function into a variable, as shown in Listing 13-4.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">expensive_result</span> <span class="o">=</span>
@@ -462,7 +462,7 @@ We also want to cut the place where we’re currently unnecessarily calling the 
 
 <h3 id="refactoring-with-closures-to-store-code">Refactoring with Closures to Store Code</h3>
 <p>Instead of always calling the <code class="language-plaintext highlighter-rouge">simulated_expensive_calculation</code> function before the <code class="language-plaintext highlighter-rouge">if</code> blocks, we can define a closure and store the <em>closure</em> in a variable rather than storing the result of the function call, as shown in Listing 13-5. We can actually move the whole body of <code class="language-plaintext highlighter-rouge">simulated_expensive_calculation</code> within the closure we’re introducing here.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
@@ -485,7 +485,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>With the closure defined, we can change the code in the <code class="language-plaintext highlighter-rouge">if</code> blocks to call the closure to execute the code and get the resulting value. We call a closure like we do a function: we specify the variable name that holds the closure definition and follow it with parentheses containing the argument values we want to use, as shown in Listing 13-6.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
@@ -530,7 +530,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>As with variables, we can add type annotations if we want to increase explicitness and clarity at the cost of being more verbose than is strictly necessary. Annotating the types for the closure we defined in Listing 13-5 would look like the definition shown in Listing 13-7.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">let</span> <span class="n">expensive_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">num</span><span class="p">:</span> <span class="nb">u32</span><span class="p">|</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"calculating slowly..."</span><span class="p">);</span>
@@ -551,7 +551,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Closure definitions will have one concrete type inferred for each of their parameters and for their return value. For instance, Listing 13-8 shows the definition of a short closure that just returns the value it receives as a parameter. This closure isn’t very useful except for the purposes of this example. Note that we haven’t added any type annotations to the definition: if we then try to call the closure twice, using a <code class="language-plaintext highlighter-rouge">String</code> as an argument the first time and a <code class="language-plaintext highlighter-rouge">u32</code> the second time, we’ll get an error.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">let</span> <span class="n">example_closure</span> <span class="o">=</span> <span class="p">|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span><span class="p">;</span>
 
@@ -587,7 +587,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Listing 13-9 shows the definition of the <code class="language-plaintext highlighter-rouge">Cacher</code> struct that holds a closure and an optional result value.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">struct</span> <span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
     <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span>
@@ -606,7 +606,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>The logic around the <code class="language-plaintext highlighter-rouge">value</code> field we’ve just described is defined in Listing 13-10.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: src/main.rs</span>
 
 <span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
     <span class="k">where</span> <span class="n">T</span><span class="p">:</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span>
@@ -642,7 +642,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Listing 13-11 shows how we can use this <code class="language-plaintext highlighter-rouge">Cacher</code> struct in the function <code class="language-plaintext highlighter-rouge">generate_workout</code> from Listing 13-6.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">generate_workout</span><span class="p">(</span><span class="n">intensity</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span> <span class="n">random_number</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">expensive_result</span> <span class="o">=</span> <span class="nn">Cacher</span><span class="p">::</span><span class="nf">new</span><span class="p">(|</span><span class="n">num</span><span class="p">|</span> <span class="p">{</span>
@@ -713,7 +713,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Listing 13-12 has an example of a closure stored in the <code class="language-plaintext highlighter-rouge">equal_to_x</code> variable that uses the x variable from the closure’s surrounding environment.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
@@ -722,7 +722,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+    <span class="nd">assert!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-13-12-example-of-a-closure-that-refers-to-a-variable-in-its-enclosing-scope">Listing 13-12: Example of a closure that refers to a variable in its enclosing scope</h4>
@@ -731,7 +731,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>We can’t do the same with functions; if we try with the following example, our code won’t compile:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
@@ -740,12 +740,12 @@ Recall that we’re using a closure because we want to define the code to call a
 
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+    <span class="nd">assert!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>We get an error:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0434</span><span class="p">]:</span> <span class="n">can</span><span class="nv">'t</span> <span class="n">capture</span> <span class="n">dynamic</span> <span class="n">environment</span> <span class="n">in</span> <span class="n">a</span> <span class="k">fn</span> <span class="n">item</span><span class="p">;</span> <span class="k">use</span> <span class="n">the</span> <span class="p">||</span> <span class="p">{</span> <span class="o">...</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span><span class="p">[</span><span class="n">E0434</span><span class="p">]:</span> <span class="n">can</span><span class="nv">'t</span> <span class="n">capture</span> <span class="n">dynamic</span> <span class="n">environment</span> <span class="k">in</span> <span class="n">a</span> <span class="k">fn</span> <span class="n">item</span><span class="p">;</span> <span class="k">use</span> <span class="n">the</span> <span class="p">||</span> <span class="p">{</span> <span class="o">...</span>
 <span class="p">}</span> <span class="n">closure</span> <span class="n">form</span> <span class="n">instead</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="py">.rs</span>
   <span class="p">|</span>
@@ -770,7 +770,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>We’ll have more examples of <code class="language-plaintext highlighter-rouge">move</code> closures in Chapter 16 when we talk about concurrency. For now, here’s the code from Listing 13-12 with the <code class="language-plaintext highlighter-rouge">move</code> keyword added to the closure definition and using vectors instead of integers, because integers can be copied rather than moved; note that this code will not yet compile.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
@@ -781,7 +781,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 
-    <span class="k">assert</span><span class="o">!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+    <span class="nd">assert!</span><span class="p">(</span><span class="nf">equal_to_x</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>We receive the following error:</p>
@@ -825,7 +825,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <span class="k">let</span> <span class="n">v1_iter</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">();</span>
 
-<span class="k">for</span> <span class="n">val</span> <span class="n">in</span> <span class="n">v1_iter</span> <span class="p">{</span>
+<span class="k">for</span> <span class="n">val</span> <span class="k">in</span> <span class="n">v1_iter</span> <span class="p">{</span>
     <span class="nd">println!</span><span class="p">(</span><span class="s">"Got: {}"</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -838,12 +838,12 @@ Recall that we’re using a closure because we want to define the code to call a
 <h3 id="the-iterator-trait-and-the-next-method">The Iterator Trait and the next Method</h3>
 <p>All iterators implement a trait named <code class="language-plaintext highlighter-rouge">Iterator</code> that is defined in the standard library. The definition of the trait looks like this:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="n">Iterator</span> <span class="p">{</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pub</span> <span class="k">trait</span> <span class="nb">Iterator</span> <span class="p">{</span>
     <span class="k">type</span> <span class="n">Item</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
 
-    <span class="c">// methods with default implementations elided</span>
+    <span class="c1">// methods with default implementations elided</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>Notice this definition uses some new syntax: <code class="language-plaintext highlighter-rouge">type Item</code> and <code class="language-plaintext highlighter-rouge">Self::Item</code>, which are defining an <em>associated type</em> with this trait. We’ll talk about associated types in depth in Chapter 19. For now, all you need to know is that this code says implementing the <code class="language-plaintext highlighter-rouge">Iterator</code> trait requires that you also define an <code class="language-plaintext highlighter-rouge">Item</code> type, and this <code class="language-plaintext highlighter-rouge">Item</code> type is used in the return type of the <code class="language-plaintext highlighter-rouge">next</code> method. In other words, the <code class="language-plaintext highlighter-rouge">Item</code> type will be the type returned from the iterator.</p>
@@ -852,7 +852,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>We can call the <code class="language-plaintext highlighter-rouge">next</code> method on iterators directly; Listing 13-15 demonstrates what values are returned from repeated calls to <code class="language-plaintext highlighter-rouge">next</code> on the iterator created from the vector.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[test]</span>
 <span class="k">fn</span> <span class="nf">iterator_demonstration</span><span class="p">()</span> <span class="p">{</span>
@@ -877,7 +877,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Methods that call <code class="language-plaintext highlighter-rouge">next</code> are called <em>consuming adaptors</em>, because calling them uses up the iterator. One example is the <code class="language-plaintext highlighter-rouge">sum</code> method, which takes ownership of the iterator and iterates through the items by repeatedly calling <code class="language-plaintext highlighter-rouge">next</code>, thus consuming the iterator. As it iterates through, it adds each item to a running total and returns the total when iteration is complete. Listing 13-16 has a test illustrating a use of the <code class="language-plaintext highlighter-rouge">sum</code> method:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[test]</span>
 <span class="k">fn</span> <span class="nf">iterator_sum</span><span class="p">()</span> <span class="p">{</span>
@@ -898,7 +898,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Listing 13-17 shows an example of calling the iterator adaptor method <code class="language-plaintext highlighter-rouge">map</code>, which takes a closure to call on each item to produce a new iterator. The closure here creates a new iterator in which each item from the vector has been incremented by 1. However, this code produces a warning:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">let</span> <span class="n">v1</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 
@@ -923,11 +923,11 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>In Listing 13-18, we collect the results of iterating over the iterator that’s returned from the call to <code class="language-plaintext highlighter-rouge">map</code> into a vector. This vector will end up containing each item from the original vector incremented by 1.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">let</span> <span class="n">v1</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 
-<span class="k">let</span> <span class="n">v2</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="mi">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="nf">.collect</span><span class="p">();</span>
+<span class="k">let</span> <span class="n">v2</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="nf">.collect</span><span class="p">();</span>
 
 <span class="nd">assert_eq!</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
 </code></pre></div></div>
@@ -940,7 +940,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>In Listing 13-19, we use <code class="language-plaintext highlighter-rouge">filter</code> with a closure that captures the <code class="language-plaintext highlighter-rouge">shoe_size</code> variable from its environment to iterate over a collection of <code class="language-plaintext highlighter-rouge">Shoe</code> struct instances. It will return only shoes that are the specified size.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[derive(PartialEq,</span> <span class="nd">Debug)]</span>
 <span class="k">struct</span> <span class="n">Shoe</span> <span class="p">{</span>
@@ -990,7 +990,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Listing 13-20 has the definition of the <code class="language-plaintext highlighter-rouge">Counter</code> struct and an associated <code class="language-plaintext highlighter-rouge">new</code> function to create instances of <code class="language-plaintext highlighter-rouge">Counter</code>:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">struct</span> <span class="n">Counter</span> <span class="p">{</span>
     <span class="n">count</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span>
@@ -1008,12 +1008,12 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>Next, we’ll implement the <code class="language-plaintext highlighter-rouge">Iterator</code> trait for our <code class="language-plaintext highlighter-rouge">Counter</code> type by defining the body of the <code class="language-plaintext highlighter-rouge">next</code> method to specify what we want to happen when this iterator is used, as shown in Listing 13-21:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
-<span class="k">impl</span> <span class="n">Iterator</span> <span class="k">for</span> <span class="n">Counter</span> <span class="p">{</span>
+<span class="k">impl</span> <span class="nb">Iterator</span> <span class="k">for</span> <span class="n">Counter</span> <span class="p">{</span>
     <span class="k">type</span> <span class="n">Item</span> <span class="o">=</span> <span class="nb">u32</span><span class="p">;</span>
 
-    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nn">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">::</span><span class="n">Item</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">self</span><span class="py">.count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="k">self</span><span class="py">.count</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="p">{</span>
@@ -1033,7 +1033,7 @@ Recall that we’re using a closure because we want to define the code to call a
 <h3 id="using-our-counter-iterators-next-method">Using Our Counter Iterator’s next Method</h3>
 <p>Once we’ve implemented the <code class="language-plaintext highlighter-rouge">Iterator</code> trait, we have an iterator! Listing 13-22 shows a test demonstrating that we can use the iterator functionality of our <code class="language-plaintext highlighter-rouge">Counter</code> struct by calling the <code class="language-plaintext highlighter-rouge">next</code> method on it directly, just as we did with the iterator created from a vector in Listing 13-15.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="nd">#[test]</span>
 <span class="k">fn</span> <span class="nf">calling_next_directly</span><span class="p">()</span> <span class="p">{</span>
@@ -1056,7 +1056,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <p>For example, if for some reason we wanted to take the values produced by an instance of <code class="language-plaintext highlighter-rouge">Counter</code>, pair them with values produced by another <code class="language-plaintext highlighter-rouge">Counter</code> instance after skipping the first value, multiply each pair together, keep only those results that are divisible by 3, and add all the resulting values together, we could do so, as shown in the test in Listing 13-23:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">//Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Filename: src/lib.rs</span>
 
 <span class="nd">#[test]</span>
 <span class="k">fn</span> <span class="nf">using_other_iterator_trait_methods</span><span class="p">()</span> <span class="p">{</span>
@@ -1079,10 +1079,10 @@ Recall that we’re using a closure because we want to define the code to call a
 <h3 id="removing-a-clone-using-an-iterator">Removing a clone Using an Iterator</h3>
 <p>In Listing 12-6, we added code that took a slice of <code class="language-plaintext highlighter-rouge">String</code> values and created an instance of the <code class="language-plaintext highlighter-rouge">Config</code> struct by indexing into the slice and cloning the values, allowing the <code class="language-plaintext highlighter-rouge">Config</code> struct to own those values. In Listing 13-24, we’ve reproduced the implementation of the <code class="language-plaintext highlighter-rouge">Config::new</code> function as it was in Listing 12-23:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">String</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">args</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="s">"not enough arguments"</span><span class="p">);</span>
         <span class="p">}</span>
@@ -1108,7 +1108,7 @@ Recall that we’re using a closure because we want to define the code to call a
 
 <h3 id="using-the-returned-iterator-directly">Using the Returned Iterator Directly</h3>
 <p>Open your I/O project’s <em>src/main.rs</em> file, which should look like this:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">args</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.collect</span><span class="p">();</span>
@@ -1118,13 +1118,13 @@ Recall that we’re using a closure because we want to define the code to call a
         <span class="nn">process</span><span class="p">::</span><span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
     <span class="p">});</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>We’ll change the start of the <code class="language-plaintext highlighter-rouge">main</code> function that we had in Listing 12-24 to the code in Listing 13-25. This won’t compile until we update <code class="language-plaintext highlighter-rouge">Config::new</code> as well.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/main.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/main.rs</span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">config</span> <span class="o">=</span> <span class="nn">Config</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">())</span><span class="nf">.unwrap_or_else</span><span class="p">(|</span><span class="n">err</span><span class="p">|</span> <span class="p">{</span>
@@ -1132,7 +1132,7 @@ Recall that we’re using a closure because we want to define the code to call a
         <span class="nn">process</span><span class="p">::</span><span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
     <span class="p">});</span>
 
-    <span class="c">// --snip--</span>
+    <span class="c1">// --snip--</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <h4 id="listing-13-25-passing-the-return-value-of-envargs-to-confignew">Listing 13-25: Passing the return value of env::args to Config::new</h4>
@@ -1143,11 +1143,11 @@ Recall that we’re using a closure because we want to define the code to call a
 In your I/O project’s <em>src/lib.rs</em> file, let’s change the signature of <code class="language-plaintext highlighter-rouge">Config::new</code> to look like Listing 13-26. 
 This still won’t compile because we need to update the function body.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
-        <span class="c">// --snip--</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="c1">// --snip--</span>
 </code></pre></div></div>
 <h4 id="listing-13-26-updating-the-signature-of-confignew-to-expect-an-iterator">Listing 13-26: Updating the signature of Config::new to expect an iterator</h4>
 
@@ -1156,10 +1156,10 @@ This still won’t compile because we need to update the function body.</p>
 <h3 id="using-iterator-trait-methods-instead-of-indexing">Using Iterator Trait Methods Instead of Indexing</h3>
 <p>Next, we’ll fix the body of <code class="language-plaintext highlighter-rouge">Config::new</code>. The standard library documentation also mentions that <code class="language-plaintext highlighter-rouge">std::env::Args</code> implements the <code class="language-plaintext highlighter-rouge">Iterator</code> trait, so we know we can call the <code class="language-plaintext highlighter-rouge">next</code> method on it! Listing 13-27 updates the code from Listing 12-23 to use the <code class="language-plaintext highlighter-rouge">next</code> method:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">impl</span> <span class="n">Config</span> <span class="p">{</span>
-    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="k">mut</span> <span class="n">args</span><span class="p">:</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="n">Args</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Config</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">'static</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="n">args</span><span class="nf">.next</span><span class="p">();</span>
 
         <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="k">match</span> <span class="n">args</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
@@ -1185,12 +1185,12 @@ This still won’t compile because we need to update the function body.</p>
 <h3 id="making-code-clearer-with-iterator-adaptors">Making Code Clearer with Iterator Adaptors</h3>
 <p>We can also take advantage of iterators in the <code class="language-plaintext highlighter-rouge">search</code> function in our I/O project, which is reproduced here in Listing 13-28 as it was in Listing 12-19:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">results</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="k">in</span> <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">line</span><span class="nf">.contains</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">results</span><span class="nf">.push</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
         <span class="p">}</span>
@@ -1203,7 +1203,7 @@ This still won’t compile because we need to update the function body.</p>
 
 <p>We can write this code in a more concise way using iterator adaptor methods. Doing so also lets us avoid having a mutable intermediate <code class="language-plaintext highlighter-rouge">results</code> vector. The functional programming style prefers to minimize the amount of mutable state to make code clearer. Removing the mutable state might enable a future enhancement to make searching happen in parallel, because we wouldn’t have to manage concurrent access to the <code class="language-plaintext highlighter-rouge">results</code> vector. Listing 13-29 shows this change:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Filename: src/lib.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Filename: src/lib.rs</span>
 
 <span class="k">pub</span> <span class="k">fn</span> <span class="n">search</span><span class="o">&lt;</span><span class="nv">'a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="o">&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;&amp;</span><span class="nv">'a</span> <span class="nb">str</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="n">contents</span><span class="nf">.lines</span><span class="p">()</span>
@@ -1246,7 +1246,7 @@ This abstracts away some of the commonplace code so it’s easier to see the con
 <span class="k">let</span> <span class="n">coefficients</span><span class="p">:</span> <span class="p">[</span><span class="nb">i64</span><span class="p">;</span> <span class="mi">12</span><span class="p">];</span>
 <span class="k">let</span> <span class="n">qlp_shift</span><span class="p">:</span> <span class="nb">i16</span><span class="p">;</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">12</span><span class="o">..</span><span class="n">buffer</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">12</span><span class="o">..</span><span class="n">buffer</span><span class="nf">.len</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">prediction</span> <span class="o">=</span> <span class="n">coefficients</span><span class="nf">.iter</span><span class="p">()</span>
                                  <span class="nf">.zip</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">12</span><span class="o">..</span><span class="n">i</span><span class="p">])</span>
                                  <span class="nf">.map</span><span class="p">(|(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)|</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">)</span>
@@ -1370,6 +1370,64 @@ This abstracts away some of the commonplace code so it’s easier to see the con
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -1414,65 +1472,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -1536,7 +1535,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

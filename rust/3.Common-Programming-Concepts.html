@@ -402,39 +402,39 @@ You declare constants using the const keyword instead of the let keyword, and th
   </tbody>
 </table>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Floating-Point(default type is f64)</span>
-<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c">// f64</span>
-<span class="k">let</span> <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">;</span> <span class="c">// f32</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Floating-Point(default type is f64)</span>
+<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c1">// f64</span>
+<span class="k">let</span> <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">;</span> <span class="c1">// f32</span>
 
-<span class="c">// Numeric Operations</span>
+<span class="c1">// Numeric Operations</span>
 <span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">difference</span> <span class="o">=</span> <span class="mf">95.5</span> <span class="o">-</span> <span class="mf">4.3</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">product</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">30</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">quotient</span> <span class="o">=</span> <span class="mf">56.7</span> <span class="o">/</span> <span class="mf">32.2</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">remainder</span> <span class="o">=</span> <span class="mi">43</span> <span class="o">%</span> <span class="mi">5</span><span class="p">;</span>
 
-<span class="c">// Boolean</span>
+<span class="c1">// Boolean</span>
 <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-<span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span> <span class="c">// with explicit type annotation</span>
+<span class="k">let</span> <span class="n">f</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span> <span class="c1">// with explicit type annotation</span>
 
-<span class="c">// Character</span>
+<span class="c1">// Character</span>
 <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">'z'</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="sc">'ℤ'</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">heart_eyed_cat</span> <span class="o">=</span> <span class="sc">'😻'</span><span class="p">;</span>
 
-<span class="c">// Tuple</span>
+<span class="c1">// Tuple</span>
 <span class="k">let</span> <span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mf">6.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="k">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="o">=</span> <span class="n">tup</span><span class="p">;</span>
 <span class="nd">println!</span><span class="p">(</span><span class="s">"The value of y is: {}"</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 
-<span class="c">// Access a tuple element directly by using a period(.)</span>
-<span class="c">// followed by the index of the value we want to access</span>
+<span class="c1">// Access a tuple element directly by using a period(.)</span>
+<span class="c1">// followed by the index of the value we want to access</span>
 <span class="k">let</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">f64</span><span class="p">,</span> <span class="nb">u8</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mf">6.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="k">let</span> <span class="n">five_hundred</span> <span class="o">=</span> <span class="n">x</span><span class="na">.0</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">six_point_four</span> <span class="o">=</span> <span class="n">x</span><span class="na">.1</span><span class="p">;</span>
 <span class="k">let</span> <span class="n">one</span> <span class="o">=</span> <span class="n">x</span><span class="na">.2</span><span class="p">;</span>
 
-<span class="c">// array</span>
+<span class="c1">// array</span>
 <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
 <span class="k">let</span> <span class="n">first</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 <span class="k">let</span> <span class="n">second</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
@@ -468,9 +468,9 @@ Rust doesn’t care where you define your functions, <code class="language-plain
 <p><code class="language-plaintext highlighter-rouge">Statements</code> are instructions that perform some action and do not return a value. <br />
 <code class="language-plaintext highlighter-rouge">Expressions</code> evaluate to a resulting value.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c">// This is Statemnets</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c1">// This is Statemnets</span>
 
-    <span class="c">// Error - (let y = 6) statement does not return a value</span>
+    <span class="c1">// Error - (let y = 6) statement does not return a value</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">6</span><span class="p">);</span> 
 <span class="p">}</span>
 </code></pre></div></div>
@@ -482,7 +482,7 @@ Calling a function is an expression. Calling a macro is an expression. The block
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 
-    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="p">{</span> <span class="c">//like this</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">//like this</span>
         <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
         <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="p">};</span>
@@ -503,7 +503,7 @@ Calling a function is an expression. Calling a macro is an expression. The block
 <p>We don’t name return values, but we do declare their type after an arrow (-&gt;)
 In Rust, the return value of the function is synonymous with the value of the final expression in the block of the body of a function. 
 You can return early from a function by using the return keyword and specifying a value, but most functions return the last expression implicitly.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// perfectly valid function in Rust</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// perfectly valid function in Rust</span>
 <span class="k">fn</span> <span class="nf">five</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="mi">5</span> 
 <span class="p">}</span>
@@ -523,21 +523,21 @@ You can return early from a function by using the return keyword and specifying 
 
 <span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="c">// If place a semicolon at the end of the line x + 1,</span>
-    <span class="c">// changing it from an expression to a statement, </span>
-    <span class="c">// we’ll get an error.</span>
-    <span class="c">// like this -&gt; error[E0308]: mismatched types</span>
+    <span class="c1">// If place a semicolon at the end of the line x + 1,</span>
+    <span class="c1">// changing it from an expression to a statement, </span>
+    <span class="c1">// we’ll get an error.</span>
+    <span class="c1">// like this -&gt; error[E0308]: mismatched types</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="comments">Comments</h2>
 <p>A simple comment:</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// So we’re doing something complicated here, </span>
-    <span class="c">// long enough that we need</span>
-    <span class="c">// multiple lines of comments to do it!</span>
-    <span class="c">// Whew! Hopefully, this comment will</span>
-    <span class="c">// explain what’s going on.</span>
-    <span class="k">let</span> <span class="n">lucky_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c">// I’m feeling lucky today.</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// So we’re doing something complicated here, </span>
+    <span class="c1">// long enough that we need</span>
+    <span class="c1">// multiple lines of comments to do it!</span>
+    <span class="c1">// Whew! Hopefully, this comment will</span>
+    <span class="c1">// explain what’s going on.</span>
+    <span class="k">let</span> <span class="n">lucky_number</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c1">// I’m feeling lucky today.</span>
 </code></pre></div></div>
 <p>Rust also has another kind of comment, <code class="language-plaintext highlighter-rouge">documentation comments</code>, which we’ll discuss in the “Publishing a Crate to Crates.io” section of Chapter 14.</p>
 
@@ -559,7 +559,7 @@ You can return early from a function by using the return keyword and specifying 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-    <span class="k">if</span> <span class="n">number</span> <span class="p">{</span>   <span class="c">//Change to "if number != 0 {"</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="p">{</span>   <span class="c1">//Change to "if number != 0 {"</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"number was three"</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -604,7 +604,7 @@ Most terminals support a keyboard shortcut, <code class="language-plaintext high
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Returning Values from Loops</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returning Values from Loops</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
@@ -651,7 +651,7 @@ Most terminals support a keyboard shortcut, <code class="language-plaintext high
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="n">element</span> <span class="n">in</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"the value is: {}"</span><span class="p">,</span> <span class="n">element</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -659,7 +659,7 @@ Most terminals support a keyboard shortcut, <code class="language-plaintext high
 
 <p>Here’s what the countdown would look like using a for loop and another method we’ve not yet talked about, rev, to reverse the range:</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="n">number</span> <span class="nf">in</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">)</span><span class="nf">.rev</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">)</span><span class="nf">.rev</span><span class="p">()</span> <span class="p">{</span>
         <span class="nd">println!</span><span class="p">(</span><span class="s">"{}!"</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
     <span class="p">}</span>
       <span class="nd">println!</span><span class="p">(</span><span class="s">"LIFTOFF!!!"</span><span class="p">);</span>
@@ -766,6 +766,64 @@ Most terminals support a keyboard shortcut, <code class="language-plaintext high
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -810,65 +868,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -932,7 +931,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

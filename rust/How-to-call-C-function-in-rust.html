@@ -322,7 +322,7 @@ What caught my eye was the <strong>FFI</strong>(Foreign Function Interface).</p>
 
 <p>Let’s implement C function for use in Rust. Plz follow this code.</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : main.c</span>
-<span class="cp">#include &lt;stdio.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="nf">c_print_fn</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
@@ -349,12 +349,12 @@ What caught my eye was the <strong>FFI</strong>(Foreign Function Interface).</p>
 <p>Great! Next step is make Rust source file.<br />
 First, let’s make the main function.</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : rust_ffi.rs</span>
 <span class="k">fn</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
   <span class="n">num</span>
 <span class="p">}</span>
 
-<span class="c">// Just function test... later delete</span>
+<span class="c1">// Just function test... later delete</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
 <span class="p">}</span>
@@ -367,19 +367,19 @@ First, let’s make the main function.</p>
 <p>Now step is calling <strong>RUST</strong> function from <strong>C</strong>.<br />
 Write the function to use for c in <code class="language-plaintext highlighter-rouge">pub extern "C" fn ~~~</code>.  <br />
 At this time, it should be the same as the prototype implemented in C.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : rust_ffi.rs</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
   <span class="n">num</span>
 <span class="p">}</span>
 
-<span class="c">// TODO : later remove main function</span>
+<span class="c1">// TODO : later remove main function</span>
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="nf">rust_pow_num</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <p>Okay… Let’s call the rust function from C</p>
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : main.c</span>
-<span class="cp">#include &lt;stdio.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="nf">c_print_fn</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
@@ -400,7 +400,7 @@ At this time, it should be the same as the prototype implemented in C.</p>
 <p>When this code(<code class="language-plaintext highlighter-rouge">main.c</code>) build, maybe we can see the error.</p>
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">clang</span> <span class="o">-</span><span class="n">o</span> <span class="n">main</span> <span class="n">main</span><span class="py">.c</span>
 <span class="n">main</span><span class="py">.c</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span> <span class="n">warning</span><span class="p">:</span> <span class="n">implicit</span> <span class="n">declaration</span> <span class="n">of</span> <span class="n">function</span> <span class="nv">'call_from_c</span><span class="err">'</span> <span class="n">is</span> 
-      <span class="n">invalid</span> <span class="n">in</span> <span class="n">C99</span> <span class="p">[</span><span class="o">-</span><span class="n">Wimplicit</span><span class="o">-</span><span class="n">function</span><span class="o">-</span><span class="n">declaration</span><span class="p">]</span>
+      <span class="n">invalid</span> <span class="k">in</span> <span class="n">C99</span> <span class="p">[</span><span class="o">-</span><span class="n">Wimplicit</span><span class="o">-</span><span class="n">function</span><span class="o">-</span><span class="n">declaration</span><span class="p">]</span>
   <span class="nf">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="mi">211</span><span class="p">));</span> 
                  <span class="o">^</span>
 <span class="mi">1</span> <span class="n">warning</span> <span class="n">generated</span><span class="err">.</span>
@@ -414,7 +414,7 @@ At this time, it should be the same as the prototype implemented in C.</p>
 fix like this :</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : main.c</span>
-<span class="cp">#include &lt;stdio.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// declare function name and parameter</span>
 <span class="kt">int</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">);</span>
@@ -451,10 +451,10 @@ fix like this :</p>
 <span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">rt</span><span class="p">::</span><span class="nn">lang_start_internal</span><span class="p">::</span><span class="n">h9cf8802361ad86c2</span><span class="err">'</span>
 <span class="n">rust_ffi</span><span class="py">.o</span><span class="p">:</span> <span class="n">In</span> <span class="n">function</span> <span class="err">`</span><span class="nn">rust_ffi</span><span class="p">::</span><span class="nn">main</span><span class="p">::</span><span class="n">h7f93501ccd4adba5</span><span class="err">'</span><span class="p">:</span>
 <span class="n">rust_ffi</span><span class="na">.7</span><span class="n">rcbfp3g</span><span class="o">-</span><span class="n">cgu</span><span class="na">.0</span><span class="p">:(</span><span class="py">.text._ZN8rust_ffi4main17h7f93501ccd4adba5E</span><span class="o">+</span><span class="mi">0x21</span><span class="p">):</span> 
-<span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="nn">core</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="nn">num</span><span class="p">::</span><span class="nn">imp</span><span class="p">::</span><span class="mi">_</span><span class="err">$</span><span class="n">LT</span><span class="err">$</span>
+<span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="nn">core</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="nn">num</span><span class="p">::</span><span class="nn">imp</span><span class="p">::</span><span class="n">_</span><span class="err">$</span><span class="n">LT</span><span class="err">$</span>
 <span class="k">impl</span><span class="err">$</span><span class="n">u20</span><span class="err">$</span><span class="n">core</span><span class="o">..</span><span class="n">fmt</span><span class="o">..</span><span class="n">Display</span><span class="err">$</span><span class="n">u20</span><span class="err">$</span><span class="k">for</span><span class="err">$</span><span class="n">u20</span><span class="err">$</span><span class="nb">i32</span><span class="err">$</span><span class="n">GT</span><span class="err">$</span><span class="p">::</span><span class="nn">fmt</span><span class="p">::</span><span class="n">h765415089818841e</span><span class="err">'</span>
 <span class="n">rust_ffi</span><span class="na">.7</span><span class="n">rcbfp3g</span><span class="o">-</span><span class="n">cgu</span><span class="na">.0</span><span class="p">:(</span><span class="py">.text._ZN8rust_ffi4main17h7f93501ccd4adba5E</span><span class="o">+</span><span class="mi">0x8b</span><span class="p">):</span> 
-<span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="nn">stdio</span><span class="p">::</span><span class="mi">_</span><span class="nn">print</span><span class="p">::</span><span class="n">h7e1d4022dd9ebaea</span><span class="err">'</span>
+<span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="nn">stdio</span><span class="p">::</span><span class="nn">_print</span><span class="p">::</span><span class="n">h7e1d4022dd9ebaea</span><span class="err">'</span>
 <span class="n">rust_ffi</span><span class="py">.o</span><span class="p">:(</span><span class="py">.data.DW.ref.rust_eh_personality</span><span class="p">[</span><span class="n">DW</span><span class="py">.ref.rust_eh_personality</span><span class="p">]</span><span class="o">+</span><span class="mi">0x0</span><span class="p">):</span> 
 <span class="n">undefined</span> <span class="n">reference</span> <span class="n">to</span> <span class="err">`</span><span class="n">rust_eh_personality</span><span class="err">'</span>
 <span class="n">clang</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">linker</span> <span class="n">command</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span> <span class="p">(</span><span class="k">use</span> <span class="o">-</span><span class="n">v</span> <span class="n">to</span> <span class="n">see</span> <span class="n">invocation</span><span class="p">)</span>
@@ -465,7 +465,7 @@ I think rust file(<code class="language-plaintext highlighter-rouge">rust_ffi.rs
 <code class="language-plaintext highlighter-rouge">rust_ffi.rs</code> file has a main function and comment. <br />
 Delete main as comment. like this:</p>
 
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : rust_ffi.rs</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">call_from_c</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
   <span class="n">num</span>
 <span class="p">}</span>
@@ -473,22 +473,22 @@ Delete main as comment. like this:</p>
 
 <div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">rustc</span> <span class="o">--</span><span class="n">emit</span><span class="o">=</span><span class="n">obj</span> <span class="n">rust_ffi</span><span class="py">.rs</span>
 
-<span class="n">error</span><span class="p">[</span><span class="n">E0601</span><span class="p">]:</span> <span class="err">`</span><span class="n">main</span><span class="err">`</span> <span class="n">function</span> <span class="n">not</span> <span class="n">found</span> <span class="n">in</span> <span class="n">crate</span> <span class="err">`</span><span class="n">rust_ffi</span><span class="err">`</span>
+<span class="n">error</span><span class="p">[</span><span class="n">E0601</span><span class="p">]:</span> <span class="err">`</span><span class="n">main</span><span class="err">`</span> <span class="n">function</span> <span class="n">not</span> <span class="n">found</span> <span class="k">in</span> <span class="k">crate</span> <span class="err">`</span><span class="n">rust_ffi</span><span class="err">`</span>
  <span class="o">-</span><span class="k">-&gt;</span> <span class="n">rust_ffi</span><span class="py">.rs</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
   <span class="p">|</span>
 <span class="mi">1</span> <span class="p">|</span> <span class="o">/</span> <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">rust_pow_num</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span>
 <span class="mi">2</span> <span class="p">|</span> <span class="p">|</span> <span class="p">{</span>
 <span class="mi">3</span> <span class="p">|</span> <span class="p">|</span>     <span class="n">num</span>
 <span class="mi">4</span> <span class="p">|</span> <span class="p">|</span> <span class="p">}</span>
-  <span class="p">|</span> <span class="p">|</span><span class="mi">_</span><span class="o">^</span> <span class="n">consider</span> <span class="n">adding</span> <span class="n">a</span> <span class="err">`</span><span class="n">main</span><span class="err">`</span> <span class="n">function</span> <span class="n">to</span> <span class="err">`</span><span class="n">rust_ffi</span><span class="py">.rs</span><span class="err">`</span>
+  <span class="p">|</span> <span class="p">|</span><span class="n">_</span><span class="o">^</span> <span class="n">consider</span> <span class="n">adding</span> <span class="n">a</span> <span class="err">`</span><span class="n">main</span><span class="err">`</span> <span class="n">function</span> <span class="n">to</span> <span class="err">`</span><span class="n">rust_ffi</span><span class="py">.rs</span><span class="err">`</span>
 
 <span class="n">error</span><span class="p">:</span> <span class="n">aborting</span> <span class="n">due</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">error</span>
 
-<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="n">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0601</span><span class="err">`.</span>
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="n">this</span> <span class="n">error</span><span class="p">,</span> <span class="k">try</span> <span class="err">`</span><span class="n">rustc</span> <span class="o">--</span><span class="n">explain</span> <span class="n">E0601</span><span class="err">`.</span>
 </code></pre></div></div>
 <p>This time, error occureed because there is now main function <code class="language-plaintext highlighter-rouge">(error[E0601]: </code>main<code class="language-plaintext highlighter-rouge"> function not found in crate 'rust_ffi')</code>
 Let me know “main function” isn’t exist in file to RUST using <code class="language-plaintext highlighter-rouge">#![no_main]</code> keyword.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : rust_ffi.rs</span>
 <span class="nd">#![no_main]</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">rust_pow_num</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
   <span class="n">num</span>
@@ -511,7 +511,7 @@ Oh finally!! Can we complete it successfully?</p>
 Maybe We should declare something more in the rust file.</p>
 
 <p>Oh other sample code has <code class="language-plaintext highlighter-rouge">#[no_mangle]</code> keyword.. we will try this..</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file : rust_ffi.rs</span>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file : rust_ffi.rs</span>
 <span class="nd">#![no_main]</span>
 <span class="nd">#[no_mangle]</span>
 <span class="k">pub</span> <span class="k">extern</span> <span class="s">"C"</span> <span class="k">fn</span> <span class="nf">rust_pow_num</span><span class="p">(</span><span class="n">num</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
@@ -527,7 +527,7 @@ Maybe We should declare something more in the rust file.</p>
 <span class="err">$</span> <span class="n">clang</span> <span class="o">-</span><span class="n">o</span> <span class="n">test</span> <span class="n">main</span><span class="py">.o</span> <span class="n">rust_ffi</span><span class="py">.o</span>
 <span class="err">$</span> <span class="err">.</span><span class="o">/</span><span class="n">test</span> 
 <span class="n">Hello</span> <span class="n">World</span>
-<span class="n">Calling</span> <span class="n">in</span> <span class="n">C</span>
+<span class="n">Calling</span> <span class="k">in</span> <span class="n">C</span>
 <span class="mi">211</span>
 </code></pre></div></div>
 
@@ -652,6 +652,64 @@ Now let’s apply it and learn more about ‘rust’.</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  13 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/vs%20code/VSCODE-Dev-set(Settings-Sync)/" rel="permalink">Dev Setting - Settings Sync
 </a>
       
@@ -696,65 +754,6 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In the past, When distributing the homepage was using CI called travis.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/github/Testing-for-local-server" rel="permalink">Github Pages: Testing for local server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Before committing to github pages, you can upload your homepage locally through ruby and jekyll serve!
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Algorithm/algorithm-Sort" rel="permalink">Algorithm - SORT
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">```cpp
-#include 
 </p>
   </article>
 </div>
@@ -818,7 +817,7 @@ It’s so inconvenient. So I’m trying to use syncing up settings(vscode plugin
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
