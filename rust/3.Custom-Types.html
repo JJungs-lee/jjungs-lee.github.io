@@ -1,0 +1,1044 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.17.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html -->
+
+<!----><title>Yes! I Take IT :)</title>
+<meta name="description" content="Rust custom data types are formed mainly through the two keywords:">
+
+
+  <meta name="author" content="JJungs-lee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Yes! I Take IT">
+<meta property="og:title" content="Rust by Example : 3. Custom Types">
+<meta property="og:url" content="https://jjungs-lee.github.io//rust/3.Custom-Types">
+
+
+  <meta property="og:description" content="Rust custom data types are formed mainly through the two keywords:">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-04T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://jjungs-lee.github.io//rust/3.Custom-Types">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "JJungs-lee",
+      "url": "https://jjungs-lee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="NONE" type="application/atom+xml" rel="alternate" title="Yes! I Take IT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <b>I.T.I</b> <small>by JHLee</small>
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/" >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a href="/kernel/" >Kernel</a>
+            </li><li class="masthead__menu-item">
+              <a href="/swim/" >Swim</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/author_jhl.png" alt="JJungs-lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">JJungs-lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Do Coding! Do Study!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Rust by Example : 3. Custom Types">
+    <meta itemprop="description" content="Rust custom data types are formed mainly through the two keywords:">
+    <meta itemprop="datePublished" content="2022-03-04T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Rust by Example : 3. Custom Types
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Rust custom data types are formed mainly through the two keywords:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">struct</code>: define a structure</li>
+  <li><code class="language-plaintext highlighter-rouge">enum</code>: define an enumeration</li>
+</ul>
+
+<p>Constants can also be created via the <code class="language-plaintext highlighter-rouge">const</code> and <code class="language-plaintext highlighter-rouge">static</code> keywords.</p>
+
+<h2 id="31-structures">3.1 Structures</h2>
+<p>There are three types of structures (“structs”) that can be created using the <code class="language-plaintext highlighter-rouge">struct</code> keyword:</p>
+
+<ul>
+  <li>Tuple structs, which are, basically, named tuples.</li>
+  <li>The classic C structs</li>
+  <li>Unit structs, which are field-less, are useful for generics.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+  <span class="n">age</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// A unit struct</span>
+<span class="k">struct</span> <span class="n">Unit</span><span class="p">;</span>
+
+<span class="c1">// A tuple struct</span>
+<span class="k">struct</span> <span class="nf">Pair</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">);</span>
+
+<span class="c1">// A struct with two fields</span>
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Structs can be reused as fields of another struct</span>
+<span class="nd">#[allow(dead_code)]</span>
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="c1">// A rectangle can be specified by </span>
+  <span class="c1">// where the top left and bottom right corners are in space.</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Create struct with field init shorthand</span>
+  <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Peter"</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">27</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Person</span> <span class="p">{</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="p">};</span>
+
+  <span class="c1">// Print debug struct</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">peter</span><span class="p">);</span>
+
+  <span class="c1">// Instantiate a `Point`</span>
+  <span class="k">let</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">10.3</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.4</span> <span class="p">};</span>
+
+  <span class="c1">// Access the fields of the point</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"point coordinates: ({}, {})"</span><span class="p">,</span> <span class="n">point</span><span class="py">.x</span><span class="p">,</span> <span class="n">point</span><span class="py">.y</span><span class="p">);</span>
+
+  <span class="c1">// Make a new point by using struct update syntax </span>
+  <span class="c1">// to use the fields of our other one</span>
+  <span class="k">let</span> <span class="n">bottom_right</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="o">..</span><span class="n">point</span> <span class="p">};</span>
+
+  <span class="c1">// `bottom_right.y` will be the same as `point.y` </span>
+  <span class="c1">// because we used that field from `point`</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"second point: ({}, {})"</span><span class="p">,</span> <span class="n">bottom_right</span><span class="py">.x</span><span class="p">,</span> <span class="n">bottom_right</span><span class="py">.y</span><span class="p">);</span>
+
+  <span class="c1">// Destructure the point using a `let` binding</span>
+  <span class="k">let</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">top_edge</span> <span class="p">}</span> <span class="o">=</span> <span class="n">point</span><span class="p">;</span>
+
+  <span class="k">let</span> <span class="n">_rectangle</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span>
+    <span class="c1">// struct instantiation is an expression too</span>
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">top_edge</span> <span class="p">},</span>
+    <span class="n">bottom_right</span><span class="p">:</span> <span class="n">bottom_right</span><span class="p">,</span>
+  <span class="p">};</span>
+
+  <span class="c1">// Instantiate a unit struct</span>
+  <span class="k">let</span> <span class="n">_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">;</span>
+
+  <span class="c1">// Instantiate a tuple struct</span>
+  <span class="k">let</span> <span class="n">pair</span> <span class="o">=</span> <span class="nf">Pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+
+  <span class="c1">// Access the fields of a tuple struct</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"pair contains {:?} and {:?}"</span><span class="p">,</span> <span class="n">pair</span><span class="na">.0</span><span class="p">,</span> <span class="n">pair</span><span class="na">.1</span><span class="p">);</span>
+
+  <span class="c1">// Destructure a tuple struct</span>
+  <span class="k">let</span> <span class="nf">Pair</span><span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">decimal</span><span class="p">)</span> <span class="o">=</span> <span class="n">pair</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"pair contains {:?} and {:?}"</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">decimal</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="activity">Activity</h3>
+<ol>
+  <li>Add a function <code class="language-plaintext highlighter-rouge">rect_area</code> which calculates the area of a <code class="language-plaintext highlighter-rouge">Rectangle</code> 
+(try using nested destructuring).</li>
+</ol>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">rect_area</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">f32</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">Rectangle</span> <span class="p">{</span>
+      <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y1</span> <span class="p">},</span>
+      <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y2</span> <span class="p">},</span>
+    <span class="p">}</span> <span class="o">=</span> <span class="k">self</span><span class="p">;</span>
+
+    <span class="p">((</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y2</span><span class="p">))</span><span class="nf">.abs</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span>
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">10.0</span> <span class="p">},</span>
+    <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">5.0</span> <span class="p">},</span>
+  <span class="p">};</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"rec area: {}"</span><span class="p">,</span> <span class="n">rec</span><span class="nf">.rect_area</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<ol>
+  <li>Add a function <code class="language-plaintext highlighter-rouge">square</code> which takes a <code class="language-plaintext highlighter-rouge">Point</code> and a <code class="language-plaintext highlighter-rouge">f32</code> as arguments, 
+and returns a Rectangle with its top left corner on the point, 
+and a width and height corresponding to the <code class="language-plaintext highlighter-rouge">f32</code>.</li>
+</ol>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">square</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">f32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">Rectangle</span> <span class="p">{</span> 
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">p</span><span class="py">.x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">p</span><span class="py">.y</span> <span class="o">+</span> <span class="n">size</span><span class="p">},</span>
+    <span class="n">bottom_right</span> <span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span><span class="n">p</span><span class="py">.x</span> <span class="o">+</span> <span class="n">size</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">p</span><span class="py">.y</span><span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"square {:?}"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span> <span class="p">},</span> <span class="mf">5.0</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="32-enums">3.2 Enums</h2>
+<p>The <code class="language-plaintext highlighter-rouge">enum</code> keyword allows the creation of a type which may be one of a few different variants. 
+Any variant which is valid as a <code class="language-plaintext highlighter-rouge">struct</code> is also valid as an <code class="language-plaintext highlighter-rouge">enum</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create an `enum` to classify a web event. Note how both</span>
+<span class="c1">// names and type information together specify the variant:</span>
+<span class="c1">// `PageLoad != PageUnload` and `KeyPress(char) != Paste(String)`.</span>
+<span class="c1">// Each is different and independent.</span>
+<span class="k">enum</span> <span class="n">WebEvent</span> <span class="p">{</span>
+  <span class="c1">// An `enum` may either be `unit-like`,</span>
+  <span class="n">PageLoad</span><span class="p">,</span>
+  <span class="n">PageUnload</span><span class="p">,</span>
+  <span class="c1">// like tuple structs,</span>
+  <span class="nf">KeyPress</span><span class="p">(</span><span class="nb">char</span><span class="p">),</span>
+  <span class="nf">Paste</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+  <span class="c1">// or c-like structures.</span>
+  <span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i64</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i64</span> <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1">// A function which takes a `WebEvent` enum as an argument and</span>
+<span class="c1">// returns nothing.</span>
+<span class="k">fn</span> <span class="nf">inspect</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">WebEvent</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">match</span> <span class="n">event</span> <span class="p">{</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageLoad</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"page loaded"</span><span class="p">),</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageUnload</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"page unloaded"</span><span class="p">),</span>
+    <span class="c1">// Destructure `c` from inside the `enum`.</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">KeyPress</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"pressed '{}'."</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">Paste</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"pasted </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s">."</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+    <span class="c1">// Destructure `Click` into `x` and `y`.</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">}</span> <span class="k">=&gt;</span> <span class="p">{</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"clicked at x={}, y={}."</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">pressed</span> <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">KeyPress</span><span class="p">(</span><span class="sc">'x'</span><span class="p">);</span>
+  <span class="c1">// `to_owned()` creates an owned `String` from a string slice.</span>
+  <span class="k">let</span> <span class="n">pasted</span>  <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">Paste</span><span class="p">(</span><span class="s">"my text"</span><span class="nf">.to_owned</span><span class="p">());</span>
+  <span class="k">let</span> <span class="n">click</span>   <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">80</span> <span class="p">};</span>
+  <span class="k">let</span> <span class="n">load</span>    <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageLoad</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">unload</span>  <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageUnload</span><span class="p">;</span>
+
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">pressed</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">pasted</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">click</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">load</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">unload</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="type-aliases">Type aliases</h3>
+<p>If you use a type alias, you can refer to each enum variant via its alias. 
+This might be useful if the enum’s name is too long or too generic, and you want to rename it.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="nb">Add</span><span class="p">,</span>
+  <span class="n">Subtract</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Creates a type alias</span>
+<span class="k">type</span> <span class="n">Operations</span> <span class="o">=</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// We can refer to each variant via its alias,</span>
+  <span class="c1">// not its long and inconvenient name.</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Operations</span><span class="p">::</span><span class="nb">Add</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The most common place you’ll see this is in <code class="language-plaintext highlighter-rouge">impl</code> blocks using the <code class="language-plaintext highlighter-rouge">Self</code> alias.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="nb">Add</span><span class="p">,</span>
+  <span class="n">Subtract</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="k">self</span> <span class="p">{</span>
+      <span class="k">Self</span><span class="p">::</span><span class="nb">Add</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+      <span class="k">Self</span><span class="p">::</span><span class="n">Subtract</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>To learn more about enums and type aliases, you can read the stabilization report from when this feature was stabilized into Rust.</p>
+
+<h3 id="321-use">3.2.1 use</h3>
+<p>The <code class="language-plaintext highlighter-rouge">use</code> declaration can be used so manual scoping isn’t needed:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// An attribute to hide warnings for unused code.</span>
+<span class="nd">#![allow(dead_code)]</span>
+
+<span class="k">enum</span> <span class="n">Status</span> <span class="p">{</span>
+  <span class="n">Rich</span><span class="p">,</span>
+  <span class="n">Poor</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">enum</span> <span class="n">Work</span> <span class="p">{</span>
+  <span class="n">Civilian</span><span class="p">,</span>
+  <span class="n">Soldier</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Explicitly `use` each name so they are available without</span>
+  <span class="c1">// manual scoping.</span>
+  <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">Status</span><span class="p">::{</span><span class="n">Poor</span><span class="p">,</span> <span class="n">Rich</span><span class="p">};</span>
+  <span class="c1">// Automatically `use` each name inside `Work`.</span>
+  <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">Work</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+  <span class="c1">// Equivalent to `Status::Poor`.</span>
+  <span class="k">let</span> <span class="n">status</span> <span class="o">=</span> <span class="n">Poor</span><span class="p">;</span>
+  <span class="c1">// Equivalent to `Work::Civilian`.</span>
+  <span class="k">let</span> <span class="n">work</span> <span class="o">=</span> <span class="n">Civilian</span><span class="p">;</span>
+
+  <span class="k">match</span> <span class="n">status</span> <span class="p">{</span>
+    <span class="c1">// Note the lack of scoping because of the explicit `use` above.</span>
+    <span class="n">Rich</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"The rich have lots of money!"</span><span class="p">),</span>
+    <span class="n">Poor</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"The poor have no money..."</span><span class="p">),</span>
+  <span class="p">}</span>
+
+  <span class="k">match</span> <span class="n">work</span> <span class="p">{</span>
+    <span class="c1">// Note again the lack of scoping.</span>
+    <span class="n">Civilian</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Civilians work!"</span><span class="p">),</span>
+    <span class="n">Soldier</span>  <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Soldiers fight!"</span><span class="p">),</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="322-c-like">3.2.2 C-like</h3>
+<p><code class="language-plaintext highlighter-rouge">enum</code> can also be used as C-like enums.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// An attribute to hide warnings for unused code.</span>
+<span class="nd">#![allow(dead_code)]</span>
+
+<span class="c1">// enum with implicit discriminator (starts at 0)</span>
+<span class="k">enum</span> <span class="n">Number</span> <span class="p">{</span>
+  <span class="n">Zero</span><span class="p">,</span>
+  <span class="n">One</span><span class="p">,</span>
+  <span class="n">Two</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// enum with explicit discriminator</span>
+<span class="k">enum</span> <span class="n">Color</span> <span class="p">{</span>
+  <span class="n">Red</span> <span class="o">=</span> <span class="mi">0xff0000</span><span class="p">,</span>
+  <span class="n">Green</span> <span class="o">=</span> <span class="mi">0x00ff00</span><span class="p">,</span>
+  <span class="n">Blue</span> <span class="o">=</span> <span class="mi">0x0000ff</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// `enums` can be cast as integers.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"zero is {}"</span><span class="p">,</span> <span class="nn">Number</span><span class="p">::</span><span class="n">Zero</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"one is {}"</span><span class="p">,</span> <span class="nn">Number</span><span class="p">::</span><span class="n">One</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"roses are #{:06x}"</span><span class="p">,</span> <span class="nn">Color</span><span class="p">::</span><span class="n">Red</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"violets are #{:06x}"</span><span class="p">,</span> <span class="nn">Color</span><span class="p">::</span><span class="n">Blue</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="323-testcase-linked-list">3.2.3 Testcase: linked-list</h3>
+<p>A common way to implement a linked-list is via <code class="language-plaintext highlighter-rouge">enums</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
+  <span class="c1">// Cons: Tuple struct that wraps an element and a pointer to the next node</span>
+  <span class="nf">Cons</span><span class="p">(</span><span class="nb">u32</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
+  <span class="c1">// Nil: A node that signifies the end of the linked list</span>
+  <span class="nb">Nil</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Methods can be attached to an enum</span>
+<span class="k">impl</span> <span class="n">List</span> <span class="p">{</span>
+  <span class="c1">// Create an empty list</span>
+  <span class="k">fn</span> <span class="nf">new</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">List</span> <span class="p">{</span>
+    <span class="c1">// `Nil` has type `List`</span>
+    <span class="nb">Nil</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Consume a list, and return the same list with a new element at its front</span>
+  <span class="k">fn</span> <span class="nf">prepend</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">List</span> <span class="p">{</span>
+    <span class="c1">// `Cons` also has type List</span>
+    <span class="nf">Cons</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="k">self</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Return the length of the list</span>
+  <span class="k">fn</span> <span class="nf">len</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+    <span class="c1">// `self` has to be matched, because the behavior of this method</span>
+    <span class="c1">// depends on the variant of `self`</span>
+    <span class="c1">// `self` has type `&amp;List`, and `*self` has type `List`, matching on a</span>
+    <span class="c1">// concrete type `T` is preferred over a match on a reference `&amp;T`</span>
+    <span class="c1">// after Rust 2018 you can use self here and tail (with no ref) below as well,</span>
+    <span class="c1">// rust will infer &amp;s and ref tail. </span>
+    <span class="c1">// See https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/default-match-bindings.html</span>
+    <span class="k">match</span> <span class="o">*</span><span class="k">self</span> <span class="p">{</span>
+      <span class="c1">// Can't take ownership of the tail, because `self` is borrowed;</span>
+      <span class="c1">// instead take a reference to the tail</span>
+      <span class="nf">Cons</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="k">ref</span> <span class="n">tail</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">tail</span><span class="nf">.len</span><span class="p">(),</span>
+      <span class="c1">// Base Case: An empty list has zero length</span>
+      <span class="nb">Nil</span> <span class="k">=&gt;</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Return representation of the list as a (heap allocated) string</span>
+  <span class="k">fn</span> <span class="nf">stringify</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="o">*</span><span class="k">self</span> <span class="p">{</span>
+      <span class="nf">Cons</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="k">ref</span> <span class="n">tail</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// `format!` is similar to `print!`, but returns a heap</span>
+        <span class="c1">// allocated string instead of printing to the console</span>
+        <span class="nd">format!</span><span class="p">(</span><span class="s">"{}, {}"</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="nf">.stringify</span><span class="p">())</span>
+      <span class="p">},</span>
+      <span class="nb">Nil</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="nd">format!</span><span class="p">(</span><span class="s">"Nil"</span><span class="p">)</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Create an empty linked list</span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">list</span> <span class="o">=</span> <span class="nn">List</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+  <span class="c1">// Prepend some elements</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+  <span class="c1">// Show the final state of the list</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"linked list has length: {}"</span><span class="p">,</span> <span class="n">list</span><span class="nf">.len</span><span class="p">());</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">list</span><span class="nf">.stringify</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="constants">constants</h2>
+<p>Rust has two different types of constants which can be declared in any scope including global. 
+Both require explicit type annotation:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">const</code>: An unchangeable value (the common case).</li>
+  <li><code class="language-plaintext highlighter-rouge">static</code>: A possibly <code class="language-plaintext highlighter-rouge">mut</code>able variable with <code class="language-plaintext highlighter-rouge">'static</code> lifetime. 
+The static lifetime is inferred and does not have to be specified. 
+Accessing or modifying a mutable static variable is <code class="language-plaintext highlighter-rouge">unsafe</code>.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Globals are declared outside all other scopes.</span>
+<span class="k">static</span> <span class="n">LANGUAGE</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="o">=</span> <span class="s">"Rust"</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">THRESHOLD</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">is_big</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+  <span class="c1">// Access constant in some function</span>
+  <span class="n">n</span> <span class="o">&gt;</span> <span class="n">THRESHOLD</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+
+  <span class="c1">// Access constant in the main thread</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"This is {}"</span><span class="p">,</span> <span class="n">LANGUAGE</span><span class="p">);</span><span class="o">~</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"The threshold is {}"</span><span class="p">,</span> <span class="n">THRESHOLD</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{} is {}"</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="k">if</span> <span class="nf">is_big</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="s">"big"</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="s">"small"</span> <span class="p">});</span>
+
+  <span class="c1">// Error! Cannot modify a `const`.</span>
+  <span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="c1">// FIXME ^ Comment out this line</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#const" class="page__taxonomy-item" rel="tag">const</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#enum" class="page__taxonomy-item" rel="tag">enum</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#example" class="page__taxonomy-item" rel="tag">Example</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rust" class="page__taxonomy-item" rel="tag">Rust</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#static" class="page__taxonomy-item" rel="tag">static</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sturct" class="page__taxonomy-item" rel="tag">sturct</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#rust-by-example" class="page__taxonomy-item" rel="tag">RUST by Example</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-04T00:00:00+00:00">March 4, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Rust+by+Example+%3A+3.+Custom+Types%20https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F3.Custom-Types" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F3.Custom-Types" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjjungs-lee.github.io%2F%2Frust%2F3.Custom-Types" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rust/2.Primitives" class="pagination--pager" title="Rust by Example : 2. Primitives
+">Previous</a>
+    
+    
+      <a href="/rust/4.Variable-Bindings" class="pagination--pager" title="Rust by Example : 4. Variable Bindings
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/4.Variable-Bindings" rel="permalink">Rust by Example : 4. Variable Bindings
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Rust provides type safety via static typing. 
+Variable bindings can be type annotated when declared. 
+However, in most cases, the compiler will be able to in...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/2.Primitives" rel="permalink">Rust by Example : 2. Primitives
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Rust provides access to a wide variety of primitives. A sample includes:
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/1.Hello-World" rel="permalink">Rust by Example : 1. Hello World
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This is the source code of the traditional Hello World program.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/rust/0.Rust-By-Exaple" rel="permalink">Rust by Example : 0. Introduction
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">If you’re studying rust, it’s very helpful to follow the examples. I’m going to try to study it. :)
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/jjungs-lee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+    
+
+    <li><a href="NONE"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

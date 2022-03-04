@@ -1,4 +1,573 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2022-03-03T15:13:25+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">Rust by Example : 2. Primitives</title><link href="https://jjungs-lee.github.io//rust/2.Primitives" rel="alternate" type="text/html" title="Rust by Example : 2. Primitives" /><published>2022-03-03T00:00:00+00:00</published><updated>2022-03-03T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/2.Primitives</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/2.Primitives"><![CDATA[<p>Rust provides access to a wide variety of <code class="language-plaintext highlighter-rouge">primitives</code>. A sample includes:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://jjungs-lee.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://jjungs-lee.github.io//" rel="alternate" type="text/html" /><updated>2022-03-04T14:10:25+00:00</updated><id>https://jjungs-lee.github.io//feed.xml</id><title type="html">Yes! I Take IT</title><subtitle>This is JJung's Website.</subtitle><author><name>JJungs-lee</name></author><entry><title type="html">Rust by Example : 3. Custom Types</title><link href="https://jjungs-lee.github.io//rust/3.Custom-Types" rel="alternate" type="text/html" title="Rust by Example : 3. Custom Types" /><published>2022-03-04T00:00:00+00:00</published><updated>2022-03-04T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/3.Custom%20Types</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/3.Custom-Types"><![CDATA[<p>Rust custom data types are formed mainly through the two keywords:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">struct</code>: define a structure</li>
+  <li><code class="language-plaintext highlighter-rouge">enum</code>: define an enumeration</li>
+</ul>
+
+<p>Constants can also be created via the <code class="language-plaintext highlighter-rouge">const</code> and <code class="language-plaintext highlighter-rouge">static</code> keywords.</p>
+
+<h2 id="31-structures">3.1 Structures</h2>
+<p>There are three types of structures (“structs”) that can be created using the <code class="language-plaintext highlighter-rouge">struct</code> keyword:</p>
+
+<ul>
+  <li>Tuple structs, which are, basically, named tuples.</li>
+  <li>The classic C structs</li>
+  <li>Unit structs, which are field-less, are useful for generics.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+  <span class="n">age</span><span class="p">:</span> <span class="nb">u8</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// A unit struct</span>
+<span class="k">struct</span> <span class="n">Unit</span><span class="p">;</span>
+
+<span class="c1">// A tuple struct</span>
+<span class="k">struct</span> <span class="nf">Pair</span><span class="p">(</span><span class="nb">i32</span><span class="p">,</span> <span class="nb">f32</span><span class="p">);</span>
+
+<span class="c1">// A struct with two fields</span>
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Structs can be reused as fields of another struct</span>
+<span class="nd">#[allow(dead_code)]</span>
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="c1">// A rectangle can be specified by </span>
+  <span class="c1">// where the top left and bottom right corners are in space.</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Create struct with field init shorthand</span>
+  <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="nn">String</span><span class="p">::</span><span class="nf">from</span><span class="p">(</span><span class="s">"Peter"</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">27</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Person</span> <span class="p">{</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="p">};</span>
+
+  <span class="c1">// Print debug struct</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{:?}"</span><span class="p">,</span> <span class="n">peter</span><span class="p">);</span>
+
+  <span class="c1">// Instantiate a `Point`</span>
+  <span class="k">let</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">10.3</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.4</span> <span class="p">};</span>
+
+  <span class="c1">// Access the fields of the point</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"point coordinates: ({}, {})"</span><span class="p">,</span> <span class="n">point</span><span class="py">.x</span><span class="p">,</span> <span class="n">point</span><span class="py">.y</span><span class="p">);</span>
+
+  <span class="c1">// Make a new point by using struct update syntax </span>
+  <span class="c1">// to use the fields of our other one</span>
+  <span class="k">let</span> <span class="n">bottom_right</span> <span class="o">=</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="o">..</span><span class="n">point</span> <span class="p">};</span>
+
+  <span class="c1">// `bottom_right.y` will be the same as `point.y` </span>
+  <span class="c1">// because we used that field from `point`</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"second point: ({}, {})"</span><span class="p">,</span> <span class="n">bottom_right</span><span class="py">.x</span><span class="p">,</span> <span class="n">bottom_right</span><span class="py">.y</span><span class="p">);</span>
+
+  <span class="c1">// Destructure the point using a `let` binding</span>
+  <span class="k">let</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">top_edge</span> <span class="p">}</span> <span class="o">=</span> <span class="n">point</span><span class="p">;</span>
+
+  <span class="k">let</span> <span class="n">_rectangle</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span>
+    <span class="c1">// struct instantiation is an expression too</span>
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">left_edge</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">top_edge</span> <span class="p">},</span>
+    <span class="n">bottom_right</span><span class="p">:</span> <span class="n">bottom_right</span><span class="p">,</span>
+  <span class="p">};</span>
+
+  <span class="c1">// Instantiate a unit struct</span>
+  <span class="k">let</span> <span class="n">_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">;</span>
+
+  <span class="c1">// Instantiate a tuple struct</span>
+  <span class="k">let</span> <span class="n">pair</span> <span class="o">=</span> <span class="nf">Pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+
+  <span class="c1">// Access the fields of a tuple struct</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"pair contains {:?} and {:?}"</span><span class="p">,</span> <span class="n">pair</span><span class="na">.0</span><span class="p">,</span> <span class="n">pair</span><span class="na">.1</span><span class="p">);</span>
+
+  <span class="c1">// Destructure a tuple struct</span>
+  <span class="k">let</span> <span class="nf">Pair</span><span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">decimal</span><span class="p">)</span> <span class="o">=</span> <span class="n">pair</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"pair contains {:?} and {:?}"</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">decimal</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="activity">Activity</h3>
+<ol>
+  <li>Add a function <code class="language-plaintext highlighter-rouge">rect_area</code> which calculates the area of a <code class="language-plaintext highlighter-rouge">Rectangle</code> 
+(try using nested destructuring).</li>
+</ol>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">rect_area</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">f32</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">Rectangle</span> <span class="p">{</span>
+      <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y1</span> <span class="p">},</span>
+      <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y2</span> <span class="p">},</span>
+    <span class="p">}</span> <span class="o">=</span> <span class="k">self</span><span class="p">;</span>
+
+    <span class="p">((</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y2</span><span class="p">))</span><span class="nf">.abs</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">Rectangle</span> <span class="p">{</span>
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">10.0</span> <span class="p">},</span>
+    <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">5.0</span> <span class="p">},</span>
+  <span class="p">};</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"rec area: {}"</span><span class="p">,</span> <span class="n">rec</span><span class="nf">.rect_area</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<ol>
+  <li>Add a function <code class="language-plaintext highlighter-rouge">square</code> which takes a <code class="language-plaintext highlighter-rouge">Point</code> and a <code class="language-plaintext highlighter-rouge">f32</code> as arguments, 
+and returns a Rectangle with its top left corner on the point, 
+and a width and height corresponding to the <code class="language-plaintext highlighter-rouge">f32</code>.</li>
+</ol>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="n">x</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+  <span class="n">y</span><span class="p">:</span> <span class="nb">f32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">struct</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+  <span class="n">bottom_right</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">square</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">f32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Rectangle</span> <span class="p">{</span>
+  <span class="n">Rectangle</span> <span class="p">{</span> 
+    <span class="n">top_left</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="n">p</span><span class="py">.x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">p</span><span class="py">.y</span> <span class="o">+</span> <span class="n">size</span><span class="p">},</span>
+    <span class="n">bottom_right</span> <span class="p">:</span> <span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span><span class="n">p</span><span class="py">.x</span> <span class="o">+</span> <span class="n">size</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">p</span><span class="py">.y</span><span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"square {:?}"</span><span class="p">,</span> <span class="nf">square</span><span class="p">(</span><span class="n">Point</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span> <span class="p">},</span> <span class="mf">5.0</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="32-enums">3.2 Enums</h2>
+<p>The <code class="language-plaintext highlighter-rouge">enum</code> keyword allows the creation of a type which may be one of a few different variants. 
+Any variant which is valid as a <code class="language-plaintext highlighter-rouge">struct</code> is also valid as an <code class="language-plaintext highlighter-rouge">enum</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create an `enum` to classify a web event. Note how both</span>
+<span class="c1">// names and type information together specify the variant:</span>
+<span class="c1">// `PageLoad != PageUnload` and `KeyPress(char) != Paste(String)`.</span>
+<span class="c1">// Each is different and independent.</span>
+<span class="k">enum</span> <span class="n">WebEvent</span> <span class="p">{</span>
+  <span class="c1">// An `enum` may either be `unit-like`,</span>
+  <span class="n">PageLoad</span><span class="p">,</span>
+  <span class="n">PageUnload</span><span class="p">,</span>
+  <span class="c1">// like tuple structs,</span>
+  <span class="nf">KeyPress</span><span class="p">(</span><span class="nb">char</span><span class="p">),</span>
+  <span class="nf">Paste</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+  <span class="c1">// or c-like structures.</span>
+  <span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i64</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i64</span> <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1">// A function which takes a `WebEvent` enum as an argument and</span>
+<span class="c1">// returns nothing.</span>
+<span class="k">fn</span> <span class="nf">inspect</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">WebEvent</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">match</span> <span class="n">event</span> <span class="p">{</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageLoad</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"page loaded"</span><span class="p">),</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageUnload</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"page unloaded"</span><span class="p">),</span>
+    <span class="c1">// Destructure `c` from inside the `enum`.</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">KeyPress</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"pressed '{}'."</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">Paste</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"pasted </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s">."</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+    <span class="c1">// Destructure `Click` into `x` and `y`.</span>
+    <span class="nn">WebEvent</span><span class="p">::</span><span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">}</span> <span class="k">=&gt;</span> <span class="p">{</span>
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"clicked at x={}, y={}."</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">pressed</span> <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">KeyPress</span><span class="p">(</span><span class="sc">'x'</span><span class="p">);</span>
+  <span class="c1">// `to_owned()` creates an owned `String` from a string slice.</span>
+  <span class="k">let</span> <span class="n">pasted</span>  <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="nf">Paste</span><span class="p">(</span><span class="s">"my text"</span><span class="nf">.to_owned</span><span class="p">());</span>
+  <span class="k">let</span> <span class="n">click</span>   <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">Click</span> <span class="p">{</span> <span class="n">x</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">80</span> <span class="p">};</span>
+  <span class="k">let</span> <span class="n">load</span>    <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageLoad</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">unload</span>  <span class="o">=</span> <span class="nn">WebEvent</span><span class="p">::</span><span class="n">PageUnload</span><span class="p">;</span>
+
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">pressed</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">pasted</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">click</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">load</span><span class="p">);</span>
+  <span class="nf">inspect</span><span class="p">(</span><span class="n">unload</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="type-aliases">Type aliases</h3>
+<p>If you use a type alias, you can refer to each enum variant via its alias. 
+This might be useful if the enum’s name is too long or too generic, and you want to rename it.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="nb">Add</span><span class="p">,</span>
+  <span class="n">Subtract</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Creates a type alias</span>
+<span class="k">type</span> <span class="n">Operations</span> <span class="o">=</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// We can refer to each variant via its alias,</span>
+  <span class="c1">// not its long and inconvenient name.</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">Operations</span><span class="p">::</span><span class="nb">Add</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The most common place you’ll see this is in <code class="language-plaintext highlighter-rouge">impl</code> blocks using the <code class="language-plaintext highlighter-rouge">Self</code> alias.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="nb">Add</span><span class="p">,</span>
+  <span class="n">Subtract</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">VeryVerboseEnumOfThingsToDoWithNumbers</span> <span class="p">{</span>
+  <span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="k">self</span> <span class="p">{</span>
+      <span class="k">Self</span><span class="p">::</span><span class="nb">Add</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+      <span class="k">Self</span><span class="p">::</span><span class="n">Subtract</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>To learn more about enums and type aliases, you can read the stabilization report from when this feature was stabilized into Rust.</p>
+
+<h3 id="321-use">3.2.1 use</h3>
+<p>The <code class="language-plaintext highlighter-rouge">use</code> declaration can be used so manual scoping isn’t needed:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// An attribute to hide warnings for unused code.</span>
+<span class="nd">#![allow(dead_code)]</span>
+
+<span class="k">enum</span> <span class="n">Status</span> <span class="p">{</span>
+  <span class="n">Rich</span><span class="p">,</span>
+  <span class="n">Poor</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">enum</span> <span class="n">Work</span> <span class="p">{</span>
+  <span class="n">Civilian</span><span class="p">,</span>
+  <span class="n">Soldier</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Explicitly `use` each name so they are available without</span>
+  <span class="c1">// manual scoping.</span>
+  <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">Status</span><span class="p">::{</span><span class="n">Poor</span><span class="p">,</span> <span class="n">Rich</span><span class="p">};</span>
+  <span class="c1">// Automatically `use` each name inside `Work`.</span>
+  <span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">Work</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+  <span class="c1">// Equivalent to `Status::Poor`.</span>
+  <span class="k">let</span> <span class="n">status</span> <span class="o">=</span> <span class="n">Poor</span><span class="p">;</span>
+  <span class="c1">// Equivalent to `Work::Civilian`.</span>
+  <span class="k">let</span> <span class="n">work</span> <span class="o">=</span> <span class="n">Civilian</span><span class="p">;</span>
+
+  <span class="k">match</span> <span class="n">status</span> <span class="p">{</span>
+    <span class="c1">// Note the lack of scoping because of the explicit `use` above.</span>
+    <span class="n">Rich</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"The rich have lots of money!"</span><span class="p">),</span>
+    <span class="n">Poor</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"The poor have no money..."</span><span class="p">),</span>
+  <span class="p">}</span>
+
+  <span class="k">match</span> <span class="n">work</span> <span class="p">{</span>
+    <span class="c1">// Note again the lack of scoping.</span>
+    <span class="n">Civilian</span> <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Civilians work!"</span><span class="p">),</span>
+    <span class="n">Soldier</span>  <span class="k">=&gt;</span> <span class="nd">println!</span><span class="p">(</span><span class="s">"Soldiers fight!"</span><span class="p">),</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="322-c-like">3.2.2 C-like</h3>
+<p><code class="language-plaintext highlighter-rouge">enum</code> can also be used as C-like enums.</p>
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// An attribute to hide warnings for unused code.</span>
+<span class="nd">#![allow(dead_code)]</span>
+
+<span class="c1">// enum with implicit discriminator (starts at 0)</span>
+<span class="k">enum</span> <span class="n">Number</span> <span class="p">{</span>
+  <span class="n">Zero</span><span class="p">,</span>
+  <span class="n">One</span><span class="p">,</span>
+  <span class="n">Two</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// enum with explicit discriminator</span>
+<span class="k">enum</span> <span class="n">Color</span> <span class="p">{</span>
+  <span class="n">Red</span> <span class="o">=</span> <span class="mi">0xff0000</span><span class="p">,</span>
+  <span class="n">Green</span> <span class="o">=</span> <span class="mi">0x00ff00</span><span class="p">,</span>
+  <span class="n">Blue</span> <span class="o">=</span> <span class="mi">0x0000ff</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// `enums` can be cast as integers.</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"zero is {}"</span><span class="p">,</span> <span class="nn">Number</span><span class="p">::</span><span class="n">Zero</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"one is {}"</span><span class="p">,</span> <span class="nn">Number</span><span class="p">::</span><span class="n">One</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"roses are #{:06x}"</span><span class="p">,</span> <span class="nn">Color</span><span class="p">::</span><span class="n">Red</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"violets are #{:06x}"</span><span class="p">,</span> <span class="nn">Color</span><span class="p">::</span><span class="n">Blue</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="323-testcase-linked-list">3.2.3 Testcase: linked-list</h3>
+<p>A common way to implement a linked-list is via <code class="language-plaintext highlighter-rouge">enums</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">List</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="k">enum</span> <span class="n">List</span> <span class="p">{</span>
+  <span class="c1">// Cons: Tuple struct that wraps an element and a pointer to the next node</span>
+  <span class="nf">Cons</span><span class="p">(</span><span class="nb">u32</span><span class="p">,</span> <span class="nb">Box</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&gt;</span><span class="p">),</span>
+  <span class="c1">// Nil: A node that signifies the end of the linked list</span>
+  <span class="nb">Nil</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// Methods can be attached to an enum</span>
+<span class="k">impl</span> <span class="n">List</span> <span class="p">{</span>
+  <span class="c1">// Create an empty list</span>
+  <span class="k">fn</span> <span class="nf">new</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">List</span> <span class="p">{</span>
+    <span class="c1">// `Nil` has type `List`</span>
+    <span class="nb">Nil</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Consume a list, and return the same list with a new element at its front</span>
+  <span class="k">fn</span> <span class="nf">prepend</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">List</span> <span class="p">{</span>
+    <span class="c1">// `Cons` also has type List</span>
+    <span class="nf">Cons</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nn">Box</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="k">self</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Return the length of the list</span>
+  <span class="k">fn</span> <span class="nf">len</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+    <span class="c1">// `self` has to be matched, because the behavior of this method</span>
+    <span class="c1">// depends on the variant of `self`</span>
+    <span class="c1">// `self` has type `&amp;List`, and `*self` has type `List`, matching on a</span>
+    <span class="c1">// concrete type `T` is preferred over a match on a reference `&amp;T`</span>
+    <span class="c1">// after Rust 2018 you can use self here and tail (with no ref) below as well,</span>
+    <span class="c1">// rust will infer &amp;s and ref tail. </span>
+    <span class="c1">// See https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/default-match-bindings.html</span>
+    <span class="k">match</span> <span class="o">*</span><span class="k">self</span> <span class="p">{</span>
+      <span class="c1">// Can't take ownership of the tail, because `self` is borrowed;</span>
+      <span class="c1">// instead take a reference to the tail</span>
+      <span class="nf">Cons</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="k">ref</span> <span class="n">tail</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">tail</span><span class="nf">.len</span><span class="p">(),</span>
+      <span class="c1">// Base Case: An empty list has zero length</span>
+      <span class="nb">Nil</span> <span class="k">=&gt;</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Return representation of the list as a (heap allocated) string</span>
+  <span class="k">fn</span> <span class="nf">stringify</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
+    <span class="k">match</span> <span class="o">*</span><span class="k">self</span> <span class="p">{</span>
+      <span class="nf">Cons</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="k">ref</span> <span class="n">tail</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// `format!` is similar to `print!`, but returns a heap</span>
+        <span class="c1">// allocated string instead of printing to the console</span>
+        <span class="nd">format!</span><span class="p">(</span><span class="s">"{}, {}"</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="nf">.stringify</span><span class="p">())</span>
+      <span class="p">},</span>
+      <span class="nb">Nil</span> <span class="k">=&gt;</span> <span class="p">{</span>
+        <span class="nd">format!</span><span class="p">(</span><span class="s">"Nil"</span><span class="p">)</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Create an empty linked list</span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">list</span> <span class="o">=</span> <span class="nn">List</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+
+  <span class="c1">// Prepend some elements</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="n">list</span> <span class="o">=</span> <span class="n">list</span><span class="nf">.prepend</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+  <span class="c1">// Show the final state of the list</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"linked list has length: {}"</span><span class="p">,</span> <span class="n">list</span><span class="nf">.len</span><span class="p">());</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">list</span><span class="nf">.stringify</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="constants">constants</h2>
+<p>Rust has two different types of constants which can be declared in any scope including global. 
+Both require explicit type annotation:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">const</code>: An unchangeable value (the common case).</li>
+  <li><code class="language-plaintext highlighter-rouge">static</code>: A possibly <code class="language-plaintext highlighter-rouge">mut</code>able variable with <code class="language-plaintext highlighter-rouge">'static</code> lifetime. 
+The static lifetime is inferred and does not have to be specified. 
+Accessing or modifying a mutable static variable is <code class="language-plaintext highlighter-rouge">unsafe</code>.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Globals are declared outside all other scopes.</span>
+<span class="k">static</span> <span class="n">LANGUAGE</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span> <span class="o">=</span> <span class="s">"Rust"</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">THRESHOLD</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">is_big</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">i32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">bool</span> <span class="p">{</span>
+  <span class="c1">// Access constant in some function</span>
+  <span class="n">n</span> <span class="o">&gt;</span> <span class="n">THRESHOLD</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+
+  <span class="c1">// Access constant in the main thread</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"This is {}"</span><span class="p">,</span> <span class="n">LANGUAGE</span><span class="p">);</span><span class="o">~</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"The threshold is {}"</span><span class="p">,</span> <span class="n">THRESHOLD</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"{} is {}"</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="k">if</span> <span class="nf">is_big</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="s">"big"</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="s">"small"</span> <span class="p">});</span>
+
+  <span class="c1">// Error! Cannot modify a `const`.</span>
+  <span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="c1">// FIXME ^ Comment out this line</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name>JJungs-lee</name></author><category term="RUST by Example" /><category term="Rust" /><category term="Example" /><category term="sturct" /><category term="enum" /><category term="const" /><category term="static" /><summary type="html"><![CDATA[Rust custom data types are formed mainly through the two keywords:]]></summary></entry><entry><title type="html">Rust by Example : 4. Variable Bindings</title><link href="https://jjungs-lee.github.io//rust/4.Variable-Bindings" rel="alternate" type="text/html" title="Rust by Example : 4. Variable Bindings" /><published>2022-03-04T00:00:00+00:00</published><updated>2022-03-04T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/4.Variable%20Bindings</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/4.Variable-Bindings"><![CDATA[<p>Rust provides type safety via static typing. 
+Variable bindings can be type annotated when declared. 
+However, in most cases, the compiler will be able to infer the type of the variable from the context, heavily reducing the annotation burden.</p>
+
+<p>Values (like literals) can be bound to variables, using the <code class="language-plaintext highlighter-rouge">let</code> binding.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">an_integer</span> <span class="o">=</span> <span class="mi">1u32</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">a_boolean</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">unit</span> <span class="o">=</span> <span class="p">();</span>
+
+  <span class="c1">// copy `an_integer` into `copied_integer`</span>
+  <span class="k">let</span> <span class="n">copied_integer</span> <span class="o">=</span> <span class="n">an_integer</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"An integer: {:?}"</span><span class="p">,</span> <span class="n">copied_integer</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"A boolean: {:?}"</span><span class="p">,</span> <span class="n">a_boolean</span><span class="p">);</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Meet the unit value: {:?}"</span><span class="p">,</span> <span class="n">unit</span><span class="p">);</span>
+
+  <span class="c1">// The compiler warns about unused variable bindings; </span>
+  <span class="c1">// these warnings can be silenced by prefixing </span>
+  <span class="c1">// the variable name with an underscore</span>
+  <span class="k">let</span> <span class="n">_unused_variable</span> <span class="o">=</span> <span class="mi">3u32</span><span class="p">;</span>
+
+  <span class="k">let</span> <span class="n">noisy_unused_variable</span> <span class="o">=</span> <span class="mi">2u32</span><span class="p">;</span>
+  <span class="c1">// FIXME ^ Prefix with an underscore to suppress the warning</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="41-mutability">4.1 Mutability</h2>
+<p>Variable bindings are immutable by default, but this can be overridden using the <code class="language-plaintext highlighter-rouge">mut</code> modifier.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">_immutable_binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">mutable_binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"Before mutation: {}"</span><span class="p">,</span> <span class="n">mutable_binding</span><span class="p">);</span>
+
+  <span class="c1">// Ok</span>
+  <span class="n">mutable_binding</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"After mutation: {}"</span><span class="p">,</span> <span class="n">mutable_binding</span><span class="p">);</span>
+
+  <span class="c1">// Error!</span>
+  <span class="n">_immutable_binding</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="c1">// FIXME ^ Comment out this line</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The compiler will throw a detailed diagnostic about mutability errors.</p>
+
+<h2 id="42-scope-and-shadowing">4.2 Scope and Shadowing</h2>
+<p>Variable bindings have a scope, and are constrained to live in a block. 
+A block is a collection of statements enclosed by braces <code class="language-plaintext highlighter-rouge">{}</code>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// This binding lives in the main function</span>
+  <span class="k">let</span> <span class="n">long_lived_binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// This is a block, and has a smaller scope than the main function</span>
+  <span class="p">{</span>
+      <span class="c1">// This binding only exists in this block</span>
+      <span class="k">let</span> <span class="n">short_lived_binding</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+      <span class="nd">println!</span><span class="p">(</span><span class="s">"inner short: {}"</span><span class="p">,</span> <span class="n">short_lived_binding</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// End of the block</span>
+
+  <span class="c1">// Error! `short_lived_binding` doesn't exist in this scope</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"outer short: {}"</span><span class="p">,</span> <span class="n">short_lived_binding</span><span class="p">);</span>
+  <span class="c1">// FIXME ^ Comment out this line</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"outer long: {}"</span><span class="p">,</span> <span class="n">long_lived_binding</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Also, variable shadowing is allowed.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="n">shadowed_binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"before being shadowed: {}"</span><span class="p">,</span> <span class="n">shadowed_binding</span><span class="p">);</span>
+
+    <span class="c1">// This binding *shadows* the outer one</span>
+    <span class="k">let</span> <span class="n">shadowed_binding</span> <span class="o">=</span> <span class="s">"abc"</span><span class="p">;</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"shadowed in inner block: {}"</span><span class="p">,</span> <span class="n">shadowed_binding</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"outside inner block: {}"</span><span class="p">,</span> <span class="n">shadowed_binding</span><span class="p">);</span>
+
+  <span class="c1">// This binding *shadows* the previous binding</span>
+  <span class="k">let</span> <span class="n">shadowed_binding</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"shadowed in outer block: {}"</span><span class="p">,</span> <span class="n">shadowed_binding</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="43-declare-first">4.3 Declare first</h2>
+<p>It’s possible to declare variable bindings first, and initialize them later. 
+However, this form is seldom used, as it may lead to the use of uninitialized variables.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Declare a variable binding</span>
+  <span class="k">let</span> <span class="n">a_binding</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// Initialize the binding</span>
+    <span class="n">a_binding</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"a binding: {}"</span><span class="p">,</span> <span class="n">a_binding</span><span class="p">);</span>
+
+  <span class="k">let</span> <span class="n">another_binding</span><span class="p">;</span>
+
+  <span class="c1">// Error! Use of uninitialized binding</span>
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"another binding: {}"</span><span class="p">,</span> <span class="n">another_binding</span><span class="p">);</span>
+  <span class="c1">// FIXME ^ Comment out this line</span>
+
+  <span class="n">another_binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="nd">println!</span><span class="p">(</span><span class="s">"another binding: {}"</span><span class="p">,</span> <span class="n">another_binding</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The compiler forbids use of uninitialized variables, as this would lead to undefined behavior.</p>
+
+<h2 id="44-freezing">4.4 Freezing</h2>
+<p>When data is bound by the same name immutably, it also <em>freezes</em>. 
+Frozen data can’t be modified until the immutable binding goes out of scope:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="k">mut</span> <span class="n">_mutable_integer</span> <span class="o">=</span> <span class="mi">7i32</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="c1">// Shadowing by immutable `_mutable_integer`</span>
+    <span class="k">let</span> <span class="n">_mutable_integer</span> <span class="o">=</span> <span class="n">_mutable_integer</span><span class="p">;</span>
+
+    <span class="c1">// Error! `_mutable_integer` is frozen in this scope</span>
+    <span class="n">_mutable_integer</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="c1">// FIXME ^ Comment out this line</span>
+
+    <span class="c1">// `_mutable_integer` goes out of scope</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Ok! `_mutable_integer` is not frozen in this scope</span>
+  <span class="n">_mutable_integer</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name>JJungs-lee</name></author><category term="RUST by Example" /><category term="Rust" /><category term="Example" /><summary type="html"><![CDATA[Rust provides type safety via static typing. Variable bindings can be type annotated when declared. However, in most cases, the compiler will be able to infer the type of the variable from the context, heavily reducing the annotation burden.]]></summary></entry><entry><title type="html">Rust by Example : 2. Primitives</title><link href="https://jjungs-lee.github.io//rust/2.Primitives" rel="alternate" type="text/html" title="Rust by Example : 2. Primitives" /><published>2022-03-03T00:00:00+00:00</published><updated>2022-03-03T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/2.Primitives</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/2.Primitives"><![CDATA[<p>Rust provides access to a wide variety of <code class="language-plaintext highlighter-rouge">primitives</code>. A sample includes:</p>
 
 <h3 id="scalar-types">Scalar Types</h3>
 <ul>
@@ -1311,165 +1880,4 @@ Configuration file: D:/jjungs-page/_config.yml
 
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>JJungs-lee</name></author><category term="Algorithm" /><category term="Heap" /><category term="Priority Queue" /><category term="Max heap" /><category term="Min heap" /><summary type="html"><![CDATA[```cpp #include]]></summary></entry><entry><title type="html">Data Structure - LIST</title><link href="https://jjungs-lee.github.io//Algorithm/Data-structure-List" rel="alternate" type="text/html" title="Data Structure - LIST" /><published>2021-02-24T00:00:00+00:00</published><updated>2021-02-24T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//Algorithm/%5BData%20structure%5D%20List</id><content type="html" xml:base="https://jjungs-lee.github.io//Algorithm/Data-structure-List"><![CDATA[<ul>
-  <li>Also known as linked list</li>
-  <li>The linked list is a data space in which data can be added and deleted whenever necessary, without a space of a fixed size.</li>
-  <li>Linked list is a data structure that connects data that exist in a remote place with pointer.</li>
-</ul>
-
-<h2 id="basic-term">Basic term</h2>
-<ul>
-  <li>Node - Consists of data storage units (data values, pointers)</li>
-  <li>Pointer - In each node, a space containing connection information (address) with the next or previous node, null value if there is no next node</li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="c1">// Single linked list</span>
-<span class="k">struct</span> <span class="nc">SNode</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
-  <span class="n">SNode</span><span class="o">*</span> <span class="n">prev</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="n">SNode</span><span class="o">*</span> <span class="n">sList</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="nf">addSList</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">SNode</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SNode</span><span class="p">;</span>
-  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">sList</span><span class="p">;</span>
-  <span class="n">sList</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">printSList</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">SNode</span><span class="o">*</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">sList</span><span class="p">;</span> <span class="n">iter</span> <span class="o">!=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
-
-  <span class="p">}</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// Double linked list</span>
-<span class="k">struct</span> <span class="nc">DNode</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
-  <span class="n">DNode</span><span class="o">*</span> <span class="n">prev</span><span class="p">;</span>
-  <span class="n">DNode</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="n">DNode</span><span class="o">*</span> <span class="n">head</span><span class="p">;</span>
-<span class="n">DNode</span><span class="o">*</span> <span class="n">tail</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="nf">addDList</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">DNode</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DNode</span><span class="p">();</span>
-  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span>
-  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">tail</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
-
-  <span class="n">tail</span><span class="o">-&gt;</span><span class="n">prev</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
-  <span class="n">tail</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">deletaDList</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">DNode</span><span class="o">*</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span> <span class="n">iter</span> <span class="o">!=</span> <span class="n">tail</span><span class="p">;</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">iter</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">iter</span><span class="o">-&gt;</span><span class="n">prev</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-      <span class="n">iter</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
-      <span class="k">delete</span> <span class="n">iter</span><span class="p">;</span>
-      <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="kt">void</span> <span class="nf">printDList</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">DNode</span><span class="o">*</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span> <span class="n">iter</span> <span class="o">!=</span> <span class="n">tail</span><span class="p">;</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">iter</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// SLL</span>
-  <span class="n">sList</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-  <span class="n">addSList</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-  <span class="n">addSList</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-  <span class="n">printSList</span><span class="p">();</span>
-
-  <span class="c1">// DLL</span>
-  <span class="n">head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DNode</span><span class="p">();</span>
-  <span class="n">tail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DNode</span><span class="p">();</span>
-  <span class="n">head</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-  <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span>
-  <span class="n">tail</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-  <span class="n">tail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-
-  <span class="n">addDList</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-  <span class="n">addDList</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-
-  <span class="n">printDList</span><span class="p">();</span>
-  <span class="n">deletaDList</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-  <span class="n">printDList</span><span class="p">();</span>
-
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>JJungs-lee</name></author><category term="Algorithm" /><category term="List" /><category term="Single linked list" /><category term="Double linked list" /><summary type="html"><![CDATA[Also known as linked list The linked list is a data space in which data can be added and deleted whenever necessary, without a space of a fixed size. Linked list is a data structure that connects data that exist in a remote place with pointer.]]></summary></entry><entry><title type="html">RUST : How to check overflow and underflow in integer types</title><link href="https://jjungs-lee.github.io//rust/How-to-check-overflow-and-underflow-in-integer-types" rel="alternate" type="text/html" title="RUST : How to check overflow and underflow in integer types" /><published>2021-01-10T00:00:00+00:00</published><updated>2021-01-10T00:00:00+00:00</updated><id>https://jjungs-lee.github.io//rust/How%20to%20check%20overflow%20and%20underflow%20in%20integer%20types</id><content type="html" xml:base="https://jjungs-lee.github.io//rust/How-to-check-overflow-and-underflow-in-integer-types"><![CDATA[<h3 id="what-is-overflow-and-underflow">What is overflow and underflow?</h3>
-<p>Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. 
-Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).</p>
-
-<p>Simply put, overflow and underflow happen when we assign a value that is <strong>out of range</strong> of the declared data type of the variable.
-If the (absolute) value is too big, we call it <code class="language-plaintext highlighter-rouge">overflow</code>, if the value is too small, we call it <code class="language-plaintext highlighter-rouge">underflow</code>.</p>
-
-<p>Instead of an error in the program, it usually causes the result to be unexpected. 
-Data overflows have been listed as the number 8 most <strong>dangerous</strong> software error in the most recent CWE 2019 list, mostly because they often lead to <code class="language-plaintext highlighter-rouge">buffer overflows</code>, which are currently the number 1 most dangerous software error according to that list.</p>
-
-<p>Most integer overflow and underflow conditions lead to erroneous program behavior but don’t cause any vulnerabilities. There is no error, there is no warning, you simply get a wrong result of the operation. So, they are very hard to discover and prevent.</p>
-
-<p>So let’s see how to prevent these things in Rust.</p>
-
-<h3 id="preventing-integer-overflows">Preventing Integer Overflows</h3>
-<p>Rust provides standard library integer types have <code class="language-plaintext highlighter-rouge">checked_*</code> methods for common operations, such as checked_add for addition, etc.</p>
-
-<p>The API form of each function is variable as follows.</p>
-
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Checked integer addition. Computes self + rhs, </span>
-<span class="c1">// returning None if overflow occurred.</span>
-<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_add</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-
-<span class="c1">//Checked integer subtraction. Computes self - rhs, </span>
-<span class="c1">// returning None if overflow occurred.</span>
-<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_sub</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-
-<span class="c1">// Checked integer multiplication. Computes self * rhs, </span>
-<span class="c1">// returning None if overflow occurred.</span>
-<span class="k">pub</span> <span class="k">const</span> <span class="k">fn</span> <span class="nf">checked_mul</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-
-<span class="c1">// Checked integer division. Computes self / rhs, </span>
-<span class="c1">// returning None if rhs == 0.</span>
-<span class="k">pub</span> <span class="k">fn</span> <span class="nf">checked_div</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-</code></pre></div></div>
-
-<p>Looking at API form, Each function returns as an <code class="language-plaintext highlighter-rouge">Option</code> type. When an overflow or underflow problem occurs, it returns None and the rest return Some(T).</p>
-
-<p>So, it is good to implement programming whether to proceed with the operation by checking the return or to cause panic.</p>
-
-<p>Below code is a simple example. Let’s make a bug-free program by referring to the following.</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="nn">u32</span><span class="p">::</span><span class="nf">max_value</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span>
-<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-
-<span class="k">match</span> <span class="n">x</span><span class="nf">.checked_add</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">Some</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
-        <span class="nd">println!</span><span class="p">(</span><span class="s">"{} + {} = {}"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="nb">None</span> <span class="k">=&gt;</span> <span class="p">{</span>
-        <span class="nd">println!</span><span class="p">(</span><span class="s">"overflow!"</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div></div>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// count checker</span>
-<span class="k">let</span> <span class="n">x</span><span class="p">:</span><span class="nb">u64</span> <span class="o">=</span> <span class="nn">u64</span><span class="p">::</span><span class="nf">min_value</span><span class="p">();</span>
-<span class="k">if</span> <span class="n">x</span><span class="nf">.checked_sub</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="nf">.is_none</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"This operation's result is underflow"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<hr />
-<p>reference)</p>
-<ul>
-  <li><a href="https://doc.rust-lang.org/std/primitive.u32.html">RUST API document</a></li>
-  <li><a href="https://stackoverflow.com/questions/52646755/checking-for-integer-overflow-in-rust">Stack overflow</a></li>
-</ul>]]></content><author><name>JJungs-lee</name></author><category term="RUST" /><category term="overflow" /><category term="underflow" /><category term="Data types" /><category term="checked_add" /><category term="checked_sub" /><summary type="html"><![CDATA[What is overflow and underflow? Overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits – either higher than the maximum or lower than the minimum representable value. Underflow is a condition in a computer program where the result of a calculation is a number of smaller absolute value than the computer can actually represent in memory on its central processing unit (CPU).]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>JJungs-lee</name></author><category term="Algorithm" /><category term="Heap" /><category term="Priority Queue" /><category term="Max heap" /><category term="Min heap" /><summary type="html"><![CDATA[```cpp #include]]></summary></entry></feed>
