@@ -895,7 +895,7 @@ Here we store that mutable reference in the <code class="language-plaintext high
 The mutable reference goes out of scope at the end of the <code class="language-plaintext highlighter-rouge">for</code> loop, so all of these changes are safe and allowed by the borrowing rules.</p>
 
 <h3 id="hashing-functions">Hashing Functions</h3>
-<p>By default, <code class="language-plaintext highlighter-rouge">HashMap</code> uses a “cryptographically strong”<sup id="fnref:siphash" role="doc-noteref"><a href="#fn:siphash" class="footnote" rel="footnote">1</a></sup> hashing function that can provide resistance to Denial of Service (DoS) attacks. 
+<p>By default, <code class="language-plaintext highlighter-rouge">HashMap</code> uses a “cryptographically strong”<sup id="fnref:siphash"><a href="#fn:siphash" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> hashing function that can provide resistance to Denial of Service (DoS) attacks. 
 This is not the fastest hashing algorithm available, but the trade-off for better security that comes with the drop in performance is worth it. 
 If you profile your code and find that the default hash function is too slow for your purposes, you can switch to another function by specifying a different <em>hasher</em>. 
 A hasher is a type that implements the <code class="language-plaintext highlighter-rouge">BuildHasher</code> trait. We’ll talk about traits and how to implement them in Chapter 10. 
@@ -915,7 +915,7 @@ You don’t necessarily have to implement your own hasher from scratch; <a href=
 <hr />
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:siphash" role="doc-endnote">
+    <li id="fn:siphash">
       <p><a href="https://www.131002.net/siphash/siphash.pdf">https://www.131002.net/siphash/siphash.pdf</a> <a href="#fnref:siphash" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
@@ -1199,7 +1199,7 @@ However, in most cases, the compiler will be able to in...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2023 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2025 JJungs-lee. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
